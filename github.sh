@@ -4,5 +4,4 @@ if [[ -z "$1" ]]; then
 fi
 git add .
 git commit -m "$1"
-git remote add origin https://github.com/Hepolise/TrafficWidget.git
 git push -u origin master
