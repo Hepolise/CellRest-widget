@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Traffic Widget</string>
+    <string name="widget_name">Traffic Widget</string>
+    <string name="widget_text">Traffic Widget</string>
+</resources>
