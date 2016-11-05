@@ -24,4 +24,5 @@ public class QuickstartPreferences {
     public static final String setting_update = "setting_update";
     public static final String pass = "password";
     public static final String login = "login";
+    public static final String op = "op";
 }

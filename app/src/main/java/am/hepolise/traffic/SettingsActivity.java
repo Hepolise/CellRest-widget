@@ -177,7 +177,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // guidelines.
             bindPreferenceSummaryToValue(findPreference("login"));
             //bindPreferenceSummaryToValue(findPreference("password"));
-            //bindPreferenceSummaryToValue(findPreference("example_list"));
+            bindPreferenceSummaryToValue(findPreference("op_list"));
         }
 
         @Override

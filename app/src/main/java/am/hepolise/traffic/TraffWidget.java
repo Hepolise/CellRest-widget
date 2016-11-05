@@ -32,6 +32,7 @@ public class TraffWidget extends AppWidgetProvider {
     String ACTION_APPWIDGET_FORCE_UPDATE = "";
     String login;
     String pass;
+    String op;
     //String ACTION_MINICALLWIDGET_CLICKED;
 
 
@@ -146,6 +147,7 @@ public class TraffWidget extends AppWidgetProvider {
         UPD = shrpr.getString(QuickstartPreferences.update, "1");
         pass = shrpr.getString(QuickstartPreferences.pass, "");
         login = shrpr.getString(QuickstartPreferences.login, "");
+        op = shrpr.getString(QuickstartPreferences.op, "");
 
         if (content.equals("Updating...")) {
             //Log.d(LOG_TAG, "exec");
@@ -204,7 +206,7 @@ public class TraffWidget extends AppWidgetProvider {
             BufferedReader reader;
 
             try {
-                URL url = new URL("https://srvr.tk/traf.php?cmd=widget&upd=" + UPD + "&login=" + login + "&pass=" + pass + "&op=bee");
+                URL url = new URL("https://srvr.tk/traf.php?cmd=widget&upd=" + UPD + "&login=" + login + "&pass=" + pass + "&op=" + op);
                 Log.d(LOG_TAG, "url: " + url);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 reader= new BufferedReader(new InputStreamReader(conn.getInputStream()));
