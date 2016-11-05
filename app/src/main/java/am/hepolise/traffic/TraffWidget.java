@@ -30,6 +30,8 @@ public class TraffWidget extends AppWidgetProvider {
     int idglobal;
     String UPD;
     String ACTION_APPWIDGET_FORCE_UPDATE = "";
+    String login;
+    String pass;
     //String ACTION_MINICALLWIDGET_CLICKED;
 
 
@@ -108,8 +110,13 @@ public class TraffWidget extends AppWidgetProvider {
             //id = Integer.parseInt(action.substring(ACTION_APPWIDGET_FORCE_UPDATE.length()));
             //Log.d(LOG_TAG, "id: " + id);
 
-
-            UPD = "1";
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+            Boolean setting_update = sharedPreferences.getBoolean(QuickstartPreferences.setting_update, true);
+            if (setting_update.equals(true)) {
+                UPD = "1";
+            } else {
+                UPD = "0";
+            }
             //SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
             //int id = sharedPreferences.getInt(QuickstartPreferences.WId, 0);
 
@@ -124,7 +131,6 @@ public class TraffWidget extends AppWidgetProvider {
                     new int[] { id });
             context.sendBroadcast(updateIntent);
         } else {
-            //UPD = "0";
             Toast.makeText(context, "Updating widget: " + UPD, Toast.LENGTH_SHORT).show();
         }
 
@@ -137,7 +143,9 @@ public class TraffWidget extends AppWidgetProvider {
 
 
         SharedPreferences shrpr = PreferenceManager.getDefaultSharedPreferences(context);
-        UPD = shrpr.getString(QuickstartPreferences.update, "");
+        UPD = shrpr.getString(QuickstartPreferences.update, "1");
+        pass = shrpr.getString(QuickstartPreferences.pass, "");
+        login = shrpr.getString(QuickstartPreferences.login, "");
 
         if (content.equals("Updating...")) {
             //Log.d(LOG_TAG, "exec");
@@ -154,6 +162,7 @@ public class TraffWidget extends AppWidgetProvider {
         RemoteViews widgetView = new RemoteViews(context.getPackageName(),
                 R.layout.widget);
         widgetView.setTextViewText(R.id.tv, content);
+        //widgetView.u
 
         Intent updateIntent = new Intent(context, TraffWidget.class);
         updateIntent.setAction(ACTION_APPWIDGET_FORCE_UPDATE);
@@ -163,6 +172,7 @@ public class TraffWidget extends AppWidgetProvider {
         widgetView.setOnClickPendingIntent(R.id.tv, pIntent);
 
         // Обновляем виджет
+        //appWidgetManager.up
         appWidgetManager.updateAppWidget(widgetID, widgetView);
         //}
         return (null);
@@ -187,8 +197,8 @@ public class TraffWidget extends AppWidgetProvider {
             BufferedReader reader;
 
             try {
-                URL url = new URL("https://srvr.tk/traf.php?cmd=widget&upd=" + UPD);
-                //Log.d(LOG_TAG, "getContent (UPD): " + UPD);
+                URL url = new URL("https://srvr.tk/traf.php?cmd=widget&upd=" + UPD + "&login=" + login + "&pass=" + pass + "&op=bee");
+                Log.d(LOG_TAG, "url: " + url);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 reader= new BufferedReader(new InputStreamReader(conn.getInputStream()));
                 StringBuilder buf=new StringBuilder();
