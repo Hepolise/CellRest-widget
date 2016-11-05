@@ -150,10 +150,17 @@ public class TraffWidget extends AppWidgetProvider {
         if (content.equals("Updating...")) {
             //Log.d(LOG_TAG, "exec");
             new ProgressTask().execute();
-            if (UPD.equals("1")) {
-                //Log.d(LOG_TAG, "updateWidget (change UPD)");
+            if (login.equals("") || pass.equals("")) {
+                Log.d(LOG_TAG, "null");
+                if (UPD.equals("1")) {
+                    //Log.d(LOG_TAG, "updateWidget (change UPD)");
+                    SharedPreferences shpr = PreferenceManager.getDefaultSharedPreferences(context);
+                    shpr.edit().putString(QuickstartPreferences.update, "0").apply();
+                }
+            } else {
+                Log.d(LOG_TAG, "not null " + pass + " " + login);
                 SharedPreferences shpr = PreferenceManager.getDefaultSharedPreferences(context);
-                shpr.edit().putString(QuickstartPreferences.update, "0").apply();
+                shpr.edit().putString(QuickstartPreferences.update, "1").apply();
             }
             //Toast.makeText(context, "Update: " + UPD, Toast.LENGTH_SHORT).show();
         } //else {
