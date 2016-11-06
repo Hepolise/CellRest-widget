@@ -149,28 +149,39 @@ public class TraffWidget extends AppWidgetProvider {
         login = shrpr.getString(QuickstartPreferences.login, "");
         op = shrpr.getString(QuickstartPreferences.op, "");
 
+
+        if (content.equals("Unable to resolve host \"srvr.tk\": No address associated with hostname")) {
+            //Log.d(LOG_TAG, "not accessible");
+            //Toast.makeText(context, "Server is unreachable", Toast.LENGTH_SHORT).show();
+            content = shrpr.getString(QuickstartPreferences.content, "");
+        }
+        //Log.d(LOG_TAG, content);
+
         if (content.equals("Updating...")) {
             //Log.d(LOG_TAG, "exec");
             new ProgressTask().execute();
             if (login.equals("") || pass.equals("")) {
-                Log.d(LOG_TAG, "null");
+                //Log.d(LOG_TAG, "null");
                 if (UPD.equals("1")) {
                     //Log.d(LOG_TAG, "updateWidget (change UPD)");
-                    SharedPreferences shpr = PreferenceManager.getDefaultSharedPreferences(context);
-                    shpr.edit().putString(QuickstartPreferences.update, "0").apply();
+                    shrpr.edit().putString(QuickstartPreferences.update, "0").apply();
                 }
             } else {
-                Log.d(LOG_TAG, "not null " + pass + " " + login);
-                SharedPreferences shpr = PreferenceManager.getDefaultSharedPreferences(context);
-                shpr.edit().putString(QuickstartPreferences.update, "1").apply();
+                //Log.d(LOG_TAG, "not null " + pass + " " + login);
+                shrpr.edit().putString(QuickstartPreferences.update, "1").apply();
             }
             //Toast.makeText(context, "Update: " + UPD, Toast.LENGTH_SHORT).show();
-        } //else {
+        } else {
+            shrpr.edit().putString(QuickstartPreferences.content, content).apply();
+        }
 
         // Настраиваем внешний вид виджета
         RemoteViews widgetView = new RemoteViews(context.getPackageName(),
                 R.layout.widget);
         widgetView.setTextViewText(R.id.tv, content);
+        //widgetView.setTextColor(R.id.tv, );
+        //SharedPreferences shared_prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        //shared_prefs.edit().putString(QuickstartPreferences.content, content).apply();
         //widgetView.u
 
         Intent updateIntent = new Intent(context, TraffWidget.class);
@@ -207,7 +218,7 @@ public class TraffWidget extends AppWidgetProvider {
 
             try {
                 URL url = new URL("https://srvr.tk/traf.php?cmd=widget&upd=" + UPD + "&login=" + login + "&pass=" + pass + "&op=" + op);
-                Log.d(LOG_TAG, "url: " + url);
+                //Log.d(LOG_TAG, "url: " + url);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 reader= new BufferedReader(new InputStreamReader(conn.getInputStream()));
                 StringBuilder buf=new StringBuilder();
