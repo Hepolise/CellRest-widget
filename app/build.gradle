@@ -36,7 +36,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.android.support:support-v4:24.2.1'
     compile 'com.android.support:support-vector-drawable:24.2.1'
-    compile 'com.rarepebble:colorpicker:2.0.0'
+    compile 'com.github.yukuku:ambilwarna:2.0.1'
 
     testCompile 'junit:junit:4.12'
 }

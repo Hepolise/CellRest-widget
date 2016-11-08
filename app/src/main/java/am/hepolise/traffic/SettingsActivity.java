@@ -4,6 +4,7 @@ package am.hepolise.traffic;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -22,9 +23,10 @@ import android.util.Log;
 import android.view.MenuItem;
 
 
-import com.rarepebble.colorpicker.ColorPickerView;
 
 import java.util.List;
+
+import yuku.ambilwarna.AmbilWarnaDialog;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
@@ -161,7 +163,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
      */
     protected boolean isValidFragment(String fragmentName) {
         return PreferenceFragment.class.getName().equals(fragmentName)
-                || DataSyncPreferenceFragment.class.getName().equals(fragmentName)
+                || ColorPickerPreferenceFragment.class.getName().equals(fragmentName)
                 || GeneralPreferenceFragment.class.getName().equals(fragmentName);
 
     }
@@ -198,30 +200,33 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         }
     }
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public static class DataSyncPreferenceFragment extends PreferenceFragment {
+    public static class ColorPickerPreferenceFragment extends PreferenceFragment {
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            //final ColorPicker cp = new ColorPicker(SettingsActivity.super, 0, 0, 0);
-            final ColorPickerView picker = new ColorPickerView(getContext());
-            picker.setColor(0xff12345);
-            final int color = picker.getColor();
-            StringBuilder sb = new StringBuilder();
-            sb.append("");
-            sb.append(color);
-            String col = sb.toString();
-            Log.d("traffLog", col);
-            //addPreferencesFromResource(R.xml.pref_general);
-            //setHasOptionsMenu(true);
+            final Context ctx = getContext();
+            int initialColor = 0xff4d4d4d;
+            AmbilWarnaDialog dialog = new AmbilWarnaDialog(ctx, initialColor, new AmbilWarnaDialog.OnAmbilWarnaListener() {
+                @Override
+                public void onOk(AmbilWarnaDialog dialog, int color) {
+                    // color is the color selected by the user.
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ctx);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putInt(QuickstartPreferences.color, color).apply();
+                    Intent intent = new Intent(getActivity(), SettingsActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                }
 
-            // Bind the summaries of EditText/List/Dialog/Ringtone preferences
-            // to their values. When their values change, their summaries are
-            // updated to reflect the new value, per the Android Design
-            // guidelines.
-            //bindPreferenceSummaryToValue(findPreference("login"));
-            //bindPreferenceSummaryToValue(findPreference("password"));
-            //bindPreferenceSummaryToValue(findPreference("op_list"));
+                @Override
+                public void onCancel(AmbilWarnaDialog dialog) {
+                    startActivity(new Intent(getActivity(), SettingsActivity.class));
+                }
+
+
+            });
+            dialog.show();
         }
 
         @Override

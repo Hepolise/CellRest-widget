@@ -17,7 +17,7 @@
     <string name="pref_account_pass">Password</string>
 
     <string name="pref_description_pass">Password for your account</string>
-    <string name="pref_color">Colors</string>
+    <string name="pref_color">Choose color for widget\'s text</string>
 
 
     <string name="pref_title_op">Your operator</string>

@@ -26,4 +26,5 @@ public class QuickstartPreferences {
     public static final String login = "login";
     public static final String op = "op";
     public static final String content = "content";
+    public static final String color = "color";
 }

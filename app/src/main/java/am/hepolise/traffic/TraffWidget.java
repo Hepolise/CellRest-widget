@@ -175,10 +175,13 @@ public class TraffWidget extends AppWidgetProvider {
             shrpr.edit().putString(QuickstartPreferences.content, content).apply();
         }
 
+        int color =  shrpr.getInt(QuickstartPreferences.color, 0xff4d4d4d);
+
         // Настраиваем внешний вид виджета
         RemoteViews widgetView = new RemoteViews(context.getPackageName(),
                 R.layout.widget);
         widgetView.setTextViewText(R.id.tv, content);
+        widgetView.setTextColor(R.id.tv, color);
         //widgetView.setTextColor(R.id.tv, );
         //SharedPreferences shared_prefs = PreferenceManager.getDefaultSharedPreferences(context);
         //shared_prefs.edit().putString(QuickstartPreferences.content, content).apply();
