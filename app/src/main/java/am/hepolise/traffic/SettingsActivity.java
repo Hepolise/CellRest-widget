@@ -28,6 +28,8 @@ import java.util.List;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
 
+import static am.hepolise.traffic.R.string.pref_title_update;
+
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
  * handset devices, settings are presented as a single list. On tablets,
@@ -117,10 +119,11 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
         // Trigger the listener immediately with the preference's
         // current value.
+
         sBindPreferenceSummaryToValueListener.onPreferenceChange(preference,
                 PreferenceManager
                         .getDefaultSharedPreferences(preference.getContext())
-                        .getString(preference.getKey(), "Your phone's number (a 10-digit format)"));
+                        .getString(preference.getKey(), preference.getContext().getString(R.string.pref_desc_login)));
     }
 
     @Override
@@ -221,7 +224,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
                 @Override
                 public void onCancel(AmbilWarnaDialog dialog) {
-                    startActivity(new Intent(getActivity(), SettingsActivity.class));
+                    Intent intent = new Intent(getActivity(), SettingsActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
                 }
 
 

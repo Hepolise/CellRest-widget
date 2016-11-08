@@ -7,9 +7,11 @@
     <string name="pref_description_pass">Пароль от Вашего аккаунта</string>
     <string name="pref_description_update">Обновлять информацию с сервера при клике на виджет</string>
     <string name="pref_header_general">Общее</string>
-    <string name="pref_title_op">Ваш оператор (на данный момент поддерживается только Билайн)</string>
+    <string name="pref_title_op">Оператор (на данный момент только Билайн)</string>
     <string name="pref_title_update">Принудительное обновление</string>
     <string name="title_activity_settings">Настройки</string>
+    <string name="pref_desc_login">Ваш номер телефона в 10-значном формате
+    (без +7 или 8)</string>
     <string-array name="pref_op_list_titles">
         <item>Beeline</item>
         <!--<item>Megafon</item>-->
