@@ -132,7 +132,7 @@ public class TraffWidget extends AppWidgetProvider {
                     new int[] { id });
             context.sendBroadcast(updateIntent);
         } else {
-            Toast.makeText(context, "Updating widget: " + UPD, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, "Updating widget: " + UPD, Toast.LENGTH_SHORT).show();
         }
 
         //SharedPreferences SharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -207,7 +207,7 @@ public class TraffWidget extends AppWidgetProvider {
 
             try {
 
-                String cont = getContent();
+                getContent();
                 //Log.d(LOG_TAG, "getContent: " + cont);
             } catch (IOException ex) {
                 //Log.d(LOG_TAG, "Error: " + ex.getMessage());

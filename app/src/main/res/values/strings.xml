@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">Traffic Widget</string>
-    <string name="widget_name">Traffic Widget</string>
-    <string name="widget_text">Traffic Widget</string>
+    <string name="app_name" translatable="false">Traffic Widget</string>
+    <string name="widget_name" translatable="false">Traffic Widget</string>
+    <string name="widget_text" translatable="false">Traffic Widget</string>
     <string name="title_activity_settings">Settings</string>
 
     <!-- Strings related to Settings -->
@@ -13,23 +13,23 @@
     <string name="pref_description_update">Force updates the widget information on click</string>
 
     <string name="pref_account_name">Account</string>
-    <string name="pref_account_login">Login</string>
     <string name="pref_account_pass">Password</string>
 
     <string name="pref_description_pass">Password for your account</string>
     <string name="pref_color">Choose color for widget\'s text</string>
 
 
-    <string name="pref_title_op">Your operator</string>
+    <string name="pref_title_op">Your operator (only Beeline now)</string>
     <string-array name="pref_op_list_titles">
         <item>Beeline</item>
-        <item>Megafon</item>
-        <item>Tele2</item>
+        <!--<item>Megafon</item>-->
+        <!--<item>Tele2</item>-->
     </string-array>
     <string-array name="pref_op_list_values">
         <item>bee</item>
         <item>megafon</item>
         <item>tele2</item>
     </string-array>
+    <string name="pref_account_login">Login</string>
 
 </resources>
