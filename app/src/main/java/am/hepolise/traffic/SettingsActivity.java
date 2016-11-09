@@ -209,7 +209,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             final Context ctx = getContext();
-            int initialColor = 0xff4d4d4d;
+            SharedPreferences shrpr = PreferenceManager.getDefaultSharedPreferences(ctx);
+            int initialColor =  shrpr.getInt(QuickstartPreferences.color, 0xff4d4d4d);
             AmbilWarnaDialog dialog = new AmbilWarnaDialog(ctx, initialColor, new AmbilWarnaDialog.OnAmbilWarnaListener() {
                 @Override
                 public void onOk(AmbilWarnaDialog dialog, int color) {
