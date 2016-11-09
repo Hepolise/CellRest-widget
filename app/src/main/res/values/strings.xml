@@ -12,14 +12,20 @@
     <string name="pref_title_update">Enable force reload on click</string>
     <string name="pref_description_update">Force updates the widget information on click</string>
 
+    <string name="pref_title_default_color">Default color in widget\'s text</string>
+    <string name="pref_description_default_color">Sets the default color in widget\'s text</string>
+
     <string name="pref_account_name">Account</string>
     <string name="pref_account_pass">Password</string>
 
     <string name="pref_description_pass">Password for your account</string>
     <string name="pref_color">Choose color for widget\'s text</string>
 
+    <string name="general">General preferences</string>
+    <string name="widget_settings">Widget\'s settings</string>
 
     <string name="pref_title_op">Your operator (only Beeline now)</string>
+    <string name="pref_title_font">Font for the widget</string>
     <string name="pref_desc_login">Your phone\'s number (a 10-digit format)</string>
     <string-array name="pref_op_list_titles">
         <item>Beeline</item>
@@ -30,6 +36,18 @@
         <item>bee</item>
         <item>megafon</item>
         <item>tele2</item>
+    </string-array>
+
+
+    <string-array name="pref_font_titles">
+        <item>Normal</item>
+        <item><b>Bold</b></item>
+        <item><i>Italic</i></item>
+    </string-array>
+    <string-array name="pref_font_values">
+        <item>l</item>
+        <item>b</item>
+        <item>i</item>
     </string-array>
     <string name="pref_account_login">Login</string>
 

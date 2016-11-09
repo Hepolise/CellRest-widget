@@ -176,12 +176,31 @@ public class TraffWidget extends AppWidgetProvider {
         }
 
         int color =  shrpr.getInt(QuickstartPreferences.color, 0xff4d4d4d);
-
+        Boolean default_color =  shrpr.getBoolean(QuickstartPreferences.default_color, true);
+        if (default_color.equals(true)) {
+            color = 0xff4d4d4d;
+            shrpr.edit().putInt(QuickstartPreferences.color, -11711155).apply();
+        }
+        String font =  shrpr.getString(QuickstartPreferences.font, "n");
         // Настраиваем внешний вид виджета
         RemoteViews widgetView = new RemoteViews(context.getPackageName(),
                 R.layout.widget);
-        widgetView.setTextViewText(R.id.tv, content);
-        widgetView.setTextColor(R.id.tv, color);
+        widgetView.setTextViewText(R.id.text_light, "");
+        widgetView.setTextViewText(R.id.text_bold, "");
+        widgetView.setTextViewText(R.id.text_italic, "");
+        int res = R.id.text_light;
+        if (font.equals("i")) {
+            Log.d(LOG_TAG, "i " + font);
+            res = R.id.text_italic;
+        } else if(font.equals("b")) {
+            Log.d(LOG_TAG, "b " + font);
+            res = R.id.text_bold;
+        }
+
+
+        widgetView.setTextViewText(res, content);
+        widgetView.setTextColor(res, color);
+
         //widgetView.setTextColor(R.id.tv, );
         //SharedPreferences shared_prefs = PreferenceManager.getDefaultSharedPreferences(context);
         //shared_prefs.edit().putString(QuickstartPreferences.content, content).apply();
@@ -192,7 +211,7 @@ public class TraffWidget extends AppWidgetProvider {
 
         updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetID);
         android.app.PendingIntent pIntent = PendingIntent.getBroadcast(context, widgetID, updateIntent, 0);
-        widgetView.setOnClickPendingIntent(R.id.tv, pIntent);
+        widgetView.setOnClickPendingIntent(res, pIntent);
 
         // Обновляем виджет
         //appWidgetManager.up

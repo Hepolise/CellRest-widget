@@ -190,6 +190,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             bindPreferenceSummaryToValue(findPreference("login"));
             //bindPreferenceSummaryToValue(findPreference("password"));
             bindPreferenceSummaryToValue(findPreference("op_list"));
+            bindPreferenceSummaryToValue(findPreference("font"));
         }
 
         @Override
@@ -218,6 +219,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                     SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ctx);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putInt(QuickstartPreferences.color, color).apply();
+                    editor.putBoolean(QuickstartPreferences.default_color, false).apply();
                     Intent intent = new Intent(getActivity(), SettingsActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
