@@ -15,12 +15,14 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
 import static android.R.attr.action;
 import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE;
+import static java.security.AccessController.getContext;
 
 
 public class TraffWidget extends AppWidgetProvider {
@@ -150,7 +152,7 @@ public class TraffWidget extends AppWidgetProvider {
         op = shrpr.getString(QuickstartPreferences.op, "");
 
 
-        if (content.equals("Unable to resolve host \"srvr.tk\": No address associated with hostname")) {
+        if (content.equals("error")) {
             //Log.d(LOG_TAG, "not accessible");
             //Toast.makeText(context, "Server is unreachable", Toast.LENGTH_SHORT).show();
             content = shrpr.getString(QuickstartPreferences.content, "");
@@ -190,10 +192,10 @@ public class TraffWidget extends AppWidgetProvider {
         widgetView.setTextViewText(R.id.text_italic, "");
         int res = R.id.text_light;
         if (font.equals("i")) {
-            Log.d(LOG_TAG, "i " + font);
+            //Log.d(LOG_TAG, "i " + font);
             res = R.id.text_italic;
         } else if(font.equals("b")) {
-            Log.d(LOG_TAG, "b " + font);
+            //Log.d(LOG_TAG, "b " + font);
             res = R.id.text_bold;
         }
 
@@ -204,7 +206,10 @@ public class TraffWidget extends AppWidgetProvider {
         //widgetView.setTextColor(R.id.tv, );
         //SharedPreferences shared_prefs = PreferenceManager.getDefaultSharedPreferences(context);
         //shared_prefs.edit().putString(QuickstartPreferences.content, content).apply();
-        //widgetView.u
+
+
+        String android_id = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+        Log.d(LOG_TAG, "android_id " + android_id);
 
         Intent updateIntent = new Intent(context, TraffWidget.class);
         updateIntent.setAction(ACTION_APPWIDGET_FORCE_UPDATE);
@@ -254,7 +259,7 @@ public class TraffWidget extends AppWidgetProvider {
                 return(buffer);
 
             } catch (IOException e) {
-                updateWidget(conextglobal, appWidgetManagerglobal, idglobal, e.getMessage());
+                updateWidget(conextglobal, appWidgetManagerglobal, idglobal, "error");
                 return e.getMessage();
             }
 

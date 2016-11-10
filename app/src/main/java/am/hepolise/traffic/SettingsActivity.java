@@ -9,11 +9,13 @@ import android.content.res.Configuration;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceScreen;
 import android.support.v7.app.ActionBar;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
@@ -21,14 +23,20 @@ import android.preference.RingtonePreference;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 
-
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
 
 import static am.hepolise.traffic.R.string.pref_title_update;
+import static java.security.AccessController.getContext;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
@@ -51,6 +59,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         @Override
         public boolean onPreferenceChange(Preference preference, Object value) {
             String stringValue = value.toString();
+            String stringPref = preference.toString();
+            Log.d("traffLog", "Changed " + stringPref + " to " + stringValue);
+
 
             if (preference instanceof ListPreference) {
                 // For list preferences, look up the correct display value in
@@ -63,29 +74,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                         index >= 0
                                 ? listPreference.getEntries()[index]
                                 : null);
-
-            } else if (preference instanceof RingtonePreference) {
-                // For ringtone preferences, look up the correct display value
-                // using RingtoneManager.
-                if (TextUtils.isEmpty(stringValue)) {
-                    // Empty values correspond to 'silent' (no ringtone).
-                   // preference.setSummary(R.string.pref_ringtone_silent);
-
-                } else {
-                    Ringtone ringtone = RingtoneManager.getRingtone(
-                            preference.getContext(), Uri.parse(stringValue));
-
-                    if (ringtone == null) {
-                        // Clear the summary if there was a lookup error.
-                        preference.setSummary(null);
-                    } else {
-                        // Set the summary to reflect the new ringtone display
-                        // name.
-                        String name = ringtone.getTitle(preference.getContext());
-                        preference.setSummary(name);
-                    }
-                }
-
             } else {
                 // For all other preferences, set the summary to the value's
                 // simple string representation.
@@ -116,6 +104,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     private static void bindPreferenceSummaryToValue(Preference preference) {
         // Set the listener to watch for value changes.
         preference.setOnPreferenceChangeListener(sBindPreferenceSummaryToValueListener);
+        //Log.d("traff", "clicked");
 
         // Trigger the listener immediately with the preference's
         // current value.
@@ -177,11 +166,68 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class GeneralPreferenceFragment extends PreferenceFragment {
+        String LOG_TAG="traff";
+        class ProgressTask extends AsyncTask<String, Void, String> {
+            String content ="";
+            @Override
+            public String doInBackground(String... path) {
+
+                try {
+                    getContent();
+                } catch (IOException ex) {
+                    //nothing to do
+                }
+                return null;
+            }
+            @Override
+            protected void onPostExecute(String result){
+                    Toast.makeText(getContext(), content, Toast.LENGTH_SHORT).show();
+            }
+
+            private String getContent() throws IOException {
+                BufferedReader reader;
+                SharedPreferences shrpr = PreferenceManager.getDefaultSharedPreferences(getContext());
+                String pass = shrpr.getString(QuickstartPreferences.pass, "");
+                String login = shrpr.getString(QuickstartPreferences.login, "");
+                String op = shrpr.getString(QuickstartPreferences.op, "");
+
+                try {
+                    URL url = new URL("https://srvr.tk/traf.php?cmd=widget&upd=1&login=" + login + "&pass=" + pass + "&op=" + op);
+                    //Log.d(LOG_TAG, "url: " + url);
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    StringBuilder buf = new StringBuilder();
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        buf.append(line + " ");
+                    }
+                    String buffer = buf.toString();
+                    buffer = buffer.replace(" NEWLINE ", "\n");
+                    content = buffer;
+                    return (buffer);
+
+                } catch (IOException e) {
+                    content = e.getMessage();
+                    return e.getMessage();
+                }
+            }
+        }
+
+
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.pref_general);
             setHasOptionsMenu(true);
+
+            Preference button = (Preference)findPreference(getString(R.string.button));
+            button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    new ProgressTask().execute();
+                    return true;
+                }
+            });
 
             // Bind the summaries of EditText/List/Dialog/Ringtone preferences
             // to their values. When their values change, their summaries are
@@ -190,17 +236,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             bindPreferenceSummaryToValue(findPreference("login"));
             //bindPreferenceSummaryToValue(findPreference("password"));
             bindPreferenceSummaryToValue(findPreference("op_list"));
-            bindPreferenceSummaryToValue(findPreference("font"));
-        }
-
-        @Override
-        public boolean onOptionsItemSelected(MenuItem item) {
-            int id = item.getItemId();
-            if (id == android.R.id.home) {
-                startActivity(new Intent(getActivity(), SettingsActivity.class));
-                return true;
-            }
-            return super.onOptionsItemSelected(item);
         }
     }
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -209,62 +244,53 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
+            addPreferencesFromResource(R.xml.pref_widgetview);
+            setHasOptionsMenu(true);
             final Context ctx = getContext();
-            SharedPreferences shrpr = PreferenceManager.getDefaultSharedPreferences(ctx);
-            int initialColor =  shrpr.getInt(QuickstartPreferences.color, 0xff4d4d4d);
-            AmbilWarnaDialog dialog = new AmbilWarnaDialog(ctx, initialColor, new AmbilWarnaDialog.OnAmbilWarnaListener() {
+            final SharedPreferences shrpr = PreferenceManager.getDefaultSharedPreferences(ctx);
+            Preference button = (Preference)findPreference(getString(R.string.button_colorpicker));
+            button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
-                public void onOk(AmbilWarnaDialog dialog, int color) {
-                    // color is the color selected by the user.
-                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ctx);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putInt(QuickstartPreferences.color, color).apply();
-                    editor.putBoolean(QuickstartPreferences.default_color, false).apply();
-                    Intent intent = new Intent(getActivity(), SettingsActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
+                public boolean onPreferenceClick(Preference preference) {
+                    int initialColor =  shrpr.getInt(QuickstartPreferences.color, 0xff4d4d4d);
+                    AmbilWarnaDialog dialog = new AmbilWarnaDialog(ctx, initialColor, new AmbilWarnaDialog.OnAmbilWarnaListener() {
+                        @Override
+                        public void onOk(AmbilWarnaDialog dialog, int color) {
+                            // color is the color selected by the user.
+                            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ctx);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putInt(QuickstartPreferences.color, color).apply();
+                            editor.putBoolean(QuickstartPreferences.default_color, false).apply();
+                            //Intent intent = new Intent(getActivity(), SettingsActivity.class);
+                            //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            //startActivity(intent);
+                        }
+
+                        @Override
+                        public void onCancel(AmbilWarnaDialog dialog) {
+                            //Intent intent = new Intent(getActivity(), SettingsActivity.class);
+                            //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            //startActivity(intent);
+                        }
+
+
+                    });
+                    dialog.show();
+                    return true;
                 }
-
-                @Override
-                public void onCancel(AmbilWarnaDialog dialog) {
-                    Intent intent = new Intent(getActivity(), SettingsActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
-                }
-
-
             });
-            dialog.show();
+            bindPreferenceSummaryToValue(findPreference("font"));
         }
 
-        @Override
-        public boolean onOptionsItemSelected(MenuItem item) {
-            int id = item.getItemId();
-            if (id == android.R.id.home) {
-                startActivity(new Intent(getActivity(), SettingsActivity.class));
-                return true;
-            }
-            return super.onOptionsItemSelected(item);
-        }
+        //@Override
+        //public boolean onOptionsItemSelected(MenuItem item) {
+        //    int id = item.getItemId();
+        //    Toast.makeText(getContext(), "", Toast.LENGTH_SHORT).show();
+        //    if (id == android.R.id.home) {
+        //        startActivity(new Intent(getActivity(), SettingsActivity.class));
+        //        return true;
+        //    }
+        //    return super.onOptionsItemSelected(item);
+        //}
     }
-
-    /**
-     * This fragment shows notification preferences only. It is used when the
-     * activity is showing a two-pane settings UI.
-     */
-
-
-        @Override
-        public boolean onOptionsItemSelected(MenuItem item) {
-            return super.onOptionsItemSelected(item);
-        }
-    }
-
-
-
-    /**
-     * This fragment shows data and sync preferences only. It is used when the
-     * activity is showing a two-pane settings UI.
-     */
-
-
+}

@@ -19,14 +19,22 @@
     <string name="pref_account_pass">Password</string>
 
     <string name="pref_description_pass">Password for your account</string>
-    <string name="pref_color">Choose color for widget\'s text</string>
+    <string name="pref_color">Widget View</string>
 
     <string name="general">General preferences</string>
     <string name="widget_settings">Widget\'s settings</string>
 
     <string name="pref_title_op">Your operator (only Beeline now)</string>
     <string name="pref_title_font">Font for the widget</string>
-    <string name="pref_desc_login">Your phone\'s number (a 10-digit format)</string>
+    <string name="pref_desc_login">Your phone\'s number in a 10-digit format (without \"8\" or \"+7\")</string>
+    <string name="button" translatable="false">button</string>
+    <string name="button_desc">Makes a test connection to server</string>
+    <string name="button_title"><b>Test connection</b></string>
+
+
+    <string name="button_colorpicker" translatable="false">ColorPicker</string>
+    <string name="button_colorpicker_desc">Widget\'s text color</string>
+    <string name="button_colorpicker_title">Choose color for widget\'s text</string>
     <string-array name="pref_op_list_titles">
         <item>Beeline</item>
         <!--<item>Megafon</item>-->

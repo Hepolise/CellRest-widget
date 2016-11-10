@@ -36,4 +36,8 @@
     </string-array>
     <string name="pref_description_default_color">Устанавливает стандартное значение цвета для виджета</string>
     <string name="pref_title_default_color">Стандартный цвет текста виджета</string>
+    <string name="button_desc">Подключается к серверу для тестирования входа в аккаунт</string>
+    <string name="button_title"><b>Пробное подключение</b></string>
+    <string name="button_colorpicker_desc">Цвет текста виджета</string>
+    <string name="button_colorpicker_title">Выбор цвета текста для виджета</string>
 </resources>
