@@ -35,6 +35,8 @@ public class TraffWidget extends AppWidgetProvider {
     String login;
     String pass;
     String op;
+    String android_id;
+    String smscode;
     //String ACTION_MINICALLWIDGET_CLICKED;
 
 
@@ -149,7 +151,8 @@ public class TraffWidget extends AppWidgetProvider {
         UPD = shrpr.getString(QuickstartPreferences.update, "1");
         pass = shrpr.getString(QuickstartPreferences.pass, "");
         login = shrpr.getString(QuickstartPreferences.login, "");
-        op = shrpr.getString(QuickstartPreferences.op, "");
+        op = shrpr.getString(QuickstartPreferences.op_list, "");
+        smscode = shrpr.getString(QuickstartPreferences.smscode, "");
 
 
         if (content.equals("error")) {
@@ -158,6 +161,19 @@ public class TraffWidget extends AppWidgetProvider {
             content = shrpr.getString(QuickstartPreferences.content, "");
         }
         //Log.d(LOG_TAG, content);
+
+        if (login.startsWith("+7")) {
+            login = login.substring(2);
+            Log.d(LOG_TAG, "+7 change: " + login);
+        } else if (login.startsWith("7") || login.startsWith("8")){
+            login = login.substring(1);
+            Log.d(LOG_TAG, "7/8 change: " + login);
+        }
+
+        if (op.equals("tele2")) {
+            login = "7" + login;
+            Log.d(LOG_TAG, "tele2 change: " + login);
+        }
 
         if (content.equals("Updating...")) {
             //Log.d(LOG_TAG, "exec");
@@ -208,7 +224,7 @@ public class TraffWidget extends AppWidgetProvider {
         //shared_prefs.edit().putString(QuickstartPreferences.content, content).apply();
 
 
-        String android_id = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+        android_id = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
         Log.d(LOG_TAG, "android_id " + android_id);
 
         Intent updateIntent = new Intent(context, TraffWidget.class);
@@ -244,7 +260,7 @@ public class TraffWidget extends AppWidgetProvider {
             BufferedReader reader;
 
             try {
-                URL url = new URL("https://srvr.tk/traf.php?cmd=widget&upd=" + UPD + "&login=" + login + "&pass=" + pass + "&op=" + op);
+                URL url = new URL("https://srvr.tk/traf.php?cmd=widget&upd=" + UPD + "&login=" + login + "&pass=" + pass + "&op=" + op + "d&evid=" + android_id + "&smscode=" + smscode);
                 //Log.d(LOG_TAG, "url: " + url);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 reader= new BufferedReader(new InputStreamReader(conn.getInputStream()));

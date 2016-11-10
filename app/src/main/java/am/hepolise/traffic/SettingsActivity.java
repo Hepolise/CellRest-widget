@@ -59,8 +59,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         @Override
         public boolean onPreferenceChange(Preference preference, Object value) {
             String stringValue = value.toString();
-            String stringPref = preference.toString();
-            Log.d("traffLog", "Changed " + stringPref + " to " + stringValue);
+            //String stringPref = preference.toString();
+            //Log.d("traffLog", "Changed " + stringPref + " to " + stringValue);
 
 
             if (preference instanceof ListPreference) {
@@ -189,7 +189,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 SharedPreferences shrpr = PreferenceManager.getDefaultSharedPreferences(getContext());
                 String pass = shrpr.getString(QuickstartPreferences.pass, "");
                 String login = shrpr.getString(QuickstartPreferences.login, "");
-                String op = shrpr.getString(QuickstartPreferences.op, "");
+                String op = shrpr.getString(QuickstartPreferences.op_list, "");
 
                 try {
                     URL url = new URL("https://srvr.tk/traf.php?cmd=widget&upd=1&login=" + login + "&pass=" + pass + "&op=" + op);
@@ -236,6 +236,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             bindPreferenceSummaryToValue(findPreference("login"));
             //bindPreferenceSummaryToValue(findPreference("password"));
             bindPreferenceSummaryToValue(findPreference("op_list"));
+            //bindPreferenceSummaryToValue(findPreference("smscode"));
         }
     }
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)

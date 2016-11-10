@@ -4,22 +4,22 @@
     <string name="pref_account_name">Аккаунт</string>
     <string name="pref_account_pass">Пароль</string>
     <string name="pref_color">Выбрать цвет для текста виджета</string>
-    <string name="pref_description_pass">Пароль от Вашего аккаунта</string>
+    <string name="pref_description_pass">Пароль от Вашего аккаунта (Не заполнять в случае с Теле2)</string>
     <string name="pref_description_update">Обновлять информацию с сервера при клике на виджет</string>
     <string name="pref_header_general">Общее</string>
     <string name="pref_title_op">Оператор (на данный момент только Билайн)</string>
     <string name="pref_title_update">Принудительное обновление</string>
     <string name="title_activity_settings">Настройки</string>
-    <string name="pref_desc_login">Ваш номер телефона в 10-значном формате (без +7 или 8)</string>
+    <string name="pref_desc_login">Ваш номер телефона</string>
     <string-array name="pref_op_list_titles">
         <item>Beeline</item>
+        <item>Tele2</item>
         <!--<item>Megafon</item>-->
-        <!--<item>Tele2</item>-->
     </string-array>
     <string-array name="pref_op_list_values">
         <item>bee</item>
-        <item>megafon</item>
         <item>tele2</item>
+        <item>megafon</item>
     </string-array>
     <string name="general">Общие настройки</string>
     <string name="pref_title_font">Шрифт для текста виджета</string>
@@ -40,4 +40,6 @@
     <string name="button_title"><b>Пробное подключение</b></string>
     <string name="button_colorpicker_desc">Цвет текста виджета</string>
     <string name="button_colorpicker_title">Выбор цвета текста для виджета</string>
+    <string name="smscode_desc">Не заполнять, если не знаете, зачм это</string>
+    <string name="smscode_title">Код из SMS</string>
 </resources>

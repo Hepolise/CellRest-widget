@@ -24,9 +24,10 @@ public class QuickstartPreferences {
     public static final String setting_update = "setting_update";
     public static final String pass = "password";
     public static final String login = "login";
-    public static final String op = "op";
+    public static final String op_list = "op_list";
     public static final String content = "content";
     public static final String color = "color";
     public static final String font = "font";
     public static final String default_color = "default_color";
+    public static final String smscode = "smscode";
 }
