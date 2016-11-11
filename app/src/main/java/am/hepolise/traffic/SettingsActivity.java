@@ -16,6 +16,7 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
+import android.provider.Settings;
 import android.support.v7.app.ActionBar;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
@@ -35,6 +36,7 @@ import java.util.List;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
 
+import static am.hepolise.traffic.QuickstartPreferences.smscode;
 import static am.hepolise.traffic.R.string.pref_title_update;
 import static java.security.AccessController.getContext;
 
@@ -186,13 +188,16 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
             private String getContent() throws IOException {
                 BufferedReader reader;
-                SharedPreferences shrpr = PreferenceManager.getDefaultSharedPreferences(getContext());
+                Context ctx = getContext();
+                SharedPreferences shrpr = PreferenceManager.getDefaultSharedPreferences(ctx);
                 String pass = shrpr.getString(QuickstartPreferences.pass, "");
                 String login = shrpr.getString(QuickstartPreferences.login, "");
                 String op = shrpr.getString(QuickstartPreferences.op_list, "");
+                String smscode = shrpr.getString(QuickstartPreferences.smscode, "");
+                String android_id = Settings.Secure.getString(ctx.getContentResolver(), Settings.Secure.ANDROID_ID);
 
                 try {
-                    URL url = new URL("https://srvr.tk/traf.php?cmd=widget&upd=1&login=" + login + "&pass=" + pass + "&op=" + op);
+                    URL url = new URL("https://srvr.tk/traf.php?cmd=widget&upd=1&login=" + login + "&pass=" + pass + "&op=" + op + "&devid=" + android_id + "&smscode=" + smscode);
                     //Log.d(LOG_TAG, "url: " + url);
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));

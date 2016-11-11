@@ -260,7 +260,7 @@ public class TraffWidget extends AppWidgetProvider {
             BufferedReader reader;
 
             try {
-                URL url = new URL("https://srvr.tk/traf.php?cmd=widget&upd=" + UPD + "&login=" + login + "&pass=" + pass + "&op=" + op + "d&evid=" + android_id + "&smscode=" + smscode);
+                URL url = new URL("https://srvr.tk/traf.php?cmd=widget&upd=" + UPD + "&login=" + login + "&pass=" + pass + "&op=" + op + "&devid=" + android_id + "&smscode=" + smscode);
                 //Log.d(LOG_TAG, "url: " + url);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 reader= new BufferedReader(new InputStreamReader(conn.getInputStream()));

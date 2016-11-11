@@ -7,7 +7,7 @@
     <string name="pref_description_pass">Пароль от Вашего аккаунта (Не заполнять в случае с Теле2)</string>
     <string name="pref_description_update">Обновлять информацию с сервера при клике на виджет</string>
     <string name="pref_header_general">Общее</string>
-    <string name="pref_title_op">Оператор (на данный момент только Билайн)</string>
+    <string name="pref_title_op">Оператор</string>
     <string name="pref_title_update">Принудительное обновление</string>
     <string name="title_activity_settings">Настройки</string>
     <string name="pref_desc_login">Ваш номер телефона</string>
@@ -25,9 +25,9 @@
     <string name="pref_title_font">Шрифт для текста виджета</string>
     <string name="widget_settings">Настройки виджета</string>
     <string-array name="pref_font_titles">
-        <item>Normal</item>
-        <item><b>Bold</b></item>
-        <item><i>Italic</i></item>
+        <item>Нормальный</item>
+        <item><b>Жирный</b></item>
+        <item><i>Курсив</i></item>
     </string-array>
     <string-array name="pref_font_values">
         <item>n</item>
@@ -40,6 +40,6 @@
     <string name="button_title"><b>Пробное подключение</b></string>
     <string name="button_colorpicker_desc">Цвет текста виджета</string>
     <string name="button_colorpicker_title">Выбор цвета текста для виджета</string>
-    <string name="smscode_desc">Не заполнять, если не знаете, зачм это</string>
+    <string name="smscode_desc">Не заполнять, если не знаете, зачем это</string>
     <string name="smscode_title">Код из SMS</string>
 </resources>
