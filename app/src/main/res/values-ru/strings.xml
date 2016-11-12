@@ -40,6 +40,8 @@
     <string name="button_title"><b>Пробное подключение</b></string>
     <string name="button_colorpicker_desc">Цвет текста виджета</string>
     <string name="button_colorpicker_title">Выбор цвета текста для виджета</string>
-    <string name="smscode_desc">Не заполнять, если не знаете, зачем это</string>
-    <string name="smscode_title">Код из SMS</string>
+    <string name="pin_code_desc">ПИН-код приложения \"Мой Теле2\" (вход в приложение должен быть выполнен с данного девайса)</string>
+    <string name="beeline">Настройки Билайна</string>
+    <string name="pin_code_title">PIN-код</string>
+    <string name="tele2">Настройки Теле2</string>
 </resources>

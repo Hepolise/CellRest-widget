@@ -18,7 +18,7 @@
     <string name="pref_account_name">Account</string>
     <string name="pref_account_pass">Password</string>
 
-    <string name="pref_description_pass">Password for your account (don\'t fill in case of Tele2)</string>
+    <string name="pref_description_pass">Password for your account</string>
     <string name="pref_color">Widget View</string>
 
     <string name="general">General preferences</string>
@@ -30,13 +30,14 @@
     <string name="button" translatable="false">button</string>
     <string name="button_desc">Makes a test connection to server</string>
     <string name="button_title"><b>Test connection</b></string>
-
-    <string name="smscode_title">SMS code</string>
-    <string name="smscode_desc">Do not fill if you do not know what it is</string>
+    <string name="pin_code_title">Pin-code</string>
+    <string name="pin_code_desc">Please enter the PIN-code for your Tele2 application (it should be registered on this device)</string>
 
     <string name="button_colorpicker" translatable="false">ColorPicker</string>
     <string name="button_colorpicker_desc">Widget\'s text color</string>
     <string name="button_colorpicker_title">Choose color for widget\'s text</string>
+    <string name="tele2">Tele2 settings</string>
+    <string name="beeline">Beeline settings</string>
     <string-array name="pref_op_list_titles">
         <item>Beeline</item>
         <item>Tele2</item>

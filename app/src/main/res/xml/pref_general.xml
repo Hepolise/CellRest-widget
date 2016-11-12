@@ -15,15 +15,7 @@
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:title="@string/pref_account_login" />
-        <EditTextPreference
-        android:capitalize="words"
-            android:inputType="textPassword"
-            android:summary="@string/pref_description_pass"
-            android:key="password"
-            android:maxLines="1"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:title="@string/pref_account_pass" />
+
         <!-- NOTE: Hide buttons to simplify the UI. Users can touch outside the dialog to
          dismiss it. -->
         <!-- NOTE: ListPreference's summary should be set to its value by the activity code. -->
@@ -37,16 +29,33 @@
             android:title="@string/pref_title_op" />
 
 
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/beeline">
+
+        <EditTextPreference
+            android:capitalize="words"
+            android:inputType="textPassword"
+            android:summary="@string/pref_description_pass"
+            android:key="password"
+            android:maxLines="1"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/pref_account_pass" />
+
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/tele2">
+
         <EditTextPreference
             android:capitalize="words"
             android:inputType="phone"
-            android:key="smscode"
+            android:key="pin_code"
             android:maxLength="4"
             android:maxLines="1"
             android:selectAllOnFocus="true"
             android:singleLine="true"
-            android:summary="@string/smscode_desc"
-            android:title="@string/smscode_title" />
+            android:title="@string/pin_code_title" />
 
     </PreferenceCategory>
     <Preference android:title="@string/button_title"
