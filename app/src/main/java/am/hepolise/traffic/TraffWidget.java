@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.Locale;
+
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
@@ -36,7 +38,9 @@ public class TraffWidget extends AppWidgetProvider {
     String pass;
     String op;
     String android_id;
-    String smscode;
+    //String smscode;
+    String pin_code;
+    String locale;
     //String ACTION_MINICALLWIDGET_CLICKED;
 
 
@@ -149,10 +153,10 @@ public class TraffWidget extends AppWidgetProvider {
 
         SharedPreferences shrpr = PreferenceManager.getDefaultSharedPreferences(context);
         UPD = shrpr.getString(QuickstartPreferences.update, "1");
-        pass = shrpr.getString(QuickstartPreferences.pass, "");
+
         login = shrpr.getString(QuickstartPreferences.login, "");
         op = shrpr.getString(QuickstartPreferences.op_list, "");
-        smscode = shrpr.getString(QuickstartPreferences.smscode, "");
+        //smscode = shrpr.getString(QuickstartPreferences.smscode, "");
 
 
         if (content.equals("error")) {
@@ -172,8 +176,17 @@ public class TraffWidget extends AppWidgetProvider {
 
         if (op.equals("tele2")) {
             login = "7" + login;
-            Log.d(LOG_TAG, "tele2 change: " + login);
+            //Log.d(LOG_TAG, "tele2 change: " + login);
+            pin_code = shrpr.getString(QuickstartPreferences.pin_code, "");
+            pass = "null";
+            android_id = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+            Log.d(LOG_TAG, "android_id " + android_id);
+        } else {
+            pass = shrpr.getString(QuickstartPreferences.pass, "");
         }
+
+        Locale currentLocale = Locale.getDefault();
+        locale = currentLocale.toString();
 
         if (content.equals("Updating...")) {
             //Log.d(LOG_TAG, "exec");
@@ -224,8 +237,7 @@ public class TraffWidget extends AppWidgetProvider {
         //shared_prefs.edit().putString(QuickstartPreferences.content, content).apply();
 
 
-        android_id = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
-        Log.d(LOG_TAG, "android_id " + android_id);
+
 
         Intent updateIntent = new Intent(context, TraffWidget.class);
         updateIntent.setAction(ACTION_APPWIDGET_FORCE_UPDATE);
@@ -260,7 +272,7 @@ public class TraffWidget extends AppWidgetProvider {
             BufferedReader reader;
 
             try {
-                URL url = new URL("https://srvr.tk/traf.php?cmd=widget&upd=" + UPD + "&login=" + login + "&pass=" + pass + "&op=" + op + "&devid=" + android_id + "&smscode=" + smscode);
+                URL url = new URL("https://srvr.tk/traf.php?cmd=widget&upd=" + UPD + "&login=" + login + "&pass=" + pass + "&op=" + op + "&devid=" + android_id + "&pin=" + pin_code + "&loc=" + locale);
                 //Log.d(LOG_TAG, "url: " + url);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 reader= new BufferedReader(new InputStreamReader(conn.getInputStream()));

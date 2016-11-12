@@ -4,9 +4,9 @@
     <string name="pref_account_name">Аккаунт</string>
     <string name="pref_account_pass">Пароль</string>
     <string name="pref_color">Выбрать цвет для текста виджета</string>
-    <string name="pref_description_pass">Пароль от Вашего аккаунта (Не заполнять в случае с Теле2)</string>
+    <string name="pref_description_pass">Пароль от Вашего аккаунта (не заполнять в случае с Теле2)</string>
     <string name="pref_description_update">Обновлять информацию с сервера при клике на виджет</string>
-    <string name="pref_header_general">Общее</string>
+    <string name="pref_header_general">Общие настройки</string>
     <string name="pref_title_op">Оператор</string>
     <string name="pref_title_update">Принудительное обновление</string>
     <string name="title_activity_settings">Настройки</string>
@@ -44,4 +44,6 @@
     <string name="beeline">Настройки Билайна</string>
     <string name="pin_code_title">PIN-код</string>
     <string name="tele2">Настройки Теле2</string>
+    <string name="help_title">Справка</string>
+    <string name="request_sent">Пожалуйста, подождите...</string>
 </resources>

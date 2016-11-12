@@ -30,14 +30,17 @@
     <string name="button" translatable="false">button</string>
     <string name="button_desc">Makes a test connection to server</string>
     <string name="button_title"><b>Test connection</b></string>
-    <string name="pin_code_title">Pin-code</string>
+    <string name="pin_code_title">PIN-code</string>
     <string name="pin_code_desc">Please enter the PIN-code for your Tele2 application (it should be registered on this device)</string>
 
     <string name="button_colorpicker" translatable="false">ColorPicker</string>
     <string name="button_colorpicker_desc">Widget\'s text color</string>
     <string name="button_colorpicker_title">Choose color for widget\'s text</string>
-    <string name="tele2">Tele2 settings</string>
-    <string name="beeline">Beeline settings</string>
+    <string name="tele2">Tele2 preferences</string>
+    <string name="beeline">Beeline preferences</string>
+
+    <string name="request_sent">Please wait...</string>
+    <string name="help_title">Help</string>
     <string-array name="pref_op_list_titles">
         <item>Beeline</item>
         <item>Tele2</item>

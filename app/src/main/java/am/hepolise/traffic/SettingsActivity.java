@@ -23,6 +23,7 @@ import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -33,12 +34,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
+import java.util.Locale;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
-
-import static am.hepolise.traffic.QuickstartPreferences.smscode;
-import static am.hepolise.traffic.R.string.pref_title_update;
-import static java.security.AccessController.getContext;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
@@ -110,11 +108,25 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
         // Trigger the listener immediately with the preference's
         // current value.
+        Log.d("traff", preference.toString());
+        if (preference.toString().equals("PIN-code") || preference.toString().equals("PIN-код")) {
+            sBindPreferenceSummaryToValueListener.onPreferenceChange(preference,
+                    PreferenceManager
+                            .getDefaultSharedPreferences(preference.getContext())
+                            .getString(preference.getKey(), preference.getContext().getString(R.string.pin_code_desc)));
+        } else if (preference.toString().equals("Login") || preference.toString().equals("Логин")){
+            sBindPreferenceSummaryToValueListener.onPreferenceChange(preference,
+                    PreferenceManager
+                            .getDefaultSharedPreferences(preference.getContext())
+                            .getString(preference.getKey(), preference.getContext().getString(R.string.pref_desc_login)));
+        } else {
+            sBindPreferenceSummaryToValueListener.onPreferenceChange(preference,
+                    PreferenceManager
+                            .getDefaultSharedPreferences(preference.getContext())
+                            .getString(preference.getKey(), ""));
+        }
 
-        sBindPreferenceSummaryToValueListener.onPreferenceChange(preference,
-                PreferenceManager
-                        .getDefaultSharedPreferences(preference.getContext())
-                        .getString(preference.getKey(), preference.getContext().getString(R.string.pref_desc_login)));
+
     }
 
     @Override
@@ -122,6 +134,37 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         super.onCreate(savedInstanceState);
         setupActionBar();
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // TODO Auto-generated method stub
+
+        menu.add(0, 1, 0, getString(R.string.help_title));
+        //menu.add("menu1");
+        //menu.add("menu3");
+        //menu.add("menu4");
+
+        return super.onCreateOptionsMenu(menu);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // TODO Auto-generated method stub
+        //StringBuilder sb = new StringBuilder();
+
+
+        // Выведем в TextView информацию о нажатом пункте меню
+        //String name = item.getTitle().toString();
+
+
+        String id = String.valueOf(item.getItemId());
+        //Log.d("traff", id);
+        if (id.equals("1")) {
+            Intent intent = new Intent(this, help_activity.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
     /**
      * Set up the {@link android.app.ActionBar}, if the API is available.
@@ -193,11 +236,14 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 String pass = shrpr.getString(QuickstartPreferences.pass, "");
                 String login = shrpr.getString(QuickstartPreferences.login, "");
                 String op = shrpr.getString(QuickstartPreferences.op_list, "");
-                String smscode = shrpr.getString(QuickstartPreferences.smscode, "");
+                //String smscode = shrpr.getString(QuickstartPreferences.smscode, "");
+                String pin_code = shrpr.getString(QuickstartPreferences.pin_code, "");
                 String android_id = Settings.Secure.getString(ctx.getContentResolver(), Settings.Secure.ANDROID_ID);
+                Locale currentLocale = Locale.getDefault();
+                String locale = currentLocale.toString();
 
                 try {
-                    URL url = new URL("https://srvr.tk/traf.php?cmd=widget&upd=1&login=" + login + "&pass=" + pass + "&op=" + op + "&devid=" + android_id + "&smscode=" + smscode);
+                    URL url = new URL("https://srvr.tk/traf.php?cmd=widget&upd=1&login=" + login + "&pass=" + pass + "&op=" + op + "&devid=" + android_id + "&pin=" + pin_code + "&loc=" + locale);
                     //Log.d(LOG_TAG, "url: " + url);
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -229,6 +275,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
+                    Toast.makeText(getContext(), getContext().getString(R.string.request_sent), Toast.LENGTH_SHORT).show();
                     new ProgressTask().execute();
                     return true;
                 }
@@ -241,6 +288,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             bindPreferenceSummaryToValue(findPreference("login"));
             //bindPreferenceSummaryToValue(findPreference("password"));
             bindPreferenceSummaryToValue(findPreference("op_list"));
+            bindPreferenceSummaryToValue(findPreference("pin_code"));
             //bindPreferenceSummaryToValue(findPreference("smscode"));
         }
     }

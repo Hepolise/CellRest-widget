@@ -20,21 +20,25 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <receiver
             android:name=".TraffWidget"
             android:icon="@android:drawable/star_big_on"
             android:label="@string/widget_name">
             <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"></action>
-                <action android:name="android.appwidget.action.ACTION_APPWIDGET_FORCE_UPDATE"></action>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.appwidget.action.ACTION_APPWIDGET_FORCE_UPDATE" />
             </intent-filter>
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/widget_metadata"></meta-data>
+                android:resource="@xml/widget_metadata" />
         </receiver>
 
-
+        <activity
+            android:name=".help_activity"
+            android:label="@string/help_title">
+        </activity>
     </application>
 
 </manifest>
