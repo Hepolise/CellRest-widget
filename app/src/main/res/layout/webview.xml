@@ -3,7 +3,8 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".help_activity">
+    android:background="#e0e0e0"
+    tools:context=".help_activity"
     tools:ignore="MergeRootFrame">
 
     <WebView

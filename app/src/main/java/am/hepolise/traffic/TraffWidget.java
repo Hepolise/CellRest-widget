@@ -14,6 +14,7 @@ import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -42,6 +43,7 @@ public class TraffWidget extends AppWidgetProvider {
     String pin_code;
     String locale;
     String loc;
+    String version;
     //String ACTION_MINICALLWIDGET_CLICKED;
 
 
@@ -212,6 +214,11 @@ public class TraffWidget extends AppWidgetProvider {
         } else {
             shrpr.edit().putString(QuickstartPreferences.content, content).apply();
         }
+        try {
+            version = context.getPackageManager().getPackageInfo(context.getPackageName(), 0 ).versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+
+        }
 
         int color =  shrpr.getInt(QuickstartPreferences.color, 0xff4d4d4d);
         Boolean default_color =  shrpr.getBoolean(QuickstartPreferences.default_color, true);
@@ -285,7 +292,7 @@ public class TraffWidget extends AppWidgetProvider {
             BufferedReader reader;
 
             try {
-                URL url = new URL("https://srvr.tk/traf.php?cmd=widget&upd=" + UPD + "&login=" + login + "&pass=" + pass + "&op=" + op + "&devid=" + android_id + "&pin=" + pin_code + "&loc=" + loc);
+                URL url = new URL("https://srvr.tk/traf.php?cmd=widget&upd=" + UPD + "&login=" + login + "&pass=" + pass + "&op=" + op + "&devid=" + android_id + "&pin=" + pin_code + "&loc=" + loc + "&version=" + version);
                 //Log.d(LOG_TAG, "url: " + url);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 reader= new BufferedReader(new InputStreamReader(conn.getInputStream()));
