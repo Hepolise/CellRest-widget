@@ -37,4 +37,15 @@
         android:textColor="#4d4d4d"
         android:textSize="16sp">
     </TextView>
+    <TextView
+        android:id="@+id/text_default"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:gravity="center|bottom"
+        android:fontFamily="sans-serif-light"
+        android:textStyle="italic"
+        android:textColor="#4d4d4d"
+        android:textSize="13sp">
+    </TextView>
 </RelativeLayout>

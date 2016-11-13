@@ -226,6 +226,12 @@ public class TraffWidget extends AppWidgetProvider {
         widgetView.setTextViewText(R.id.text_light, "");
         widgetView.setTextViewText(R.id.text_bold, "");
         widgetView.setTextViewText(R.id.text_italic, "");
+        if (login.equals("") || pass.equals("")){
+            Log.d(LOG_TAG, "login: " + login + " pass: " + pass);
+            widgetView.setTextViewText(R.id.text_default, context.getString(R.string.admin_acc));
+        } else {
+            widgetView.setTextViewText(R.id.text_default, "");
+        }
         int res = R.id.text_light;
         if (font.equals("i")) {
             //Log.d(LOG_TAG, "i " + font);
