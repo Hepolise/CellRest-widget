@@ -35,10 +35,11 @@ public class help_activity extends AppCompatActivity {
         Log.d("traff: ", locale);
         mWebView.loadUrl("https://srvr.tk/traffic/help.php?l=" + locale);
         // Force links and redirects to open in the WebView instead of in a browser
-        mWebView.setWebViewClient(new WebViewClient());
+        //mWebView.setWebViewClient(new WebViewClient());
         // Stop local links and redirects from opening in browser instead of WebView
-        mWebView.setWebViewClient(new webview());
+        //mWebView.setWebViewClient(new webview());
         //start of download
+
         mWebView.setDownloadListener(new DownloadListener() {
             public void onDownloadStart(String url, String userAgent,
                                         String contentDisposition, String mimetype,

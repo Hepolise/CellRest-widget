@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">Traffic Widget</string>
+    <string name="app_name" translatable="false">Traffic Info</string>
     <string name="widget_name" translatable="false">Traffic Widget</string>
     <string name="widget_text" translatable="false">Traffic Widget</string>
     <string name="title_activity_settings">Settings</string>
@@ -9,10 +9,10 @@
     <!-- Example General settings -->
     <string name="pref_header_general">General</string>
 
-    <string name="pref_title_update">Enable force reload on click</string>
+    <string name="pref_title_update">Force reload</string>
     <string name="pref_description_update">Force updates the widget information on click</string>
 
-    <string name="pref_title_default_color">Default color in widget\'s text</string>
+    <string name="pref_title_default_color">Default color</string>
     <string name="pref_description_default_color">Sets the default color in widget\'s text</string>
 
     <string name="pref_account_name">Account</string>
@@ -22,10 +22,10 @@
     <string name="pref_color">Widget View</string>
 
     <string name="general">General preferences</string>
-    <string name="widget_settings">Widget\'s settings</string>
+    <string name="widget_settings">Widget\'s text settings</string>
 
-    <string name="pref_title_op">Your operator</string>
-    <string name="pref_title_font">Font for the widget</string>
+    <string name="pref_title_op">Cellular operator</string>
+    <string name="pref_title_font">Font</string>
     <string name="pref_desc_login">Your phone\'s number</string>
     <string name="button" translatable="false">button</string>
     <string name="button_desc">Makes a test connection to server</string>
@@ -33,14 +33,21 @@
     <string name="pin_code_title">PIN-code</string>
     <string name="pin_code_desc">Please enter the PIN-code for your Tele2 application (it should be registered on this device)</string>
 
+    <string name="about_description">Traffic Info is an application for control all traffic consumption, created to provide a great experience when dealing with cellular opearator\'s data</string>
+    <string name="about_contact">If you find any bugs, please file an issue in the <![CDATA[<a href="%1$s">Traffic Info Github repository</a>]]>. Doing so will also show other people whether the bug has been reported already. There is also a <![CDATA[<a href="%2$s">4pda topic</a>]]> for discussions about the app.</string>
     <string name="button_colorpicker" translatable="false">ColorPicker</string>
-    <string name="button_colorpicker_desc">Widget\'s text color</string>
-    <string name="button_colorpicker_title">Choose color for widget\'s text</string>
+    <string name="button_colorpicker_title">Widget\'s text color</string>
     <string name="tele2">Tele2 preferences</string>
     <string name="beeline">Beeline preferences</string>
 
     <string name="request_sent">Please wait...</string>
     <string name="help_title">Help</string>
+    <string name="about_title">About</string>
+
+    <string name="updating">Updating...</string>
+
+    <string name="widget_other_pref">Other widget\'s preferences</string>
+    <string name="pref_locale">Language</string>
     <string-array name="pref_op_list_titles">
         <item>Beeline</item>
         <item>Tele2</item>
@@ -53,16 +60,29 @@
     </string-array>
 
 
+    <string-array name="pref_locale_titles">
+        <item>Russian</item>
+        <item>English</item>
+        <item>Default</item>
+    </string-array>
+    <string-array name="pref_locale_values">
+        <item>ru_RU</item>
+        <item>en_US</item>
+        <item>def</item>
+    </string-array>
+
+
     <string-array name="pref_font_titles">
         <item>Normal</item>
         <item><b>Bold</b></item>
         <item><i>Italic</i></item>
     </string-array>
     <string-array name="pref_font_values">
-        <item>l</item>
+        <item>n</item>
         <item>b</item>
         <item>i</item>
     </string-array>
     <string name="pref_account_login">Login</string>
+    <string name="button_colorpicker_desc">Choose color for widget\'s text</string>
 
 </resources>

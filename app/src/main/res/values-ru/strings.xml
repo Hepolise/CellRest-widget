@@ -3,7 +3,7 @@
     <string name="pref_account_login">Логин</string>
     <string name="pref_account_name">Аккаунт</string>
     <string name="pref_account_pass">Пароль</string>
-    <string name="pref_color">Выбрать цвет для текста виджета</string>
+    <string name="pref_color">Настройки виджета</string>
     <string name="pref_description_pass">Пароль от Вашего аккаунта (не заполнять в случае с Теле2)</string>
     <string name="pref_description_update">Обновлять информацию с сервера при клике на виджет</string>
     <string name="pref_header_general">Общие настройки</string>
@@ -22,8 +22,7 @@
         <item>megafon</item>
     </string-array>
     <string name="general">Общие настройки</string>
-    <string name="pref_title_font">Шрифт для текста виджета</string>
-    <string name="widget_settings">Настройки виджета</string>
+    <string name="pref_title_font">Шрифт</string>
     <string-array name="pref_font_titles">
         <item>Нормальный</item>
         <item><b>Жирный</b></item>
@@ -34,16 +33,33 @@
         <item>b</item>
         <item>i</item>
     </string-array>
+    <string-array name="pref_locale_titles">
+        <item>Русский</item>
+        <item>Английский</item>
+        <item>Стандартный</item>
+    </string-array>
+    <string-array name="pref_locale_values">
+        <item>ru_RU</item>
+        <item>en_US</item>
+        <item>def</item>
+    </string-array>
     <string name="pref_description_default_color">Устанавливает стандартное значение цвета для виджета</string>
-    <string name="pref_title_default_color">Стандартный цвет текста виджета</string>
+    <string name="pref_title_default_color">Стандартный цвет</string>
     <string name="button_desc">Подключается к серверу для тестирования входа в аккаунт</string>
     <string name="button_title"><b>Пробное подключение</b></string>
-    <string name="button_colorpicker_desc">Цвет текста виджета</string>
-    <string name="button_colorpicker_title">Выбор цвета текста для виджета</string>
+    <string name="button_colorpicker_desc">Выбор цвета текста виджета</string>
+    <string name="button_colorpicker_title">Color</string>
     <string name="pin_code_desc">ПИН-код приложения \"Мой Теле2\" (вход в приложение должен быть выполнен с данного девайса)</string>
     <string name="beeline">Настройки Билайна</string>
     <string name="pin_code_title">PIN-код</string>
     <string name="tele2">Настройки Теле2</string>
     <string name="help_title">Справка</string>
     <string name="request_sent">Пожалуйста, подождите...</string>
+    <string name="pref_locale">Язык</string>
+    <string name="updating">Обновление...</string>
+    <string name="widget_settings">Настройки текста виджета</string>
+    <string name="widget_other_pref">Другие настройки виджета</string>
+    <string name="about_description">Traffic Info представляет собой приложение для контролирования расходов трафик, созданное, чтобы обеспечить удобство при работе с данными операторов сотовой связи</string>
+    <string name="about_contact">Если Вы нашли ошибку, пожалуйста сообщите об этом в <![CDATA[<a href="%2$s">тему на 4pda</a>]]>.</string>
+    <string name="about_title">О приложении</string>
 </resources>

@@ -41,6 +41,7 @@ public class TraffWidget extends AppWidgetProvider {
     //String smscode;
     String pin_code;
     String locale;
+    String loc;
     //String ACTION_MINICALLWIDGET_CLICKED;
 
 
@@ -185,10 +186,16 @@ public class TraffWidget extends AppWidgetProvider {
             pass = shrpr.getString(QuickstartPreferences.pass, "");
         }
 
+        loc = shrpr.getString(QuickstartPreferences.loc, "def");
         Locale currentLocale = Locale.getDefault();
         locale = currentLocale.toString();
+        if (loc.equals("def")) {
+            loc = locale;
+        }
+
 
         if (content.equals("Updating...")) {
+            content = context.getString(R.string.updating);
             //Log.d(LOG_TAG, "exec");
             new ProgressTask().execute();
             if (login.equals("") || pass.equals("")) {
@@ -272,7 +279,7 @@ public class TraffWidget extends AppWidgetProvider {
             BufferedReader reader;
 
             try {
-                URL url = new URL("https://srvr.tk/traf.php?cmd=widget&upd=" + UPD + "&login=" + login + "&pass=" + pass + "&op=" + op + "&devid=" + android_id + "&pin=" + pin_code + "&loc=" + locale);
+                URL url = new URL("https://srvr.tk/traf.php?cmd=widget&upd=" + UPD + "&login=" + login + "&pass=" + pass + "&op=" + op + "&devid=" + android_id + "&pin=" + pin_code + "&loc=" + loc);
                 //Log.d(LOG_TAG, "url: " + url);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 reader= new BufferedReader(new InputStreamReader(conn.getInputStream()));

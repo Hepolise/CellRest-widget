@@ -140,6 +140,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         // TODO Auto-generated method stub
 
         menu.add(0, 1, 0, getString(R.string.help_title));
+        menu.add(0, 2, 0, getString(R.string.about_title));
         //menu.add("menu1");
         //menu.add("menu3");
         //menu.add("menu4");
@@ -148,7 +149,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // TODO Auto-generated method stub
         //StringBuilder sb = new StringBuilder();
 
 
@@ -160,6 +160,10 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         //Log.d("traff", id);
         if (id.equals("1")) {
             Intent intent = new Intent(this, help_activity.class);
+            startActivity(intent);
+        }
+        if (id.equals("2")) {
+            Intent intent = new Intent(this, AboutActivity.class);
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
@@ -241,9 +245,31 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 String android_id = Settings.Secure.getString(ctx.getContentResolver(), Settings.Secure.ANDROID_ID);
                 Locale currentLocale = Locale.getDefault();
                 String locale = currentLocale.toString();
+                String loc = shrpr.getString(QuickstartPreferences.loc, "def");
+                if (loc.equals("def")) {
+                    loc = locale;
+                }
+                if (login.startsWith("+7")) {
+                    login = login.substring(2);
+                    Log.d(LOG_TAG, "+7 change: " + login);
+                } else if (login.startsWith("7") || login.startsWith("8")){
+                    login = login.substring(1);
+                    Log.d(LOG_TAG, "7/8 change: " + login);
+                }
+
+                if (op.equals("tele2")) {
+                    login = "7" + login;
+                    //Log.d(LOG_TAG, "tele2 change: " + login);
+                    pin_code = shrpr.getString(QuickstartPreferences.pin_code, "");
+                    pass = "null";
+                    android_id = Settings.Secure.getString(ctx.getContentResolver(), Settings.Secure.ANDROID_ID);
+                    Log.d(LOG_TAG, "android_id " + android_id);
+                } else {
+                    pass = shrpr.getString(QuickstartPreferences.pass, "");
+                }
 
                 try {
-                    URL url = new URL("https://srvr.tk/traf.php?cmd=widget&upd=1&login=" + login + "&pass=" + pass + "&op=" + op + "&devid=" + android_id + "&pin=" + pin_code + "&loc=" + locale);
+                    URL url = new URL("https://srvr.tk/traf.php?cmd=widget&upd=1&login=" + login + "&pass=" + pass + "&op=" + op + "&devid=" + android_id + "&pin=" + pin_code + "&loc=" + loc);
                     //Log.d(LOG_TAG, "url: " + url);
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -334,6 +360,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 }
             });
             bindPreferenceSummaryToValue(findPreference("font"));
+            bindPreferenceSummaryToValue(findPreference("loc"));
         }
 
         //@Override
