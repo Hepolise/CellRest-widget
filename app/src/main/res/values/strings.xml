@@ -44,6 +44,7 @@
     <string name="help_title">Help</string>
     <string name="about_title">About</string>
     <string name="admin_acc">Creator\'s account</string>
+    <string name="about_write"><![CDATA[<a href="%1$s">Contact the author of the application</a>]]></string>
 
     <string name="updating">Updating...</string>
 
