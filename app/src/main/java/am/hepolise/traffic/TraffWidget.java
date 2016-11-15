@@ -157,7 +157,7 @@ public class TraffWidget extends AppWidgetProvider {
         }
 
         if (admin) {
-            //Do not update first run if admin acconut
+            //Do not update first run if admin account
             UPD = shrpr.getString(QuickstartPreferences.update, "0");
         } else {
             UPD = shrpr.getString(QuickstartPreferences.update, "1");
