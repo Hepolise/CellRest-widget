@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">Traffic Info</string>
-    <string name="widget_name" translatable="false">Traffic Widget</string>
-    <string name="widget_text" translatable="false">Traffic Widget</string>
+    <string name="widget_name">Traffic Info widget</string>
+    <string name="widget_text">Traffic Info widget</string>
     <string name="title_activity_settings">Settings</string>
 
     <!-- Strings related to Settings -->
@@ -15,7 +15,6 @@
     <string name="pref_title_default_color">Default color</string>
     <string name="pref_description_default_color">Sets the default color in widget\'s text</string>
 
-    <string name="pref_account_name">Account</string>
     <string name="pref_account_pass">Password</string>
 
     <string name="pref_description_pass">Password for your account</string>
@@ -29,7 +28,7 @@
     <string name="pref_desc_login">Your phone\'s number</string>
     <string name="button" translatable="false">button</string>
     <string name="button_desc">Makes a test connection to server</string>
-    <string name="button_title"><b>Test connection</b></string>
+    <string name="button_title">Test connection</string>
     <string name="pin_code_title">PIN-code</string>
     <string name="pin_code_desc">Please enter the PIN-code for your Tele2 application (it should be registered on this device)</string>
 

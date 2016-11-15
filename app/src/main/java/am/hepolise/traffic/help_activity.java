@@ -31,32 +31,21 @@ public class help_activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.webview);
-
-
         try {
             version = getPackageManager().getPackageInfo(getPackageName(), 0 ).versionName;
         } catch (PackageManager.NameNotFoundException e) {
 
         }
-
-
         mWebView = (WebView) findViewById(R.id.activity_main_webview);
         // Enable Javascript
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
-        Log.d("traff: ", locale);
+        //Log.d("traff: ", locale);
         mWebView.loadUrl("https://srvr.tk/traffic/help.php?l=" + locale + "&v=" + version);
-        // Force links and redirects to open in the WebView instead of in a browser
-        //mWebView.setWebViewClient(new WebViewClient());
-        // Stop local links and redirects from opening in browser instead of WebView
-        //mWebView.setWebViewClient(new webview());
-        //start of download
-
         mWebView.setDownloadListener(new DownloadListener() {
             public void onDownloadStart(String url, String userAgent,
                                         String contentDisposition, String mimetype,
                                         long contentLength) {
-
                 Uri uri = Uri.parse(url);
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent);

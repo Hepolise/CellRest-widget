@@ -6,22 +6,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
-import android.preference.PreferenceScreen;
 import android.provider.Settings;
 import android.support.v7.app.ActionBar;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.preference.RingtonePreference;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -141,23 +135,14 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
         menu.add(0, 1, 0, getString(R.string.help_title));
         menu.add(0, 2, 0, getString(R.string.about_title));
-        //menu.add("menu1");
-        //menu.add("menu3");
-        //menu.add("menu4");
 
         return super.onCreateOptionsMenu(menu);
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        //StringBuilder sb = new StringBuilder();
-
-
-        // Выведем в TextView информацию о нажатом пункте меню
-        //String name = item.getTitle().toString();
 
 
         String id = String.valueOf(item.getItemId());
-        //Log.d("traff", id);
         if (id.equals("1")) {
             Intent intent = new Intent(this, help_activity.class);
             startActivity(intent);
@@ -180,28 +165,17 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             actionBar.setDisplayHomeAsUpEnabled(false);
         }
     }
-
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean onIsMultiPane() {
         return isXLargeTablet(this);
     }
-
-    /**
-     * {@inheritDoc}
-     */
     @Override
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public void onBuildHeaders(List<Header> target) {
         loadHeadersFromResource(R.xml.pref_headers, target);
     }
 
-    /**
-     * This method stops fragment injection in malicious applications.
-     * Make sure to deny any unknown fragments here.
-     */
+
     protected boolean isValidFragment(String fragmentName) {
         return PreferenceFragment.class.getName().equals(fragmentName)
                 || ColorPickerPreferenceFragment.class.getName().equals(fragmentName)
@@ -224,7 +198,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 try {
                     getContent();
                 } catch (IOException ex) {
-                    //nothing to do
                 }
                 return null;
             }
@@ -237,10 +210,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 BufferedReader reader;
                 Context ctx = getContext();
                 SharedPreferences shrpr = PreferenceManager.getDefaultSharedPreferences(ctx);
-                String pass = shrpr.getString(QuickstartPreferences.pass, "");
+                String pass;
                 String login = shrpr.getString(QuickstartPreferences.login, "");
                 String op = shrpr.getString(QuickstartPreferences.op_list, "");
-                //String smscode = shrpr.getString(QuickstartPreferences.smscode, "");
                 String pin_code = shrpr.getString(QuickstartPreferences.pin_code, "");
                 String android_id = Settings.Secure.getString(ctx.getContentResolver(), Settings.Secure.ANDROID_ID);
                 Locale currentLocale = Locale.getDefault();
@@ -259,7 +231,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
                 if (op.equals("tele2")) {
                     login = "7" + login;
-                    //Log.d(LOG_TAG, "tele2 change: " + login);
                     pin_code = shrpr.getString(QuickstartPreferences.pin_code, "");
                     pass = "null";
                     android_id = Settings.Secure.getString(ctx.getContentResolver(), Settings.Secure.ANDROID_ID);
@@ -270,7 +241,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
                 try {
                     URL url = new URL("https://srvr.tk/traf.php?cmd=widget&upd=1&login=" + login + "&pass=" + pass + "&op=" + op + "&devid=" + android_id + "&pin=" + pin_code + "&loc=" + loc);
-                    //Log.d(LOG_TAG, "url: " + url);
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                     StringBuilder buf = new StringBuilder();
@@ -312,10 +282,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // updated to reflect the new value, per the Android Design
             // guidelines.
             bindPreferenceSummaryToValue(findPreference("login"));
-            //bindPreferenceSummaryToValue(findPreference("password"));
             bindPreferenceSummaryToValue(findPreference("op_list"));
             bindPreferenceSummaryToValue(findPreference("pin_code"));
-            //bindPreferenceSummaryToValue(findPreference("smscode"));
         }
     }
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -341,17 +309,10 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                             SharedPreferences.Editor editor = sharedPreferences.edit();
                             editor.putInt(QuickstartPreferences.color, color).apply();
                             editor.putBoolean(QuickstartPreferences.default_color, false).apply();
-                            //Intent intent = new Intent(getActivity(), SettingsActivity.class);
-                            //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            //startActivity(intent);
                         }
 
                         @Override
-                        public void onCancel(AmbilWarnaDialog dialog) {
-                            //Intent intent = new Intent(getActivity(), SettingsActivity.class);
-                            //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            //startActivity(intent);
-                        }
+                        public void onCancel(AmbilWarnaDialog dialog) {}
 
 
                     });
