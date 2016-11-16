@@ -69,7 +69,7 @@ public class TraffWidget extends AppWidgetProvider {
             //new ProgressTask().execute();
             //content = "Updating...";
             //UPD = "0";
-            updateWidget(context, appWidgetManager, id, "Updating...");
+            updateWidget(context, appWidgetManager, id, context.getString(R.string.updating));
 
         }
     }
@@ -179,7 +179,7 @@ public class TraffWidget extends AppWidgetProvider {
         }
 
         if (content.equals(context.getString(R.string.updating))) {
-            content = context.getString(R.string.updating);
+            //content = context.getString(R.string.updating);
             //Starting to load content
             new ProgressTask().execute();
             if (admin) {
@@ -252,6 +252,7 @@ public class TraffWidget extends AppWidgetProvider {
                 //Loading content
                 getContent();
             } catch (IOException ex) {
+
             }
             return null;
         }

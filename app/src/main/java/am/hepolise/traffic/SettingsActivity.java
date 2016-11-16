@@ -214,7 +214,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 String login = shrpr.getString(QuickstartPreferences.login, "");
                 String op = shrpr.getString(QuickstartPreferences.op_list, "");
                 String pin_code = shrpr.getString(QuickstartPreferences.pin_code, "");
-                String android_id = Settings.Secure.getString(ctx.getContentResolver(), Settings.Secure.ANDROID_ID);
+                String android_id = "";
                 Locale currentLocale = Locale.getDefault();
                 String locale = currentLocale.toString();
                 String loc = shrpr.getString(QuickstartPreferences.loc, "def");
@@ -271,7 +271,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
-                    Toast.makeText(getContext(), getContext().getString(R.string.request_sent), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getActivity().getString(R.string.request_sent), Toast.LENGTH_SHORT).show();
                     new ProgressTask().execute();
                     return true;
                 }
@@ -294,7 +294,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.pref_widgetview);
             setHasOptionsMenu(true);
-            final Context ctx = getContext();
+            final Context ctx = getActivity();
             final SharedPreferences shrpr = PreferenceManager.getDefaultSharedPreferences(ctx);
             Preference button = (Preference)findPreference(getString(R.string.button_colorpicker));
             button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
