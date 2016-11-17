@@ -150,11 +150,7 @@ public class TraffWidget extends AppWidgetProvider {
             pass = shrpr.getString(QuickstartPreferences.pass, "");
         }
 
-        if (login.equals("") || pass.equals("")) {
-            admin = true;
-        } else {
-            admin = false;
-        }
+        admin = (login.equals("") || pass.equals(""));
 
         if (admin) {
             //Do not update first run if admin account
@@ -252,7 +248,7 @@ public class TraffWidget extends AppWidgetProvider {
                 //Loading content
                 getContent();
             } catch (IOException ex) {
-
+                updateWidget(conextglobal, appWidgetManagerglobal, idglobal, "error");
             }
             return null;
         }
