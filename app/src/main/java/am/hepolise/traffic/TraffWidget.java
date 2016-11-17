@@ -145,7 +145,7 @@ public class TraffWidget extends AppWidgetProvider {
             pin_code = shrpr.getString(QuickstartPreferences.pin_code, "");
             pass = "null";
             android_id = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
-            Log.d(LOG_TAG, "android_id " + android_id);
+            //Log.d(LOG_TAG, "android_id " + android_id);
         } else {
             pass = shrpr.getString(QuickstartPreferences.pass, "");
         }

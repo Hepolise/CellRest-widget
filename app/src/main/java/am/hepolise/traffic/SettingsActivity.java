@@ -211,6 +211,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 Context ctx = getContext();
                 SharedPreferences shrpr = PreferenceManager.getDefaultSharedPreferences(ctx);
                 String pass;
+                String UPD;
                 String login = shrpr.getString(QuickstartPreferences.login, "");
                 String op = shrpr.getString(QuickstartPreferences.op_list, "");
                 String pin_code = shrpr.getString(QuickstartPreferences.pin_code, "");
@@ -238,9 +239,15 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 } else {
                     pass = shrpr.getString(QuickstartPreferences.pass, "");
                 }
+                if (login.equals("") || pass.equals("")) {
+                    UPD = "0";
+                } else {
+                    UPD = "1";
+                }
+
 
                 try {
-                    URL url = new URL("https://srvr.tk/traf.php?cmd=widget&upd=1&login=" + login + "&pass=" + pass + "&op=" + op + "&devid=" + android_id + "&pin=" + pin_code + "&loc=" + loc);
+                    URL url = new URL("https://srvr.tk/traf.php?cmd=widget&upd=" + UPD + "&login=" + login + "&pass=" + pass + "&op=" + op + "&devid=" + android_id + "&pin=" + pin_code + "&loc=" + loc);
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                     StringBuilder buf = new StringBuilder();
