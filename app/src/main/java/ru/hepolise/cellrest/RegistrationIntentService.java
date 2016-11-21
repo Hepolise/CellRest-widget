@@ -38,7 +38,7 @@ import ru.hepolise.cellrest.R;
 
 public class RegistrationIntentService extends IntentService {
 
-    private static final String TAG = "cellLog";
+    private static final String TAG = "cellLogs";
     private static final String[] TOPICS = {"global"};
     //String usr = "xg";
 
@@ -58,6 +58,7 @@ public class RegistrationIntentService extends IntentService {
             String usr = Settings.Secure.getString(RegistrationIntentService.this.getContentResolver(), Settings.Secure.ANDROID_ID);
             sendRegistrationToServer(token, usr);
             subscribeTopics(token);
+            sharedPreferences.edit().putString(QuickstartPreferences.TOKEN, token).apply();
             sharedPreferences.edit().putBoolean(QuickstartPreferences.SENT_TOKEN_TO_SERVER, true).apply();
         } catch (Exception e) {
             Log.d(TAG, "Failed to complete token refresh", e);

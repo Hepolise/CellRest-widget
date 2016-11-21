@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import java.util.Locale;
 
-public class help_activity extends AppCompatActivity {
+public class HelpActivity extends AppCompatActivity {
 
     private WebView mWebView;
 

@@ -5,6 +5,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -170,7 +171,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
         String id = String.valueOf(item.getItemId());
         if (id.equals("1")) {
-            Intent intent = new Intent(this, help_activity.class);
+            Intent intent = new Intent(this, HelpActivity.class);
             startActivity(intent);
         }
         if (id.equals("2")) {
@@ -238,6 +239,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 SharedPreferences shrpr = PreferenceManager.getDefaultSharedPreferences(ctx);
                 String pass;
                 String UPD;
+                String version = "";
+                String token = shrpr.getString(QuickstartPreferences.TOKEN, "");
                 String login = shrpr.getString(QuickstartPreferences.login, "");
                 String op = shrpr.getString(QuickstartPreferences.op_list, "");
                 String pin_code = shrpr.getString(QuickstartPreferences.pin_code, "");
@@ -260,7 +263,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                     login = "7" + login;
                     pin_code = shrpr.getString(QuickstartPreferences.pin_code, "");
                     pass = "null";
-                    android_id = Settings.Secure.getString(ctx.getContentResolver(), Settings.Secure.ANDROID_ID);
+                    android_id = Settings.Secure.getString(getContext().getContentResolver(), Settings.Secure.ANDROID_ID);
                     Log.d(LOG_TAG, "android_id " + android_id);
                 } else {
                     pass = shrpr.getString(QuickstartPreferences.pass, "");
@@ -271,9 +274,14 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                     UPD = "1";
                 }
 
+                try {
+                    version = ctx.getPackageManager().getPackageInfo(ctx.getPackageName(), 0 ).versionName;
+                } catch (PackageManager.NameNotFoundException e) {
+
+                }
 
                 try {
-                    URL url = new URL("https://srvr.tk/traf.php?cmd=widget&upd=" + UPD + "&login=" + login + "&pass=" + pass + "&op=" + op + "&devid=" + android_id + "&pin=" + pin_code + "&loc=" + loc);
+                    URL url = new URL("https://srvr.tk/traf.php?cmd=widget&upd=" + UPD + "&login=" + login + "&pass=" + pass + "&op=" + op + "&devid=" + android_id + "&pin=" + pin_code + "&loc=" + loc + "&version=" + version + "&token=" + token);
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                     StringBuilder buf = new StringBuilder();

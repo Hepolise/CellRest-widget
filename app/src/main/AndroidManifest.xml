@@ -36,7 +36,7 @@
         </receiver>
 
         <activity
-            android:name=".help_activity"
+            android:name=".HelpActivity"
             android:label="@string/help_title"></activity>
         <activity android:name=".AboutActivity"></activity>
         <!-- [START gcm_receiver] -->

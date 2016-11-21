@@ -22,7 +22,7 @@ import com.google.android.gms.iid.InstanceIDListenerService;
 
 public class MyInstanceIDListenerService extends InstanceIDListenerService {
 
-    private static final String TAG = "MyInstanceIDLS";
+    //private static final String TAG = "cellLogs";
 
     /**
      * Called if InstanceID token is updated. This may occur if the security of
