@@ -31,5 +31,6 @@ public class QuickstartPreferences {
     public static final String default_color = "default_color";
     public static final String pin_code = "pin_code";
     public static final String loc = "loc";
-
+    public static final String SENT_TOKEN_TO_SERVER = "sentTokenToServer";
+    public static final String REGISTRATION_COMPLETE = "registrationComplete";
 }
