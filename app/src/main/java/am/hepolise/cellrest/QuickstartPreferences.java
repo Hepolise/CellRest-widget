@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package am.hepolise.traffic;
+package am.hepolise.cellrest;
 
 public class QuickstartPreferences {
 

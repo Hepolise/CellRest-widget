@@ -4,7 +4,7 @@ android {
     compileSdkVersion 24
     buildToolsVersion "24.0.2"
     defaultConfig {
-        applicationId "am.hepolise.traffic"
+        applicationId "am.hepolise.cellrest"
         minSdkVersion 19
         targetSdkVersion 24
         versionCode 1
@@ -20,7 +20,7 @@ android {
             applicationVariants.all { variant ->
                 variant.outputs.each { output ->
                     output.outputFile = new File(output.outputFile.parent,
-                            output.outputFile.name.replace("app-release", "app-widget-release")
+                            output.outputFile.name.replace("app-release", "app-cellrest-release")
                     )
                 }
             }

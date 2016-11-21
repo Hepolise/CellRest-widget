@@ -1,4 +1,4 @@
-package am.hepolise.traffic;
+package am.hepolise.cellrest;
 
 import android.content.res.Configuration;
 import android.os.Bundle;

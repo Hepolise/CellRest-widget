@@ -1,4 +1,4 @@
-package am.hepolise.traffic;
+package am.hepolise.cellrest;
 
 import java.io.BufferedReader;
 import java.io.IOException;
