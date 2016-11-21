@@ -1,4 +1,4 @@
-package am.hepolise.traffic;
+package ru.hepolise.cellrest;
 
 import org.junit.Test;
 

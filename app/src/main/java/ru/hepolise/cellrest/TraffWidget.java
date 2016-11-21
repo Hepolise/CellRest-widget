@@ -41,7 +41,7 @@ public class TraffWidget extends AppWidgetProvider {
 
 
 
-    final String LOG_TAG = "traffLogs";
+    final String LOG_TAG = "cellLogs";
 
     @Override
     public void onEnabled(Context context) {

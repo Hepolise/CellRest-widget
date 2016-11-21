@@ -32,6 +32,8 @@ import java.util.Locale;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
 
+import static ru.hepolise.cellrest.R.string.pref_account_login;
+
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
  * handset devices, settings are presented as a single list. On tablets,
@@ -103,12 +105,12 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         // Trigger the listener immediately with the preference's
         // current value.
         Log.d("traff", preference.toString());
-        if (preference.toString().equals("PIN-code") || preference.toString().equals("PIN-код")) {
+        if (preference.toString().equals(preference.getContext().getString(R.string.pin_code_title))) {
             sBindPreferenceSummaryToValueListener.onPreferenceChange(preference,
                     PreferenceManager
                             .getDefaultSharedPreferences(preference.getContext())
                             .getString(preference.getKey(), preference.getContext().getString(R.string.pin_code_desc)));
-        } else if (preference.toString().equals("Login") || preference.toString().equals("Логин")){
+        } else if (preference.toString().equals(preference.getContext().getString(R.string.pref_account_login))){
             sBindPreferenceSummaryToValueListener.onPreferenceChange(preference,
                     PreferenceManager
                             .getDefaultSharedPreferences(preference.getContext())
@@ -189,9 +191,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class GeneralPreferenceFragment extends PreferenceFragment {
-        String LOG_TAG="traff";
+        String LOG_TAG="celllogs";
         class ProgressTask extends AsyncTask<String, Void, String> {
-            String content ="";
+            String content = "";
             @Override
             public String doInBackground(String... path) {
 

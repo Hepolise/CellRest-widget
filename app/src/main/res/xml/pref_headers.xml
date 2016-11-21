@@ -3,12 +3,12 @@
     <!-- These settings headers are only used on tablets. -->
 
     <header
-        android:fragment="am.hepolise.traffic.SettingsActivity$GeneralPreferenceFragment"
+        android:fragment="ru.hepolise.cellrest.SettingsActivity$GeneralPreferenceFragment"
         android:icon="@drawable/ic_info_black_24dp"
         android:title="@string/pref_header_general" />
 
     <header
-        android:fragment="am.hepolise.traffic.SettingsActivity$ColorPickerPreferenceFragment"
+        android:fragment="ru.hepolise.cellrest.SettingsActivity$ColorPickerPreferenceFragment"
         android:icon="@drawable/ic_format_color_text_black_24dp"
         android:title="@string/pref_color" />
 
