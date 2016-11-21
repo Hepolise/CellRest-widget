@@ -1,4 +1,4 @@
-package am.hepolise.cellrest;
+package ru.hepolise.cellrest;
 
 import java.io.BufferedReader;
 import java.io.IOException;

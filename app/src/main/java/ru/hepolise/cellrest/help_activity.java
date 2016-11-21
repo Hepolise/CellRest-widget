@@ -1,4 +1,4 @@
-package am.hepolise.cellrest;
+package ru.hepolise.cellrest;
 
 import android.annotation.TargetApi;
 import android.content.Intent;

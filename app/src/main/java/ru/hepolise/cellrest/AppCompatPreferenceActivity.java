@@ -1,4 +1,4 @@
-package am.hepolise.cellrest;
+package ru.hepolise.cellrest;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
