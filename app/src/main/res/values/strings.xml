@@ -39,6 +39,7 @@
     <string name="tele2">Tele2 preferences</string>
     <string name="beeline">Beeline preferences</string>
 
+    <string name="other_settings">Test</string>
     <string name="request_sent">Please wait...</string>
     <string name="help_title">Help</string>
     <string name="about_title">About</string>

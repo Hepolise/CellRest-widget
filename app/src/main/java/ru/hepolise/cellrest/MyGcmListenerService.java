@@ -64,7 +64,7 @@ public class MyGcmListenerService extends GcmListenerService {
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle(title)
                 .setContentText(message)
-                .setAutoCancel(false)
+                .setAutoCancel(true)
                 .setContentIntent(pendingIntent);
         Notification notification = new Notification.BigTextStyle(notificationBuilder)
                 .bigText(message).build();

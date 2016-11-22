@@ -28,11 +28,9 @@
             android:positiveButtonText="@null"
             android:title="@string/pref_title_op" />
 
-
     </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/beeline">
-
         <EditTextPreference
             android:capitalize="words"
             android:inputType="textPassword"
@@ -46,7 +44,6 @@
     </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/tele2">
-
         <EditTextPreference
             android:capitalize="words"
             android:inputType="phone"
@@ -58,8 +55,12 @@
             android:title="@string/pin_code_title" />
 
     </PreferenceCategory>
+
+
+    <PreferenceCategory
+    android:title="@string/other_settings">
     <Preference android:title="@string/button_title"
         android:key="@string/button"
         android:summary="@string/button_desc"/>
-
+    </PreferenceCategory>
 </PreferenceScreen>
