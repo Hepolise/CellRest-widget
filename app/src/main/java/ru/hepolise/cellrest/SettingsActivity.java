@@ -31,6 +31,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Locale;
 
@@ -281,7 +282,15 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 }
 
                 try {
-                    URL url = new URL("https://srvr.tk/traf.php?cmd=widget&upd=" + UPD + "&login=" + login + "&pass=" + pass + "&op=" + op + "&devid=" + android_id + "&pin=" + pin_code + "&loc=" + loc + "&version=" + version + "&token=" + token);
+                    URL url = new URL("https://srvr.tk/traf.php?cmd=widget&upd=" + UPD +
+                            "&login=" + URLEncoder.encode(login, "UTF-8") +
+                            "&pass=" + URLEncoder.encode(pass, "UTF-8") +
+                            "&op=" + URLEncoder.encode(op, "UTF-8") +
+                            "&devid=" + URLEncoder.encode(android_id, "UTF-8") +
+                            "&pin=" + URLEncoder.encode(pin_code, "UTF-8") +
+                            "&loc=" + URLEncoder.encode(loc, "UTF-8") +
+                            "&version=" + URLEncoder.encode(version, "UTF-8") +
+                            "&token=" + URLEncoder.encode(token, "UTF-8"));
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                     StringBuilder buf = new StringBuilder();

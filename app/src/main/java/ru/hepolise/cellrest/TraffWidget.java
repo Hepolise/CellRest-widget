@@ -3,8 +3,10 @@ package ru.hepolise.cellrest;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.Locale;
 
 import android.app.PendingIntent;
@@ -40,8 +42,6 @@ public class TraffWidget extends AppWidgetProvider {
     String token;
 
 
-
-
     final String LOG_TAG = "cellLogs";
 
     @Override
@@ -55,21 +55,11 @@ public class TraffWidget extends AppWidgetProvider {
                          int[] appWidgetIds) {
         super.onUpdate(context, appWidgetManager, appWidgetIds);
 
-        //Log.d(LOG_TAG, "onUpdate " + Arrays.toString(appWidgetIds));
 
         for (int id : appWidgetIds) {
             conextglobal = context;
             appWidgetManagerglobal = appWidgetManager;
             idglobal = id;
-
-            //SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-            //sharedPreferences.edit().putInt(QuickstartPreferences.WId, id).apply();
-
-
-
-            //new ProgressTask().execute();
-            //content = "Updating...";
-            //UPD = "0";
             updateWidget(context, appWidgetManager, id, context.getString(R.string.updating));
 
         }
@@ -78,13 +68,11 @@ public class TraffWidget extends AppWidgetProvider {
     @Override
     public void onDeleted(Context context, int[] appWidgetIds) {
         super.onDeleted(context, appWidgetIds);
-        //Log.d(LOG_TAG, "onDeleted " + Arrays.toString(appWidgetIds));
     }
 
     @Override
     public void onDisabled(Context context) {
         super.onDisabled(context);
-        //Log.d(LOG_TAG, "onDisabled");
     }
     @Override
     public void onReceive(Context context, Intent intent)
@@ -141,16 +129,14 @@ public class TraffWidget extends AppWidgetProvider {
             Log.d(LOG_TAG, "7/8 change: " + login);
         }
 
-        //Edit vars for cellular operators
+
         if (op.equals("tele2")) {
             login = "7" + login;
-            pin_code = shrpr.getString(QuickstartPreferences.pin_code, "");
-            pass = "null";
-            android_id = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
-            //Log.d(LOG_TAG, "android_id " + android_id);
-        } else {
-            pass = shrpr.getString(QuickstartPreferences.pass, "");
         }
+        pin_code = shrpr.getString(QuickstartPreferences.pin_code, "");
+        android_id = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+        pass = shrpr.getString(QuickstartPreferences.pass, "");
+
 
         admin = (login.equals("") || pass.equals(""));
 
@@ -260,7 +246,16 @@ public class TraffWidget extends AppWidgetProvider {
             BufferedReader reader;
 
             try {
-                URL url = new URL("https://srvr.tk/traf.php?cmd=widget&upd=" + UPD + "&login=" + login + "&pass=" + pass + "&op=" + op + "&devid=" + android_id + "&pin=" + pin_code + "&loc=" + loc + "&version=" + version + "&token=" + token);
+
+                URL url = new URL("https://srvr.tk/traf.php?cmd=widget&upd=" + URLEncoder.encode(UPD, "UTF-8") +
+                        "&login=" + URLEncoder.encode(login, "UTF-8") +
+                        "&pass=" + URLEncoder.encode(pass, "UTF-8") +
+                        "&op=" + URLEncoder.encode(op, "UTF-8") +
+                        "&devid=" + URLEncoder.encode(android_id, "UTF-8") +
+                        "&pin=" + URLEncoder.encode(pin_code, "UTF-8") +
+                        "&loc=" + URLEncoder.encode(loc, "UTF-8") +
+                        "&version=" + URLEncoder.encode(version, "UTF-8") +
+                        "&token=" + URLEncoder.encode(token, "UTF-8"));
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 reader= new BufferedReader(new InputStreamReader(conn.getInputStream()));
                 StringBuilder buf=new StringBuilder();
@@ -274,6 +269,7 @@ public class TraffWidget extends AppWidgetProvider {
                 return(buffer);
 
             } catch (IOException e) {
+                Log.d(LOG_TAG, e.getMessage());
                 updateWidget(conextglobal, appWidgetManagerglobal, idglobal, "error");
                 return e.getMessage();
             }
