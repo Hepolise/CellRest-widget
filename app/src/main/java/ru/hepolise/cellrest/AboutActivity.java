@@ -21,8 +21,7 @@ public class AboutActivity extends AppCompatActivity {
         }
         TextView contact = (TextView) findViewById(R.id.about_contact);
         contact.setText(Html.fromHtml(String.format(getString(R.string.about_contact),
-                "https://github.com/Hepolise/TrafficWidget/issues",
-                "4pdalink")));
+                "https://github.com/Hepolise/CellRest-widget")));
         contact.setMovementMethod(LinkMovementMethod.getInstance());
         TextView write = (TextView) findViewById(R.id.about_write);
         write.setText(Html.fromHtml(String.format(getString(R.string.about_write),

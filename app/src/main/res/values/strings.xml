@@ -32,8 +32,9 @@
     <string name="pin_code_title">PIN-code</string>
     <string name="pin_code_desc">Please enter the PIN-code for your Tele2 application (it should be registered on this device)</string>
 
-    <string name="about_description">Traffic Info is an application for control all traffic consumption, created to provide a great experience when dealing with cellular opearator\'s data</string>
-    <string name="about_contact">If you find any bugs, please file an issue in the <![CDATA[<a href="%1$s">Traffic Info Github repository</a>]]>. Doing so will also show other people whether the bug has been reported already. There is also a <![CDATA[<a href="%2$s">4pda topic</a>]]> for discussions about the app.</string>
+    <string name="about_description">CellRest is an application for control all traffic consumption, created to provide a great experience when dealing with cellular opearator\'s data</string>
+    <string name="about_contact">If you find any bugs, please file an issue in the <![CDATA[<a href="%1$s">CellRest Github repository</a>]]>.
+        Doing so will also show other people whether the bug has been reported already. </string>
     <string name="button_colorpicker" translatable="false">ColorPicker</string>
     <string name="button_colorpicker_title">Widget\'s text color</string>
     <string name="tele2">Tele2 preferences</string>

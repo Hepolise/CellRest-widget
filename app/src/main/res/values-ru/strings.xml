@@ -58,8 +58,10 @@
     <string name="updating">Обновление...</string>
     <string name="widget_settings">Настройки текста виджета</string>
     <string name="widget_other_pref">Другие настройки виджета</string>
-    <string name="about_description">Traffic Info представляет собой приложение для контроля расходов трафика, созданное, чтобы обеспечить удобство при работе с данными операторов сотовой связи</string>
-    <string name="about_contact">Если Вы нашли ошибку, пожалуйста, сообщите об этом в <![CDATA[<a href="%2$s">тему на 4pda</a>]]>.</string>
+    <string name="about_description">CellRest представляет собой приложение для контроля расходов трафика, созданное, чтобы
+        обеспечить удобство при работе с данными операторов сотовой связи</string>
+    <string name="about_contact">Открытый исходный код приложения:
+        <![CDATA[<a href="%1$s">Github</a>]]>.</string>
     <string name="about_title">О приложении</string>
     <string name="admin_acc">Аккаунт автора</string>
     <string name="about_write"><![CDATA[<a href="%1$s">Связаться с автором приложения</a>]]></string>
