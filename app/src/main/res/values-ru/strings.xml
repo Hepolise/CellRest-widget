@@ -47,7 +47,7 @@
     <string name="button_desc">Подключается к серверу для тестирования входа в аккаунт</string>
     <string name="button_title">Пробное подключение</string>
     <string name="button_colorpicker_desc">Выбор цвета текста виджета</string>
-    <string name="button_colorpicker_title">Color</string>
+    <string name="button_colorpicker_title">Цвет</string>
     <string name="pin_code_desc">ПИН-код приложения \"Мой Теле2\" (вход в приложение должен быть выполнен с данного девайса)</string>
     <string name="beeline">Настройки Билайна</string>
     <string name="pin_code_title">PIN-код</string>

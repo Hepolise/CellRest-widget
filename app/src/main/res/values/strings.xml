@@ -36,7 +36,7 @@
     <string name="about_contact">If you find any bugs, please file an issue in the <![CDATA[<a href="%1$s">CellRest Github repository</a>]]>.
         Doing so will also show other people whether the bug has been reported already. </string>
     <string name="button_colorpicker" translatable="false">ColorPicker</string>
-    <string name="button_colorpicker_title">Widget\'s text color</string>
+    <string name="button_colorpicker_title">Color</string>
     <string name="tele2">Tele2 preferences</string>
     <string name="beeline">Beeline preferences</string>
 
