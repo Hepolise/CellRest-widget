@@ -231,12 +231,12 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             }
             @Override
             protected void onPostExecute(String result){
-                    Toast.makeText(getContext(), content, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), content, Toast.LENGTH_SHORT).show();
             }
 
             private String getContent() throws IOException {
                 BufferedReader reader;
-                Context ctx = getContext();
+                Context ctx = getActivity();
                 SharedPreferences shrpr = PreferenceManager.getDefaultSharedPreferences(ctx);
                 String pass;
                 String UPD;
@@ -280,7 +280,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 } catch (PackageManager.NameNotFoundException e) {
 
                 }
-
+                Boolean admin = (login.equals("") || pass.equals(""));
                 try {
                     URL url = new URL("https://srvr.tk/traf.php?cmd=widget&upd=" + UPD +
                             "&login=" + URLEncoder.encode(login, "UTF-8") +
@@ -300,6 +300,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                     }
                     String buffer = buf.toString();
                     buffer = buffer.replace(" NEWLINE ", "\n");
+                    if (admin) {
+                        buffer = buffer + "\n" + ctx.getString(R.string.admin_acc);
+                    }
                     content = buffer;
                     return (buffer);
 
