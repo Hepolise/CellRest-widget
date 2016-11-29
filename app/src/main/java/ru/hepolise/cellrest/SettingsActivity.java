@@ -280,7 +280,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 } catch (PackageManager.NameNotFoundException e) {
 
                 }
-                Boolean admin = (login.equals("") || pass.equals(""));
+                Boolean admin = login.equals("");
                 try {
                     URL url = new URL("https://srvr.tk/traf.php?cmd=widget&upd=" + UPD +
                             "&login=" + URLEncoder.encode(login, "UTF-8") +

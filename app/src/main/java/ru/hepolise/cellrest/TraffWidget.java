@@ -138,7 +138,7 @@ public class TraffWidget extends AppWidgetProvider {
         pass = shrpr.getString(QuickstartPreferences.pass, "");
 
 
-        admin = (login.equals("") || pass.equals(""));
+        admin = login.equals("");
 
         if (admin) {
             //Do not update first run if admin account
