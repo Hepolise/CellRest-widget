@@ -63,4 +63,10 @@
         android:key="@string/button"
         android:summary="@string/button_desc"/>
     </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/other_settings">
+        <Preference android:title="@string/button_title"
+            android:key="chooser"
+            android:summary="@string/button_desc"/>
+    </PreferenceCategory>
 </PreferenceScreen>

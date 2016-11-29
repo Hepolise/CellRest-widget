@@ -47,6 +47,9 @@
     <string name="admin_acc">Creator\'s account</string>
     <string name="about_write"><![CDATA[<a href="%1$s">Contact the author of the application</a>]]></string>
 
+    <string name="return_title">Type returning data</string>
+    <string name="return_desc" translatable="false"></string>
+    <string name="chooser" translatable="false">chooser</string>
     <string name="updating">Updating...</string>
 
     <string name="error">An error ocurred. Did you enter the correct info?</string>

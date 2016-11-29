@@ -2,7 +2,10 @@ package ru.hepolise.cellrest;
 
 
 import android.annotation.TargetApi;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -17,6 +20,7 @@ import android.provider.Settings;
 import android.support.v7.app.ActionBar;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,6 +36,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.sql.Array;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -312,6 +318,46 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             }
         }
 
+//        public static class FireMissilesDialogFragment extends DialogFragment {
+//            @Override
+//            public Dialog onCreateDialog(Bundle savedInstanceState) {
+//                final ArrayList mSelectedItems = new ArrayList();  // Where we track the selected items
+//                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+//                // Set the dialog title
+//                builder.setTitle(R.string.error)
+//                        // Specify the list array, the items to be selected by default (null for none),
+//                        // and the listener through which to receive callbacks when items are selected
+//                        .setMultiChoiceItems(R.array.pref_font_titles, null,
+//                                new DialogInterface.OnMultiChoiceClickListener() {
+//                                    @Override
+//                                    public void onClick(DialogInterface dialog, int which,
+//                                                        boolean isChecked) {
+//                                        if (isChecked) {
+//                                            // If the user checked the item, add it to the selected items
+//                                            mSelectedItems.add(which);
+//                                        } else if (mSelectedItems.contains(which)) {
+//                                            // Else, if the item is already in the array, remove it
+//                                            mSelectedItems.remove(Integer.valueOf(which));
+//                                        }
+//                                    }
+//                                })
+//                        // Set the action buttons
+//                        .setPositiveButton(R.string.error, new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int id) {
+//                                // User clicked OK, so save the mSelectedItems results somewhere
+//                                // or return them to the component that opened the dialog
+//                            }
+//                        })
+//                        .setNegativeButton(R.string.error, new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int id) {
+//                            }
+//                        });
+//
+//                return builder.create();
+//            }
+//        }
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
@@ -328,6 +374,19 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                     return true;
                 }
             });
+//            Preference chooser = (Preference)findPreference(getString(R.string.chooser));
+//            chooser.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+//                @Override
+//                public boolean onPreferenceClick(Preference preference) {
+//                    //new ProgressTask().execute();
+//                    //FireMissilesDialogFragment;
+//                    //increase.addActionListener(new incListener());
+//                    DialogFragment dialog = new FireMissilesDialogFragment();
+//                    dialog.show(getFragmentManager(), "Show");
+//
+//                    return true;
+//                }
+//            });
 
             // Bind the summaries of EditText/List/Dialog/Ringtone preferences
             // to their values. When their values change, their summaries are
@@ -387,4 +446,5 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         //    return super.onOptionsItemSelected(item);
         //}
     }
+
 }
