@@ -116,7 +116,7 @@ public class TraffWidget extends AppWidgetProvider {
         Boolean admin;
 
         //in case of error loading new data
-        if (content.equals("error")) {
+        if (content.startsWith("error")) {
             content = shrpr.getString(QuickstartPreferences.content, "");
         }
 
@@ -130,7 +130,9 @@ public class TraffWidget extends AppWidgetProvider {
         }
 
 
-        if (op.equals("tele2")) {
+        admin = login.equals("");
+
+        if (op.equals("tele2") && !admin) {
             login = "7" + login;
         }
         pin_code = shrpr.getString(QuickstartPreferences.pin_code, "");
@@ -138,7 +140,7 @@ public class TraffWidget extends AppWidgetProvider {
         pass = shrpr.getString(QuickstartPreferences.pass, "");
 
 
-        admin = login.equals("");
+
 
         if (admin) {
             //Do not update first run if admin account
@@ -256,6 +258,7 @@ public class TraffWidget extends AppWidgetProvider {
                         "&loc=" + URLEncoder.encode(loc, "UTF-8") +
                         "&version=" + URLEncoder.encode(version, "UTF-8") +
                         "&token=" + URLEncoder.encode(token, "UTF-8"));
+                Log.d(LOG_TAG, "URL: " + url);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 reader= new BufferedReader(new InputStreamReader(conn.getInputStream()));
                 StringBuilder buf=new StringBuilder();
