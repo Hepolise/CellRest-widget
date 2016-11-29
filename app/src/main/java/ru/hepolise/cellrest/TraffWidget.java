@@ -117,7 +117,7 @@ public class TraffWidget extends AppWidgetProvider {
 
         //in case of error loading new data
         if (content.startsWith("error")) {
-            content = shrpr.getString(QuickstartPreferences.content, "");
+            content = shrpr.getString(QuickstartPreferences.content, context.getString(R.string.error));
         }
 
         //Reformat login

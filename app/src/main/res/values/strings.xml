@@ -49,6 +49,7 @@
 
     <string name="updating">Updating...</string>
 
+    <string name="error">An error ocurred. Did you enter the correct info?</string>
     <string name="widget_other_pref">Other widget\'s preferences</string>
     <string name="pref_locale">Language</string>
     <string-array name="pref_op_list_titles">

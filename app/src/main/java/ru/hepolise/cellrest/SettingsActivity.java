@@ -224,7 +224,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             public String doInBackground(String... path) {
 
                 try {
-                    getContent();
+                    getContent(getActivity());
                 } catch (IOException ex) {
                 }
                 return null;
@@ -234,9 +234,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                     Toast.makeText(getActivity(), content, Toast.LENGTH_SHORT).show();
             }
 
-            private String getContent() throws IOException {
+            private String getContent(Context ctx) throws IOException {
                 BufferedReader reader;
-                Context ctx = getActivity();
                 SharedPreferences shrpr = PreferenceManager.getDefaultSharedPreferences(ctx);
                 String pass;
                 String UPD;
@@ -264,7 +263,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                     login = "7" + login;
                     pin_code = shrpr.getString(QuickstartPreferences.pin_code, "");
                     pass = "null";
-                    android_id = Settings.Secure.getString(getContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+                    android_id = Settings.Secure.getString(getActivity().getContentResolver(), Settings.Secure.ANDROID_ID);
                     Log.d(LOG_TAG, "android_id " + android_id);
                 } else {
                     pass = shrpr.getString(QuickstartPreferences.pass, "");

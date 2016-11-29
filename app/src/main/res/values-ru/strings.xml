@@ -67,4 +67,5 @@
     <string name="about_write"><![CDATA[<a href="%1$s">Связаться с автором приложения</a>]]></string>
     <string name="widget_name">CellRest виджет</string>
     <string name="other_settings">Проверка</string>
+    <string name="error">Произошла ошибка. Вы ввели верные данные?</string>
 </resources>
