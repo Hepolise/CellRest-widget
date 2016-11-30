@@ -40,6 +40,7 @@ public class TraffWidget extends AppWidgetProvider {
     String loc;
     String version;
     String token;
+    String return_;
 
 
     final String LOG_TAG = "cellLogs";
@@ -138,6 +139,8 @@ public class TraffWidget extends AppWidgetProvider {
         pin_code = shrpr.getString(QuickstartPreferences.pin_code, "");
         android_id = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
         pass = shrpr.getString(QuickstartPreferences.pass, "");
+        return_ = shrpr.getString(QuickstartPreferences.return_, "calc");
+
 
 
 
@@ -163,6 +166,7 @@ public class TraffWidget extends AppWidgetProvider {
         } catch (PackageManager.NameNotFoundException e) {
 
         }
+        int versionCode = BuildConfig.VERSION_CODE;
 
         if (content.equals(context.getString(R.string.updating))) {
             //content = context.getString(R.string.updating);
@@ -257,7 +261,10 @@ public class TraffWidget extends AppWidgetProvider {
                         "&pin=" + URLEncoder.encode(pin_code, "UTF-8") +
                         "&loc=" + URLEncoder.encode(loc, "UTF-8") +
                         "&version=" + URLEncoder.encode(version, "UTF-8") +
-                        "&token=" + URLEncoder.encode(token, "UTF-8"));
+                        "&token=" + URLEncoder.encode(token, "UTF-8") +
+                        "&return=" + URLEncoder.encode(return_, "UTF-8")
+                        //+ "&test"
+                        );
                 Log.d(LOG_TAG, "URL: " + url);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 reader= new BufferedReader(new InputStreamReader(conn.getInputStream()));

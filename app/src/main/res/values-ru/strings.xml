@@ -42,6 +42,14 @@
         <item>en_US</item>
         <item>def</item>
     </string-array>
+    <string-array name="return_type_titles">
+        <item>Возвращать без рассчёта на день</item>
+        <item>Возвращать даные с рассчётом на день</item>
+    </string-array>
+    <string-array name="return_type_values">
+        <item>full</item>
+        <item>calc</item>
+    </string-array>
     <string name="pref_description_default_color">Устанавливает стандартное значение цвета для виджета</string>
     <string name="pref_title_default_color">Стандартный цвет</string>
     <string name="button_desc">Подключается к серверу для тестирования входа в аккаунт</string>
@@ -69,4 +77,5 @@
     <string name="other_settings">Проверка</string>
     <string name="error">Произошла ошибка. Вы ввели верные данные?</string>
     <string name="return_title">Вид возвращаемых данных</string>
+    <string name="return_desc">Выбрать тип данных в виджете: с рассчётом на текущий день и без</string>
 </resources>

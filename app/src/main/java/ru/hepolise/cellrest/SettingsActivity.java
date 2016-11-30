@@ -250,6 +250,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 String login = shrpr.getString(QuickstartPreferences.login, "");
                 String op = shrpr.getString(QuickstartPreferences.op_list, "");
                 String pin_code = shrpr.getString(QuickstartPreferences.pin_code, "");
+                String return_ = shrpr.getString(QuickstartPreferences.return_, "calc");
                 String android_id = "";
                 Locale currentLocale = Locale.getDefault();
                 String locale = currentLocale.toString();
@@ -295,7 +296,11 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                             "&pin=" + URLEncoder.encode(pin_code, "UTF-8") +
                             "&loc=" + URLEncoder.encode(loc, "UTF-8") +
                             "&version=" + URLEncoder.encode(version, "UTF-8") +
-                            "&token=" + URLEncoder.encode(token, "UTF-8"));
+                            "&token=" + URLEncoder.encode(token, "UTF-8") +
+                            "&return=" + URLEncoder.encode(return_, "UTF-8")
+                            //+ "&test"
+                    );
+                    Log.d(LOG_TAG, "URL: " + url);
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                     StringBuilder buf = new StringBuilder();
@@ -374,6 +379,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                     return true;
                 }
             });
+            //button.setContentDescription(contentDescription);
 //            Preference chooser = (Preference)findPreference(getString(R.string.chooser));
 //            chooser.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
 //                @Override
@@ -433,6 +439,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             });
             bindPreferenceSummaryToValue(findPreference("font"));
             bindPreferenceSummaryToValue(findPreference("loc"));
+            //bindPreferenceSummaryToValue(findPreference("return"));
         }
 
         //@Override
