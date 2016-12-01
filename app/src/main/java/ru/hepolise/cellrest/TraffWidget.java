@@ -23,6 +23,10 @@ import android.provider.Settings;
 import android.util.Log;
 import android.widget.RemoteViews;
 import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE;
+import static android.appwidget.AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT;
+import static android.appwidget.AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH;
+import static android.appwidget.AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT;
+import static android.appwidget.AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH;
 
 
 public class TraffWidget extends AppWidgetProvider {
@@ -69,6 +73,21 @@ public class TraffWidget extends AppWidgetProvider {
     @Override
     public void onDeleted(Context context, int[] appWidgetIds) {
         super.onDeleted(context, appWidgetIds);
+    }
+
+    @Override
+    public void onAppWidgetOptionsChanged (Context context,
+                                    AppWidgetManager appWidgetManager,
+                                    int appWidgetId,
+                                    Bundle newOptions) {
+        int max_h = newOptions.getInt(OPTION_APPWIDGET_MAX_HEIGHT);
+        int max_w = newOptions.getInt(OPTION_APPWIDGET_MAX_WIDTH);
+        int min_h = newOptions.getInt(OPTION_APPWIDGET_MIN_HEIGHT);
+        int min_w = newOptions.getInt(OPTION_APPWIDGET_MIN_WIDTH);
+        Log.d(LOG_TAG, "max_h: " + max_h);
+        Log.d(LOG_TAG, "max_w: " + max_w);
+        Log.d(LOG_TAG, "min_h: " + min_h);
+        Log.d(LOG_TAG, "min_w: " + min_w);
     }
 
     @Override
