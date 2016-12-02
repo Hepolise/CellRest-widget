@@ -40,6 +40,7 @@ import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
 
@@ -258,6 +259,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 if (loc.equals("def")) {
                     loc = locale;
                 }
+                String tz = TimeZone.getDefault().getID();
                 if (login.startsWith("+7")) {
                     login = login.substring(2);
                     Log.d(LOG_TAG, "+7 change: " + login);
@@ -297,7 +299,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                             "&loc=" + URLEncoder.encode(loc, "UTF-8") +
                             "&version=" + URLEncoder.encode(version, "UTF-8") +
                             "&token=" + URLEncoder.encode(token, "UTF-8") +
-                            "&return=" + URLEncoder.encode(return_, "UTF-8")
+                            "&return=" + URLEncoder.encode(return_, "UTF-8") +
+                            "&tz=" + URLEncoder.encode(tz, "UTF-8")
                             //+ "&test"
                     );
                     Log.d(LOG_TAG, "URL: " + url);

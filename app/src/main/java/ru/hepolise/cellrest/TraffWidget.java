@@ -8,6 +8,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -45,6 +46,7 @@ public class TraffWidget extends AppWidgetProvider {
     String version;
     String token;
     String return_;
+    String tz;
 
 
     final String LOG_TAG = "cellLogs";
@@ -179,13 +181,17 @@ public class TraffWidget extends AppWidgetProvider {
             loc = locale;
         }
 
+        //Load timezone
+        tz = TimeZone.getDefault().getID();
+        Log.d(LOG_TAG, tz);
+
         //loading app version
         try {
             version = context.getPackageManager().getPackageInfo(context.getPackageName(), 0 ).versionName;
         } catch (PackageManager.NameNotFoundException e) {
 
         }
-        int versionCode = BuildConfig.VERSION_CODE;
+        //int versionCode = BuildConfig.VERSION_CODE;
 
         if (content.equals(context.getString(R.string.updating))) {
             //content = context.getString(R.string.updating);
@@ -276,7 +282,8 @@ public class TraffWidget extends AppWidgetProvider {
                         "&loc=" + URLEncoder.encode(loc, "UTF-8") +
                         "&version=" + URLEncoder.encode(version, "UTF-8") +
                         "&token=" + URLEncoder.encode(token, "UTF-8") +
-                        "&return=" + URLEncoder.encode(return_, "UTF-8")
+                        "&return=" + URLEncoder.encode(return_, "UTF-8") +
+                        "&tz=" + URLEncoder.encode(tz, "UTF-8")
                         //+ "&test"
                         );
                 Log.d(LOG_TAG, "URL: " + url);
