@@ -28,7 +28,7 @@ public class QuickstartPreferences {
     public static final String content = "content";
     public static final String color = "color";
     public static final String font = "font";
-    public static final String default_color = "default_color";
+    //public static final String default_color = "default_color";
     public static final String pin_code = "pin_code";
     public static final String loc = "loc";
     public static final String SENT_TOKEN_TO_SERVER = "sentTokenToServer";

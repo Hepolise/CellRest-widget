@@ -210,12 +210,7 @@ public class TraffWidget extends AppWidgetProvider {
         RemoteViews widgetView = new RemoteViews(context.getPackageName(),
                 R.layout.widget);
         //Working with colors
-        int color =  shrpr.getInt(QuickstartPreferences.color, 0xff4d4d4d);
-        Boolean default_color =  shrpr.getBoolean(QuickstartPreferences.default_color, true);
-        if (default_color.equals(true)) {
-            color = 0xff4d4d4d;
-            shrpr.edit().putInt(QuickstartPreferences.color, -11711155).apply();
-        }
+        int color =  shrpr.getInt(QuickstartPreferences.color, 0xffffffff);
 
 
         //Setting warning about admin's account

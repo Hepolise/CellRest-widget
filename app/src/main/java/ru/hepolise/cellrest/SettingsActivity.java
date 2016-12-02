@@ -417,7 +417,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
-                    int initialColor =  shrpr.getInt(QuickstartPreferences.color, 0xff4d4d4d);
+                    int initialColor =  shrpr.getInt(QuickstartPreferences.color, 0xffffffff);
                     AmbilWarnaDialog dialog = new AmbilWarnaDialog(ctx, initialColor, new AmbilWarnaDialog.OnAmbilWarnaListener() {
                         @Override
                         public void onOk(AmbilWarnaDialog dialog, int color) {
@@ -425,7 +425,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ctx);
                             SharedPreferences.Editor editor = sharedPreferences.edit();
                             editor.putInt(QuickstartPreferences.color, color).apply();
-                            editor.putBoolean(QuickstartPreferences.default_color, false).apply();
                         }
 
                         @Override
