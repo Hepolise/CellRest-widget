@@ -132,7 +132,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
         // Trigger the listener immediately with the preference's
         // current value.
-        Log.d("traff", preference.toString());
+        //Log.d("traff", preference.toString());
         if (preference.toString().equals(preference.getContext().getString(R.string.pin_code_title))) {
             sBindPreferenceSummaryToValueListener.onPreferenceChange(preference,
                     PreferenceManager
@@ -262,10 +262,10 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 String tz = TimeZone.getDefault().getID();
                 if (login.startsWith("+7")) {
                     login = login.substring(2);
-                    Log.d(LOG_TAG, "+7 change: " + login);
+                    //Log.d(LOG_TAG, "+7 change: " + login);
                 } else if (login.startsWith("7") || login.startsWith("8")){
                     login = login.substring(1);
-                    Log.d(LOG_TAG, "7/8 change: " + login);
+                    //Log.d(LOG_TAG, "7/8 change: " + login);
                 }
 
                 if (op.equals("tele2")) {
@@ -273,7 +273,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                     pin_code = shrpr.getString(QuickstartPreferences.pin_code, "");
                     pass = "null";
                     android_id = Settings.Secure.getString(getActivity().getContentResolver(), Settings.Secure.ANDROID_ID);
-                    Log.d(LOG_TAG, "android_id " + android_id);
+                    //Log.d(LOG_TAG, "android_id " + android_id);
                 } else {
                     pass = shrpr.getString(QuickstartPreferences.pass, "");
                 }
@@ -303,7 +303,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                             "&tz=" + URLEncoder.encode(tz, "UTF-8")
                             //+ "&test"
                     );
-                    Log.d(LOG_TAG, "URL: " + url);
+                    //Log.d(LOG_TAG, "URL: " + url);
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                     StringBuilder buf = new StringBuilder();

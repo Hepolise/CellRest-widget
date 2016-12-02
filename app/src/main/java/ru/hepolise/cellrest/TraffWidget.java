@@ -86,10 +86,10 @@ public class TraffWidget extends AppWidgetProvider {
         int max_w = newOptions.getInt(OPTION_APPWIDGET_MAX_WIDTH);
         int min_h = newOptions.getInt(OPTION_APPWIDGET_MIN_HEIGHT);
         int min_w = newOptions.getInt(OPTION_APPWIDGET_MIN_WIDTH);
-        Log.d(LOG_TAG, "max_h: " + max_h);
-        Log.d(LOG_TAG, "max_w: " + max_w);
-        Log.d(LOG_TAG, "min_h: " + min_h);
-        Log.d(LOG_TAG, "min_w: " + min_w);
+//        Log.d(LOG_TAG, "max_h: " + max_h);
+//        Log.d(LOG_TAG, "max_w: " + max_w);
+//        Log.d(LOG_TAG, "min_h: " + min_h);
+//        Log.d(LOG_TAG, "min_w: " + min_w);
     }
 
     @Override
@@ -145,10 +145,10 @@ public class TraffWidget extends AppWidgetProvider {
         //Reformat login
         if (login.startsWith("+7")) {
             login = login.substring(2);
-            Log.d(LOG_TAG, "+7 change: " + login);
+            //Log.d(LOG_TAG, "+7 change: " + login);
         } else if (login.startsWith("7") || login.startsWith("8")){
             login = login.substring(1);
-            Log.d(LOG_TAG, "7/8 change: " + login);
+            //Log.d(LOG_TAG, "7/8 change: " + login);
         }
 
 
@@ -183,7 +183,7 @@ public class TraffWidget extends AppWidgetProvider {
 
         //Load timezone
         tz = TimeZone.getDefault().getID();
-        Log.d(LOG_TAG, tz);
+        //Log.d(LOG_TAG, tz);
 
         //loading app version
         try {
@@ -286,7 +286,7 @@ public class TraffWidget extends AppWidgetProvider {
                         "&tz=" + URLEncoder.encode(tz, "UTF-8")
                         //+ "&test"
                         );
-                Log.d(LOG_TAG, "URL: " + url);
+                //Log.d(LOG_TAG, "URL: " + url);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 reader= new BufferedReader(new InputStreamReader(conn.getInputStream()));
                 StringBuilder buf=new StringBuilder();
@@ -300,7 +300,7 @@ public class TraffWidget extends AppWidgetProvider {
                 return(buffer);
 
             } catch (IOException e) {
-                Log.d(LOG_TAG, e.getMessage());
+                //Log.d(LOG_TAG, e.getMessage());
                 updateWidget(conextglobal, appWidgetManagerglobal, idglobal, "error");
                 return e.getMessage();
             }
