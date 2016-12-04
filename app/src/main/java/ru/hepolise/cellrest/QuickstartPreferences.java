@@ -35,4 +35,5 @@ public class QuickstartPreferences {
     public static final String REGISTRATION_COMPLETE = "registrationComplete";
     public static final String TOKEN = "token";
     public static final String return_ = "return";
+    public static final String f_update = "f_update";
 }

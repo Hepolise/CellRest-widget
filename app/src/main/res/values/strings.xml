@@ -38,7 +38,7 @@
     <string name="button_colorpicker" translatable="false">ColorPicker</string>
     <string name="button_colorpicker_title">Color</string>
     <string name="tele2">Tele2 preferences</string>
-    <string name="beeline">Beeline preferences</string>
+    <string name="beeline">Beeline/Megafon preferences</string>
 
     <string name="other_settings">Test</string>
     <string name="request_sent">Please wait...</string>
@@ -58,7 +58,7 @@
     <string-array name="pref_op_list_titles">
         <item>Beeline</item>
         <item>Tele2</item>
-        <!--<item>Megafon</item>-->
+        <item>Megafon</item>
     </string-array>
     <string-array name="pref_op_list_values">
         <item>bee</item>

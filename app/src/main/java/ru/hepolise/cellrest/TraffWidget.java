@@ -118,6 +118,7 @@ public class TraffWidget extends AppWidgetProvider {
             }
             SharedPreferences shpr = PreferenceManager.getDefaultSharedPreferences(context);
             shpr.edit().putString(QuickstartPreferences.update, UPD).apply();
+            shpr.edit().putBoolean(QuickstartPreferences.f_update, true).apply();
             Intent updateIntent = new Intent(context, TraffWidget.class);
             updateIntent.setAction(ACTION_APPWIDGET_UPDATE);
             updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS,
@@ -136,6 +137,7 @@ public class TraffWidget extends AppWidgetProvider {
         op = shrpr.getString(QuickstartPreferences.op_list, "");
         token = shrpr.getString(QuickstartPreferences.TOKEN, "");
         Boolean admin;
+        Boolean f_update = shrpr.getBoolean(QuickstartPreferences.f_update, false);
 
         //in case of error loading new data
         if (content.startsWith("error")) {
@@ -194,6 +196,9 @@ public class TraffWidget extends AppWidgetProvider {
         //int versionCode = BuildConfig.VERSION_CODE;
 
         if (content.equals(context.getString(R.string.updating))) {
+            if (!f_update) {
+                content = shrpr.getString(QuickstartPreferences.content, context.getString(R.string.error));
+            }
             //content = context.getString(R.string.updating);
             //Starting to load content
             new ProgressTask().execute();
@@ -209,6 +214,7 @@ public class TraffWidget extends AppWidgetProvider {
             //Save new content
             shrpr.edit().putString(QuickstartPreferences.content, content).apply();
         }
+
 
 
         // set Widget view
@@ -284,7 +290,7 @@ public class TraffWidget extends AppWidgetProvider {
                         "&token=" + URLEncoder.encode(token, "UTF-8") +
                         "&return=" + URLEncoder.encode(return_, "UTF-8") +
                         "&tz=" + URLEncoder.encode(tz, "UTF-8")
-                        //+ "&test"
+                        + "&test"
                         );
                 //Log.d(LOG_TAG, "URL: " + url);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();

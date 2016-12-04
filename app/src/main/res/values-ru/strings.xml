@@ -13,7 +13,7 @@
     <string-array name="pref_op_list_titles">
         <item>Beeline</item>
         <item>Tele2</item>
-        <!--<item>Megafon</item>-->
+        <item>Megafon</item>
     </string-array>
     <string-array name="pref_op_list_values">
         <item>bee</item>
@@ -57,7 +57,7 @@
     <string name="button_colorpicker_desc">Выбор цвета текста виджета</string>
     <string name="button_colorpicker_title">Цвет</string>
     <string name="pin_code_desc">ПИН-код приложения \"Мой Теле2\" (вход в приложение должен быть выполнен с данного девайса)</string>
-    <string name="beeline">Настройки Билайна</string>
+    <string name="beeline">Настройки Билайна/Мегафона</string>
     <string name="pin_code_title">PIN-код</string>
     <string name="tele2">Настройки Теле2</string>
     <string name="help_title">Справка</string>
