@@ -196,10 +196,10 @@ public class TraffWidget extends AppWidgetProvider {
         //int versionCode = BuildConfig.VERSION_CODE;
 
         if (content.equals(context.getString(R.string.updating))) {
-            if (!f_update) {
-                content = shrpr.getString(QuickstartPreferences.content, context.getString(R.string.error));
-            } else{
+            if (f_update) {
                 shrpr.edit().putBoolean(QuickstartPreferences.f_update, false).apply();
+            } else {
+                content = shrpr.getString(QuickstartPreferences.content, context.getString(R.string.error));
             }
             //content = context.getString(R.string.updating);
             //Starting to load content
