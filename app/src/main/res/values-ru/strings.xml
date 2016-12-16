@@ -78,4 +78,5 @@
     <string name="error">Произошла ошибка. Вы ввели верные данные?</string>
     <string name="return_title">Вид возвращаемых данных</string>
     <string name="return_desc">Выбрать тип данных в виджете: с расчётом на текущий день и без</string>
+    <string name="server_down">В данный момент сервер не доступен, пожалуйста, попробуйте позже</string>
 </resources>
