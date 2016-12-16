@@ -320,10 +320,11 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                     return (buffer);
 
                 } catch (IOException e) {
-                    content = e.getMessage();
                     if (e.getMessage().equals("No route to host")) {
+                        content = ctx.getString(R.string.server_down);
                         return ctx.getString(R.string.server_down);
                     } else {
+                        content = e.getMessage();
                         return e.getMessage();
                     }
                 }
