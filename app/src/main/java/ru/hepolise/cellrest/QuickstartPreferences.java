@@ -36,4 +36,17 @@ public class QuickstartPreferences {
     public static final String TOKEN = "token";
     public static final String return_ = "return";
     public static final String f_update = "f_update";
+    public static final String time = "time";
+    public static final String ok = "ok";
+    //public static final String foo = "foo";
+    //public static final String bar = "bar";
+    public static final String dtr = "dtr";
+    public static final String dtn = "dtn";
+    public static final String balance = "balance";
+    public static final String leftmin = "leftmin";
+    public static final String leftsms = "leftsms";
+    public static final String maxsms = "maxsms";
+    public static final String maxmin = "maxmin";
+    public static final String max = "max";
+
 }

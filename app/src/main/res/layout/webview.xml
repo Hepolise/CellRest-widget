@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#e0e0e0"
-    tools:context=".help_activity"
+    tools:context=".HelpActivity"
     tools:ignore="MergeRootFrame">
 
     <WebView
