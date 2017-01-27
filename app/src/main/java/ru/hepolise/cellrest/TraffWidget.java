@@ -101,21 +101,7 @@ public class TraffWidget extends AppWidgetProvider {
     public void onDeleted(Context context, int[] appWidgetIds) {
         super.onDeleted(context, appWidgetIds);
     }
-//
-//    @Override
-//    public void onAppWidgetOptionsChanged (Context context,
-//                                    AppWidgetManager appWidgetManager,
-//                                    int appWidgetId,
-//                                    Bundle newOptions) {
-//        int max_h = newOptions.getInt(OPTION_APPWIDGET_MAX_HEIGHT);
-//        int max_w = newOptions.getInt(OPTION_APPWIDGET_MAX_WIDTH);
-//        int min_h = newOptions.getInt(OPTION_APPWIDGET_MIN_HEIGHT);
-//        int min_w = newOptions.getInt(OPTION_APPWIDGET_MIN_WIDTH);
-//        Log.d(LOG_TAG, "max_h: " + max_h);
-//        Log.d(LOG_TAG, "max_w: " + max_w);
-//        Log.d(LOG_TAG, "min_h: " + min_h);
-//        Log.d(LOG_TAG, "min_w: " + min_w);
-//    }
+
 
     @Override
     public void onDisabled(Context context) {
@@ -156,12 +142,13 @@ public class TraffWidget extends AppWidgetProvider {
     private String getDate(long timeStamp){
 
         try{
-            DateFormat sdf = DateFormat.getTimeInstance();
+            DateFormat data = DateFormat.getDateInstance(DateFormat.SHORT);
+            DateFormat time = DateFormat.getTimeInstance(DateFormat.SHORT);
             Date netDate = (new Date(timeStamp));
-            return sdf.format(netDate);
+            return time.format(netDate) + "\n" + data.format(netDate);
         }
         catch(Exception ex){
-            return "xx";
+            return "0";
         }
     }
 
@@ -191,41 +178,13 @@ public class TraffWidget extends AppWidgetProvider {
                 Color.colorToHSV(pixel, srcHSV);
                 Color.colorToHSV(dstColor, dstHSV);
 
-                // If it area to be painted set only value of original image
-                //dstHSV[2] = srcHSV[2];  // value
+
                 dstBitmap.setPixel(col, row, Color.HSVToColor(alpha, dstHSV));
             }
         }
 
         return dstBitmap;
     }
-
-//    public Bitmap getColoredBitmap(int color, Bitmap srcBmp) {
-//        //Bitmap source = BitmapFactory.decodeResource(context.getResources(),
-//                //drawableId);
-//        final Bitmap bitmap = Bitmap.createBitmap(srcBmp.getWidth(),
-//                srcBmp.getHeight(), Bitmap.Config.ARGB_8888);
-//        for (int i = 0; i < srcBmp.getWidth(); i++) {
-//            for (int j = 0; j < srcBmp.getHeight(); j++) {
-//                int pixel = srcBmp.getPixel(i, j);
-//
-//                // if (pixel == Color.TRANSPARENT) {
-//                //
-//                // } else
-//                if (pixel == Color.WHITE) {
-//                    pixel = Color.argb(Color.alpha(pixel),
-//                            Color.red(Color.WHITE), Color.green(Color.WHITE),
-//                            Color.blue(Color.WHITE));
-//                } else {
-//                    pixel = Color.argb(Color.alpha(pixel), Color.red(color),
-//                            Color.green(color), Color.blue(color));
-//                }
-//                bitmap.setPixel(i, j, pixel);
-//            }
-//        }
-//        return  bitmap;
-//    }
-
 
 
     public String updateWidget(Context context, AppWidgetManager appWidgetManager,
@@ -239,11 +198,6 @@ public class TraffWidget extends AppWidgetProvider {
         token = shrpr.getString(QuickstartPreferences.TOKEN, "");
         Boolean f_update = shrpr.getBoolean(QuickstartPreferences.f_update, false);
 
-        //in case of error loading new data
-//        if (content.startsWith("error")) {
-//            content = shrpr.getString(QuickstartPreferences.content, context.getString(R.string.error));
-//        }
-
 
         String max = "";
         String time = "";
@@ -256,27 +210,35 @@ public class TraffWidget extends AppWidgetProvider {
         String dtr = "";
         String balance = "";
         String date = "";
+        String left = "";
 
         //if (content.equals("success")) {
-            time = shrpr.getString(QuickstartPreferences.time, "0");
-            ok = shrpr.getString(QuickstartPreferences.ok, "");
-            leftmin = shrpr.getString(QuickstartPreferences.leftmin, "");
-            leftsms =  shrpr.getString(QuickstartPreferences.leftsms, "");
-            maxmin = shrpr.getString(QuickstartPreferences.maxmin, "");
-            maxsms =  shrpr.getString(QuickstartPreferences.maxsms, "");
-            max = shrpr.getString(QuickstartPreferences.max, "");
-            dtn = shrpr.getString(QuickstartPreferences.dtn, "-1");
-            dtr = shrpr.getString(QuickstartPreferences.dtr, "");
-            balance = shrpr.getString(QuickstartPreferences.balance, "");
+        time = shrpr.getString(QuickstartPreferences.time, "0");
+        ok = shrpr.getString(QuickstartPreferences.ok, "");
+        leftmin = shrpr.getString(QuickstartPreferences.leftmin, "");
+        leftsms =  shrpr.getString(QuickstartPreferences.leftsms, "");
+        maxmin = shrpr.getString(QuickstartPreferences.maxmin, "");
+        maxsms =  shrpr.getString(QuickstartPreferences.maxsms, "");
+        max = shrpr.getString(QuickstartPreferences.max, "");
+        dtn = shrpr.getString(QuickstartPreferences.dtn, "0");
+        dtr = shrpr.getString(QuickstartPreferences.dtr, "");
+        left = shrpr.getString(QuickstartPreferences.left, "");
+        balance = shrpr.getString(QuickstartPreferences.balance, "");
+        //balance = "10000";
 
 
+        try {
             //convert unix epoch timestamp (seconds) to milliseconds
             long timestamp = Long.parseLong(time) * 1000L;
-            date = getDate(timestamp );
+            date = getDate(timestamp);
 
 
             long days_to_new = Long.parseLong(dtn);
             dtn = plurals(days_to_new, "день", "дня", "дней");
+        } catch (NumberFormatException e){
+            Log.e(LOG_TAG, e.getMessage());
+            content = "error";
+        }
         //}
         //Reformat login
         if (login.startsWith("+7")) {
@@ -399,9 +361,9 @@ public class TraffWidget extends AppWidgetProvider {
 //                widgetView.setTextViewText(R.id.renew, "");
                 //if (Build.VERSION.SDK_INT >= 23) {
                 // Marshmallow+
-                widgetView.setImageViewResource(R.id.calls_logo, 0);
-                widgetView.setImageViewResource(R.id.sms_logo, 0);
-                widgetView.setImageViewResource(R.id.inet_logo, 0);
+                widgetView.setImageViewBitmap(R.id.calls_logo, null);
+                widgetView.setImageViewBitmap(R.id.sms_logo, null);
+                widgetView.setImageViewBitmap(R.id.inet_logo, null);
                 //}
                 if (font.equals("n")) {
                     widgetView.setTextViewText(R.id.text_upd, context.getString(R.string.updating));
@@ -442,9 +404,9 @@ public class TraffWidget extends AppWidgetProvider {
 
 
             if (ok.equals("")) {
-                widgetView.setImageViewResource(R.id.calls_logo, 0);
-                widgetView.setImageViewResource(R.id.sms_logo, 0);
-                widgetView.setImageViewResource(R.id.inet_logo, 0);
+                widgetView.setImageViewBitmap(R.id.calls_logo, null);
+                widgetView.setImageViewBitmap(R.id.sms_logo, null);
+                widgetView.setImageViewBitmap(R.id.inet_logo, null);
                 //}
                 if (font.equals("n")) {
                     widgetView.setTextViewText(R.id.text_upd, context.getString(R.string.error));
@@ -457,22 +419,32 @@ public class TraffWidget extends AppWidgetProvider {
                     widgetView.setTextColor(R.id.text_upd_bold, color);
                 }
             } else {
-
-                //Save new content
-                //shrpr.edit().putString(QuickstartPreferences.content, content).apply();
-
                 //set text view
 
+                String sms;
+                String min;
+                String inet;
+                if (return_.equals("calc")) {
+                    sms = maxsms;
+                    min = maxmin;
+                    inet = max;
+                } else {
+                    sms = leftsms;
+                    min = leftmin;
+                    inet = left;
+                }
+
+
                 if (font.equals("n")) {
-                    widgetView.setTextViewText(R.id.inet, max);
-                    widgetView.setTextViewText(R.id.calls, maxmin);
+                    widgetView.setTextViewText(R.id.inet, inet);
+                    widgetView.setTextViewText(R.id.calls, min);
                     //for center of image
                     if (maxsms.length() % 2 == 0) {
-                        widgetView.setTextViewText(R.id.sms, maxsms + " ");
+                        widgetView.setTextViewText(R.id.sms, sms + " ");
                     } else {
-                        widgetView.setTextViewText(R.id.sms, maxsms + "  ");
+                        widgetView.setTextViewText(R.id.sms, sms + "  ");
                     }
-                    widgetView.setTextViewText(R.id.balance, balance + " \u20BD");
+                    widgetView.setTextViewText(R.id.balance, " " + balance + " \u20BD");
                     widgetView.setTextViewText(R.id.date, date);
                     widgetView.setTextViewText(R.id.renew, "Сброс через\n" + dtn);
 
@@ -484,13 +456,13 @@ public class TraffWidget extends AppWidgetProvider {
                     widgetView.setTextColor(R.id.date, color);
                     widgetView.setTextColor(R.id.renew, color);
                 } else if (font.equals("i")) {
-                    widgetView.setTextViewText(R.id.inet_italic, max);
-                    widgetView.setTextViewText(R.id.calls_italic, maxmin);
+                    widgetView.setTextViewText(R.id.inet_italic, inet);
+                    widgetView.setTextViewText(R.id.calls_italic, min);
                     //for center of image
                     if (maxsms.length() % 2 == 0) {
-                        widgetView.setTextViewText(R.id.sms_italic, maxsms + " ");
+                        widgetView.setTextViewText(R.id.sms_italic, sms + " ");
                     } else {
-                        widgetView.setTextViewText(R.id.sms_italic, maxsms + "  ");
+                        widgetView.setTextViewText(R.id.sms_italic, sms + "  ");
                     }
                     widgetView.setTextViewText(R.id.balance_italic, balance + " \u20BD");
                     widgetView.setTextViewText(R.id.date_italic, date);
@@ -503,13 +475,13 @@ public class TraffWidget extends AppWidgetProvider {
                     widgetView.setTextColor(R.id.date_italic, color);
                     widgetView.setTextColor(R.id.renew_italic, color);
                 } else if (font.equals("b")) {
-                    widgetView.setTextViewText(R.id.inet_bold, max);
-                    widgetView.setTextViewText(R.id.calls_bold, maxmin);
+                    widgetView.setTextViewText(R.id.inet_bold, inet);
+                    widgetView.setTextViewText(R.id.calls_bold, min);
                     //for center of image
                     if (maxsms.length() % 2 == 0) {
-                        widgetView.setTextViewText(R.id.sms_bold, maxsms + " ");
+                        widgetView.setTextViewText(R.id.sms_bold, sms + " ");
                     } else {
-                        widgetView.setTextViewText(R.id.sms_bold, maxsms + "  ");
+                        widgetView.setTextViewText(R.id.sms_bold, sms + "  ");
                     }
                     widgetView.setTextViewText(R.id.balance_bold, balance + " \u20BD");
                     widgetView.setTextViewText(R.id.date_bold, date);
@@ -526,9 +498,9 @@ public class TraffWidget extends AppWidgetProvider {
 
 
                 //set image view
-                widgetView.setImageViewResource(R.id.calls_logo, 0);
-                widgetView.setImageViewResource(R.id.sms_logo, R.drawable.ic_message_white_48dp);
-                widgetView.setImageViewResource(R.id.inet_logo, R.drawable.ic_data_usage_white_48dp);
+//                widgetView.setImageViewResource(R.id.calls_logo, 0);
+//                widgetView.setImageViewResource(R.id.sms_logo, R.drawable.ic_message_white_48dp);
+//                widgetView.setImageViewResource(R.id.inet_logo, R.drawable.ic_data_usage_white_48dp);
 
 
                 //Log.d( LOG_TAG, String.valueOf(maxsms.length()));
@@ -646,7 +618,7 @@ public class TraffWidget extends AppWidgetProvider {
                         //"&loc=" + URLEncoder.encode(loc, "UTF-8") +
                         "&version=" + URLEncoder.encode(version, "UTF-8") +
                         "&token=" + URLEncoder.encode(token, "UTF-8") +
-                        "&return=" + URLEncoder.encode(return_, "UTF-8") +
+                        //"&return=" + URLEncoder.encode(return_, "UTF-8") +
                         "&tz=" + URLEncoder.encode(tz, "UTF-8")
                         + "&test"
                         );
@@ -686,6 +658,8 @@ public class TraffWidget extends AppWidgetProvider {
                     Log.d("json", "dtr " + dtr);
                     String dtn = jsonObject.getString("dtn");
                     Log.d("json", "dtn " + dtn);
+                    String left = jsonObject.getString("left");
+                    Log.d("json", "left " + left);
                     String balance = jsonObject.getString("balance");
                     Log.d("json", "balance " + balance);
                     Log.d("json", jsonObject.toString());
@@ -699,12 +673,16 @@ public class TraffWidget extends AppWidgetProvider {
                     shrpr.edit().putString(QuickstartPreferences.max, max).apply();
                     shrpr.edit().putString(QuickstartPreferences.dtr, dtr).apply();
                     shrpr.edit().putString(QuickstartPreferences.dtn, dtn).apply();
+                    shrpr.edit().putString(QuickstartPreferences.left, left).apply();
                     shrpr.edit().putString(QuickstartPreferences.balance, balance).apply();
 
                     updateWidget(conextglobal, appWidgetManagerglobal, idglobal, "success");
                     return(buffer);
 
                 } catch (JSONException e){
+//                    JSONObject jsonObject = new JSONObject(buffer)
+//                    String error = jsonObject.getString("error");
+//                    Log.d("json", "error " + error);
                     Log.d("json", e.getMessage());
                     updateWidget(conextglobal, appWidgetManagerglobal, idglobal, "error");
                     return e.getMessage();

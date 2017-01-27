@@ -48,6 +48,7 @@ public class QuickstartPreferences {
     public static final String maxsms = "maxsms";
     public static final String maxmin = "maxmin";
     public static final String max = "max";
+    public static final String left = "left";
     public static final String color_text = "color_text";
 
 }
