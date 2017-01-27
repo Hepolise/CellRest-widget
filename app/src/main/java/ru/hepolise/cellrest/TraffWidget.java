@@ -192,13 +192,40 @@ public class TraffWidget extends AppWidgetProvider {
                 Color.colorToHSV(dstColor, dstHSV);
 
                 // If it area to be painted set only value of original image
-                dstHSV[2] = srcHSV[2];  // value
+                //dstHSV[2] = srcHSV[2];  // value
                 dstBitmap.setPixel(col, row, Color.HSVToColor(alpha, dstHSV));
             }
         }
 
         return dstBitmap;
     }
+
+//    public Bitmap getColoredBitmap(int color, Bitmap srcBmp) {
+//        //Bitmap source = BitmapFactory.decodeResource(context.getResources(),
+//                //drawableId);
+//        final Bitmap bitmap = Bitmap.createBitmap(srcBmp.getWidth(),
+//                srcBmp.getHeight(), Bitmap.Config.ARGB_8888);
+//        for (int i = 0; i < srcBmp.getWidth(); i++) {
+//            for (int j = 0; j < srcBmp.getHeight(); j++) {
+//                int pixel = srcBmp.getPixel(i, j);
+//
+//                // if (pixel == Color.TRANSPARENT) {
+//                //
+//                // } else
+//                if (pixel == Color.WHITE) {
+//                    pixel = Color.argb(Color.alpha(pixel),
+//                            Color.red(Color.WHITE), Color.green(Color.WHITE),
+//                            Color.blue(Color.WHITE));
+//                } else {
+//                    pixel = Color.argb(Color.alpha(pixel), Color.red(color),
+//                            Color.green(color), Color.blue(color));
+//                }
+//                bitmap.setPixel(i, j, pixel);
+//            }
+//        }
+//        return  bitmap;
+//    }
+
 
 
     public String updateWidget(Context context, AppWidgetManager appWidgetManager,
@@ -302,6 +329,7 @@ public class TraffWidget extends AppWidgetProvider {
         RemoteViews widgetView = new RemoteViews(context.getPackageName(),
                 R.layout.widget);
         int color =  shrpr.getInt(QuickstartPreferences.color, 0xffffffff);
+        //color = 0x00000000;
 
 
         if (content.equals(context.getString(R.string.updating))) {
