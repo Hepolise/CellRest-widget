@@ -292,7 +292,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 } catch (PackageManager.NameNotFoundException e) {
 
                 }
-                Boolean admin = login.equals("");
                 try {
                     URL url = new URL("https://srvr.tk/traf.php?cmd=widget&upd=" + UPD +
                             "&login=" + URLEncoder.encode(login, "UTF-8") +
@@ -305,7 +304,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                             "&token=" + URLEncoder.encode(token, "UTF-8") +
                             "&return=" + URLEncoder.encode(return_, "UTF-8") +
                             "&tz=" + URLEncoder.encode(tz, "UTF-8")
-                            //+ "&test"
+                            + "&test"
                     );
                     Log.d(LOG_TAG, "URL: " + url);
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -317,9 +316,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                     }
                     String buffer = buf.toString();
                     buffer = buffer.replace(" NEWLINE ", "\n");
-                    if (admin) {
-                        buffer = buffer + "\n" + ctx.getString(R.string.admin_acc);
-                    }
                     content = buffer;
                     return (buffer);
 

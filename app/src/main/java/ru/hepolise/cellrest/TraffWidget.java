@@ -258,14 +258,14 @@ public class TraffWidget extends AppWidgetProvider {
         String date = "";
 
         //if (content.equals("success")) {
-            time = shrpr.getString(QuickstartPreferences.time, "");
+            time = shrpr.getString(QuickstartPreferences.time, "0");
             ok = shrpr.getString(QuickstartPreferences.ok, "");
             leftmin = shrpr.getString(QuickstartPreferences.leftmin, "");
             leftsms =  shrpr.getString(QuickstartPreferences.leftsms, "");
             maxmin = shrpr.getString(QuickstartPreferences.maxmin, "");
             maxsms =  shrpr.getString(QuickstartPreferences.maxsms, "");
             max = shrpr.getString(QuickstartPreferences.max, "");
-            dtn = shrpr.getString(QuickstartPreferences.dtn, "");
+            dtn = shrpr.getString(QuickstartPreferences.dtn, "-1");
             dtr = shrpr.getString(QuickstartPreferences.dtr, "");
             balance = shrpr.getString(QuickstartPreferences.balance, "");
 
@@ -441,24 +441,97 @@ public class TraffWidget extends AppWidgetProvider {
 
 
 
-
-            //Save new content
-            //shrpr.edit().putString(QuickstartPreferences.content, content).apply();
-
-            //set text view
-
-            if (font.equals("n")) {
-                widgetView.setTextViewText(R.id.inet, max);
-                widgetView.setTextViewText(R.id.calls, maxmin);
-                //for center of image
-                if (maxsms.length() % 2 == 0) {
-                    widgetView.setTextViewText(R.id.sms, maxsms + " ");
-                } else {
-                    widgetView.setTextViewText(R.id.sms, maxsms + "  ");
+            if (ok.equals("")) {
+                widgetView.setImageViewResource(R.id.calls_logo, 0);
+                widgetView.setImageViewResource(R.id.sms_logo, 0);
+                widgetView.setImageViewResource(R.id.inet_logo, 0);
+                //}
+                if (font.equals("n")) {
+                    widgetView.setTextViewText(R.id.text_upd, context.getString(R.string.error));
+                    widgetView.setTextColor(R.id.text_upd, color);
+                } else if (font.equals("i")) {
+                    widgetView.setTextViewText(R.id.text_upd_italic, context.getString(R.string.error));
+                    widgetView.setTextColor(R.id.text_upd_italic, color);
+                } else if (font.equals("b")) {
+                    widgetView.setTextViewText(R.id.text_upd_bold, context.getString(R.string.error));
+                    widgetView.setTextColor(R.id.text_upd_bold, color);
                 }
-                widgetView.setTextViewText(R.id.balance, balance + " \u20BD");
-                widgetView.setTextViewText(R.id.date, date);
-                widgetView.setTextViewText(R.id.renew, "Сброс через\n" + dtn);
+            } else {
+
+                //Save new content
+                //shrpr.edit().putString(QuickstartPreferences.content, content).apply();
+
+                //set text view
+
+                if (font.equals("n")) {
+                    widgetView.setTextViewText(R.id.inet, max);
+                    widgetView.setTextViewText(R.id.calls, maxmin);
+                    //for center of image
+                    if (maxsms.length() % 2 == 0) {
+                        widgetView.setTextViewText(R.id.sms, maxsms + " ");
+                    } else {
+                        widgetView.setTextViewText(R.id.sms, maxsms + "  ");
+                    }
+                    widgetView.setTextViewText(R.id.balance, balance + " \u20BD");
+                    widgetView.setTextViewText(R.id.date, date);
+                    widgetView.setTextViewText(R.id.renew, "Сброс через\n" + dtn);
+
+
+                    widgetView.setTextColor(R.id.inet, color);
+                    widgetView.setTextColor(R.id.calls, color);
+                    widgetView.setTextColor(R.id.sms, color);
+                    widgetView.setTextColor(R.id.balance, color);
+                    widgetView.setTextColor(R.id.date, color);
+                    widgetView.setTextColor(R.id.renew, color);
+                } else if (font.equals("i")) {
+                    widgetView.setTextViewText(R.id.inet_italic, max);
+                    widgetView.setTextViewText(R.id.calls_italic, maxmin);
+                    //for center of image
+                    if (maxsms.length() % 2 == 0) {
+                        widgetView.setTextViewText(R.id.sms_italic, maxsms + " ");
+                    } else {
+                        widgetView.setTextViewText(R.id.sms_italic, maxsms + "  ");
+                    }
+                    widgetView.setTextViewText(R.id.balance_italic, balance + " \u20BD");
+                    widgetView.setTextViewText(R.id.date_italic, date);
+                    widgetView.setTextViewText(R.id.renew_italic, "Сброс через\n" + dtn);
+
+                    widgetView.setTextColor(R.id.inet_italic, color);
+                    widgetView.setTextColor(R.id.calls_italic, color);
+                    widgetView.setTextColor(R.id.sms_italic, color);
+                    widgetView.setTextColor(R.id.balance_italic, color);
+                    widgetView.setTextColor(R.id.date_italic, color);
+                    widgetView.setTextColor(R.id.renew_italic, color);
+                } else if (font.equals("b")) {
+                    widgetView.setTextViewText(R.id.inet_bold, max);
+                    widgetView.setTextViewText(R.id.calls_bold, maxmin);
+                    //for center of image
+                    if (maxsms.length() % 2 == 0) {
+                        widgetView.setTextViewText(R.id.sms_bold, maxsms + " ");
+                    } else {
+                        widgetView.setTextViewText(R.id.sms_bold, maxsms + "  ");
+                    }
+                    widgetView.setTextViewText(R.id.balance_bold, balance + " \u20BD");
+                    widgetView.setTextViewText(R.id.date_bold, date);
+                    widgetView.setTextViewText(R.id.renew_bold, "Сброс через\n" + dtn);
+
+
+                    widgetView.setTextColor(R.id.inet_bold, color);
+                    widgetView.setTextColor(R.id.calls_bold, color);
+                    widgetView.setTextColor(R.id.sms_bold, color);
+                    widgetView.setTextColor(R.id.balance_bold, color);
+                    widgetView.setTextColor(R.id.date_bold, color);
+                    widgetView.setTextColor(R.id.renew_bold, color);
+                }
+
+
+                //set image view
+                widgetView.setImageViewResource(R.id.calls_logo, 0);
+                widgetView.setImageViewResource(R.id.sms_logo, R.drawable.ic_message_white_48dp);
+                widgetView.setImageViewResource(R.id.inet_logo, R.drawable.ic_data_usage_white_48dp);
+
+
+                //Log.d( LOG_TAG, String.valueOf(maxsms.length()));
 
 
                 widgetView.setTextColor(R.id.inet, color);
@@ -467,86 +540,25 @@ public class TraffWidget extends AppWidgetProvider {
                 widgetView.setTextColor(R.id.balance, color);
                 widgetView.setTextColor(R.id.date, color);
                 widgetView.setTextColor(R.id.renew, color);
-            } else if (font.equals("i")) {
-                widgetView.setTextViewText(R.id.inet_italic, max);
-                widgetView.setTextViewText(R.id.calls_italic, maxmin);
-                //for center of image
-                if (maxsms.length() % 2 == 0) {
-                    widgetView.setTextViewText(R.id.sms_italic, maxsms + " ");
-                } else {
-                    widgetView.setTextViewText(R.id.sms_italic, maxsms + "  ");
-                }
-                widgetView.setTextViewText(R.id.balance_italic, balance + " \u20BD");
-                widgetView.setTextViewText(R.id.date_italic, date);
-                widgetView.setTextViewText(R.id.renew_italic, "Сброс через\n" + dtn);
-
-                widgetView.setTextColor(R.id.inet_italic, color);
-                widgetView.setTextColor(R.id.calls_italic, color);
-                widgetView.setTextColor(R.id.sms_italic, color);
-                widgetView.setTextColor(R.id.balance_italic, color);
-                widgetView.setTextColor(R.id.date_italic, color);
-                widgetView.setTextColor(R.id.renew_italic, color);
-            } else if (font.equals("b")){
-                widgetView.setTextViewText(R.id.inet_bold, max);
-                widgetView.setTextViewText(R.id.calls_bold, maxmin);
-                //for center of image
-                if (maxsms.length() % 2 == 0) {
-                    widgetView.setTextViewText(R.id.sms_bold, maxsms + " ");
-                } else {
-                    widgetView.setTextViewText(R.id.sms_bold, maxsms + "  ");
-                }
-                widgetView.setTextViewText(R.id.balance_bold, balance + " \u20BD");
-                widgetView.setTextViewText(R.id.date_bold, date);
-                widgetView.setTextViewText(R.id.renew_bold, "Сброс через\n" + dtn);
 
 
-                widgetView.setTextColor(R.id.inet_bold, color);
-                widgetView.setTextColor(R.id.calls_bold, color);
-                widgetView.setTextColor(R.id.sms_bold, color);
-                widgetView.setTextColor(R.id.balance_bold, color);
-                widgetView.setTextColor(R.id.date_bold, color);
-                widgetView.setTextColor(R.id.renew_bold, color);
+                Drawable icon_calls = ContextCompat.getDrawable(context, R.drawable.ic_local_phone_white_48dp);
+                Bitmap b_icon_calls = ((BitmapDrawable) icon_calls).getBitmap();
+                b_icon_calls = colorize(b_icon_calls, color);
+                widgetView.setImageViewBitmap(R.id.calls_logo, b_icon_calls);
+
+                Drawable icon_inet = ContextCompat.getDrawable(context, R.drawable.ic_data_usage_white_48dp);
+                Bitmap b_icon_inet = ((BitmapDrawable) icon_inet).getBitmap();
+                b_icon_inet = colorize(b_icon_inet, color);
+                widgetView.setImageViewBitmap(R.id.inet_logo, b_icon_inet);
+
+                Drawable icon_sms = ContextCompat.getDrawable(context, R.drawable.ic_message_white_48dp);
+                Bitmap b_icon_sms = ((BitmapDrawable) icon_sms).getBitmap();
+                b_icon_sms = colorize(b_icon_sms, color);
+                widgetView.setImageViewBitmap(R.id.sms_logo, b_icon_sms);
+
+
             }
-
-
-
-            //set image view
-            widgetView.setImageViewResource(R.id.calls_logo, 0);
-            widgetView.setImageViewResource(R.id.sms_logo, R.drawable.ic_message_white_48dp);
-            widgetView.setImageViewResource(R.id.inet_logo, R.drawable.ic_data_usage_white_48dp);
-
-
-
-            //Log.d( LOG_TAG, String.valueOf(maxsms.length()));
-
-
-
-
-            widgetView.setTextColor(R.id.inet, color);
-            widgetView.setTextColor(R.id.calls, color);
-            widgetView.setTextColor(R.id.sms, color);
-            widgetView.setTextColor(R.id.balance, color);
-            widgetView.setTextColor(R.id.date, color);
-            widgetView.setTextColor(R.id.renew, color);
-
-
-
-            Drawable icon_calls = ContextCompat.getDrawable(context, R.drawable.ic_local_phone_white_48dp);
-            Bitmap b_icon_calls = ((BitmapDrawable) icon_calls).getBitmap();
-            b_icon_calls = colorize(b_icon_calls, color);
-            widgetView.setImageViewBitmap(R.id.calls_logo, b_icon_calls);
-
-            Drawable icon_inet = ContextCompat.getDrawable(context, R.drawable.ic_data_usage_white_48dp);
-            Bitmap b_icon_inet = ((BitmapDrawable) icon_inet).getBitmap();
-            b_icon_inet = colorize(b_icon_inet, color);
-            widgetView.setImageViewBitmap(R.id.inet_logo, b_icon_inet);
-
-            Drawable icon_sms = ContextCompat.getDrawable(context, R.drawable.ic_message_white_48dp);
-            Bitmap b_icon_sms = ((BitmapDrawable) icon_sms).getBitmap();
-            b_icon_sms = colorize(b_icon_sms, color);
-            widgetView.setImageViewBitmap(R.id.sms_logo, b_icon_sms);
-
-
 
 
 

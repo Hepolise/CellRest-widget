@@ -10,6 +10,9 @@
 
     <string name="widget_settings_color">Widget\'s color</string>
 
+
+    <string name="error">An error ecorred, please check settings</string>
+
     <string name="widget_settings_color_text">Widget\'s color by code</string>
     <string name="widget_settings_color_text_desc">Set widget\'s color by code</string>
 
@@ -44,7 +47,6 @@
     <string name="request_sent">Please wait...</string>
     <string name="help_title">Help</string>
     <string name="about_title">About</string>
-    <string name="admin_acc">Creator\'s account</string>
     <string name="about_write"><![CDATA[<a href="%1$s">Contact the author of the application</a>]]></string>
 
     <string name="return_title">Type returning data</string>

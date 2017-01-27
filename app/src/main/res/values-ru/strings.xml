@@ -67,7 +67,6 @@
     <string name="about_contact">Открытый исходный код приложения:
         <![CDATA[<a href="%1$s">Github</a>]]>.</string>
     <string name="about_title">О приложении</string>
-    <string name="admin_acc">Аккаунт автора</string>
     <string name="about_write"><![CDATA[<a href="%1$s">Связаться с автором приложения</a>]]></string>
     <string name="widget_name">CellRest виджет</string>
     <string name="other_settings">Проверка</string>
@@ -77,4 +76,5 @@
     <string name="widget_settings_color">Цвет виджета</string>
     <string name="widget_settings_color_text">Цвет виджета по коду</string>
     <string name="widget_settings_color_text_desc">Установить цвет виджета по коду цвета</string>
+    <string name="error">Произошла какая-то ошибка, пожалуйста, вернитесь к настройкам</string>
 </resources>
