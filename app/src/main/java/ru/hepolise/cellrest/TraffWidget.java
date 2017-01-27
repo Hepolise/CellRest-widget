@@ -328,10 +328,60 @@ public class TraffWidget extends AppWidgetProvider {
 
         RemoteViews widgetView = new RemoteViews(context.getPackageName(),
                 R.layout.widget);
+
+
+
         int color =  shrpr.getInt(QuickstartPreferences.color, 0xffffffff);
-        //color = 0x00000000;
+
+        int text= 0;
+        String color_text = shrpr.getString(QuickstartPreferences.color_text, "null");
+        if (color_text.equals("null")){
+            String hexColor = String.format("#%06X", (0xFFFFFF & color));
+            shrpr.edit().putString(QuickstartPreferences.color_text, hexColor).apply();
+        } else {
+            try {
+                text = Color.parseColor(color_text);
+                color = text;
+                shrpr.edit().putInt(QuickstartPreferences.color, text).apply();
+            } catch (IllegalArgumentException e) {
+                text = 0;
+            }
+        }
+        Log.d(LOG_TAG, Integer.toString(text));
 
 
+        //SET ALL TEXT TO NULL
+        widgetView.setTextViewText(R.id.inet, "");
+        widgetView.setTextViewText(R.id.calls, "");
+        widgetView.setTextViewText(R.id.sms, "");
+        widgetView.setTextViewText(R.id.balance, "");
+        widgetView.setTextViewText(R.id.date, "");
+        widgetView.setTextViewText(R.id.renew, "");
+
+        widgetView.setTextViewText(R.id.inet_italic, "");
+        widgetView.setTextViewText(R.id.calls_italic, "");
+        widgetView.setTextViewText(R.id.sms_italic, "");
+        widgetView.setTextViewText(R.id.balance_italic, "");
+        widgetView.setTextViewText(R.id.date_italic, "");
+        widgetView.setTextViewText(R.id.renew_italic, "");
+
+        widgetView.setTextViewText(R.id.inet_bold, "");
+        widgetView.setTextViewText(R.id.calls_bold, "");
+        widgetView.setTextViewText(R.id.sms_bold, "");
+        widgetView.setTextViewText(R.id.balance_bold, "");
+        widgetView.setTextViewText(R.id.date_bold, "");
+        widgetView.setTextViewText(R.id.renew_bold, "");
+
+
+        //set update to null
+        widgetView.setTextViewText(R.id.text_upd, "");
+        widgetView.setTextViewText(R.id.text_upd_italic, "");
+        widgetView.setTextViewText(R.id.text_upd_bold, "");
+
+        //END SET ALL TEXT TO NULL
+
+
+        String font =  shrpr.getString(QuickstartPreferences.font, "n");
         if (content.equals(context.getString(R.string.updating))) {
             if (f_update) {
 
@@ -341,20 +391,29 @@ public class TraffWidget extends AppWidgetProvider {
 
 
                 shrpr.edit().putString(QuickstartPreferences.update, "1").apply();
-                widgetView.setTextViewText(R.id.inet, "");
-                widgetView.setTextViewText(R.id.calls, "");
-                widgetView.setTextViewText(R.id.sms, "");
-                widgetView.setTextViewText(R.id.balance, "");
-                widgetView.setTextViewText(R.id.date, "");
-                widgetView.setTextViewText(R.id.renew, "");
+//                widgetView.setTextViewText(R.id.inet, "");
+//                widgetView.setTextViewText(R.id.calls, "");
+//                widgetView.setTextViewText(R.id.sms, "");
+//                widgetView.setTextViewText(R.id.balance, "");
+//                widgetView.setTextViewText(R.id.date, "");
+//                widgetView.setTextViewText(R.id.renew, "");
                 //if (Build.VERSION.SDK_INT >= 23) {
                 // Marshmallow+
                 widgetView.setImageViewResource(R.id.calls_logo, 0);
                 widgetView.setImageViewResource(R.id.sms_logo, 0);
                 widgetView.setImageViewResource(R.id.inet_logo, 0);
                 //}
-                widgetView.setTextViewText(R.id.text_upd, context.getString(R.string.updating));
-                widgetView.setTextColor(R.id.text_upd, color);
+                if (font.equals("n")) {
+                    widgetView.setTextViewText(R.id.text_upd, context.getString(R.string.updating));
+                    widgetView.setTextColor(R.id.text_upd, color);
+                } else if (font.equals("i")) {
+                    widgetView.setTextViewText(R.id.text_upd_italic, context.getString(R.string.updating));
+                    widgetView.setTextColor(R.id.text_upd_italic, color);
+                } else if (font.equals("b")) {
+                    widgetView.setTextViewText(R.id.text_upd_bold, context.getString(R.string.updating));
+                    widgetView.setTextColor(R.id.text_upd_bold, color);
+                }
+
 
 
 
@@ -362,8 +421,8 @@ public class TraffWidget extends AppWidgetProvider {
 
 
                 shrpr.edit().putBoolean(QuickstartPreferences.f_update, false).apply();
-            } else {
-                content = shrpr.getString(QuickstartPreferences.content, context.getString(R.string.error));
+            //} else {
+                //content = shrpr.getString(QuickstartPreferences.content, context.getString(R.string.error));
             }
             //content = context.getString(R.string.updating);
             //Starting to load content
@@ -378,37 +437,90 @@ public class TraffWidget extends AppWidgetProvider {
 //            }
 
         } else {
+
+
+
+
+
             //Save new content
-            shrpr.edit().putString(QuickstartPreferences.content, content).apply();
-            widgetView.setTextViewText(R.id.inet, max);
-            widgetView.setTextViewText(R.id.calls, maxmin);
+            //shrpr.edit().putString(QuickstartPreferences.content, content).apply();
+
+            //set text view
+
+            if (font.equals("n")) {
+                widgetView.setTextViewText(R.id.inet, max);
+                widgetView.setTextViewText(R.id.calls, maxmin);
+                //for center of image
+                if (maxsms.length() % 2 == 0) {
+                    widgetView.setTextViewText(R.id.sms, maxsms + " ");
+                } else {
+                    widgetView.setTextViewText(R.id.sms, maxsms + "  ");
+                }
+                widgetView.setTextViewText(R.id.balance, balance + " \u20BD");
+                widgetView.setTextViewText(R.id.date, date);
+                widgetView.setTextViewText(R.id.renew, "Сброс через\n" + dtn);
 
 
-            //for center of image
-            if(maxsms.length() % 2 == 0) {
-                widgetView.setTextViewText(R.id.sms, maxsms + " ");
-            } else {
-                widgetView.setTextViewText(R.id.sms, maxsms + "  ");
+                widgetView.setTextColor(R.id.inet, color);
+                widgetView.setTextColor(R.id.calls, color);
+                widgetView.setTextColor(R.id.sms, color);
+                widgetView.setTextColor(R.id.balance, color);
+                widgetView.setTextColor(R.id.date, color);
+                widgetView.setTextColor(R.id.renew, color);
+            } else if (font.equals("i")) {
+                widgetView.setTextViewText(R.id.inet_italic, max);
+                widgetView.setTextViewText(R.id.calls_italic, maxmin);
+                //for center of image
+                if (maxsms.length() % 2 == 0) {
+                    widgetView.setTextViewText(R.id.sms_italic, maxsms + " ");
+                } else {
+                    widgetView.setTextViewText(R.id.sms_italic, maxsms + "  ");
+                }
+                widgetView.setTextViewText(R.id.balance_italic, balance + " \u20BD");
+                widgetView.setTextViewText(R.id.date_italic, date);
+                widgetView.setTextViewText(R.id.renew_italic, "Сброс через\n" + dtn);
+
+                widgetView.setTextColor(R.id.inet_italic, color);
+                widgetView.setTextColor(R.id.calls_italic, color);
+                widgetView.setTextColor(R.id.sms_italic, color);
+                widgetView.setTextColor(R.id.balance_italic, color);
+                widgetView.setTextColor(R.id.date_italic, color);
+                widgetView.setTextColor(R.id.renew_italic, color);
+            } else if (font.equals("b")){
+                widgetView.setTextViewText(R.id.inet_bold, max);
+                widgetView.setTextViewText(R.id.calls_bold, maxmin);
+                //for center of image
+                if (maxsms.length() % 2 == 0) {
+                    widgetView.setTextViewText(R.id.sms_bold, maxsms + " ");
+                } else {
+                    widgetView.setTextViewText(R.id.sms_bold, maxsms + "  ");
+                }
+                widgetView.setTextViewText(R.id.balance_bold, balance + " \u20BD");
+                widgetView.setTextViewText(R.id.date_bold, date);
+                widgetView.setTextViewText(R.id.renew_bold, "Сброс через\n" + dtn);
+
+
+                widgetView.setTextColor(R.id.inet_bold, color);
+                widgetView.setTextColor(R.id.calls_bold, color);
+                widgetView.setTextColor(R.id.sms_bold, color);
+                widgetView.setTextColor(R.id.balance_bold, color);
+                widgetView.setTextColor(R.id.date_bold, color);
+                widgetView.setTextColor(R.id.renew_bold, color);
             }
 
 
-            widgetView.setTextViewText(R.id.balance, balance + " \u20BD");
-            widgetView.setTextViewText(R.id.date, date);
-            widgetView.setTextViewText(R.id.renew, "Сброс через\n" + dtn);
-            //if (Build.VERSION.SDK_INT >= 23) {
-                // Marshmallow+
+
+            //set image view
             widgetView.setImageViewResource(R.id.calls_logo, 0);
             widgetView.setImageViewResource(R.id.sms_logo, R.drawable.ic_message_white_48dp);
             widgetView.setImageViewResource(R.id.inet_logo, R.drawable.ic_data_usage_white_48dp);
-            //}
+
 
 
             //Log.d( LOG_TAG, String.valueOf(maxsms.length()));
 
 
 
-
-            widgetView.setTextViewText(R.id.text_upd, "");
 
             widgetView.setTextColor(R.id.inet, color);
             widgetView.setTextColor(R.id.calls, color);

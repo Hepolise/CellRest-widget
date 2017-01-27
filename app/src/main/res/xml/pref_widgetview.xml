@@ -2,7 +2,7 @@
 
 
     <PreferenceCategory
-        android:title="@string/widget_settings">
+        android:title="@string/widget_settings_color">
         <Preference android:title="@string/button_colorpicker_title"
             android:key="@string/button_colorpicker"
             android:summary="@string/button_colorpicker_desc"/>
@@ -11,6 +11,18 @@
             android:key="default_color"
             android:summary="@string/pref_description_default_color"
             android:title="@string/pref_title_default_color" />-->
+
+        <EditTextPreference
+            android:capitalize="words"
+            android:inputType="text"
+            android:key="color_text"
+            android:maxLength="12"
+            android:maxLines="1"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/widget_settings_color_text"
+            android:summary="@string/widget_settings_color_text_desc"/>
+
 
 
         <ListPreference
@@ -22,14 +34,14 @@
             android:positiveButtonText="@null"
             android:title="@string/pref_title_font" />
 
-        <ListPreference
+        <!--<ListPreference
             android:defaultValue="def"
             android:entries="@array/pref_locale_titles"
             android:entryValues="@array/pref_locale_values"
             android:key="loc"
             android:negativeButtonText="@null"
             android:positiveButtonText="@null"
-            android:title="@string/pref_locale" />
+            android:title="@string/pref_locale" />-->
     </PreferenceCategory>
 
     <PreferenceCategory

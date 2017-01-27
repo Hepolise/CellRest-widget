@@ -143,6 +143,11 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                     PreferenceManager
                             .getDefaultSharedPreferences(preference.getContext())
                             .getString(preference.getKey(), preference.getContext().getString(R.string.pref_desc_login)));
+        } else if (preference.toString().equals(preference.getContext().getString(R.string.widget_settings_color_text))){
+            sBindPreferenceSummaryToValueListener.onPreferenceChange(preference,
+                    PreferenceManager
+                            .getDefaultSharedPreferences(preference.getContext())
+                            .getString(preference.getKey(), preference.getContext().getString(R.string.widget_settings_color_text_desc)));
         } else {
             sBindPreferenceSummaryToValueListener.onPreferenceChange(preference,
                     PreferenceManager
@@ -166,7 +171,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // TODO Auto-generated method stub
 
         menu.add(0, 1, 0, getString(R.string.help_title));
         menu.add(0, 2, 0, getString(R.string.about_title));
@@ -433,6 +437,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ctx);
                             SharedPreferences.Editor editor = sharedPreferences.edit();
                             editor.putInt(QuickstartPreferences.color, color).apply();
+                            String hexColor = String.format("#%06X", (0xFFFFFF & color));
+                            editor.putString(QuickstartPreferences.color_text, hexColor).apply();
+                            bindPreferenceSummaryToValue(findPreference("color_text"));
                         }
 
                         @Override
@@ -445,8 +452,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 }
             });
             bindPreferenceSummaryToValue(findPreference("font"));
-            bindPreferenceSummaryToValue(findPreference("loc"));
-            //bindPreferenceSummaryToValue(findPreference("return"));
+            //bindPreferenceSummaryToValue(findPreference("loc"));
+            bindPreferenceSummaryToValue(findPreference("color_text"));
         }
 
         //@Override
