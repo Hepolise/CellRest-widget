@@ -562,7 +562,20 @@ public class TraffWidget extends AppWidgetProvider {
         widgetView.setOnClickPendingIntent(R.id.calls_logo, pIntent);
         widgetView.setOnClickPendingIntent(R.id.sms_logo, pIntent);
         widgetView.setOnClickPendingIntent(R.id.balance, pIntent);
-        widgetView.setOnClickPendingIntent(R.id.text_upd, pIntent);
+
+        //widgetView.setOnClickPendingIntent(R.id.text_upd_italic, pIntent);
+        widgetView.setOnClickPendingIntent(R.id.inet_italic, pIntent);
+        widgetView.setOnClickPendingIntent(R.id.calls_italic, pIntent);
+        widgetView.setOnClickPendingIntent(R.id.sms_italic, pIntent);
+        widgetView.setOnClickPendingIntent(R.id.balance_italic, pIntent);
+        widgetView.setOnClickPendingIntent(R.id.text_upd_italic, pIntent);
+
+        //widgetView.setOnClickPendingIntent(R.id.text_upd_bold, pIntent);
+        widgetView.setOnClickPendingIntent(R.id.inet_bold, pIntent);
+        widgetView.setOnClickPendingIntent(R.id.calls_bold, pIntent);
+        widgetView.setOnClickPendingIntent(R.id.sms_bold, pIntent);
+        widgetView.setOnClickPendingIntent(R.id.balance_bold, pIntent);
+        widgetView.setOnClickPendingIntent(R.id.text_upd_bold, pIntent);
         appWidgetManager.updateAppWidget(widgetID, widgetView);
         return (null);
     }
