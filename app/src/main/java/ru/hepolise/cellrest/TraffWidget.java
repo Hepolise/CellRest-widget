@@ -186,6 +186,37 @@ public class TraffWidget extends AppWidgetProvider {
         return dstBitmap;
     }
 
+    public void setAllTextTuNull(RemoteViews widgetView) {
+        //SET ALL TEXT TO NULL
+        widgetView.setTextViewText(R.id.inet, "");
+        widgetView.setTextViewText(R.id.calls, "");
+        widgetView.setTextViewText(R.id.sms, "");
+        widgetView.setTextViewText(R.id.balance, "");
+        widgetView.setTextViewText(R.id.date, "");
+        widgetView.setTextViewText(R.id.renew, "");
+
+        widgetView.setTextViewText(R.id.inet_italic, "");
+        widgetView.setTextViewText(R.id.calls_italic, "");
+        widgetView.setTextViewText(R.id.sms_italic, "");
+        widgetView.setTextViewText(R.id.balance_italic, "");
+        widgetView.setTextViewText(R.id.date_italic, "");
+        widgetView.setTextViewText(R.id.renew_italic, "");
+
+        widgetView.setTextViewText(R.id.inet_bold, "");
+        widgetView.setTextViewText(R.id.calls_bold, "");
+        widgetView.setTextViewText(R.id.sms_bold, "");
+        widgetView.setTextViewText(R.id.balance_bold, "");
+        widgetView.setTextViewText(R.id.date_bold, "");
+        widgetView.setTextViewText(R.id.renew_bold, "");
+
+
+        //set update to null
+        widgetView.setTextViewText(R.id.text_upd, "");
+        widgetView.setTextViewText(R.id.text_upd_italic, "");
+        widgetView.setTextViewText(R.id.text_upd_bold, "");
+
+        //END SET ALL TEXT TO NULL
+    }
 
     public String updateWidget(Context context, AppWidgetManager appWidgetManager,
                                int widgetID, String content) {
@@ -312,55 +343,18 @@ public class TraffWidget extends AppWidgetProvider {
         Log.d(LOG_TAG, Integer.toString(text));
 
 
-        //SET ALL TEXT TO NULL
-        widgetView.setTextViewText(R.id.inet, "");
-        widgetView.setTextViewText(R.id.calls, "");
-        widgetView.setTextViewText(R.id.sms, "");
-        widgetView.setTextViewText(R.id.balance, "");
-        widgetView.setTextViewText(R.id.date, "");
-        widgetView.setTextViewText(R.id.renew, "");
-
-        widgetView.setTextViewText(R.id.inet_italic, "");
-        widgetView.setTextViewText(R.id.calls_italic, "");
-        widgetView.setTextViewText(R.id.sms_italic, "");
-        widgetView.setTextViewText(R.id.balance_italic, "");
-        widgetView.setTextViewText(R.id.date_italic, "");
-        widgetView.setTextViewText(R.id.renew_italic, "");
-
-        widgetView.setTextViewText(R.id.inet_bold, "");
-        widgetView.setTextViewText(R.id.calls_bold, "");
-        widgetView.setTextViewText(R.id.sms_bold, "");
-        widgetView.setTextViewText(R.id.balance_bold, "");
-        widgetView.setTextViewText(R.id.date_bold, "");
-        widgetView.setTextViewText(R.id.renew_bold, "");
 
 
-        //set update to null
-        widgetView.setTextViewText(R.id.text_upd, "");
-        widgetView.setTextViewText(R.id.text_upd_italic, "");
-        widgetView.setTextViewText(R.id.text_upd_bold, "");
-
-        //END SET ALL TEXT TO NULL
 
 
         String font =  shrpr.getString(QuickstartPreferences.font, "n");
         if (content.equals(context.getString(R.string.updating))) {
             if (f_update) {
-
-
-
-
-
-
                 shrpr.edit().putString(QuickstartPreferences.update, "1").apply();
-//                widgetView.setTextViewText(R.id.inet, "");
-//                widgetView.setTextViewText(R.id.calls, "");
-//                widgetView.setTextViewText(R.id.sms, "");
-//                widgetView.setTextViewText(R.id.balance, "");
-//                widgetView.setTextViewText(R.id.date, "");
-//                widgetView.setTextViewText(R.id.renew, "");
-                //if (Build.VERSION.SDK_INT >= 23) {
-                // Marshmallow+
+
+
+
+                setAllTextTuNull(widgetView);
                 widgetView.setImageViewBitmap(R.id.calls_logo, null);
                 widgetView.setImageViewBitmap(R.id.sms_logo, null);
                 widgetView.setImageViewBitmap(R.id.inet_logo, null);
@@ -376,33 +370,16 @@ public class TraffWidget extends AppWidgetProvider {
                     widgetView.setTextColor(R.id.text_upd_bold, color);
                 }
 
-
-
-
-
-
-
                 shrpr.edit().putBoolean(QuickstartPreferences.f_update, false).apply();
-            //} else {
-                //content = shrpr.getString(QuickstartPreferences.content, context.getString(R.string.error));
             }
-            //content = context.getString(R.string.updating);
-            //Starting to load content
             new ProgressTask().execute();
-//            if (admin) {
-//                // in case of admin's account
-//                if (UPD.equals("1")) {
-//                    shrpr.edit().putString(QuickstartPreferences.update, "0").apply();
-//                }
-//            } else {
-//                shrpr.edit().putString(QuickstartPreferences.update, "1").apply();
-//            }
-
         } else {
 
 
 
 
+
+            setAllTextTuNull(widgetView);
             if (ok.equals("")) {
                 widgetView.setImageViewBitmap(R.id.calls_logo, null);
                 widgetView.setImageViewBitmap(R.id.sms_logo, null);
