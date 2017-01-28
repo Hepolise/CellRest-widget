@@ -496,7 +496,8 @@ public class TraffWidget extends AppWidgetProvider {
                 b_icon_calls = colorize(b_icon_calls, color);
                 widgetView.setImageViewBitmap(R.id.calls_logo, b_icon_calls);
 
-                Drawable icon_inet = ContextCompat.getDrawable(context, R.drawable.ic_data_usage_white_48dp);
+                //Drawable icon_inet = ContextCompat.getDrawable(context, R.drawable.ic_data_usage_white_48dp);
+                Drawable icon_inet = ContextCompat.getDrawable(context, R.drawable.ic_language_white_48dp);
                 Bitmap b_icon_inet = ((BitmapDrawable) icon_inet).getBitmap();
                 b_icon_inet = colorize(b_icon_inet, color);
                 widgetView.setImageViewBitmap(R.id.inet_logo, b_icon_inet);
