@@ -455,11 +455,11 @@ public class TraffWidget extends AppWidgetProvider {
                     widgetView.setTextViewText(R.id.inet_bold, inet);
                     widgetView.setTextViewText(R.id.calls_bold, min);
                     //for center of image
-                    if (maxsms.length() % 2 == 0) {
+                    //if (maxsms.length() % 2 == 0) {
                         widgetView.setTextViewText(R.id.sms_bold, sms + " ");
-                    } else {
-                        widgetView.setTextViewText(R.id.sms_bold, sms + "  ");
-                    }
+                    //} else {
+                    //    widgetView.setTextViewText(R.id.sms_bold, sms + "  ");
+                    //
                     widgetView.setTextViewText(R.id.balance_bold, balance + " \u20BD");
                     widgetView.setTextViewText(R.id.date_bold, date);
                     widgetView.setTextViewText(R.id.renew_bold, "Сброс через\n" + dtn);
