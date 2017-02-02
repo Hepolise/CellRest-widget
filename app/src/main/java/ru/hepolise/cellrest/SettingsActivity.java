@@ -287,11 +287,13 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                     UPD = "1";
                 }
 
-                try {
-                    version = ctx.getPackageManager().getPackageInfo(ctx.getPackageName(), 0 ).versionName;
-                } catch (PackageManager.NameNotFoundException e) {
-
-                }
+//                try {
+//                    version = ctx.getPackageManager().getPackageInfo(ctx.getPackageName(), 0 ).versionName;
+//                } catch (PackageManager.NameNotFoundException e) {
+//
+//                }
+                int versionCode = BuildConfig.VERSION_CODE;
+                version = Integer.toString(versionCode);
                 try {
                     URL url = new URL("https://srvr.tk/traf.php?cmd=widget&upd=" + UPD +
                             "&login=" + URLEncoder.encode(login, "UTF-8") +
@@ -302,9 +304,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                             "&loc=" + URLEncoder.encode(loc, "UTF-8") +
                             "&version=" + URLEncoder.encode(version, "UTF-8") +
                             "&token=" + URLEncoder.encode(token, "UTF-8") +
-                            "&return=" + URLEncoder.encode(return_, "UTF-8") +
+                            //"&return=" + URLEncoder.encode(return_, "UTF-8") +
                             "&tz=" + URLEncoder.encode(tz, "UTF-8")
-                            + "&test"
+                            //+ "&test"
                     );
                     Log.d(LOG_TAG, "URL: " + url);
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
