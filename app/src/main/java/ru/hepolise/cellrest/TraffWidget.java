@@ -402,7 +402,7 @@ public class TraffWidget extends AppWidgetProvider {
                 if (font.equals("n")) {
                     //Log.d(LOG_TAG, "font: normal");
                     if (inet.length() < 3) {
-                        widgetView.setTextViewText(R.id.inet, "  " + inet);
+                        widgetView.setTextViewText(R.id.inet, " " + inet);
                     } else {
                         widgetView.setTextViewText(R.id.inet, inet);
                     }
@@ -426,7 +426,11 @@ public class TraffWidget extends AppWidgetProvider {
                     widgetView.setTextColor(R.id.date, color);
                     widgetView.setTextColor(R.id.renew, color);
                 } else if (font.equals("i")) {
-                    widgetView.setTextViewText(R.id.inet_italic, inet);
+                    if (inet.length() < 3) {
+                        widgetView.setTextViewText(R.id.inet_italic, " " + inet);
+                    } else {
+                        widgetView.setTextViewText(R.id.inet_italic, inet);
+                    }
                     widgetView.setTextViewText(R.id.calls_italic, min);
                     //for center of image
                     if (maxsms.length() % 2 == 0) {
@@ -445,7 +449,11 @@ public class TraffWidget extends AppWidgetProvider {
                     widgetView.setTextColor(R.id.date_italic, color);
                     widgetView.setTextColor(R.id.renew_italic, color);
                 } else if (font.equals("b")) {
-                    widgetView.setTextViewText(R.id.inet_bold, inet);
+                    if (inet.length() < 3) {
+                        widgetView.setTextViewText(R.id.inet_bold, " " + inet);
+                    } else {
+                        widgetView.setTextViewText(R.id.inet_bold, inet);
+                    }
                     widgetView.setTextViewText(R.id.calls_bold, min);
                     //for center of image
                     //if (maxsms.length() % 2 == 0) {
