@@ -13,6 +13,8 @@
 
     <string name="error">An error occurred, please check settings</string>
 
+    <string name="widget_text">Text widget</string>
+
     <string name="widget_settings_color_text">Widget\'s color by code</string>
     <string name="widget_settings_color_text_desc">Set widget\'s color by code</string>
 

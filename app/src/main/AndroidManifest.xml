@@ -35,6 +35,20 @@
                 android:resource="@xml/widget_metadata" />
         </receiver>
 
+        <receiver
+            android:name=".WidgetText"
+            android:icon="@android:drawable/star_big_on"
+            android:label="@string/widget_name">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.appwidget.action.ACTION_APPWIDGET_FORCE_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_text_metadata" />
+        </receiver>
+
         <activity
             android:name=".HelpActivity"
             android:label="@string/help_title"></activity>

@@ -199,6 +199,7 @@ public class TraffWidget extends AppWidgetProvider {
 
     public String updateWidget(Context context, AppWidgetManager appWidgetManager,
                                int widgetID, String content) {
+        Log.d(LOG_TAG, "content: " + content);
 
         conextglobal = context;
         appWidgetManagerglobal = appWidgetManager;
@@ -308,7 +309,7 @@ public class TraffWidget extends AppWidgetProvider {
 
         int color =  shrpr.getInt(QuickstartPreferences.color, 0xffffffff);
 
-        int text= 0;
+        int text;
         String color_text = shrpr.getString(QuickstartPreferences.color_text, "null");
         if (color_text.equals("null")){
             String hexColor = String.format("#%06X", (0xFFFFFF & color));
@@ -319,7 +320,7 @@ public class TraffWidget extends AppWidgetProvider {
                 color = text;
                 shrpr.edit().putInt(QuickstartPreferences.color, text).apply();
             } catch (IllegalArgumentException e) {
-                text = 0;
+                color = 0;
             }
         }
         //Log.d(LOG_TAG, Integer.toString(text));
@@ -400,7 +401,12 @@ public class TraffWidget extends AppWidgetProvider {
 
                 if (font.equals("n")) {
                     //Log.d(LOG_TAG, "font: normal");
-                    widgetView.setTextViewText(R.id.inet, inet);
+                    if (inet.length() < 3) {
+                        widgetView.setTextViewText(R.id.inet, "  " + inet);
+                    } else {
+                        widgetView.setTextViewText(R.id.inet, inet);
+                    }
+
                     widgetView.setTextViewText(R.id.calls, min);
                     //for center of image
                     if (maxsms.length() % 2 == 0) {
@@ -572,12 +578,12 @@ public class TraffWidget extends AppWidgetProvider {
         widgetView.setOnClickPendingIntent(R.id.text_upd_bold, pIntent);
         //for make all-widgets app in future
         //TODO
-//        //Log.d(LOG_TAG, "rebuilding widget: " + Integer.toString(widgetID));
-//        ComponentName name = new ComponentName(context, TraffWidget.class);
-//        int [] ids = appWidgetManager.getAppWidgetIds(name);
-//        for (int i: ids) {
-//            //Log.d(LOG_TAG, Integer.toString(i));
-//        }
+        //Log.d(LOG_TAG, "rebuilding widget: " + Integer.toString(widgetID));
+        ComponentName name = new ComponentName(context, TraffWidget.class);
+        int [] ids = appWidgetManager.getAppWidgetIds(name);
+        for (int i: ids) {
+            Log.d(LOG_TAG, Integer.toString(i));
+        }
         appWidgetManager.updateAppWidget(widgetID, widgetView);
         //Log.d(LOG_TAG, "widget is rebuilt...");
         return "";
@@ -595,15 +601,18 @@ public class TraffWidget extends AppWidgetProvider {
             } catch (IOException ex) {
                 updateWidget(conextglobal, appWidgetManagerglobal, id[0], "error");
             }
-            return null;
+            return Integer.toString(id[0]);
         }
 
 
 
-//        @Override
-//        protected void onPostExecute(String result) {
-//
-//        }
+        @Override
+        protected void onPostExecute(String result) {
+            Log.d(LOG_TAG, "onpostexec result: "  + result);
+            int id = Integer.parseInt(result);
+            Log.d(LOG_TAG, "onpostexec id"  + id);
+            updateWidget(conextglobal, appWidgetManagerglobal, id, "");
+        }
 
 
         private String getContent(Integer id) throws IOException {
@@ -679,7 +688,7 @@ public class TraffWidget extends AppWidgetProvider {
                     shrpr.edit().putString(QuickstartPreferences.balance, balance).apply();
 
                     updateWidget(conextglobal, appWidgetManagerglobal, id, "success");
-                    return(buffer);
+                    return("ldfyjfdlojh");
 
                 } catch (JSONException e){
 //                    JSONObject jsonObject = new JSONObject(buffer)
