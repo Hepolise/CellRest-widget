@@ -607,7 +607,7 @@ public class TraffWidget extends AppWidgetProvider {
                 //Loading content
                 getContent(id[0]);
             } catch (IOException ex) {
-                updateWidget(conextglobal, appWidgetManagerglobal, id[0], "error");
+                updateWidget(conextglobal, appWidgetManagerglobal, id[0], "error: doInBackground");
             }
             return Integer.toString(id[0]);
         }
@@ -619,7 +619,7 @@ public class TraffWidget extends AppWidgetProvider {
             Log.d(LOG_TAG, "onpostexec result: "  + result);
             int id = Integer.parseInt(result);
             Log.d(LOG_TAG, "onpostexec id"  + id);
-            updateWidget(conextglobal, appWidgetManagerglobal, id, "");
+            updateWidget(conextglobal, appWidgetManagerglobal, id, "onPostExecute");
         }
 
 
@@ -696,21 +696,21 @@ public class TraffWidget extends AppWidgetProvider {
                     shrpr.edit().putString(QuickstartPreferences.balance, balance).apply();
 
                     updateWidget(conextglobal, appWidgetManagerglobal, id, "success");
-                    return(null);
+                    return "Success";
 
                 } catch (JSONException e){
 //                    JSONObject jsonObject = new JSONObject(buffer)
 //                    String error = jsonObject.getString("error");
 //                    //Log.d("json", "error " + error);
                     //Log.d("json", e.getMessage());
-                    updateWidget(conextglobal, appWidgetManagerglobal, id, "error");
+                    updateWidget(conextglobal, appWidgetManagerglobal, id, "error :JSONException" + e.getMessage());
                     return e.getMessage();
                 }
 
 
             } catch (IOException e) {
                 //Log.d(LOG_TAG, e.getMessage());
-                updateWidget(conextglobal, appWidgetManagerglobal, id, "error");
+                updateWidget(conextglobal, appWidgetManagerglobal, id, "error: IOException" + e.getMessage());
                 return e.getMessage();
             }
 
