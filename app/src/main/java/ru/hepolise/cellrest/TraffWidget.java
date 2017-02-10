@@ -247,10 +247,14 @@ public class TraffWidget extends AppWidgetProvider {
 
 
             long days_to_new = Long.parseLong(dtn);
-            dtn = plurals(days_to_new, "день", "дня", "дней");
+            //dtn = plurals(days_to_new, "день", "дня", "дней");
+            dtn = plurals(days_to_new,
+                    context.getString(R.string.day),
+                    context.getString(R.string.days2),
+                    context.getString(R.string.days));
         } catch (NumberFormatException e){
             Log.e(LOG_TAG, e.getMessage());
-            content = "error";
+            //content = "error";
         }
         //}
         //Reformat login
@@ -416,7 +420,7 @@ public class TraffWidget extends AppWidgetProvider {
                     }
                     widgetView.setTextViewText(R.id.balance, " " + balance + " \u20BD");
                     widgetView.setTextViewText(R.id.date, date);
-                    widgetView.setTextViewText(R.id.renew, "Сброс через\n" + dtn);
+                    widgetView.setTextViewText(R.id.renew, context.getString(R.string.renew) + "\n" + dtn);
 
 
                     widgetView.setTextColor(R.id.inet, color);
@@ -440,7 +444,7 @@ public class TraffWidget extends AppWidgetProvider {
                     }
                     widgetView.setTextViewText(R.id.balance_italic, balance + " \u20BD");
                     widgetView.setTextViewText(R.id.date_italic, date);
-                    widgetView.setTextViewText(R.id.renew_italic, "Сброс через\n" + dtn);
+                    widgetView.setTextViewText(R.id.renew_italic, context.getString(R.string.renew) + "\n" + dtn);
 
                     widgetView.setTextColor(R.id.inet_italic, color);
                     widgetView.setTextColor(R.id.calls_italic, color);
@@ -463,7 +467,7 @@ public class TraffWidget extends AppWidgetProvider {
                     //
                     widgetView.setTextViewText(R.id.balance_bold, balance + " \u20BD");
                     widgetView.setTextViewText(R.id.date_bold, date);
-                    widgetView.setTextViewText(R.id.renew_bold, "Сброс через\n" + dtn);
+                    widgetView.setTextViewText(R.id.renew_bold, context.getString(R.string.renew) + "\n" + dtn);
 
 
                     widgetView.setTextColor(R.id.inet_bold, color);
@@ -618,7 +622,7 @@ public class TraffWidget extends AppWidgetProvider {
         protected void onPostExecute(String result) {
             Log.d(LOG_TAG, "onpostexec result: "  + result);
             int id = Integer.parseInt(result);
-            Log.d(LOG_TAG, "onpostexec id"  + id);
+            Log.d(LOG_TAG, "onpostexec id "  + id);
             updateWidget(conextglobal, appWidgetManagerglobal, id, "onPostExecute");
         }
 

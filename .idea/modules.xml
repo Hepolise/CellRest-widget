@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/CellRest-Widget.iml" filepath="$PROJECT_DIR$/CellRest-Widget.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CellRest-widget.iml" filepath="$PROJECT_DIR$/CellRest-widget.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
