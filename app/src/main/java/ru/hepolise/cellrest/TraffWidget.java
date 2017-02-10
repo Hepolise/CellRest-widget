@@ -406,7 +406,7 @@ public class TraffWidget extends AppWidgetProvider {
                 if (font.equals("n")) {
                     //Log.d(LOG_TAG, "font: normal");
                     if (inet.length() < 3) {
-                        widgetView.setTextViewText(R.id.inet, " " + inet);
+                        widgetView.setTextViewText(R.id.inet, " " + inet + "  ");
                     } else {
                         widgetView.setTextViewText(R.id.inet, inet);
                     }
@@ -431,7 +431,7 @@ public class TraffWidget extends AppWidgetProvider {
                     widgetView.setTextColor(R.id.renew, color);
                 } else if (font.equals("i")) {
                     if (inet.length() < 3) {
-                        widgetView.setTextViewText(R.id.inet_italic, " " + inet);
+                        widgetView.setTextViewText(R.id.inet_italic, " " + inet + "  ");
                     } else {
                         widgetView.setTextViewText(R.id.inet_italic, inet);
                     }
@@ -454,7 +454,7 @@ public class TraffWidget extends AppWidgetProvider {
                     widgetView.setTextColor(R.id.renew_italic, color);
                 } else if (font.equals("b")) {
                     if (inet.length() < 3) {
-                        widgetView.setTextViewText(R.id.inet_bold, " " + inet);
+                        widgetView.setTextViewText(R.id.inet_bold, " " + inet + "  ");
                     } else {
                         widgetView.setTextViewText(R.id.inet_bold, inet);
                     }
