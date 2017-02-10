@@ -252,6 +252,14 @@ public class TraffWidget extends AppWidgetProvider {
                     context.getString(R.string.day),
                     context.getString(R.string.days2),
                     context.getString(R.string.days));
+
+
+            long days_to_restore = Long.parseLong(dtr);
+            dtr = plurals(days_to_restore,
+                    context.getString(R.string.day),
+                    context.getString(R.string.days2),
+                    context.getString(R.string.days));
+
         } catch (NumberFormatException e){
             Log.e(LOG_TAG, e.getMessage());
             //content = "error";
@@ -334,6 +342,7 @@ public class TraffWidget extends AppWidgetProvider {
 
 
 
+
         String font =  shrpr.getString(QuickstartPreferences.font, "n");
         if (content.equals(context.getString(R.string.updating))) {
             //Log.d(LOG_TAG, "update");
@@ -401,6 +410,12 @@ public class TraffWidget extends AppWidgetProvider {
                     min = leftmin;
                     inet = left;
                 }
+                int string_re;
+                if (Integer.parseInt(inet) < 0 || Integer.parseInt(min) < 0 || Integer.parseInt(sms) < 0) {
+                    string_re = R.string.restore;
+                } else {
+                    string_re = R.string.renew;
+                }
 
 
                 if (font.equals("n")) {
@@ -420,7 +435,7 @@ public class TraffWidget extends AppWidgetProvider {
                     }
                     widgetView.setTextViewText(R.id.balance, " " + balance + " \u20BD");
                     widgetView.setTextViewText(R.id.date, date);
-                    widgetView.setTextViewText(R.id.renew, context.getString(R.string.renew) + "\n" + dtn);
+                    widgetView.setTextViewText(R.id.renew, context.getString(string_re) + "\n" + dtn);
 
 
                     widgetView.setTextColor(R.id.inet, color);
@@ -444,7 +459,7 @@ public class TraffWidget extends AppWidgetProvider {
                     }
                     widgetView.setTextViewText(R.id.balance_italic, balance + " \u20BD");
                     widgetView.setTextViewText(R.id.date_italic, date);
-                    widgetView.setTextViewText(R.id.renew_italic, context.getString(R.string.renew) + "\n" + dtn);
+                    widgetView.setTextViewText(R.id.renew_italic, context.getString(string_re) + "\n" + dtn);
 
                     widgetView.setTextColor(R.id.inet_italic, color);
                     widgetView.setTextColor(R.id.calls_italic, color);
@@ -467,7 +482,7 @@ public class TraffWidget extends AppWidgetProvider {
                     //
                     widgetView.setTextViewText(R.id.balance_bold, balance + " \u20BD");
                     widgetView.setTextViewText(R.id.date_bold, date);
-                    widgetView.setTextViewText(R.id.renew_bold, context.getString(R.string.renew) + "\n" + dtn);
+                    widgetView.setTextViewText(R.id.renew_bold, context.getString(string_re) + "\n" + dtn);
 
 
                     widgetView.setTextColor(R.id.inet_bold, color);

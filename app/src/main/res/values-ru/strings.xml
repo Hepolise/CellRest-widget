@@ -81,4 +81,5 @@
     <string name="day">день</string>
     <string name="days">дней</string>
     <string name="days2">дня</string>
+    <string name="restore">Восстановление через</string>
 </resources>
