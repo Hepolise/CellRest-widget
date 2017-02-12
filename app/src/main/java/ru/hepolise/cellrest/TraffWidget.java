@@ -27,6 +27,7 @@ import android.provider.Settings;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
+import android.view.View;
 import android.widget.RemoteViews;
 
 
@@ -197,9 +198,46 @@ public class TraffWidget extends AppWidgetProvider {
         //END SET ALL TEXT TO NULL
     }
 
+    public int getStringResourceByName(String aString, Context ctx) {
+        String packageName = ctx.getPackageName();
+        //Log.d(LOG_TAG, Integer.toString(ctx.getResources().getIdentifier(aString, "id", packageName)));
+        return ctx.getResources().getIdentifier(aString, "id", packageName);
+    }
+
+
+    public void setIntent(RemoteViews widgetView, Context context, int widgetID) {
+
+        Intent updateIntent = new Intent(context, TraffWidget.class);
+        updateIntent.setAction(ACTION_APPWIDGET_FORCE_UPDATE);
+
+        updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetID);
+        android.app.PendingIntent pIntent = PendingIntent.getBroadcast(context, widgetID, updateIntent, 0);
+
+        widgetView.setOnClickPendingIntent(R.id.text_upd, pIntent);
+        widgetView.setOnClickPendingIntent(R.id.inet, pIntent);
+        widgetView.setOnClickPendingIntent(R.id.calls, pIntent);
+        widgetView.setOnClickPendingIntent(R.id.sms, pIntent);
+        widgetView.setOnClickPendingIntent(R.id.inet_logo, pIntent);
+        widgetView.setOnClickPendingIntent(R.id.calls_logo, pIntent);
+        widgetView.setOnClickPendingIntent(R.id.sms_logo, pIntent);
+        widgetView.setOnClickPendingIntent(R.id.balance, pIntent);
+
+        widgetView.setOnClickPendingIntent(R.id.inet_italic, pIntent);
+        widgetView.setOnClickPendingIntent(R.id.calls_italic, pIntent);
+        widgetView.setOnClickPendingIntent(R.id.sms_italic, pIntent);
+        widgetView.setOnClickPendingIntent(R.id.balance_italic, pIntent);
+        widgetView.setOnClickPendingIntent(R.id.text_upd_italic, pIntent);
+
+        widgetView.setOnClickPendingIntent(R.id.inet_bold, pIntent);
+        widgetView.setOnClickPendingIntent(R.id.calls_bold, pIntent);
+        widgetView.setOnClickPendingIntent(R.id.sms_bold, pIntent);
+        widgetView.setOnClickPendingIntent(R.id.balance_bold, pIntent);
+        widgetView.setOnClickPendingIntent(R.id.text_upd_bold, pIntent);
+    }
     public String updateWidget(Context context, AppWidgetManager appWidgetManager,
                                int widgetID, String content) {
         Log.d(LOG_TAG, "content: " + content);
+
 
         conextglobal = context;
         appWidgetManagerglobal = appWidgetManager;
@@ -212,20 +250,20 @@ public class TraffWidget extends AppWidgetProvider {
         Boolean f_update = shrpr.getBoolean(QuickstartPreferences.f_update, false);
 
 
-        String max = "";
-        String time = "";
-        String ok = "";
-        String leftmin = "";
-        String leftsms = "";
-        String dtn = "";
-        String maxmin = "";
-        String maxsms = "";
-        String dtr = "";
-        String balance = "";
+        String max;
+        String time;
+        String ok;
+        String leftmin;
+        String leftsms;
+        String dtn;
+        String maxmin;
+        String maxsms;
+        String dtr;
+        String balance;
         String date = "";
-        String left = "";
+        String left;
+        String null_;
 
-        //if (content.equals("success")) {
         time = shrpr.getString(QuickstartPreferences.time, "0");
         ok = shrpr.getString(QuickstartPreferences.ok, "");
         leftmin = shrpr.getString(QuickstartPreferences.leftmin, "");
@@ -237,7 +275,7 @@ public class TraffWidget extends AppWidgetProvider {
         dtr = shrpr.getString(QuickstartPreferences.dtr, "");
         left = shrpr.getString(QuickstartPreferences.left, "");
         balance = shrpr.getString(QuickstartPreferences.balance, "");
-        //balance = "10000";
+        null_ = shrpr.getString(QuickstartPreferences.null_, "");
 
 
         try {
@@ -284,33 +322,14 @@ public class TraffWidget extends AppWidgetProvider {
         pass = shrpr.getString(QuickstartPreferences.pass, "");
         return_ = shrpr.getString(QuickstartPreferences.return_, "calc");
 
-
-
-
-
-
-
         UPD = shrpr.getString(QuickstartPreferences.update, "1");
 
-
-//        //Load location variable
-//        loc = shrpr.getString(QuickstartPreferences.loc, "def");
-//        Locale currentLocale = Locale.getDefault();
-//        locale = currentLocale.toString();
-//        if (loc.equals("def")) {
-//            loc = locale;
-//        }
 
         //Load timezone
         tz = TimeZone.getDefault().getID();
         //Log.d(LOG_TAG, tz);
 
-        //loading app version
-//        try {
-//            version = context.getPackageManager().getPackageInfo(context.getPackageName(), 0 ).versionName;
-//        } catch (PackageManager.NameNotFoundException e) {
-//
-//        }
+        //load app version
         int versionCode = BuildConfig.VERSION_CODE;
         version = Integer.toString(versionCode);
 
@@ -336,12 +355,6 @@ public class TraffWidget extends AppWidgetProvider {
             }
         }
         //Log.d(LOG_TAG, Integer.toString(text));
-
-
-
-
-
-
 
         String font =  shrpr.getString(QuickstartPreferences.font, "n");
         if (content.equals(context.getString(R.string.updating))) {
@@ -418,92 +431,62 @@ public class TraffWidget extends AppWidgetProvider {
                 }
 
 
+                String res = "";
                 if (font.equals("n")) {
-                    //Log.d(LOG_TAG, "font: normal");
-                    if (inet.length() < 3) {
-                        widgetView.setTextViewText(R.id.inet, " " + inet + "  ");
-                    } else {
-                        widgetView.setTextViewText(R.id.inet, inet);
-                    }
-
-                    widgetView.setTextViewText(R.id.calls, min);
-                    //for center of image
-                    if (maxsms.length() % 2 == 0) {
-                        widgetView.setTextViewText(R.id.sms, sms + " ");
-                    } else {
-                        widgetView.setTextViewText(R.id.sms, sms + "  ");
-                    }
-                    widgetView.setTextViewText(R.id.balance, " " + balance + " \u20BD");
-                    widgetView.setTextViewText(R.id.date, date);
-                    widgetView.setTextViewText(R.id.renew, context.getString(string_re) + "\n" + dtn);
-
-
-                    widgetView.setTextColor(R.id.inet, color);
-                    widgetView.setTextColor(R.id.calls, color);
-                    widgetView.setTextColor(R.id.sms, color);
-                    widgetView.setTextColor(R.id.balance, color);
-                    widgetView.setTextColor(R.id.date, color);
-                    widgetView.setTextColor(R.id.renew, color);
-                } else if (font.equals("i")) {
-                    if (inet.length() < 3) {
-                        widgetView.setTextViewText(R.id.inet_italic, " " + inet + "  ");
-                    } else {
-                        widgetView.setTextViewText(R.id.inet_italic, inet);
-                    }
-                    widgetView.setTextViewText(R.id.calls_italic, min);
-                    //for center of image
-                    if (maxsms.length() % 2 == 0) {
-                        widgetView.setTextViewText(R.id.sms_italic, sms + " ");
-                    } else {
-                        widgetView.setTextViewText(R.id.sms_italic, sms + "  ");
-                    }
-                    widgetView.setTextViewText(R.id.balance_italic, balance + " \u20BD");
-                    widgetView.setTextViewText(R.id.date_italic, date);
-                    widgetView.setTextViewText(R.id.renew_italic, context.getString(string_re) + "\n" + dtn);
-
-                    widgetView.setTextColor(R.id.inet_italic, color);
-                    widgetView.setTextColor(R.id.calls_italic, color);
-                    widgetView.setTextColor(R.id.sms_italic, color);
-                    widgetView.setTextColor(R.id.balance_italic, color);
-                    widgetView.setTextColor(R.id.date_italic, color);
-                    widgetView.setTextColor(R.id.renew_italic, color);
+                    res = "";
+                } else if (font.equals("i")){
+                    res = "_italic";
                 } else if (font.equals("b")) {
-                    if (inet.length() < 3) {
-                        widgetView.setTextViewText(R.id.inet_bold, " " + inet + "  ");
-                    } else {
-                        widgetView.setTextViewText(R.id.inet_bold, inet);
-                    }
-                    widgetView.setTextViewText(R.id.calls_bold, min);
-                    //for center of image
-                    //if (maxsms.length() % 2 == 0) {
-                    widgetView.setTextViewText(R.id.sms_bold, sms + " ");
-                    //} else {
-                    //    widgetView.setTextViewText(R.id.sms_bold, sms + "  ");
-                    //
-                    widgetView.setTextViewText(R.id.balance_bold, balance + " \u20BD");
-                    widgetView.setTextViewText(R.id.date_bold, date);
-                    widgetView.setTextViewText(R.id.renew_bold, context.getString(string_re) + "\n" + dtn);
-
-
-                    widgetView.setTextColor(R.id.inet_bold, color);
-                    widgetView.setTextColor(R.id.calls_bold, color);
-                    widgetView.setTextColor(R.id.sms_bold, color);
-                    widgetView.setTextColor(R.id.balance_bold, color);
-                    widgetView.setTextColor(R.id.date_bold, color);
-                    widgetView.setTextColor(R.id.renew_bold, color);
+                    res = "_bold";
                 }
 
 
-                //set image view
-//                widgetView.setImageViewResource(R.id.calls_logo, 0);
-//                widgetView.setImageViewResource(R.id.sms_logo, R.drawable.ic_message_white_48dp);
-//                widgetView.setImageViewResource(R.id.inet_logo, R.drawable.ic_data_usage_white_48dp);
+
+                //if (font.equals("n")) {
+                //Log.d(LOG_TAG, "font: normal");
+                if (inet.length() < 3) {
+                    widgetView.setTextViewText(getStringResourceByName("inet" + res, context), " " + inet + "  ");
+                } else {
+                    widgetView.setTextViewText(getStringResourceByName("inet" + res, context), inet);
+                }
 
 
-                //Log.d( LOG_TAG, String.valueOf(maxsms.length()));
+                if (!null_.equals("false")) {
+                    //if something is not available
+
+                    //for center of image
+                    if (maxsms.length() % 2 == 0) {
+                        widgetView.setTextViewText(getStringResourceByName("sms" + res, context), sms + " ");
+                    } else {
+                        widgetView.setTextViewText(getStringResourceByName("sms" + res, context), sms + "  ");
+                    }
+                    widgetView.setTextViewText(getStringResourceByName("calls" + res, context), min);
 
 
-                //Log.d(LOG_TAG, "setting colors and images");
+                    Drawable icon_sms = ContextCompat.getDrawable(context, R.drawable.ic_message_white_48dp);
+                    Bitmap b_icon_sms = ((BitmapDrawable) icon_sms).getBitmap();
+                    b_icon_sms = colorize(b_icon_sms, color);
+                    widgetView.setImageViewBitmap(R.id.sms_logo, b_icon_sms);
+
+                    Drawable icon_calls = ContextCompat.getDrawable(context, R.drawable.ic_local_phone_white_48dp);
+                    Bitmap b_icon_calls = ((BitmapDrawable) icon_calls).getBitmap();
+                    b_icon_calls = colorize(b_icon_calls, color);
+                    widgetView.setImageViewBitmap(R.id.calls_logo, b_icon_calls);
+
+                    widgetView.setTextColor(getStringResourceByName("calls" + res, context), color);
+                    widgetView.setTextColor(getStringResourceByName("sms" + res, context), color);
+                }
+
+
+                widgetView.setTextViewText(getStringResourceByName("balance" + res, context), " " + balance + " \u20BD");
+                widgetView.setTextViewText(getStringResourceByName("date" + res, context), date);
+                widgetView.setTextViewText(getStringResourceByName("renew" + res, context), context.getString(string_re) + "\n" + dtn);
+
+                widgetView.setTextColor(getStringResourceByName("inet" + res, context), color);
+                widgetView.setTextColor(getStringResourceByName("balance" + res, context), color);
+                widgetView.setTextColor(getStringResourceByName("date" + res, context), color);
+                widgetView.setTextColor(getStringResourceByName("renew" + res, context), color);
+
 
                 widgetView.setTextColor(R.id.inet, color);
                 widgetView.setTextColor(R.id.calls, color);
@@ -513,106 +496,21 @@ public class TraffWidget extends AppWidgetProvider {
                 widgetView.setTextColor(R.id.renew, color);
 
 
-                Drawable icon_calls = ContextCompat.getDrawable(context, R.drawable.ic_local_phone_white_48dp);
-                Bitmap b_icon_calls = ((BitmapDrawable) icon_calls).getBitmap();
-                b_icon_calls = colorize(b_icon_calls, color);
-                widgetView.setImageViewBitmap(R.id.calls_logo, b_icon_calls);
-
-                //Drawable icon_inet = ContextCompat.getDrawable(context, R.drawable.ic_data_usage_white_48dp);
                 Drawable icon_inet = ContextCompat.getDrawable(context, R.drawable.ic_language_white_48dp);
                 Bitmap b_icon_inet = ((BitmapDrawable) icon_inet).getBitmap();
                 b_icon_inet = colorize(b_icon_inet, color);
                 widgetView.setImageViewBitmap(R.id.inet_logo, b_icon_inet);
 
-                Drawable icon_sms = ContextCompat.getDrawable(context, R.drawable.ic_message_white_48dp);
-                Bitmap b_icon_sms = ((BitmapDrawable) icon_sms).getBitmap();
-                b_icon_sms = colorize(b_icon_sms, color);
-                widgetView.setImageViewBitmap(R.id.sms_logo, b_icon_sms);
-
-
             }
 
 
-            //Log.d(LOG_TAG, "done1");
-
         }
 
-        //Log.d(LOG_TAG, "done2");
 
+        setIntent(widgetView, context, widgetID);
 
-        // set Widget view
-
-
-        //Working with colors
-
-
-
-        //Set all text to null
-//        widgetView.setTextViewText(R.id.inet, "");
-//        widgetView.setTextViewText(R.id.calls, "");
-//        widgetView.setTextViewText(R.id.sms, "");
-//        widgetView.setTextViewText(R.id.balance, "");
-//        if (Build.VERSION.SDK_INT >= 23) {
-//            // Marshmallow+
-//            widgetView.setImageViewIcon(R.id.calls_logo, null);
-//            widgetView.setImageViewIcon(R.id.sms_logo, null);
-//            widgetView.setImageViewIcon(R.id.inet_logo, null);
-//        }
-
-////        widgetView.setTextViewText(R.id.text_bold, "");
-////        widgetView.setTextViewText(R.id.text_italic, "");
-        //Changing text type
-//        String font =  shrpr.getString(QuickstartPreferences.font, "n");
-//        if (font.equals("i")) {
-//            res = R.id.text_italic;
-//        } else if(font.equals("b")) {
-//            res = R.id.text_bold;
-//        }
-
-
-        //Toast.makeText(context, max, Toast.LENGTH_SHORT).show();
-        //Setting content to widget and updating it
-
-
-        //Log.d(LOG_TAG, "setting update intent");
-        Intent updateIntent = new Intent(context, TraffWidget.class);
-        updateIntent.setAction(ACTION_APPWIDGET_FORCE_UPDATE);
-
-        updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetID);
-        android.app.PendingIntent pIntent = PendingIntent.getBroadcast(context, widgetID, updateIntent, 0);
-
-        widgetView.setOnClickPendingIntent(R.id.text_upd, pIntent);
-        widgetView.setOnClickPendingIntent(R.id.inet, pIntent);
-        widgetView.setOnClickPendingIntent(R.id.calls, pIntent);
-        widgetView.setOnClickPendingIntent(R.id.sms, pIntent);
-        widgetView.setOnClickPendingIntent(R.id.inet_logo, pIntent);
-        widgetView.setOnClickPendingIntent(R.id.calls_logo, pIntent);
-        widgetView.setOnClickPendingIntent(R.id.sms_logo, pIntent);
-        widgetView.setOnClickPendingIntent(R.id.balance, pIntent);
-
-        //widgetView.setOnClickPendingIntent(R.id.text_upd_italic, pIntent);
-        widgetView.setOnClickPendingIntent(R.id.inet_italic, pIntent);
-        widgetView.setOnClickPendingIntent(R.id.calls_italic, pIntent);
-        widgetView.setOnClickPendingIntent(R.id.sms_italic, pIntent);
-        widgetView.setOnClickPendingIntent(R.id.balance_italic, pIntent);
-        widgetView.setOnClickPendingIntent(R.id.text_upd_italic, pIntent);
-
-        //widgetView.setOnClickPendingIntent(R.id.text_upd_bold, pIntent);
-        widgetView.setOnClickPendingIntent(R.id.inet_bold, pIntent);
-        widgetView.setOnClickPendingIntent(R.id.calls_bold, pIntent);
-        widgetView.setOnClickPendingIntent(R.id.sms_bold, pIntent);
-        widgetView.setOnClickPendingIntent(R.id.balance_bold, pIntent);
-        widgetView.setOnClickPendingIntent(R.id.text_upd_bold, pIntent);
-        //for make all-widgets app in future
-        //TODO
-        //Log.d(LOG_TAG, "rebuilding widget: " + Integer.toString(widgetID));
-        ComponentName name = new ComponentName(context, TraffWidget.class);
-        int [] ids = appWidgetManager.getAppWidgetIds(name);
-        for (int i: ids) {
-            Log.d(LOG_TAG, Integer.toString(i));
-        }
         appWidgetManager.updateAppWidget(widgetID, widgetView);
-        //Log.d(LOG_TAG, "widget is rebuilt...");
+
         return "";
     }
 
@@ -658,7 +556,7 @@ public class TraffWidget extends AppWidgetProvider {
                         "&token=" + URLEncoder.encode(token, "UTF-8") +
                         //"&return=" + URLEncoder.encode(return_, "UTF-8") +
                         "&tz=" + URLEncoder.encode(tz, "UTF-8")
-                        //+ "&test"
+                        + "&test"
                 );
                 //Log.d(LOG_TAG, "URL: " + url);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -699,6 +597,7 @@ public class TraffWidget extends AppWidgetProvider {
                     String left = jsonObject.getString("left");
                     //Log.d("json", "left " + left);
                     String balance = jsonObject.getString("balance");
+                    String null_ = jsonObject.getString("null");
                     //Log.d("json", "balance " + balance);
                     //Log.d("json", jsonObject.toString());
                     SharedPreferences shrpr = PreferenceManager.getDefaultSharedPreferences(conextglobal);
@@ -713,6 +612,7 @@ public class TraffWidget extends AppWidgetProvider {
                     shrpr.edit().putString(QuickstartPreferences.dtn, dtn).apply();
                     shrpr.edit().putString(QuickstartPreferences.left, left).apply();
                     shrpr.edit().putString(QuickstartPreferences.balance, balance).apply();
+                    shrpr.edit().putString(QuickstartPreferences.null_, null_).apply();
 
                     updateWidget(conextglobal, appWidgetManagerglobal, id, "success");
                     return "Success";
