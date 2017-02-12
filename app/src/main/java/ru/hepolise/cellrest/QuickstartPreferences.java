@@ -51,5 +51,6 @@ public class QuickstartPreferences {
     public static final String left = "left";
     public static final String color_text = "color_text";
     public static final String null_ = "null";
+    public static final String inet_only = "inet_only";
 
 }

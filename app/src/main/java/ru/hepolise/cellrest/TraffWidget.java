@@ -36,7 +36,10 @@ import org.json.JSONObject;
 
 
 import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE;
-
+import static android.appwidget.AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT;
+import static android.appwidget.AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH;
+import static android.appwidget.AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT;
+import static android.appwidget.AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH;
 
 
 public class TraffWidget extends AppWidgetProvider {
@@ -49,8 +52,6 @@ public class TraffWidget extends AppWidgetProvider {
     String op;
     String android_id;
     String pin_code;
-    String locale;
-    String loc;
     String version;
     String token;
     String return_;
@@ -81,7 +82,27 @@ public class TraffWidget extends AppWidgetProvider {
     public void onDeleted(Context context, int[] appWidgetIds) {
         super.onDeleted(context, appWidgetIds);
     }
-
+    @Override
+    public void onAppWidgetOptionsChanged (Context context,
+                                           AppWidgetManager appWidgetManager,
+                                           int appWidgetId,
+                                           Bundle newOptions) {
+        int max_w = newOptions.getInt(OPTION_APPWIDGET_MAX_WIDTH);
+        Log.d(LOG_TAG, "max_w: " + max_w);
+        if (max_w == 137) {
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+            sharedPreferences.edit().putBoolean(QuickstartPreferences.inet_only, true).apply();
+        } else {
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+            sharedPreferences.edit().putBoolean(QuickstartPreferences.inet_only, false).apply();
+        }
+        int id = AppWidgetManager.INVALID_APPWIDGET_ID;
+        Intent updateIntent = new Intent(context, TraffWidget.class);
+        updateIntent.setAction(ACTION_APPWIDGET_UPDATE);
+        updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS,
+                new int[] { id });
+        context.sendBroadcast(updateIntent);
+    }
 
     @Override
     public void onDisabled(Context context) {
