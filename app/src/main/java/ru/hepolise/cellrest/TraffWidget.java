@@ -465,7 +465,7 @@ public class TraffWidget extends AppWidgetProvider {
 
                 //if (font.equals("n")) {
                 //Log.d(LOG_TAG, "font: normal");
-                if (inet.length() < 3) {
+                if (inet.length() == 2 && inet.startsWith("-")) {
                     widgetView.setTextViewText(getStringResourceByName("inet" + res, context), " " + inet + "  ");
                 } else {
                     widgetView.setTextViewText(getStringResourceByName("inet" + res, context), inet);
