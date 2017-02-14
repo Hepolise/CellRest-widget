@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -255,7 +256,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 String login = shrpr.getString(QuickstartPreferences.login, "");
                 String op = shrpr.getString(QuickstartPreferences.op_list, "");
                 String pin_code = shrpr.getString(QuickstartPreferences.pin_code, "");
-                String return_ = shrpr.getString(QuickstartPreferences.return_, "calc");
+                //String return_ = shrpr.getString(QuickstartPreferences.return_, "calc");
                 String android_id = "";
                 Locale currentLocale = Locale.getDefault();
                 String locale = currentLocale.toString();
@@ -428,6 +429,19 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
                     int initialColor =  shrpr.getInt(QuickstartPreferences.color, 0xffffffff);
+                    String color_text = shrpr.getString(QuickstartPreferences.color_text, "null");
+                    if (!color_text.equals("null")){
+                        int color;
+                        try {
+                            color = Color.parseColor(color_text);
+                            shrpr.edit().putInt(QuickstartPreferences.color, color).apply();
+                        } catch (IllegalArgumentException e) {
+                            color = 0xffffffff;
+                            String hexColor = String.format("#%06X", (0xFFFFFF & color));
+                            shrpr.edit().putString(QuickstartPreferences.color_text, hexColor).apply();
+                        }
+                        initialColor = color;
+                    }
                     AmbilWarnaDialog dialog = new AmbilWarnaDialog(ctx, initialColor, new AmbilWarnaDialog.OnAmbilWarnaListener() {
                         @Override
                         public void onOk(AmbilWarnaDialog dialog, int color) {

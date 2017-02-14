@@ -78,6 +78,17 @@
         android:textSize="16sp">
     </TextView>
 
+    <!--<TextView
+        android:id="@+id/balance_inet"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@android:color/transparent"
+        android:gravity="bottom|end"
+        android:fontFamily="sans-serif-light"
+        android:textColor="#ffffff"
+        android:textSize="20sp">
+    </TextView>-->
+
     <TextView
         android:id="@+id/date"
         android:layout_width="fill_parent"
@@ -90,11 +101,33 @@
     </TextView>
 
     <TextView
+        android:id="@+id/date_inet"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@android:color/transparent"
+        android:gravity="center|end"
+        android:fontFamily="sans-serif-light"
+        android:textColor="#ffffff"
+        android:textSize="12sp">
+    </TextView>
+
+    <TextView
         android:id="@+id/renew"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:background="@android:color/transparent"
         android:gravity="bottom|start"
+        android:fontFamily="sans-serif-light"
+        android:textColor="#ffffff"
+        android:textSize="12sp">
+    </TextView>
+
+    <TextView
+        android:id="@+id/renew_inet"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@android:color/transparent"
+        android:gravity="top|end"
         android:fontFamily="sans-serif-light"
         android:textColor="#ffffff"
         android:textSize="12sp">
@@ -169,8 +202,20 @@
         android:fontFamily="sans-serif-light"
         android:textStyle="italic"
         android:textColor="#ffffff"
-        android:textSize="15sp">
+        android:textSize="16sp">
     </TextView>
+
+    <!--<TextView
+        android:id="@+id/balance_inet_italic"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@android:color/transparent"
+        android:gravity="bottom|end"
+        android:fontFamily="sans-serif-light"
+        android:textStyle="italic"
+        android:textColor="#ffffff"
+        android:textSize="20sp">
+    </TextView>-->
 
     <TextView
         android:id="@+id/date_italic"
@@ -185,11 +230,35 @@
     </TextView>
 
     <TextView
+        android:id="@+id/date_inet_italic"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@android:color/transparent"
+        android:gravity="center|end"
+        android:fontFamily="sans-serif-light"
+        android:textStyle="italic"
+        android:textColor="#ffffff"
+        android:textSize="12sp">
+    </TextView>
+
+    <TextView
         android:id="@+id/renew_italic"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:background="@android:color/transparent"
         android:gravity="bottom|start"
+        android:fontFamily="sans-serif-light"
+        android:textStyle="italic"
+        android:textColor="#ffffff"
+        android:textSize="12sp">
+    </TextView>
+
+    <TextView
+        android:id="@+id/renew_inet_italic"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@android:color/transparent"
+        android:gravity="top|end"
         android:fontFamily="sans-serif-light"
         android:textStyle="italic"
         android:textColor="#ffffff"
@@ -262,8 +331,20 @@
         android:fontFamily="sans-serif-light"
         android:textStyle="bold"
         android:textColor="#ffffff"
-        android:textSize="15sp">
+        android:textSize="16sp">
     </TextView>
+
+    <!--<TextView
+        android:id="@+id/balance_inet_bold"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@android:color/transparent"
+        android:gravity="bottom|end"
+        android:fontFamily="sans-serif-light"
+        android:textStyle="bold"
+        android:textColor="#ffffff"
+        android:textSize="20sp">
+    </TextView>-->
 
     <TextView
         android:id="@+id/date_bold"
@@ -278,11 +359,34 @@
     </TextView>
 
     <TextView
+        android:id="@+id/date_inet_bold"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@android:color/transparent"
+        android:gravity="center|end"
+        android:fontFamily="sans-serif-light"
+        android:textStyle="bold"
+        android:textColor="#ffffff"
+        android:textSize="12sp">
+    </TextView>
+
+    <TextView
         android:id="@+id/renew_bold"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:background="@android:color/transparent"
         android:gravity="bottom|start"
+        android:fontFamily="sans-serif-light"
+        android:textStyle="bold"
+        android:textColor="#ffffff"
+        android:textSize="12sp">
+    </TextView>
+    <TextView
+        android:id="@+id/renew_inet_bold"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@android:color/transparent"
+        android:gravity="top|end"
         android:fontFamily="sans-serif-light"
         android:textStyle="bold"
         android:textColor="#ffffff"
