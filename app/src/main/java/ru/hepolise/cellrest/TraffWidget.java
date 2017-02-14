@@ -25,10 +25,12 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.v4.content.ContextCompat;
+import android.util.FloatProperty;
 import android.util.Log;
 
 import android.view.View;
 import android.widget.RemoteViews;
+import android.widget.Toast;
 
 
 import org.json.JSONException;
@@ -88,7 +90,7 @@ public class TraffWidget extends AppWidgetProvider {
                                            int appWidgetId,
                                            Bundle newOptions) {
         int max_w = newOptions.getInt(OPTION_APPWIDGET_MAX_WIDTH);
-        Log.d(LOG_TAG, "max_w: " + max_w);
+        //Log.d(LOG_TAG, "max_w: " + max_w);
         if (max_w == 137) {
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
             sharedPreferences.edit().putBoolean(QuickstartPreferences.inet_only, true).apply();
@@ -255,9 +257,33 @@ public class TraffWidget extends AppWidgetProvider {
         widgetView.setOnClickPendingIntent(R.id.balance_bold, pIntent);
         widgetView.setOnClickPendingIntent(R.id.text_upd_bold, pIntent);
     }
+
+    public String getSize(String s) {
+        String result;
+        float p = Float.parseFloat(s);
+        if (p > 1024) {
+            p = p/1024;
+            result = "G";
+        } else {
+            result = "M";
+        }
+        p = p * 10;
+        if (Float.toString(p).endsWith("0")) {
+            //Log.d(LOG_TAG, "a true " + Integer.toString(Math.round(p/10)));
+            return Integer.toString(Math.round(p/10)) + result;
+        } else {
+            //Log.d(LOG_TAG, "Received: " + Float.toString(p));
+            p = Math.round(p);
+            //Log.d(LOG_TAG, "round: " + Float.toString(p));
+            p = p / 10;
+            //Log.d(LOG_TAG, "division: " + Float.toString(p));
+            return Float.toString(p) + result;
+        }
+
+    }
     public String updateWidget(Context context, AppWidgetManager appWidgetManager,
                                int widgetID, String content) {
-        Log.d(LOG_TAG, "content: " + content);
+        //Log.d(LOG_TAG, "content: " + content);
 
 
         conextglobal = context;
@@ -380,33 +406,34 @@ public class TraffWidget extends AppWidgetProvider {
         String font =  shrpr.getString(QuickstartPreferences.font, "n");
         if (content.equals(context.getString(R.string.updating))) {
             //Log.d(LOG_TAG, "update");
-            if (f_update) {
-                //Log.d(LOG_TAG, "f-update");
-                shrpr.edit().putString(QuickstartPreferences.update, "1").apply();
 
-
-
-                setAllTextTuNull(widgetView);
-                widgetView.setImageViewBitmap(R.id.calls_logo, null);
-                widgetView.setImageViewBitmap(R.id.sms_logo, null);
-                widgetView.setImageViewBitmap(R.id.inet_logo, null);
-                //}
-                if (font.equals("n")) {
-                    widgetView.setTextViewText(R.id.text_upd, context.getString(R.string.updating));
-                    widgetView.setTextColor(R.id.text_upd, color);
-                } else if (font.equals("i")) {
-                    widgetView.setTextViewText(R.id.text_upd_italic, context.getString(R.string.updating));
-                    widgetView.setTextColor(R.id.text_upd_italic, color);
-                } else if (font.equals("b")) {
-                    widgetView.setTextViewText(R.id.text_upd_bold, context.getString(R.string.updating));
-                    widgetView.setTextColor(R.id.text_upd_bold, color);
-                }
-
-                shrpr.edit().putBoolean(QuickstartPreferences.f_update, false).apply();
-            }
             Integer[] params = { widgetID };
             new ProgressTask().execute(params);
-        } else {
+        }
+        if (f_update) {
+            //Log.d(LOG_TAG, "f-update");
+            shrpr.edit().putString(QuickstartPreferences.update, "1").apply();
+
+
+
+            setAllTextTuNull(widgetView);
+            widgetView.setImageViewBitmap(R.id.calls_logo, null);
+            widgetView.setImageViewBitmap(R.id.sms_logo, null);
+            widgetView.setImageViewBitmap(R.id.inet_logo, null);
+            //}
+            if (font.equals("n")) {
+                widgetView.setTextViewText(R.id.text_upd, context.getString(R.string.updating));
+                widgetView.setTextColor(R.id.text_upd, color);
+            } else if (font.equals("i")) {
+                widgetView.setTextViewText(R.id.text_upd_italic, context.getString(R.string.updating));
+                widgetView.setTextColor(R.id.text_upd_italic, color);
+            } else if (font.equals("b")) {
+                widgetView.setTextViewText(R.id.text_upd_bold, context.getString(R.string.updating));
+                widgetView.setTextColor(R.id.text_upd_bold, color);
+            }
+
+            shrpr.edit().putBoolean(QuickstartPreferences.f_update, false).apply();
+        } else {//else {
             //Log.d(LOG_TAG, "just set widget, check data");
 
 
@@ -465,11 +492,20 @@ public class TraffWidget extends AppWidgetProvider {
 
                 //if (font.equals("n")) {
                 //Log.d(LOG_TAG, "font: normal");
-                if (inet.length() == 2 && inet.startsWith("-")) {
-                    widgetView.setTextViewText(getStringResourceByName("inet" + res, context), " " + inet + "  ");
-                } else {
-                    widgetView.setTextViewText(getStringResourceByName("inet" + res, context), inet);
-                }
+                //inet = "3333";
+//                if (inet.length() < 2) {
+//                    Toast.makeText(context, "1", Toast.LENGTH_LONG).show();
+//                    widgetView.setTextViewText(getStringResourceByName("inet" + res, context), "" + inet + "M");
+//                } else if (inet.length() == 2 && inet.startsWith("-")) {
+//                    Toast.makeText(context, "2", Toast.LENGTH_LONG).show();
+//                    widgetView.setTextViewText(getStringResourceByName("inet" + res, context), "" + inet + "M");
+//                } else if (inet.length() == 2) {
+//                    Toast.makeText(context, "3", Toast.LENGTH_LONG).show();
+//                    widgetView.setTextViewText(getStringResourceByName("inet" + res, context), "" + inet + "M");
+//                } else {
+//                    Toast.makeText(context, "else", Toast.LENGTH_LONG).show();
+                    widgetView.setTextViewText(getStringResourceByName("inet" + res, context), getSize(inet));
+                //}
 
 
                 if (!null_.equals("false")) {
@@ -554,9 +590,9 @@ public class TraffWidget extends AppWidgetProvider {
 
         @Override
         protected void onPostExecute(String result) {
-            Log.d(LOG_TAG, "onpostexec result: "  + result);
+            //Log.d(LOG_TAG, "onpostexec result: "  + result);
             int id = Integer.parseInt(result);
-            Log.d(LOG_TAG, "onpostexec id "  + id);
+            //Log.d(LOG_TAG, "onpostexec id "  + id);
             updateWidget(conextglobal, appWidgetManagerglobal, id, "onPostExecute");
         }
 
@@ -588,7 +624,7 @@ public class TraffWidget extends AppWidgetProvider {
                     buf.append(line);
                 }
                 String buffer = buf.toString();
-                //Log.d(LOG_TAG, buffer);
+                //Log.d(LOG_TAG, "buf: " + buffer);
                 try{
                     JSONObject jsonObject = new JSONObject(buffer);
 //                    String error = jsonObject.getString("error");
@@ -636,6 +672,7 @@ public class TraffWidget extends AppWidgetProvider {
                     shrpr.edit().putString(QuickstartPreferences.null_, null_).apply();
 
                     updateWidget(conextglobal, appWidgetManagerglobal, id, "success");
+                    //Log.d(LOG_TAG, "json success");
                     return "Success";
 
                 } catch (JSONException e){
@@ -643,14 +680,14 @@ public class TraffWidget extends AppWidgetProvider {
 //                    String error = jsonObject.getString("error");
 //                    //Log.d("json", "error " + error);
                     //Log.d("json", e.getMessage());
-                    updateWidget(conextglobal, appWidgetManagerglobal, id, "error :JSONException" + e.getMessage());
+                    updateWidget(conextglobal, appWidgetManagerglobal, id, "error: JSONException: " + e.getMessage());
                     return e.getMessage();
                 }
 
 
             } catch (IOException e) {
                 //Log.d(LOG_TAG, e.getMessage());
-                updateWidget(conextglobal, appWidgetManagerglobal, id, "error: IOException" + e.getMessage());
+                updateWidget(conextglobal, appWidgetManagerglobal, id, "error: IOException: " + e.getMessage());
                 return e.getMessage();
             }
 
