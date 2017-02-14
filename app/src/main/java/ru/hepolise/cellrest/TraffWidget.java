@@ -253,7 +253,6 @@ public class TraffWidget extends AppWidgetProvider {
         updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetID);
         android.app.PendingIntent pIntent = PendingIntent.getBroadcast(context, widgetID, updateIntent, 0);
 
-        //TODO: add other (almost done)
         widgetView.setOnClickPendingIntent(getStringResourceByName("inet" + res, context), pIntent);
         widgetView.setOnClickPendingIntent(getStringResourceByName("calls" + res, context), pIntent);
         widgetView.setOnClickPendingIntent(getStringResourceByName("sms" + res, context), pIntent);
@@ -262,26 +261,10 @@ public class TraffWidget extends AppWidgetProvider {
         widgetView.setOnClickPendingIntent(getStringResourceByName("renew" + res, context), pIntent);
         widgetView.setOnClickPendingIntent(getStringResourceByName("renew_inet" + res, context), pIntent);
         widgetView.setOnClickPendingIntent(getStringResourceByName("date_inet" + res, context), pIntent);
-//        widgetView.setOnClickPendingIntent(R.id.text_upd, pIntent);
-//        widgetView.setOnClickPendingIntent(R.id.inet, pIntent);
-//        widgetView.setOnClickPendingIntent(R.id.calls, pIntent);
-//        widgetView.setOnClickPendingIntent(R.id.sms, pIntent);
+
         widgetView.setOnClickPendingIntent(R.id.inet_logo, pIntent);
         widgetView.setOnClickPendingIntent(R.id.calls_logo, pIntent);
         widgetView.setOnClickPendingIntent(R.id.sms_logo, pIntent);
-//        widgetView.setOnClickPendingIntent(R.id.balance, pIntent);
-
-//        widgetView.setOnClickPendingIntent(R.id.inet_italic, pIntent);
-//        widgetView.setOnClickPendingIntent(R.id.calls_italic, pIntent);
-//        widgetView.setOnClickPendingIntent(R.id.sms_italic, pIntent);
-//        widgetView.setOnClickPendingIntent(R.id.balance_italic, pIntent);
-//        widgetView.setOnClickPendingIntent(R.id.text_upd_italic, pIntent);
-//
-//        widgetView.setOnClickPendingIntent(R.id.inet_bold, pIntent);
-//        widgetView.setOnClickPendingIntent(R.id.calls_bold, pIntent);
-//        widgetView.setOnClickPendingIntent(R.id.sms_bold, pIntent);
-//        widgetView.setOnClickPendingIntent(R.id.balance_bold, pIntent);
-//        widgetView.setOnClickPendingIntent(R.id.text_upd_bold, pIntent);
     }
 
     public String getSize(String s) {
@@ -562,9 +545,9 @@ public class TraffWidget extends AppWidgetProvider {
                     widgetView.setTextColor(getStringResourceByName("calls" + res, context), color);
                     widgetView.setTextColor(getStringResourceByName("sms" + res, context), color);
                 }
-                if (null_.equals("false") && !inet_only) {
-                    Toast.makeText(context, "Try to reduce wiget size...", Toast.LENGTH_LONG).show();
-                }
+//                if (null_.equals("false") && !inet_only) {
+//                    Toast.makeText(context, "Try to reduce widget size...", Toast.LENGTH_LONG).show();
+//                }
                 String inet_add = "";
                 if (inet_only) {
                     //widgetView.setTextViewText(getStringResourceByName("balance_inet" + res, context), " " + balance + " \u20BD");
