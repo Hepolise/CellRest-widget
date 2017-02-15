@@ -38,7 +38,10 @@ import org.json.JSONObject;
 
 
 import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE;
+import static android.appwidget.AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT;
 import static android.appwidget.AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH;
+import static android.appwidget.AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT;
+import static android.appwidget.AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH;
 
 public class TraffWidget extends AppWidgetProvider {
     Context contextglobal;
@@ -85,8 +88,12 @@ public class TraffWidget extends AppWidgetProvider {
                                            int appWidgetId,
                                            Bundle newOptions) {
         int max_w = newOptions.getInt(OPTION_APPWIDGET_MAX_WIDTH);
+        int max_h = newOptions.getInt(OPTION_APPWIDGET_MAX_HEIGHT);
+        int min_w = newOptions.getInt(OPTION_APPWIDGET_MIN_WIDTH);
+        int min_h = newOptions.getInt(OPTION_APPWIDGET_MIN_HEIGHT);
         //make only inet for small widget
-        if (max_w == 204) {
+        Toast.makeText(context, Integer.toString(max_w) + " " + Integer.toString(max_h) + " " + Integer.toString(min_w) + " " + Integer.toString(min_h), Toast.LENGTH_LONG).show();
+        if (max_w < 205) {
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
             sharedPreferences.edit().putBoolean(QuickstartPreferences.inet_only, true).apply();
         } else {
