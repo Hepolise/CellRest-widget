@@ -38,14 +38,10 @@ import org.json.JSONObject;
 
 
 import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE;
-import static android.appwidget.AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT;
 import static android.appwidget.AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH;
-import static android.appwidget.AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT;
-import static android.appwidget.AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH;
-
 
 public class TraffWidget extends AppWidgetProvider {
-    Context conextglobal;
+    Context contextglobal;
     android.appwidget.AppWidgetManager appWidgetManagerglobal;
     String UPD;
     String ACTION_APPWIDGET_FORCE_UPDATE = "";
@@ -295,7 +291,7 @@ public class TraffWidget extends AppWidgetProvider {
         //Log.d(LOG_TAG, "content: " + content);
 
 
-        conextglobal = context;
+        contextglobal = context;
         appWidgetManagerglobal = appWidgetManager;
 
         SharedPreferences shrpr = PreferenceManager.getDefaultSharedPreferences(context);
@@ -420,10 +416,13 @@ public class TraffWidget extends AppWidgetProvider {
 
         String font =  shrpr.getString(QuickstartPreferences.font, "n");
         if (content.equals(context.getString(R.string.updating))) {
-            //Log.d(LOG_TAG, "update");
+            Log.d(LOG_TAG, "update");
 
             Integer[] params = { widgetID };
             new ProgressTask().execute(params);
+            if (null_.equals("false") && !inet_only) {
+                Toast.makeText(context, context.getString(R.string.reduce_widget), Toast.LENGTH_LONG).show();
+            }
         }
         if (f_update) {
             //Log.d(LOG_TAG, "f-update");
@@ -545,9 +544,6 @@ public class TraffWidget extends AppWidgetProvider {
                     widgetView.setTextColor(getStringResourceByName("calls" + res, context), color);
                     widgetView.setTextColor(getStringResourceByName("sms" + res, context), color);
                 }
-//                if (null_.equals("false") && !inet_only) {
-//                    Toast.makeText(context, "Try to reduce widget size...", Toast.LENGTH_LONG).show();
-//                }
                 String inet_add = "";
                 if (inet_only) {
                     //widgetView.setTextViewText(getStringResourceByName("balance_inet" + res, context), " " + balance + " \u20BD");
@@ -603,7 +599,7 @@ public class TraffWidget extends AppWidgetProvider {
                 //Loading content
                 getContent(id[0]);
             } catch (IOException ex) {
-                updateWidget(conextglobal, appWidgetManagerglobal, id[0], "error: doInBackground");
+                updateWidget(contextglobal, appWidgetManagerglobal, id[0], "error: doInBackground");
             }
             return Integer.toString(id[0]);
         }
@@ -615,7 +611,7 @@ public class TraffWidget extends AppWidgetProvider {
             //Log.d(LOG_TAG, "onpostexec result: "  + result);
             int id = Integer.parseInt(result);
             //Log.d(LOG_TAG, "onpostexec id "  + id);
-            updateWidget(conextglobal, appWidgetManagerglobal, id, "onPostExecute");
+            updateWidget(contextglobal, appWidgetManagerglobal, id, "onPostExecute");
         }
 
 
@@ -679,7 +675,7 @@ public class TraffWidget extends AppWidgetProvider {
                     String null_ = jsonObject.getString("null");
                     //Log.d("json", "balance " + balance);
                     //Log.d("json", jsonObject.toString());
-                    SharedPreferences shrpr = PreferenceManager.getDefaultSharedPreferences(conextglobal);
+                    SharedPreferences shrpr = PreferenceManager.getDefaultSharedPreferences(contextglobal);
                     shrpr.edit().putString(QuickstartPreferences.time, time).apply();
                     shrpr.edit().putString(QuickstartPreferences.ok, ok).apply();
                     shrpr.edit().putString(QuickstartPreferences.maxmin, maxmin).apply();
@@ -693,7 +689,8 @@ public class TraffWidget extends AppWidgetProvider {
                     shrpr.edit().putString(QuickstartPreferences.balance, balance).apply();
                     shrpr.edit().putString(QuickstartPreferences.null_, null_).apply();
 
-                    updateWidget(conextglobal, appWidgetManagerglobal, id, "success");
+                   
+                    updateWidget(contextglobal, appWidgetManagerglobal, id, "success");
                     //Log.d(LOG_TAG, "json success");
                     return "Success";
 
@@ -702,14 +699,14 @@ public class TraffWidget extends AppWidgetProvider {
 //                    String error = jsonObject.getString("error");
 //                    //Log.d("json", "error " + error);
                     //Log.d("json", e.getMessage());
-                    updateWidget(conextglobal, appWidgetManagerglobal, id, "error: JSONException: " + e.getMessage());
+                    updateWidget(contextglobal, appWidgetManagerglobal, id, "error: JSONException: " + e.getMessage());
                     return e.getMessage();
                 }
 
 
             } catch (IOException e) {
                 //Log.d(LOG_TAG, e.getMessage());
-                updateWidget(conextglobal, appWidgetManagerglobal, id, "error: IOException: " + e.getMessage());
+                updateWidget(contextglobal, appWidgetManagerglobal, id, "error: IOException: " + e.getMessage());
                 return e.getMessage();
             }
 

@@ -11,6 +11,7 @@
     <string name="days">days</string>
     <string name="days2">days</string>
     <string name="day">day</string>
+    <string name="reduce_widget">Try to reduce widget size</string>
 
 
     <string name="widget_settings_color">Widget\'s color</string>

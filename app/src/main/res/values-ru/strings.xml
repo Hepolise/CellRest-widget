@@ -82,4 +82,5 @@
     <string name="days">дней</string>
     <string name="days2">дня</string>
     <string name="restore">Восстановление через</string>
+    <string name="reduce_widget">Попробуйте уменьшить размер виджета</string>
 </resources>
