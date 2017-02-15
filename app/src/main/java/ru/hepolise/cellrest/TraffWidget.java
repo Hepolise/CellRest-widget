@@ -61,7 +61,6 @@ public class TraffWidget extends AppWidgetProvider {
     @Override
     public void onEnabled(Context context) {
         super.onEnabled(context);
-        //Log.d(LOG_TAG, "onEnabled: ");
     }
 
     @Override
@@ -86,9 +85,8 @@ public class TraffWidget extends AppWidgetProvider {
                                            int appWidgetId,
                                            Bundle newOptions) {
         int max_w = newOptions.getInt(OPTION_APPWIDGET_MAX_WIDTH);
-        //Log.d(LOG_TAG, "max_w: " + max_w);
+        //make only inet for small widget
         if (max_w == 204) {
-            //Log.d(LOG_TAG, "max_w (true):  " + max_w);
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
             sharedPreferences.edit().putBoolean(QuickstartPreferences.inet_only, true).apply();
         } else {
@@ -152,6 +150,7 @@ public class TraffWidget extends AppWidgetProvider {
     }
 
     private String plurals(Long n, String form1, String form2, String form5){
+        //day days days (день дня дней)
         if (n==0) return n.toString() + " " + form5;
         n = Math.abs(n) % 100;
         Long n1 = n % 10;
@@ -161,6 +160,7 @@ public class TraffWidget extends AppWidgetProvider {
         return n.toString() + " " + form5;
     }
     public Bitmap colorize(Bitmap srcBmp, int dstColor) {
+        //change images color
 
         int width = srcBmp.getWidth();
         int height = srcBmp.getHeight();
@@ -233,15 +233,12 @@ public class TraffWidget extends AppWidgetProvider {
 
     public int getStringResourceByName(String aString, Context ctx) {
         String packageName = ctx.getPackageName();
-        //Log.d(LOG_TAG, Integer.toString(ctx.getResources().getIdentifier(aString, "id", packageName)));
         return ctx.getResources().getIdentifier(aString, "id", packageName);
     }
 
-//
-//    public void colorize(RemoteViews widgetView, Context context, int widgetID, String res) {
-//
-//    }
+
     public void setIntent(RemoteViews widgetView, Context context, int widgetID, String res) {
+        //set intent to reload widget on tap
 
         Intent updateIntent = new Intent(context, TraffWidget.class);
         updateIntent.setAction(ACTION_APPWIDGET_FORCE_UPDATE);
@@ -264,6 +261,7 @@ public class TraffWidget extends AppWidgetProvider {
     }
 
     public String getSize(String s) {
+        //return inet on MB or GB
         String result;
         float p = Float.parseFloat(s);
         if (p > 1024) {
@@ -288,9 +286,10 @@ public class TraffWidget extends AppWidgetProvider {
     }
     public String updateWidget(Context context, AppWidgetManager appWidgetManager,
                                int widgetID, String content) {
-        //Log.d(LOG_TAG, "content: " + content);
+        //GEt data && update widget
 
 
+        //setting global vars
         contextglobal = context;
         appWidgetManagerglobal = appWidgetManager;
 
@@ -360,10 +359,8 @@ public class TraffWidget extends AppWidgetProvider {
         //Reformat login
         if (login.startsWith("+7")) {
             login = login.substring(2);
-            //Log.d(LOG_TAG, "+7 change: " + login);
         } else if (login.startsWith("7") || login.startsWith("8")){
             login = login.substring(1);
-            //Log.d(LOG_TAG, "7/8 change: " + login);
         }
 
 
@@ -381,7 +378,6 @@ public class TraffWidget extends AppWidgetProvider {
 
         //Load timezone
         tz = TimeZone.getDefault().getID();
-        //Log.d(LOG_TAG, tz);
 
         //load app version
         int versionCode = BuildConfig.VERSION_CODE;
@@ -392,9 +388,11 @@ public class TraffWidget extends AppWidgetProvider {
 
 
 
+        //load color
         int color =  shrpr.getInt(QuickstartPreferences.color, 0xffffffff);
 
         int text;
+        //set text color
         String color_text = shrpr.getString(QuickstartPreferences.color_text, "null");
         if (color_text.equals("null")){
             String hexColor = String.format("#%06X", (0xFFFFFF & color));
@@ -404,16 +402,13 @@ public class TraffWidget extends AppWidgetProvider {
                 text = Color.parseColor(color_text);
                 color = text;
                 shrpr.edit().putInt(QuickstartPreferences.color, color).apply();
-                //Log.d(LOG_TAG, "color id OK: " + color);
             } catch (IllegalArgumentException e) {
-                //Log.d(LOG_TAG, "catched: " + e.getMessage());
                 color = 0xffffffff;
                 String hexColor = String.format("#%06X", (0xFFFFFF & color));
                 shrpr.edit().putString(QuickstartPreferences.color_text, hexColor).apply();
             }
         }
-        //Log.d(LOG_TAG, Integer.toString(text));
-
+        //set text font
         String font =  shrpr.getString(QuickstartPreferences.font, "n");
         if (content.equals(context.getString(R.string.updating))) {
             Log.d(LOG_TAG, "update");
@@ -424,14 +419,11 @@ public class TraffWidget extends AppWidgetProvider {
                 Toast.makeText(context, context.getString(R.string.reduce_widget), Toast.LENGTH_LONG).show();
             }
         }
+        setAllTextTuNull(widgetView);
         if (f_update) {
-            //Log.d(LOG_TAG, "f-update");
+            //if widget is reloaded by tap
             shrpr.edit().putString(QuickstartPreferences.update, "1").apply();
 
-
-
-            setAllTextTuNull(widgetView);
-            //}
             if (font.equals("n")) {
                 widgetView.setTextViewText(R.id.text_upd, context.getString(R.string.updating));
                 widgetView.setTextColor(R.id.text_upd, color);
@@ -444,15 +436,10 @@ public class TraffWidget extends AppWidgetProvider {
             }
 
             shrpr.edit().putBoolean(QuickstartPreferences.f_update, false).apply();
-        } else {//else {
-            //Log.d(LOG_TAG, "just set widget, check data");
+        } else {
 
-
-
-
-            setAllTextTuNull(widgetView);
             if (ok.equals("")) {
-                //}
+                //if we have no data by server on first run
                 if (font.equals("n")) {
                     widgetView.setTextViewText(R.id.text_upd, context.getString(R.string.error));
                     widgetView.setTextColor(R.id.text_upd, color);
@@ -464,9 +451,6 @@ public class TraffWidget extends AppWidgetProvider {
                     widgetView.setTextColor(R.id.text_upd_bold, color);
                 }
             } else {
-                //set text view
-
-                //Log.d(LOG_TAG, "data is ok");
                 String sms;
                 String min;
                 String inet;
@@ -482,6 +466,7 @@ public class TraffWidget extends AppWidgetProvider {
                 int string_re;
                 String days;
                 if (Integer.parseInt(inet) < 0 || Integer.parseInt(min) < 0 || Integer.parseInt(sms) < 0) {
+                    //if we have something < 0 we need to return days to regain (provided by server)
                     string_re = R.string.restore;
                     days = dtr;
                 } else {
@@ -499,30 +484,12 @@ public class TraffWidget extends AppWidgetProvider {
                     res = "_bold";
                 }
 
-
-
-                //if (font.equals("n")) {
-                //Log.d(LOG_TAG, "font: normal");
-                //inet = "3333";
-//                if (inet.length() < 2) {
-//                    Toast.makeText(context, "1", Toast.LENGTH_LONG).show();
-//                    widgetView.setTextViewText(getStringResourceByName("inet" + res, context), "" + inet + "M");
-//                } else if (inet.length() == 2 && inet.startsWith("-")) {
-//                    Toast.makeText(context, "2", Toast.LENGTH_LONG).show();
-//                    widgetView.setTextViewText(getStringResourceByName("inet" + res, context), "" + inet + "M");
-//                } else if (inet.length() == 2) {
-//                    Toast.makeText(context, "3", Toast.LENGTH_LONG).show();
-//                    widgetView.setTextViewText(getStringResourceByName("inet" + res, context), "" + inet + "M");
-//                } else {
-//                    Toast.makeText(context, "else", Toast.LENGTH_LONG).show();
-                    widgetView.setTextViewText(getStringResourceByName("inet" + res, context), getSize(inet));
-                //}
-
+                widgetView.setTextViewText(getStringResourceByName("inet" + res, context), getSize(inet));
 
                 if (!null_.equals("false") && !inet_only) {
-                    //if something is not available
+                    //if cals and sms are not available
 
-                    //for center of image
+                    //for text in center of image
                     if (maxsms.length() % 2 == 0) {
                         widgetView.setTextViewText(getStringResourceByName("sms" + res, context), sms + " ");
                     } else {
@@ -546,11 +513,9 @@ public class TraffWidget extends AppWidgetProvider {
                 }
                 String inet_add = "";
                 if (inet_only) {
-                    //widgetView.setTextViewText(getStringResourceByName("balance_inet" + res, context), " " + balance + " \u20BD");
-                    //widgetView.setTextViewText(getStringResourceByName("renew_inet" + res, context), context.getString(string_re) + "\n" + days);
+                    //load another text view from layout in case if widget is small
                     inet_add = "_inet";
                 }
-
 
                 widgetView.setTextViewText(getStringResourceByName("balance" + res, context), " " + balance + " \u20BD");
                 widgetView.setTextViewText(getStringResourceByName("date" + inet_add  + res, context), date);
@@ -560,15 +525,6 @@ public class TraffWidget extends AppWidgetProvider {
                 widgetView.setTextColor(getStringResourceByName("balance" + res, context), color);
                 widgetView.setTextColor(getStringResourceByName("date" + inet_add  + res, context), color);
                 widgetView.setTextColor(getStringResourceByName("renew" + inet_add + res, context), color);
-
-
-
-//                widgetView.setTextColor(R.id.inet, color);
-//                widgetView.setTextColor(R.id.calls, color);
-//                widgetView.setTextColor(R.id.sms, color);
-//                widgetView.setTextColor(R.id.balance, color);
-//                widgetView.setTextColor(R.id.date, color);
-//                widgetView.setTextColor(R.id.renew, color);
 
 
                 Drawable icon_inet = ContextCompat.getDrawable(context, R.drawable.ic_language_white_48dp);
@@ -582,15 +538,17 @@ public class TraffWidget extends AppWidgetProvider {
         }
 
 
+        //make widget responsive to taps
         setIntent(widgetView, context, widgetID, res);
 
+        //redraw widget
         appWidgetManager.updateAppWidget(widgetID, widgetView);
 
         return "";
     }
 
-    //new ProgressTask().execute();
     class ProgressTask extends AsyncTask<Integer, String, String> {
+        //load new data from server
         @Override
         public String doInBackground(Integer... id) {
 
@@ -608,18 +566,16 @@ public class TraffWidget extends AppWidgetProvider {
 
         @Override
         protected void onPostExecute(String result) {
-            //Log.d(LOG_TAG, "onpostexec result: "  + result);
             int id = Integer.parseInt(result);
-            //Log.d(LOG_TAG, "onpostexec id "  + id);
+            //update widget after loading data
             updateWidget(contextglobal, appWidgetManagerglobal, id, "onPostExecute");
         }
 
 
         private String getContent(Integer id) throws IOException {
             BufferedReader reader;
-
             try {
-
+                //connect to server
                 URL url = new URL("https://srvr.tk/traf.php?cmd=json&upd=" + URLEncoder.encode(UPD, "UTF-8") +
                         "&login=" + URLEncoder.encode(login, "UTF-8") +
                         "&pass=" + URLEncoder.encode(pass, "UTF-8") +
@@ -633,7 +589,6 @@ public class TraffWidget extends AppWidgetProvider {
                         "&tz=" + URLEncoder.encode(tz, "UTF-8")
                         + "&test"
                 );
-                //Log.d(LOG_TAG, "URL: " + url);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 reader= new BufferedReader(new InputStreamReader(conn.getInputStream()));
                 StringBuilder buf=new StringBuilder();
@@ -642,40 +597,25 @@ public class TraffWidget extends AppWidgetProvider {
                     buf.append(line);
                 }
                 String buffer = buf.toString();
-                //Log.d(LOG_TAG, "buf: " + buffer);
                 try{
+                    //parse answer
                     JSONObject jsonObject = new JSONObject(buffer);
-//                    String error = jsonObject.getString("error");
-//                    //Log.d("json", "error " + error);
                     String time = jsonObject.getString("time");
-                    //Log.d("json", "time " + time);
                     String ok = jsonObject.getString("ok");
-                    //Log.d("json", "ok " + ok);
                     String foo = jsonObject.getString("foo");
-                    //Log.d("json", "foo " + foo);
                     String bar = jsonObject.getString("bar");
-                    //Log.d("json", "bar " + bar);
                     String max = jsonObject.getString("max");
-                    //Log.d("json", "max " + max);
                     String maxmin = jsonObject.getString("maxmin");
-                    //Log.d("json", "maxmin " + maxmin);
                     String maxsms = jsonObject.getString("maxsms");
-                    //Log.d("json", "maxsms " + maxsms);
                     String leftmin = jsonObject.getString("leftmin");
-                    //Log.d("json", "leftmin " + leftmin);
                     String leftsms = jsonObject.getString("leftsms");
-                    //Log.d("json", "leftsms " + leftsms);
                     String dtr = jsonObject.getString("dtr");
-                    //Log.d("json", "dtr " + dtr);
                     String dtn = jsonObject.getString("dtn");
-                    //Log.d("json", "dtn " + dtn);
                     String left = jsonObject.getString("left");
-                    //Log.d("json", "left " + left);
                     String balance = jsonObject.getString("balance");
                     String null_ = jsonObject.getString("null");
-                    //Log.d("json", "balance " + balance);
-                    //Log.d("json", jsonObject.toString());
                     SharedPreferences shrpr = PreferenceManager.getDefaultSharedPreferences(contextglobal);
+                    //save data
                     shrpr.edit().putString(QuickstartPreferences.time, time).apply();
                     shrpr.edit().putString(QuickstartPreferences.ok, ok).apply();
                     shrpr.edit().putString(QuickstartPreferences.maxmin, maxmin).apply();
@@ -689,30 +629,22 @@ public class TraffWidget extends AppWidgetProvider {
                     shrpr.edit().putString(QuickstartPreferences.balance, balance).apply();
                     shrpr.edit().putString(QuickstartPreferences.null_, null_).apply();
 
-                   
+                   //update widget
                     updateWidget(contextglobal, appWidgetManagerglobal, id, "success");
-                    //Log.d(LOG_TAG, "json success");
                     return "Success";
 
                 } catch (JSONException e){
-//                    JSONObject jsonObject = new JSONObject(buffer)
-//                    String error = jsonObject.getString("error");
-//                    //Log.d("json", "error " + error);
-                    //Log.d("json", e.getMessage());
+                    //update widget with old data
                     updateWidget(contextglobal, appWidgetManagerglobal, id, "error: JSONException: " + e.getMessage());
                     return e.getMessage();
                 }
 
 
             } catch (IOException e) {
-                //Log.d(LOG_TAG, e.getMessage());
+                //update widget with old data
                 updateWidget(contextglobal, appWidgetManagerglobal, id, "error: IOException: " + e.getMessage());
                 return e.getMessage();
             }
-
-
-
-
         }
 
 
