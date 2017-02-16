@@ -8,6 +8,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.TimeZone;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -147,7 +148,8 @@ public class TraffWidget extends AppWidgetProvider {
 
         try{
             DateFormat data = DateFormat.getDateInstance(DateFormat.SHORT);
-            DateFormat time = DateFormat.getTimeInstance(DateFormat.SHORT);
+            Locale currentLocale = Locale.getDefault();
+            DateFormat time = DateFormat.getTimeInstance(DateFormat.SHORT, currentLocale);
             Date netDate = (new Date(timeStamp));
             return time.format(netDate) + "\n" + data.format(netDate);
         }
