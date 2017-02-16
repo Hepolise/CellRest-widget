@@ -287,7 +287,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 } else {
                     UPD = "1";
                 }
-                
+
                 int versionCode = BuildConfig.VERSION_CODE;
                 version = Integer.toString(versionCode);
                 try {
