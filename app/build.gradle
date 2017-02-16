@@ -7,7 +7,7 @@ android {
         applicationId "ru.hepolise.cellrest"
         minSdkVersion 16
         targetSdkVersion 25
-        versionCode 6
+        versionCode 7
         versionName "2.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
