@@ -309,6 +309,7 @@ public class TraffWidget extends AppWidgetProvider {
         Boolean inet_only = shrpr.getBoolean(QuickstartPreferences.inet_only, false);
 
 
+
         String max;
         String time;
         String ok;
@@ -530,10 +531,9 @@ public class TraffWidget extends AppWidgetProvider {
                 widgetView.setTextViewText(getStringResourceByName("balance" + res, context), " " + balance + " \u20BD");
                 widgetView.setTextViewText(getStringResourceByName("date" + inet_add  + res, context), date);
                 String nl = "\n";
-                if (inet_only) {
+                if (inet_only && appWidgetManager.getAppWidgetOptions(widgetID).getInt(OPTION_APPWIDGET_MIN_WIDTH) > 140) {
                     nl = " ";
                 }
-                //TODO: depends by screen size
                 widgetView.setTextViewText(getStringResourceByName("renew" + inet_add + res, context), context.getString(string_re) + nl + days);
 
                 widgetView.setTextColor(getStringResourceByName("inet" + res, context), color);
