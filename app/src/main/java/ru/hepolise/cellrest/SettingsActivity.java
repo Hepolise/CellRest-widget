@@ -287,12 +287,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 } else {
                     UPD = "1";
                 }
-
-//                try {
-//                    version = ctx.getPackageManager().getPackageInfo(ctx.getPackageName(), 0 ).versionName;
-//                } catch (PackageManager.NameNotFoundException e) {
-//
-//                }
+                
                 int versionCode = BuildConfig.VERSION_CODE;
                 version = Integer.toString(versionCode);
                 try {
@@ -334,46 +329,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             }
         }
 
-//        public static class FireMissilesDialogFragment extends DialogFragment {
-//            @Override
-//            public Dialog onCreateDialog(Bundle savedInstanceState) {
-//                final ArrayList mSelectedItems = new ArrayList();  // Where we track the selected items
-//                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-//                // Set the dialog title
-//                builder.setTitle(R.string.error)
-//                        // Specify the list array, the items to be selected by default (null for none),
-//                        // and the listener through which to receive callbacks when items are selected
-//                        .setMultiChoiceItems(R.array.pref_font_titles, null,
-//                                new DialogInterface.OnMultiChoiceClickListener() {
-//                                    @Override
-//                                    public void onClick(DialogInterface dialog, int which,
-//                                                        boolean isChecked) {
-//                                        if (isChecked) {
-//                                            // If the user checked the item, add it to the selected items
-//                                            mSelectedItems.add(which);
-//                                        } else if (mSelectedItems.contains(which)) {
-//                                            // Else, if the item is already in the array, remove it
-//                                            mSelectedItems.remove(Integer.valueOf(which));
-//                                        }
-//                                    }
-//                                })
-//                        // Set the action buttons
-//                        .setPositiveButton(R.string.error, new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int id) {
-//                                // User clicked OK, so save the mSelectedItems results somewhere
-//                                // or return them to the component that opened the dialog
-//                            }
-//                        })
-//                        .setNegativeButton(R.string.error, new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int id) {
-//                            }
-//                        });
-//
-//                return builder.create();
-//            }
-//        }
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
@@ -390,21 +345,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                     return true;
                 }
             });
-            //button.setContentDescription(contentDescription);
-//            Preference chooser = (Preference)findPreference(getString(R.string.chooser));
-//            chooser.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-//                @Override
-//                public boolean onPreferenceClick(Preference preference) {
-//                    //new ProgressTask().execute();
-//                    //FireMissilesDialogFragment;
-//                    //increase.addActionListener(new incListener());
-//                    DialogFragment dialog = new FireMissilesDialogFragment();
-//                    dialog.show(getFragmentManager(), "Show");
-//
-//                    return true;
-//                }
-//            });
-
             // Bind the summaries of EditText/List/Dialog/Ringtone preferences
             // to their values. When their values change, their summaries are
             // updated to reflect the new value, per the Android Design
@@ -464,20 +404,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 }
             });
             bindPreferenceSummaryToValue(findPreference("font"));
-            //bindPreferenceSummaryToValue(findPreference("loc"));
             bindPreferenceSummaryToValue(findPreference("color_text"));
         }
 
-        //@Override
-        //public boolean onOptionsItemSelected(MenuItem item) {
-        //    int id = item.getItemId();
-        //    Toast.makeText(getContext(), "", Toast.LENGTH_SHORT).show();
-        //    if (id == android.R.id.home) {
-        //        startActivity(new Intent(getActivity(), SettingsActivity.class));
-        //        return true;
-        //    }
-        //    return super.onOptionsItemSelected(item);
-        //}
     }
 
 }
