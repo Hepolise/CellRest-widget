@@ -73,7 +73,7 @@
     <string name="return_title">Вид возвращаемых данных</string>
     <string name="return_desc">Выбрать тип данных в виджете: с расчётом на текущий день и без</string>
     <string name="server_down">В данный момент сервер не доступен, пожалуйста, попробуйте позже</string>
-    <string name="widget_settings_color">Цвет виджета</string>
+    <string name="widget_settings_color">Цвет и шрифт виджета</string>
     <string name="widget_settings_color_text">Цвет виджета по коду</string>
     <string name="widget_settings_color_text_desc">Установить цвет виджета по коду цвета</string>
     <string name="error">Произошла какая-то ошибка, пожалуйста, вернитесь к настройкам</string>

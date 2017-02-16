@@ -14,7 +14,7 @@
     <string name="reduce_widget">Try to reduce widget size</string>
 
 
-    <string name="widget_settings_color">Widget\'s color</string>
+    <string name="widget_settings_color">Widget\'s color &amp; text</string>
 
 
     <string name="error">An error occurred, please check settings</string>
