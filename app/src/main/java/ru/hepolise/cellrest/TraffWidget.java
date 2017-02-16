@@ -89,9 +89,9 @@ public class TraffWidget extends AppWidgetProvider {
                                            int appWidgetId,
                                            Bundle newOptions) {
         int max_w = newOptions.getInt(OPTION_APPWIDGET_MAX_WIDTH);
-        int max_h = newOptions.getInt(OPTION_APPWIDGET_MAX_HEIGHT);
-        int min_w = newOptions.getInt(OPTION_APPWIDGET_MIN_WIDTH);
-        int min_h = newOptions.getInt(OPTION_APPWIDGET_MIN_HEIGHT);
+//        int max_h = newOptions.getInt(OPTION_APPWIDGET_MAX_HEIGHT);
+//        int min_w = newOptions.getInt(OPTION_APPWIDGET_MIN_WIDTH);
+//        int min_h = newOptions.getInt(OPTION_APPWIDGET_MIN_HEIGHT);
         //make only inet for small widget
         //Toast.makeText(context, Integer.toString(max_w) + " " + Integer.toString(max_h) + " " + Integer.toString(min_w) + " " + Integer.toString(min_h) + " " + System.getProperty(""), Toast.LENGTH_LONG).show();
         if (max_w < 205) {

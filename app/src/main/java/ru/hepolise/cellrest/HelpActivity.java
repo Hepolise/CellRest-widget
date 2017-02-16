@@ -16,6 +16,8 @@ import android.widget.TextView;
 
 import java.util.Locale;
 
+import static android.R.attr.versionCode;
+
 public class HelpActivity extends AppCompatActivity {
 
     private WebView mWebView;
@@ -31,11 +33,12 @@ public class HelpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.webview);
-        try {
-            version = getPackageManager().getPackageInfo(getPackageName(), 0 ).versionName;
-        } catch (PackageManager.NameNotFoundException e) {
-
-        }
+//        try {
+//            version = getPackageManager().getPackageInfo(getPackageName(), 0 ).versionName;
+//        } catch (PackageManager.NameNotFoundException e) {
+//
+//        }
+        version = Integer.toString(versionCode);
         mWebView = (WebView) findViewById(R.id.activity_main_webview);
         // Enable Javascript
         WebSettings webSettings = mWebView.getSettings();
