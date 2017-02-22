@@ -510,10 +510,9 @@ public class TraffWidget extends AppWidgetProvider {
                     //if cals and sms are available
 
                     //for text in center of image
-                    if (maxsms.length() == 1){
+                    if (sms.length() == 1){
                         widgetView.setTextViewText(getStringResourceByName("sms" + res, context), sms + "  ");
-                    } else if (sms.length() < 3) {
-                        Log.d(LOG_TAG, Integer.toString(maxsms.length()));
+                    } else if (sms.length() == 2) {
                         widgetView.setTextViewText(getStringResourceByName("sms" + res, context), sms + " ");
                     } else {
                         widgetView.setTextViewText(getStringResourceByName("sms" + res, context), sms + "");
