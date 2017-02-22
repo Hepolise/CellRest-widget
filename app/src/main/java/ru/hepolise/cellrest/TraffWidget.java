@@ -89,11 +89,11 @@ public class TraffWidget extends AppWidgetProvider {
                                            int appWidgetId,
                                            Bundle newOptions) {
         int max_w = newOptions.getInt(OPTION_APPWIDGET_MAX_WIDTH);
-//        int max_h = newOptions.getInt(OPTION_APPWIDGET_MAX_HEIGHT);
-//        int min_w = newOptions.getInt(OPTION_APPWIDGET_MIN_WIDTH);
-//        int min_h = newOptions.getInt(OPTION_APPWIDGET_MIN_HEIGHT);
+        int max_h = newOptions.getInt(OPTION_APPWIDGET_MAX_HEIGHT);
+        int min_w = newOptions.getInt(OPTION_APPWIDGET_MIN_WIDTH);
+        int min_h = newOptions.getInt(OPTION_APPWIDGET_MIN_HEIGHT);
         //make only inet for small widget
-        //Toast.makeText(context, Integer.toString(max_w) + " " + Integer.toString(max_h) + " " + Integer.toString(min_w) + " " + Integer.toString(min_h) + " " + System.getProperty(""), Toast.LENGTH_LONG).show();
+        //Toast.makeText(context, Integer.toString(max_w) + " :max_w; " + Integer.toString(max_h) + " :max_h; " + Integer.toString(min_w) + " :min_w; " + Integer.toString(min_h) + " :min_h;", Toast.LENGTH_LONG).show();
         if (max_w < 205) {
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
             sharedPreferences.edit().putBoolean(QuickstartPreferences.inet_only, true).apply();
@@ -293,6 +293,16 @@ public class TraffWidget extends AppWidgetProvider {
         }
 
     }
+
+    public void setTextSize(RemoteViews widgetView, Context context, int widgetID, String res, AppWidgetManager appWidgetManager) {
+        int min_h = appWidgetManager.getAppWidgetOptions(widgetID).getInt(OPTION_APPWIDGET_MAX_HEIGHT);
+        float multiplier = (float) 5;
+        Float size = min_h / multiplier;
+        widgetView.setFloat(getStringResourceByName("inet" + res, context), "setTextSize", size);
+        widgetView.setFloat(getStringResourceByName("calls" + res, context), "setTextSize", size);
+        widgetView.setFloat(getStringResourceByName("sms" + res, context), "setTextSize", size);
+    }
+
     public String updateWidget(Context context, AppWidgetManager appWidgetManager,
                                int widgetID, String content) {
         //GEt data && update widget
@@ -500,11 +510,11 @@ public class TraffWidget extends AppWidgetProvider {
                     //if cals and sms are available
 
                     //for text in center of image
-                    if (sms.length() < 3) {
+                    if (maxsms.length() == 1){
+                        widgetView.setTextViewText(getStringResourceByName("sms" + res, context), sms + "  ");
+                    } else if (sms.length() < 3) {
                         Log.d(LOG_TAG, Integer.toString(maxsms.length()));
                         widgetView.setTextViewText(getStringResourceByName("sms" + res, context), sms + " ");
-                    //} else if (maxsms.length() == 3){
-                        //widgetView.setTextViewText(getStringResourceByName("sms" + res, context), sms + " ");
                     } else {
                         widgetView.setTextViewText(getStringResourceByName("sms" + res, context), sms + "");
                     }
@@ -539,6 +549,12 @@ public class TraffWidget extends AppWidgetProvider {
                 widgetView.setTextViewText(getStringResourceByName("renew" + inet_add + res, context), context.getString(string_re) + nl + days);
 
                 widgetView.setTextColor(getStringResourceByName("inet" + res, context), color);
+
+
+                //setTextSize
+                setTextSize(widgetView, context, widgetID, res, appWidgetManager);
+
+                //widgetView.set
                 widgetView.setTextColor(getStringResourceByName("balance" + res, context), color);
                 widgetView.setTextColor(getStringResourceByName("date" + inet_add  + res, context), color);
                 widgetView.setTextColor(getStringResourceByName("renew" + inet_add + res, context), color);
