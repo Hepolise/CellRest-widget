@@ -430,6 +430,8 @@ public class TraffWidget extends AppWidgetProvider {
         }
         //set text font
         String font =  shrpr.getString(QuickstartPreferences.font, "n");
+
+        //update
         if (content.equals(context.getString(R.string.updating))) {
             Log.d(LOG_TAG, "update");
 
@@ -439,6 +441,7 @@ public class TraffWidget extends AppWidgetProvider {
                 Toast.makeText(context, context.getString(R.string.reduce_widget), Toast.LENGTH_LONG).show();
             }
         }
+
         setAllTextTuNull(widgetView);
         if (f_update) {
             //if widget is reloaded by tap
@@ -634,8 +637,6 @@ public class TraffWidget extends AppWidgetProvider {
                     JSONObject jsonObject = new JSONObject(buffer);
                     String time = jsonObject.getString("time");
                     String ok = jsonObject.getString("ok");
-                    String foo = jsonObject.getString("foo");
-                    String bar = jsonObject.getString("bar");
                     String max = jsonObject.getString("max");
                     String maxmin = jsonObject.getString("maxmin");
                     String maxsms = jsonObject.getString("maxsms");

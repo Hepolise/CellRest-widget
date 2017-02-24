@@ -49,6 +49,12 @@
     <string name="tele2">Tele2 preferences</string>
     <string name="beeline">Beeline/Megafon/MTS preferences</string>
 
+    <!--text widget-->
+    <string name="pref_locale">Language (only text widget)</string>
+    <string name="pref_size">Text size (only text widget)</string>
+    <string name="pref_size_desc">Set all text widget size. Default: 16</string>
+    <string name="widget_text">CellRest: Text widget</string>
+
     <string name="other_settings">Test</string>
     <string name="request_sent">Please wait...</string>
     <string name="help_title">Help</string>
@@ -61,7 +67,7 @@
 
     <string name="server_down">Server is unreachable at the moment, please try again later</string>
     <string name="widget_other_pref">Other widget\'s preferences</string>
-    <string name="pref_locale">Language</string>
+
     <string-array name="pref_op_list_titles">
         <item>Beeline</item>
         <item>Tele2</item>

@@ -22,6 +22,7 @@ import android.support.v7.app.ActionBar;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
+//import android.support.v7;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -149,6 +150,12 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                     PreferenceManager
                             .getDefaultSharedPreferences(preference.getContext())
                             .getString(preference.getKey(), preference.getContext().getString(R.string.widget_settings_color_text_desc)));
+        } else if (preference.toString().equals(preference.getContext().getString(R.string.pref_locale))){
+            sBindPreferenceSummaryToValueListener.onPreferenceChange(preference,
+                    PreferenceManager
+                            .getDefaultSharedPreferences(preference.getContext())
+                            //set default desc to null
+                            .getString(preference.getKey(), ""));
         } else {
             sBindPreferenceSummaryToValueListener.onPreferenceChange(preference,
                     PreferenceManager
@@ -405,8 +412,10 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             });
             bindPreferenceSummaryToValue(findPreference("font"));
             bindPreferenceSummaryToValue(findPreference("color_text"));
+            bindPreferenceSummaryToValue(findPreference("loc"));
         }
 
     }
+
 
 }

@@ -21,6 +21,10 @@
         <item>megafon</item>
         <!--<item>mts</item>-->
     </string-array>
+
+    <string name="widget_text">CellRest: Текстовый виджет</string>
+
+
     <string name="general">Общие настройки</string>
     <string name="pref_title_font">Шрифт</string>
     <string-array name="pref_font_titles">
@@ -61,7 +65,6 @@
     <string name="tele2">Настройки Теле2</string>
     <string name="help_title">Справка</string>
     <string name="request_sent">Пожалуйста, подождите...</string>
-    <string name="pref_locale">Язык</string>
     <string name="updating">Обновление...</string>
     <string name="widget_other_pref">Другие настройки виджета</string>
     <string name="about_description">CellRest представляет собой приложение для контроля расходов трафика, созданное, чтобы
@@ -85,4 +88,7 @@
     <string name="days2">дня</string>
     <string name="restore">Восстановление через</string>
     <string name="reduce_widget">Попробуйте уменьшить размер виджета</string>
+    <string name="pref_locale">Язык (только текстовый виджет)</string>
+    <string name="pref_size">Размер текста (только текстовый виджет)</string>
+    <string name="pref_size_desc">Изменить размер текста. По умолчанию: 16</string>
 </resources>
