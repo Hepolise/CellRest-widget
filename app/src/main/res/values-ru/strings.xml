@@ -60,7 +60,8 @@
     <string name="button_colorpicker_desc">Выбор цвета виджета</string>
     <string name="button_colorpicker_title">Цвет</string>
     <string name="pin_code_desc">ПИН-код приложения \"Мой Теле2\" (вход в приложение должен быть выполнен с данного девайса)</string>
-    <string name="beeline">Настройки Билайна/Мегафона/МТС</string>
+    <!--<string name="beeline">Настройки Билайна/Мегафона/МТС</string>-->
+    <string name="beeline">Настройки Билайна/Мегафона</string>
     <string name="pin_code_title">PIN-код</string>
     <string name="tele2">Настройки Теле2</string>
     <string name="help_title">Справка</string>

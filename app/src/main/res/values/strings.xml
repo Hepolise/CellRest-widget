@@ -47,8 +47,8 @@
     <string name="button_colorpicker" translatable="false">ColorPicker</string>
     <string name="button_colorpicker_title">Color</string>
     <string name="tele2">Tele2 preferences</string>
-    <string name="beeline">Beeline/Megafon/MTS preferences</string>
-
+    <!--<string name="beeline">Beeline/Megafon/MTS preferences</string>-->
+    <string name="beeline">Beeline/Megafon preferences</string>
     <!--text widget-->
     <string name="pref_locale">Language (only text widget)</string>
     <string name="pref_size">Text size (only text widget)</string>
