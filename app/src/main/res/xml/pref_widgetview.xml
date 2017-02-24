@@ -45,7 +45,7 @@
             android:defaultValue="16"
 
             sample:msbp_minValue="12"
-            sample:msbp_maxValue="50"
+            sample:msbp_maxValue="30"
             sample:msbp_interval="1"
             sample:msbp_measurementUnit="SP"
             sample:msbp_dialogEnabled="true"/>

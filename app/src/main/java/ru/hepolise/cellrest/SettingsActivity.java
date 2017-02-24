@@ -263,7 +263,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 String login = shrpr.getString(QuickstartPreferences.login, "");
                 String op = shrpr.getString(QuickstartPreferences.op_list, "");
                 String pin_code = shrpr.getString(QuickstartPreferences.pin_code, "");
-                //String return_ = shrpr.getString(QuickstartPreferences.return_, "calc");
+                String return_ = shrpr.getString(QuickstartPreferences.return_, "calc");
                 String android_id = "";
                 Locale currentLocale = Locale.getDefault();
                 String locale = currentLocale.toString();
@@ -307,7 +307,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                             "&loc=" + URLEncoder.encode(loc, "UTF-8") +
                             "&version=" + URLEncoder.encode(version, "UTF-8") +
                             "&token=" + URLEncoder.encode(token, "UTF-8") +
-                            //"&return=" + URLEncoder.encode(return_, "UTF-8") +
+                            "&return=" + URLEncoder.encode(return_, "UTF-8") +
                             "&tz=" + URLEncoder.encode(tz, "UTF-8")
                             //+ "&test"
                     );

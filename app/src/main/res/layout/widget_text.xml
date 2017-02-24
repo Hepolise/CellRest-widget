@@ -11,7 +11,7 @@
         android:background="@android:color/transparent"
         android:gravity="start"
         android:fontFamily="sans-serif-light"
-        android:text="@string/widget_text"
+        android:text="@string/app_name"
         android:textColor="#ffffff"
         android:textSize="16sp">
         <!---android:textColor="#4d4d4d"-->

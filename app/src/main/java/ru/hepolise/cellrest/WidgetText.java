@@ -310,7 +310,11 @@ public class WidgetText extends AppWidgetProvider {
                     buf.append(line + " ");
                 }
                 String buffer = buf.toString();
-                buffer = buffer.replace(" NEWLINE ", "\n");
+                if (buffer.contains("NEWLINE")) {
+                    buffer = buffer.replace(" NEWLINE ", "\n");
+                } else {
+                    buffer = "error";
+                }
                 updateWidget(contextglobal, appWidgetManagerglobal, id, buffer);
                 return(buffer);
 

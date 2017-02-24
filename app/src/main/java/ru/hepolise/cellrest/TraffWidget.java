@@ -89,12 +89,13 @@ public class TraffWidget extends AppWidgetProvider {
                                            int appWidgetId,
                                            Bundle newOptions) {
         int max_w = newOptions.getInt(OPTION_APPWIDGET_MAX_WIDTH);
-        int max_h = newOptions.getInt(OPTION_APPWIDGET_MAX_HEIGHT);
-        int min_w = newOptions.getInt(OPTION_APPWIDGET_MIN_WIDTH);
-        int min_h = newOptions.getInt(OPTION_APPWIDGET_MIN_HEIGHT);
-        //make only inet for small widget
-        //Toast.makeText(context, Integer.toString(max_w) + " :max_w; " + Integer.toString(max_h) + " :max_h; " + Integer.toString(min_w) + " :min_w; " + Integer.toString(min_h) + " :min_h;", Toast.LENGTH_LONG).show();
-        if (max_w < 205) {
+//        int max_h = newOptions.getInt(OPTION_APPWIDGET_MAX_HEIGHT);
+//        int min_w = newOptions.getInt(OPTION_APPWIDGET_MIN_WIDTH);
+//        int min_h = newOptions.getInt(OPTION_APPWIDGET_MIN_HEIGHT);
+//        //make only inet for small widget
+//        Toast.makeText(context, Integer.toString(max_w) + ": max_w; " + Integer.toString(max_h) + ": max_h; " +
+//                Integer.toString(min_w) + ": min_w; " + Integer.toString(min_h) + ": min_h;", Toast.LENGTH_LONG).show();
+        if (max_w < 250) {
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
             sharedPreferences.edit().putBoolean(QuickstartPreferences.inet_only, true).apply();
         } else {
@@ -273,8 +274,8 @@ public class TraffWidget extends AppWidgetProvider {
         //return inet on MB or GB
         String result;
         float p = Float.parseFloat(s);
-        if (p > 1024) {
-            p = p/1024;
+        if (p > 999) {
+            p = p/1000;
             result = "G";
         } else {
             result = "M";
@@ -305,7 +306,7 @@ public class TraffWidget extends AppWidgetProvider {
 
     public String updateWidget(Context context, AppWidgetManager appWidgetManager,
                                int widgetID, String content) {
-        //GEt data && update widget
+        //Get data && update widget
 
 
         //setting global vars
