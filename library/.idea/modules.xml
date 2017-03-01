@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$USER_HOME$/repo/MaterialSeekBarPreference/MaterialSeekBarPreference.iml" filepath="$USER_HOME$/repo/MaterialSeekBarPreference/MaterialSeekBarPreference.iml" />
+      <module fileurl="file://$USER_HOME$/repo/MaterialSeekBarPreference/library/library.iml" filepath="$USER_HOME$/repo/MaterialSeekBarPreference/library/library.iml" />
+      <module fileurl="file://$USER_HOME$/repo/MaterialSeekBarPreference/sample/sample.iml" filepath="$USER_HOME$/repo/MaterialSeekBarPreference/sample/sample.iml" />
+    </modules>
+  </component>
+</project>

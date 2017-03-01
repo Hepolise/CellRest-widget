@@ -17,11 +17,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.RemoteViews;
 import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE;
@@ -141,6 +144,23 @@ public class WidgetText extends AppWidgetProvider {
         token = shrpr.getString(QuickstartPreferences.TOKEN, "");
         Boolean f_update = shrpr.getBoolean(QuickstartPreferences.f_update, false);
 
+//        String language_code = "en_US";
+//
+//        Resources res1 = context.getResources();
+//        // Change locale settings in the app.
+//        DisplayMetrics dm = res1.getDisplayMetrics();
+//        android.content.res.Configuration conf = res1.getConfiguration();
+//        conf.locale = new Locale(language_code.toLowerCase());
+//        res1.updateConfiguration(conf, dm);
+//
+//        String languageToLoad  = "en"; // your language
+//        Locale locale1 = new Locale(languageToLoad);
+//        Locale.setDefault(locale1);
+//        Configuration config = new Configuration();
+//        config.locale = locale1;
+//        context.getResources().updateConfiguration(config,
+//                context.getResources().getDisplayMetrics());
+
         //in case of error loading new data
         if (content.startsWith("error")) {
             content = shrpr.getString(QuickstartPreferences.content, context.getString(R.string.error));
@@ -200,6 +220,8 @@ public class WidgetText extends AppWidgetProvider {
             //Save new content
             shrpr.edit().putString(QuickstartPreferences.content, content).apply();
         }
+
+
 
 
 

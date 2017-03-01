@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="errors.must_be_between">Должно быть меньше</string>
+    <string name="errors.and">и</string>
+    <string name="enter_custom_value">Введите значение</string>
+    <string name="apply">применить</string>
+</resources>

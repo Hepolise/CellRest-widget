@@ -14,7 +14,7 @@
     <string name="reduce_widget">Try to reduce widget size</string>
 
 
-    <string name="widget_settings_color">Widget\'s color &amp; text</string>
+    <string name="widget_settings_color">General settings</string>
 
 
     <string name="error">An error occurred, please check settings</string>
@@ -30,7 +30,7 @@
     <string name="pref_description_pass">Password for your account</string>
     <string name="pref_color">Widget View</string>
 
-    <string name="general">General preferences</string>
+    <string name="general">Obligatory preferences</string>
 
     <string name="pref_title_op">Cellular operator</string>
     <string name="pref_title_font">Font</string>
@@ -50,8 +50,8 @@
     <!--<string name="beeline">Beeline/Megafon/MTS preferences</string>-->
     <string name="beeline">Beeline/Megafon preferences</string>
     <!--text widget-->
-    <string name="pref_locale">Language (only text widget)</string>
-    <string name="pref_size">Text size (only text widget)</string>
+    <string name="pref_locale">Language</string>
+    <string name="pref_size">"Text size "</string>
     <string name="pref_size_desc">Set all text widget size. Default: 16</string>
     <string name="widget_text">CellRest: Text widget</string>
 
