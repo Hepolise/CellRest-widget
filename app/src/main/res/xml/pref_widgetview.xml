@@ -37,6 +37,10 @@
             android:positiveButtonText="@null"
             android:title="@string/pref_title_font" />
 
+        </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/only_text_widget">
+
         <com.pavelsikun.seekbarpreference.SeekBarPreference
             android:key="text_size"
             android:title="@string/pref_size"
@@ -58,6 +62,11 @@
             android:negativeButtonText="@null"
             android:positiveButtonText="@null"
             android:title="@string/pref_locale" />
+
+        <CheckBoxPreference android:title="">
+
+
+        </CheckBoxPreference>
 
 
     </PreferenceCategory>

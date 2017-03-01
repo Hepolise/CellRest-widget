@@ -13,6 +13,7 @@
     <string name="day">day</string>
     <string name="reduce_widget">Try to reduce widget size</string>
 
+    <string name="only_text_widget">Only text widget</string>
 
     <string name="widget_settings_color">General settings</string>
 
