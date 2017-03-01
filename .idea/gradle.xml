@@ -8,9 +8,9 @@
         <option name="gradleHome" value="$APPLICATION_HOME_DIR$/gradle/gradle-2.14.1" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/library" />
+            <option value="$USER_HOME$/development/cellrest-widget" />
+            <option value="$USER_HOME$/development/cellrest-widget/app" />
+            <option value="$USER_HOME$/development/cellrest-widget/library" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
