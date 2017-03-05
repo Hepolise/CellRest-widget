@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$USER_HOME$/development/cellrest-widget/app/app.iml" filepath="$USER_HOME$/development/cellrest-widget/app/app.iml" />
       <module fileurl="file://$USER_HOME$/development/cellrest-widget/cellrest-widget.iml" filepath="$USER_HOME$/development/cellrest-widget/cellrest-widget.iml" />
-      <module fileurl="file://$USER_HOME$/development/cellrest-widget/library/library.iml" filepath="$USER_HOME$/development/cellrest-widget/library/library.iml" />
     </modules>
   </component>
 </project>

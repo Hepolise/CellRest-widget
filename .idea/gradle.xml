@@ -10,7 +10,6 @@
           <set>
             <option value="$USER_HOME$/development/cellrest-widget" />
             <option value="$USER_HOME$/development/cellrest-widget/app" />
-            <option value="$USER_HOME$/development/cellrest-widget/library" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

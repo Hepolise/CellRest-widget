@@ -63,10 +63,15 @@
             android:positiveButtonText="@null"
             android:title="@string/pref_locale" />
 
-        <CheckBoxPreference android:title="">
-
-
-        </CheckBoxPreference>
+        <EditTextPreference
+            android:capitalize="words"
+            android:inputType="text"
+            android:key="pattern"
+            android:maxLines="6"
+            android:selectAllOnFocus="true"
+            android:title="@string/pattern_title"
+            android:contentDescription="@string/pin_code_desc"
+            android:summary="@string/pattern_desc"/>
 
 
     </PreferenceCategory>
