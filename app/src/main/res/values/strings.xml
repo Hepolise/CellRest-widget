@@ -56,14 +56,14 @@
     <string name="widget_text">CellRest: Text widget</string>
 
     <string name="other_settings">Test</string>
-    <string name="request_sent">Please wait...</string>
+    <string name="request_sent">Please wait&#8230;</string>
     <string name="help_title">Help</string>
     <string name="about_title">About</string>
     <string name="about_write"><![CDATA[<a href="%1$s">Contact the author of the application</a>]]></string>
 
     <string name="return_title">Type returning data</string>
     <string name="return_desc">Select the type of data in the widget: the calculation for the current day and without</string>
-    <string name="updating">Updating...</string>
+    <string name="updating">Updating&#8230;</string>
 
     <string name="server_down">Server is unreachable at the moment, please try again later</string>
     <string name="widget_other_pref">Other widget\'s preferences</string>

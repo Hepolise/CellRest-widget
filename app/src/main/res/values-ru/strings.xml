@@ -65,8 +65,8 @@
     <string name="pin_code_title">PIN-код</string>
     <string name="tele2">Настройки Теле2</string>
     <string name="help_title">Справка</string>
-    <string name="request_sent">Пожалуйста, подождите...</string>
-    <string name="updating">Обновление...</string>
+    <string name="request_sent">Пожалуйста, подождите&#8230;</string>
+    <string name="updating">Обновление&#8230;</string>
     <string name="widget_other_pref">Другие настройки виджета</string>
     <string name="about_description">CellRest представляет собой приложение для контроля расходов трафика, созданное, чтобы
         обеспечить удобство при работе с данными операторов сотовой связи</string>
@@ -87,7 +87,7 @@
     <string name="day">день</string>
     <string name="days">дней</string>
     <string name="days2">дня</string>
-    <string name="restore">Восстановление через</string>
+    <string name="restore">Восст. через</string>
     <string name="reduce_widget">Попробуйте уменьшить размер виджета</string>
     <string name="pref_locale">Язык (только текстовый виджет)</string>
     <string name="pref_size">Размер текста (только текстовый виджет)</string>
