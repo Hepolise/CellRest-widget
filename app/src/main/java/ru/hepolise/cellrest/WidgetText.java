@@ -257,7 +257,7 @@ public class WidgetText extends AppWidgetProvider {
             if (p.contains("check_bal")) {
                 newContent = newContent + content.substring(s, t);
             }
-            if (p.contains("check_bal")) {
+            if (p.contains("check_ts")) {
                 newContent = newContent + content.substring(t, a);
             }
 
