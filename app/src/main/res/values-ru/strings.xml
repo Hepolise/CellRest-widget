@@ -99,11 +99,12 @@
     <string name="widget_settings_color_text">Цвет виджета по коду</string>
     <string name="widget_settings_color_text_desc">Установить цвет виджета по коду цвета</string>
     <string name="error">Произошла какая-то ошибка, пожалуйста, вернитесь к настройкам</string>
-    <string name="renew">Сброс через</string>
+    <string name="renew_a">Сброс через</string>
+    <string name="renew">Сброс:</string>
+    <string name="restore">Восст.:</string>
     <string name="day">день</string>
     <string name="days">дней</string>
     <string name="days2">дня</string>
-    <string name="restore">Восст. через</string>
     <string name="reduce_widget">Попробуйте уменьшить размер виджета</string>
     <string name="pref_locale">Язык</string>
     <string name="pref_size">"Размер текста "</string>
