@@ -83,7 +83,7 @@
     <string-array name="pref_op_list_titles">
         <item>Beeline</item>
         <item>Tele2</item>
-        <item>Megafon</item>
+        <item>Megafon (beta)</item>
         <!--<item>MTS</item>-->
     </string-array>
     <string-array name="pattern_values">
