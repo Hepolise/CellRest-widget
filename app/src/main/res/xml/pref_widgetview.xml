@@ -85,6 +85,8 @@
             android:entries="@array/pattern_titles"
             android:entryValues="@array/pattern_values"
             android:key="pattern"
+            android:defaultValue="@array/pattern_def_values"
+            android:summary="@string/pattern_desc"
             />
 
 

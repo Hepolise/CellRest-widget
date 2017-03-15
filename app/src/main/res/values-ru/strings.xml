@@ -64,12 +64,18 @@
         <item>check_ts</item>
     </string-array>
     <string-array name="pattern_titles">
-        <item>Дни до восст. и сброса</item>
+        <item>Дни до cброса и восстановления</item>
         <!--<item>Интернет</item>
         <item>Минуты</item>
         <item>СМС</item>-->
         <item>Баланс</item>
         <item>Время обновления</item>
+    </string-array>
+    <string-array name="pattern_def_values">
+        <item>check_days</item>
+        <item>check_bal</item>
+        <item>check_ts</item>
+        <item>hidden</item>
     </string-array>
     <string name="button_desc">Подключается к серверу для тестирования входа в аккаунт</string>
     <string name="button_title">Пробное подключение</string>
@@ -111,11 +117,13 @@
     <string name="pref_size_desc">Изменить размер текста. По умолчанию: 16</string>
     <string name="only_text_widget">Только текстовый виджет</string>
     <string name="pattern_title">Паттерн для текста</string>
-    <string name="pattern_desc">Изменить весь текст в виджете. \n
-        <!--%dtr% - days to reestablish; \n-->
+    <string name="pattern_desc">Какие строки Вы хотите видеть в текстовом виджете</string>
+    <!--<string name="pattern_desc">Изменить весь текст в виджете. \n
+        %dtr% - days to reestablish; \n
         Вы можете использовать данные переменные: \n
         %dtn% - Дни до обновления трафика; \n
         %inet% - Ваш интернет с е. изм. (напр.: 150 МБ или 1.9 ГБ); \n
         %mins% - минуты; \n
-        %sms% - SMS.</string>
+        %sms% - SMS.</string>-->
+
 </resources>

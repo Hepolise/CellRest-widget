@@ -20,14 +20,14 @@
     <string name="widget_settings_color">General settings</string>
 
     <string name="pattern_title">Pattern for text</string>
-    <string name="pattern_desc">Change all the text in widget. \n
-        <!--%dtr% - days to reestablish; \n-->
+    <!--<string name="pattern_desc">Change all the text in widget. \n
+        %dtr% - days to reestablish; \n
         You can use variables: \n
         %dtn% - days to renew; \n
         %inet% - your internet with units (e.g.: 150 MB or 1.9 GB); \n
         %mins% - minutes; \n
         %sms% - SMS.
-    </string>
+    </string>-->
 
     <string name="error">An error occurred, please check settings</string>
 
@@ -95,6 +95,7 @@
         <item>check_ts</item>
     </string-array>
 
+    <string name="pattern_desc">Choose what to see in text widget</string>
 
     <string-array name="pattern_titles">
         <item>Days to regain &amp; renew</item>
@@ -103,6 +104,12 @@
         <item>SMS</item>-->
         <item>Balance</item>
         <item>Time of update</item>
+    </string-array>
+    <string-array name="pattern_def_values">
+        <item>check_days</item>
+        <item>check_bal</item>
+        <item>check_ts</item>
+        <item>hidden</item>
     </string-array>
 
 

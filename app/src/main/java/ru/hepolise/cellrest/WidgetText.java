@@ -226,8 +226,20 @@ public class WidgetText extends AppWidgetProvider {
         }
 
 
-        Set<String> pattern =  shrpr.getStringSet(QuickstartPreferences.pattern, new HashSet());
-        String p = pattern.toString();
+        //shrpr.getStringSet()
+
+
+        Set<String> pattern =  shrpr.getStringSet(QuickstartPreferences.pattern, null);
+        String p = "";
+        try {
+            p = pattern.toString();
+            Log.d(LOG_TAG, "Success run");
+        } catch (NullPointerException e) {
+            Log.d(LOG_TAG, "First run");
+            p = "check_days check_bal check_bal";
+        }
+
+        Log.d(LOG_TAG, p);
 
 
         int f = content.indexOf("\n");
@@ -245,7 +257,7 @@ public class WidgetText extends AppWidgetProvider {
             if (p.contains("check_bal")) {
                 newContent = newContent + content.substring(s, t);
             }
-            if (p.contains("check_ts")) {
+            if (p.contains("check_bal")) {
                 newContent = newContent + content.substring(t, a);
             }
 
