@@ -84,6 +84,26 @@
         <item>Megafon</item>
         <!--<item>MTS</item>-->
     </string-array>
+    <string-array name="pattern_values">
+        <item>check_days</item>
+        <!--<item>check_inet</item>
+        <item>check_mins</item>
+        <item>check_sms</item>-->
+        <item>check_bal</item>
+        <item>check_ts</item>
+    </string-array>
+
+
+    <string-array name="pattern_titles">
+        <item>Days to regain &amp; renew</item>
+        <!--<item>Internet</item>
+        <item>Minutes</item>
+        <item>SMS</item>-->
+        <item>Balance</item>
+        <item>Time of update</item>
+    </string-array>
+
+
     <string-array name="pref_op_list_values">
         <item>bee</item>
         <item>tele2</item>

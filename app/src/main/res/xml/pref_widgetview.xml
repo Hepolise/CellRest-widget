@@ -63,7 +63,7 @@
             android:positiveButtonText="@null"
             android:title="@string/pref_locale" />
 
-        <EditTextPreference
+        <!--<EditTextPreference
             android:capitalize="words"
             android:inputType="text"
             android:key="pattern"
@@ -71,7 +71,23 @@
             android:selectAllOnFocus="true"
             android:title="@string/pattern_title"
             android:contentDescription="@string/pin_code_desc"
-            android:summary="@string/pattern_desc"/>
+            android:summary="@string/pattern_desc"/>-->
+        <!--<PreferenceScreen
+            android:title="qwe">
+
+            <CheckBoxPreference
+                android:title="eee" />
+
+
+        </PreferenceScreen>-->
+        <MultiSelectListPreference
+            android:title="@string/pattern_title"
+            android:entries="@array/pattern_titles"
+            android:entryValues="@array/pattern_values"
+            android:key="pattern"
+            />
+
+
 
 
     </PreferenceCategory>

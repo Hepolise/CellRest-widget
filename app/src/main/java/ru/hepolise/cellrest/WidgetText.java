@@ -4,10 +4,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Locale;
+import java.util.Set;
 import java.util.TimeZone;
 
 import android.app.PendingIntent;
@@ -222,6 +226,34 @@ public class WidgetText extends AppWidgetProvider {
         }
 
 
+        Set<String> pattern =  shrpr.getStringSet(QuickstartPreferences.pattern, new HashSet());
+        String p = pattern.toString();
+
+
+        int f = content.indexOf("\n");
+        int s = content.indexOf("\n", f+1);
+        int t = content.indexOf("\n", s+1);
+        int a = content.length();
+        //Log.d(LOG_TAG, Integer.toString(f) + " " + Integer.toString(s) + " " + Integer.toString(t) + " " + Integer.toString(a));
+        //int lines = 3;
+        String newContent = "";
+        if ( ! content.equals(context.getString(R.string.error)) && ! content.equals(context.getString(R.string.updating)) ) {
+            if (p.contains("check_days")) {
+                newContent = content.substring(0, f) + "\n";
+            }
+            newContent = newContent +  content.substring(f+1, s);
+            if (p.contains("check_bal")) {
+                newContent = newContent + content.substring(s, t);
+            }
+            if (p.contains("check_ts")) {
+                newContent = newContent + content.substring(t, a);
+            }
+
+            content = newContent;
+        }
+
+//        Log.d(LOG_TAG, "newc: " + newContent);
+//        Log.d(LOG_TAG, "c: " + content);
 
 
 
