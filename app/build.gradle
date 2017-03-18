@@ -53,6 +53,9 @@ dependencies {
     compile 'com.pavelsikun:material-seekbar-preference:2.3.0'
     //compile project(':library')
 
+    // AppMetrica from maven central.
+    compile 'com.yandex.android:mobmetricalib:2.62'
+
 
     testCompile 'junit:junit:4.12'
 }
