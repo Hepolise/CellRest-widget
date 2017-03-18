@@ -37,6 +37,10 @@
             android:positiveButtonText="@null"
             android:title="@string/pref_title_font" />
 
+        </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/only_text_widget">
+
         <com.pavelsikun.seekbarpreference.SeekBarPreference
             android:key="text_size"
             android:title="@string/pref_size"
@@ -58,6 +62,34 @@
             android:negativeButtonText="@null"
             android:positiveButtonText="@null"
             android:title="@string/pref_locale" />
+
+        <!--<EditTextPreference
+            android:capitalize="words"
+            android:inputType="text"
+            android:key="pattern"
+            android:maxLines="6"
+            android:selectAllOnFocus="true"
+            android:title="@string/pattern_title"
+            android:contentDescription="@string/pin_code_desc"
+            android:summary="@string/pattern_desc"/>-->
+        <!--<PreferenceScreen
+            android:title="qwe">
+
+            <CheckBoxPreference
+                android:title="eee" />
+
+
+        </PreferenceScreen>-->
+        <MultiSelectListPreference
+            android:title="@string/pattern_title"
+            android:entries="@array/pattern_titles"
+            android:entryValues="@array/pattern_values"
+            android:key="pattern"
+            android:defaultValue="@array/pattern_def_values"
+            android:summary="@string/pattern_desc"
+            />
+
+
 
 
     </PreferenceCategory>

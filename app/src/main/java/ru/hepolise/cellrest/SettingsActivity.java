@@ -31,6 +31,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.yandex.metrica.YandexMetrica;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -174,6 +175,10 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // Start IntentService to register this application with GCM.
             Intent intent = new Intent(this, RegistrationIntentService.class);
             startService(intent);
+            // Инициализация AppMetrica SDK
+            YandexMetrica.activate(getApplicationContext(), "b7dc00b5-0eba-48e4-b2df-6ce98c35ccc0");
+            // Отслеживание активности пользователей
+            YandexMetrica.enableActivityAutoTracking(this.getApplication());
         }
     }
 

@@ -274,8 +274,8 @@ public class TraffWidget extends AppWidgetProvider {
         //return inet on MB or GB
         String result;
         float p = Float.parseFloat(s);
-        if (p > 999) {
-            p = p/1000;
+        if (p > 1023) {
+            p = p/1024;
             result = "G";
         } else {
             result = "M";
@@ -487,16 +487,17 @@ public class TraffWidget extends AppWidgetProvider {
                     min = leftmin;
                     inet = left;
                 }
-                int string_re;
-                String days;
-                if (Integer.parseInt(inet) < 0 || Integer.parseInt(min) < 0 || Integer.parseInt(sms) < 0) {
-                    //if we have something < 0 we need to return days to regain (provided by server)
-                    string_re = R.string.restore;
-                    days = dtr;
-                } else {
-                    string_re = R.string.renew;
-                    days = dtn;
-                }
+//                int string_re;
+//                String days;
+                Boolean minus = (Integer.parseInt(inet) < 0 || Integer.parseInt(min) < 0 || Integer.parseInt(sms) < 0);
+//                if (minus) {
+//                    //if we have something < 0 we need to return days to regain (provided by server)
+//                    string_re = R.string.restore;
+//                    days = dtr;
+//                } else {
+//                    string_re = R.string.renew;
+//                    days = dtn;
+//                }
 
 
 
@@ -549,7 +550,12 @@ public class TraffWidget extends AppWidgetProvider {
                 if (inet_only && appWidgetManager.getAppWidgetOptions(widgetID).getInt(OPTION_APPWIDGET_MIN_WIDTH) > 140) {
                     nl = " ";
                 }
-                widgetView.setTextViewText(getStringResourceByName("renew" + inet_add + res, context), context.getString(string_re) + nl + days);
+                if (!minus) {
+                    //everything is more than zero
+                    widgetView.setTextViewText(getStringResourceByName("renew" + inet_add + res, context), context.getString(R.string.renew_a) + nl + dtn);
+                } else {
+                    widgetView.setTextViewText(getStringResourceByName("renew" + inet_add + res, context), context.getString(R.string.restore) + " " + dtr + "\n" + context.getString(R.string.renew) + " " + dtn);
+                }
 
                 widgetView.setTextColor(getStringResourceByName("inet" + res, context), color);
 

@@ -4,10 +4,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Locale;
+import java.util.Set;
 import java.util.TimeZone;
 
 import android.app.PendingIntent;
@@ -17,11 +21,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.RemoteViews;
 import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE;
@@ -141,6 +148,23 @@ public class WidgetText extends AppWidgetProvider {
         token = shrpr.getString(QuickstartPreferences.TOKEN, "");
         Boolean f_update = shrpr.getBoolean(QuickstartPreferences.f_update, false);
 
+//        String language_code = "en_US";
+//
+//        Resources res1 = context.getResources();
+//        // Change locale settings in the app.
+//        DisplayMetrics dm = res1.getDisplayMetrics();
+//        android.content.res.Configuration conf = res1.getConfiguration();
+//        conf.locale = new Locale(language_code.toLowerCase());
+//        res1.updateConfiguration(conf, dm);
+//
+//        String languageToLoad  = "en"; // your language
+//        Locale locale1 = new Locale(languageToLoad);
+//        Locale.setDefault(locale1);
+//        Configuration config = new Configuration();
+//        config.locale = locale1;
+//        context.getResources().updateConfiguration(config,
+//                context.getResources().getDisplayMetrics());
+
         //in case of error loading new data
         if (content.startsWith("error")) {
             content = shrpr.getString(QuickstartPreferences.content, context.getString(R.string.error));
@@ -200,6 +224,48 @@ public class WidgetText extends AppWidgetProvider {
             //Save new content
             shrpr.edit().putString(QuickstartPreferences.content, content).apply();
         }
+
+
+        //shrpr.getStringSet()
+
+
+        Set<String> pattern =  shrpr.getStringSet(QuickstartPreferences.pattern, null);
+        String p = "";
+        try {
+            p = pattern.toString();
+            Log.d(LOG_TAG, "Success run");
+        } catch (NullPointerException e) {
+            Log.d(LOG_TAG, "First run");
+            p = "check_days check_bal check_bal";
+        }
+
+        Log.d(LOG_TAG, p);
+
+
+        int f = content.indexOf("\n");
+        int s = content.indexOf("\n", f+1);
+        int t = content.indexOf("\n", s+1);
+        int a = content.length();
+        //Log.d(LOG_TAG, Integer.toString(f) + " " + Integer.toString(s) + " " + Integer.toString(t) + " " + Integer.toString(a));
+        //int lines = 3;
+        String newContent = "";
+        if ( ! content.equals(context.getString(R.string.error)) && ! content.equals(context.getString(R.string.updating)) ) {
+            if (p.contains("check_days")) {
+                newContent = content.substring(0, f) + "\n";
+            }
+            newContent = newContent +  content.substring(f+1, s);
+            if (p.contains("check_bal")) {
+                newContent = newContent + content.substring(s, t);
+            }
+            if (p.contains("check_ts")) {
+                newContent = newContent + content.substring(t, a);
+            }
+
+            content = newContent;
+        }
+
+//        Log.d(LOG_TAG, "newc: " + newContent);
+//        Log.d(LOG_TAG, "c: " + content);
 
 
 

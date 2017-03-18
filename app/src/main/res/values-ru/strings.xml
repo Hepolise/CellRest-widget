@@ -12,7 +12,7 @@
     <string-array name="pref_op_list_titles">
         <item>Beeline</item>
         <item>Tele2</item>
-        <item>Megafon</item>
+        <item>Megafon (Beta)</item>
         <!--<item>MTS</item>-->
     </string-array>
     <string-array name="pref_op_list_values">
@@ -25,7 +25,7 @@
     <string name="widget_text">CellRest: Текстовый виджет</string>
 
 
-    <string name="general">Общие настройки</string>
+    <string name="general">Обязательные настройки</string>
     <string name="pref_title_font">Шрифт</string>
     <string-array name="pref_font_titles">
         <item>Нормальный</item>
@@ -55,6 +55,28 @@
         <item>full</item>
         <item>calc</item>
     </string-array>
+    <string-array name="pattern_values">
+        <item>check_days</item>
+        <!--<item>check_inet</item>
+        <item>check_mins</item>
+        <item>check_sms</item>-->
+        <item>check_bal</item>
+        <item>check_ts</item>
+    </string-array>
+    <string-array name="pattern_titles">
+        <item>Дни до cброса и восстановления</item>
+        <!--<item>Интернет</item>
+        <item>Минуты</item>
+        <item>СМС</item>-->
+        <item>Баланс</item>
+        <item>Время обновления</item>
+    </string-array>
+    <string-array name="pattern_def_values">
+        <item>check_days</item>
+        <item>check_bal</item>
+        <item>check_ts</item>
+        <item>hidden</item>
+    </string-array>
     <string name="button_desc">Подключается к серверу для тестирования входа в аккаунт</string>
     <string name="button_title">Пробное подключение</string>
     <string name="button_colorpicker_desc">Выбор цвета виджета</string>
@@ -65,8 +87,8 @@
     <string name="pin_code_title">PIN-код</string>
     <string name="tele2">Настройки Теле2</string>
     <string name="help_title">Справка</string>
-    <string name="request_sent">Пожалуйста, подождите...</string>
-    <string name="updating">Обновление...</string>
+    <string name="request_sent">Пожалуйста, подождите&#8230;</string>
+    <string name="updating">Обновление&#8230;</string>
     <string name="widget_other_pref">Другие настройки виджета</string>
     <string name="about_description">CellRest представляет собой приложение для контроля расходов трафика, созданное, чтобы
         обеспечить удобство при работе с данными операторов сотовой связи</string>
@@ -79,17 +101,29 @@
     <string name="return_title">Вид возвращаемых данных</string>
     <string name="return_desc">Выбрать тип данных в виджете: с расчётом на текущий день и без</string>
     <string name="server_down">В данный момент сервер не доступен, пожалуйста, попробуйте позже</string>
-    <string name="widget_settings_color">Цвет и шрифт виджета</string>
+    <string name="widget_settings_color">Общие настройки</string>
     <string name="widget_settings_color_text">Цвет виджета по коду</string>
     <string name="widget_settings_color_text_desc">Установить цвет виджета по коду цвета</string>
     <string name="error">Произошла какая-то ошибка, пожалуйста, вернитесь к настройкам</string>
-    <string name="renew">Сброс через</string>
+    <string name="renew_a">Сброс через</string>
+    <string name="renew">Сброс:</string>
+    <string name="restore">Восст.:</string>
     <string name="day">день</string>
     <string name="days">дней</string>
     <string name="days2">дня</string>
-    <string name="restore">Восстановление через</string>
     <string name="reduce_widget">Попробуйте уменьшить размер виджета</string>
-    <string name="pref_locale">Язык (только текстовый виджет)</string>
-    <string name="pref_size">Размер текста (только текстовый виджет)</string>
+    <string name="pref_locale">Язык</string>
+    <string name="pref_size">"Размер текста "</string>
     <string name="pref_size_desc">Изменить размер текста. По умолчанию: 16</string>
+    <string name="only_text_widget">Только текстовый виджет</string>
+    <string name="pattern_title">Паттерн для текста</string>
+    <string name="pattern_desc">Какие строки Вы хотите видеть в текстовом виджете</string>
+    <!--<string name="pattern_desc">Изменить весь текст в виджете. \n
+        %dtr% - days to reestablish; \n
+        Вы можете использовать данные переменные: \n
+        %dtn% - Дни до обновления трафика; \n
+        %inet% - Ваш интернет с е. изм. (напр.: 150 МБ или 1.9 ГБ); \n
+        %mins% - минуты; \n
+        %sms% - SMS.</string>-->
+
 </resources>

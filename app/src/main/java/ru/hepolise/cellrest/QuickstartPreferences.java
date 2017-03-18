@@ -53,5 +53,14 @@ public class QuickstartPreferences {
     public static final String null_ = "null";
     public static final String inet_only = "inet_only";
     public static final String text_size = "text_size";
+    public static final String pattern = "pattern";
+//    public static final String check_days = "check_days";
+//    public static final String check_inet = "check_inet";
+//    public static final String check_mins = "check_mins";
+//    public static final String check_sms = "check_sms";
+//    public static final String check_bal = "check_bal";
+//    public static final String check_ts = "check_ts";
+
+
 
 }

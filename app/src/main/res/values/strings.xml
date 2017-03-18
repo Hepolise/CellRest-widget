@@ -6,16 +6,28 @@
 
     <!-- Example General settings -->
     <string name="pref_header_general">General</string>
-    <string name="renew">Update after</string>
-    <string name="restore">Restore after</string>
+    <string name="renew_a">Update after</string>
+
+    <string name="renew">Update:</string>
+    <string name="restore">Restore:</string>
     <string name="days">days</string>
     <string name="days2">days</string>
     <string name="day">day</string>
     <string name="reduce_widget">Try to reduce widget size</string>
 
+    <string name="only_text_widget">Only text widget</string>
 
-    <string name="widget_settings_color">Widget\'s color &amp; text</string>
+    <string name="widget_settings_color">General settings</string>
 
+    <string name="pattern_title">Pattern for text</string>
+    <!--<string name="pattern_desc">Change all the text in widget. \n
+        %dtr% - days to reestablish; \n
+        You can use variables: \n
+        %dtn% - days to renew; \n
+        %inet% - your internet with units (e.g.: 150 MB or 1.9 GB); \n
+        %mins% - minutes; \n
+        %sms% - SMS.
+    </string>-->
 
     <string name="error">An error occurred, please check settings</string>
 
@@ -30,7 +42,7 @@
     <string name="pref_description_pass">Password for your account</string>
     <string name="pref_color">Widget View</string>
 
-    <string name="general">General preferences</string>
+    <string name="general">Obligatory preferences</string>
 
     <string name="pref_title_op">Cellular operator</string>
     <string name="pref_title_font">Font</string>
@@ -50,20 +62,20 @@
     <!--<string name="beeline">Beeline/Megafon/MTS preferences</string>-->
     <string name="beeline">Beeline/Megafon preferences</string>
     <!--text widget-->
-    <string name="pref_locale">Language (only text widget)</string>
-    <string name="pref_size">Text size (only text widget)</string>
+    <string name="pref_locale">Language</string>
+    <string name="pref_size">"Text size "</string>
     <string name="pref_size_desc">Set all text widget size. Default: 16</string>
     <string name="widget_text">CellRest: Text widget</string>
 
     <string name="other_settings">Test</string>
-    <string name="request_sent">Please wait...</string>
+    <string name="request_sent">Please wait&#8230;</string>
     <string name="help_title">Help</string>
     <string name="about_title">About</string>
     <string name="about_write"><![CDATA[<a href="%1$s">Contact the author of the application</a>]]></string>
 
     <string name="return_title">Type returning data</string>
     <string name="return_desc">Select the type of data in the widget: the calculation for the current day and without</string>
-    <string name="updating">Updating...</string>
+    <string name="updating">Updating&#8230;</string>
 
     <string name="server_down">Server is unreachable at the moment, please try again later</string>
     <string name="widget_other_pref">Other widget\'s preferences</string>
@@ -71,9 +83,36 @@
     <string-array name="pref_op_list_titles">
         <item>Beeline</item>
         <item>Tele2</item>
-        <item>Megafon</item>
+        <item>Megafon (beta)</item>
         <!--<item>MTS</item>-->
     </string-array>
+    <string-array name="pattern_values">
+        <item>check_days</item>
+        <!--<item>check_inet</item>
+        <item>check_mins</item>
+        <item>check_sms</item>-->
+        <item>check_bal</item>
+        <item>check_ts</item>
+    </string-array>
+
+    <string name="pattern_desc">Choose what to see in text widget</string>
+
+    <string-array name="pattern_titles">
+        <item>Days to regain &amp; renew</item>
+        <!--<item>Internet</item>
+        <item>Minutes</item>
+        <item>SMS</item>-->
+        <item>Balance</item>
+        <item>Time of update</item>
+    </string-array>
+    <string-array name="pattern_def_values">
+        <item>check_days</item>
+        <item>check_bal</item>
+        <item>check_ts</item>
+        <item>hidden</item>
+    </string-array>
+
+
     <string-array name="pref_op_list_values">
         <item>bee</item>
         <item>tele2</item>

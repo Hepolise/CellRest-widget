@@ -38,7 +38,7 @@
 
         <receiver
             android:name=".WidgetText"
-            android:icon="@android:drawable/star_big_on"
+            android:icon="@mipmap/ic_launcher"
             android:label="@string/widget_name">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
