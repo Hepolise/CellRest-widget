@@ -274,7 +274,7 @@ public class TraffWidget extends AppWidgetProvider {
         //return inet on MB or GB
         String result;
         float p = Float.parseFloat(s);
-        if (p > 1023) {
+        if (p > 1000 || p < -1000) {
             p = p/1024;
             result = "G";
         } else {
