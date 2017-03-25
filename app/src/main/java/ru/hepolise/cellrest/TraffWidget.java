@@ -1,6 +1,7 @@
 package ru.hepolise.cellrest;
 
 import java.io.BufferedReader;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -17,7 +18,10 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -429,6 +433,9 @@ public class TraffWidget extends AppWidgetProvider {
                 shrpr.edit().putString(QuickstartPreferences.color_text, hexColor).apply();
             }
         }
+        //Colorize icons should be async
+        new Colorize().execute();
+
         //set text font
         String font =  shrpr.getString(QuickstartPreferences.font, "n");
 
@@ -511,6 +518,19 @@ public class TraffWidget extends AppWidgetProvider {
 
                 widgetView.setTextViewText(getStringResourceByName("inet" + res, context), getSize(inet));
 
+
+
+                //get dada dir for get icons
+                PackageManager m = context.getPackageManager();
+                String s = context.getPackageName();
+                try {
+                    PackageInfo p = m.getPackageInfo(s, 0);
+                    s = p.applicationInfo.dataDir;
+                } catch (PackageManager.NameNotFoundException e) {
+
+                }
+
+
                 if (!null_.equals("false") && !inet_only) {
                     //if cals and sms are available
 
@@ -525,14 +545,11 @@ public class TraffWidget extends AppWidgetProvider {
                     widgetView.setTextViewText(getStringResourceByName("calls" + res, context), min);
 
 
-                    Drawable icon_sms = ContextCompat.getDrawable(context, R.drawable.ic_message_white_48dp);
-                    Bitmap b_icon_sms = ((BitmapDrawable) icon_sms).getBitmap();
-                    b_icon_sms = colorize(b_icon_sms, color);
+
+                    Bitmap b_icon_sms = BitmapFactory.decodeFile(s + "/sms.png");
                     widgetView.setImageViewBitmap(R.id.sms_logo, b_icon_sms);
 
-                    Drawable icon_calls = ContextCompat.getDrawable(context, R.drawable.ic_local_phone_white_48dp);
-                    Bitmap b_icon_calls = ((BitmapDrawable) icon_calls).getBitmap();
-                    b_icon_calls = colorize(b_icon_calls, color);
+                    Bitmap b_icon_calls = BitmapFactory.decodeFile(s + "/calls.png");
                     widgetView.setImageViewBitmap(R.id.calls_logo, b_icon_calls);
 
                     widgetView.setTextColor(getStringResourceByName("calls" + res, context), color);
@@ -569,9 +586,10 @@ public class TraffWidget extends AppWidgetProvider {
                 widgetView.setTextColor(getStringResourceByName("renew" + inet_add + res, context), color);
 
 
-                Drawable icon_inet = ContextCompat.getDrawable(context, R.drawable.ic_language_white_48dp);
-                Bitmap b_icon_inet = ((BitmapDrawable) icon_inet).getBitmap();
-                b_icon_inet = colorize(b_icon_inet, color);
+
+
+                //get icon from data folder
+                Bitmap b_icon_inet = BitmapFactory.decodeFile(s + "/inet.png");
                 widgetView.setImageViewBitmap(R.id.inet_logo, b_icon_inet);
 
             }
@@ -589,7 +607,76 @@ public class TraffWidget extends AppWidgetProvider {
         return "";
     }
 
-    class ProgressTask extends AsyncTask<Integer, String, String> {
+
+    private class Colorize extends AsyncTask<Integer, String, String> {
+
+
+        @Override
+        public  String doInBackground(Integer... id) {
+
+            FileOutputStream out = null;
+            try {
+                SharedPreferences shrpr = PreferenceManager.getDefaultSharedPreferences(contextglobal);
+                int color =  shrpr.getInt(QuickstartPreferences.color, 0xffffffff);
+
+                //inet
+                Drawable icon_inet = ContextCompat.getDrawable(contextglobal, R.drawable.ic_language_white_48dp);
+                Bitmap b_icon_inet = ((BitmapDrawable) icon_inet).getBitmap();
+                b_icon_inet = colorize(b_icon_inet, color);
+
+
+                //Calls
+                Drawable icon_calls = ContextCompat.getDrawable(contextglobal, R.drawable.ic_local_phone_white_48dp);
+                Bitmap b_icon_calls = ((BitmapDrawable) icon_calls).getBitmap();
+                b_icon_calls = colorize(b_icon_calls, color);
+
+
+                //SMS
+                Drawable icon_sms = ContextCompat.getDrawable(contextglobal, R.drawable.ic_message_white_48dp);
+                Bitmap b_icon_sms = ((BitmapDrawable) icon_sms).getBitmap();
+                b_icon_sms = colorize(b_icon_sms, color);
+
+
+                PackageManager m = contextglobal.getPackageManager();
+                String s = contextglobal.getPackageName();
+                PackageInfo p = m.getPackageInfo(s, 0);
+                s = p.applicationInfo.dataDir;
+
+
+                String filename = s + "/inet.png";
+                Log.d(LOG_TAG, filename);
+                out = new FileOutputStream(filename);
+                b_icon_inet.compress(Bitmap.CompressFormat.PNG, 100, out);
+
+                filename = s + "/calls.png";
+                Log.d(LOG_TAG, filename);
+                out = new FileOutputStream(filename);
+                b_icon_calls.compress(Bitmap.CompressFormat.PNG, 100, out);
+
+                filename = s + "/sms.png";
+                Log.d(LOG_TAG, filename);
+                out = new FileOutputStream(filename);
+                b_icon_sms.compress(Bitmap.CompressFormat.PNG, 100, out);
+                // PNG is a lossless format, the compression factor (100) is ignored
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (out != null) {
+                        out.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            return Integer.toString(id[0]);
+        }
+
+    }
+
+
+
+    private class ProgressTask extends AsyncTask<Integer, String, String> {
         //load new data from server
         @Override
         public String doInBackground(Integer... id) {
