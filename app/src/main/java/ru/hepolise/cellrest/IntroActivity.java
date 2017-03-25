@@ -22,11 +22,21 @@ public class IntroActivity extends AppIntro {
 
         // Add your slide fragments here.
         // AppIntro will automatically generate the dots indicator and buttons.
-        String title = "ww";
-        String description = "dd";
-        int image = R.drawable.ic_arrow_back_white;
-        int backgroundColor = -1;
-        addSlide(AppIntroFragment.newInstance(title, description, image, backgroundColor));
+        String title = "sdfghkrgs herkugshrkhrgkdljgh sdklfjgshdfkljghsdkflgjhdfkljg ";
+        String description = "rkjs r;lijrisj gijg dklgjfklgs lksdjg kj gd";
+        int image = R.mipmap.ic_launcher;
+        int backgroundColor = Color.parseColor("#000000");
+//        addSlide(AppIntroFragment.newInstance(title, description, image, backgroundColor));
+//        addSlide(AppIntroFragment.newInstance(title, description, image, backgroundColor));
+        /*
+        First slide: Brief description
+        Second: Selecting an operator
+        Third: Phone number
+        Fourth: pass or PIN-code, depending by selected operator
+
+
+         */
+        addSlide(Slide.newInstance(R.layout.first_slide));
 //        addSlide(secondFragment);
 //        addSlide(thirdFragment);
 //        addSlide(fourthFragment);
@@ -42,7 +52,7 @@ public class IntroActivity extends AppIntro {
 
         // Hide Skip/Done button.
         showSkipButton(false);
-        setProgressButtonEnabled(false);
+        setProgressButtonEnabled(true);
 
         // Turn vibration on and set intensity.
         // NOTE: you will probably need to ask VIBRATE permission in Manifest.
