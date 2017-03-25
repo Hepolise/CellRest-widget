@@ -173,31 +173,7 @@ public class TraffWidget extends AppWidgetProvider {
         if (n1 == 1) return n.toString() + " " + form1;
         return n.toString() + " " + form5;
     }
-    public Bitmap colorize(Bitmap srcBmp, int dstColor) {
-        //change images color
 
-        int width = srcBmp.getWidth();
-        int height = srcBmp.getHeight();
-
-        float srcHSV[] = new float[3];
-        float dstHSV[] = new float[3];
-
-        Bitmap dstBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-
-        for (int row = 0; row < height; row++) {
-            for (int col = 0; col < width; col++) {
-                int pixel = srcBmp.getPixel(col, row);
-                int alpha = Color.alpha(pixel);
-                Color.colorToHSV(pixel, srcHSV);
-                Color.colorToHSV(dstColor, dstHSV);
-
-
-                dstBitmap.setPixel(col, row, Color.HSVToColor(alpha, dstHSV));
-            }
-        }
-
-        return dstBitmap;
-    }
 
     public void setAllTextTuNull(RemoteViews widgetView) {
         //SET ALL TEXT TO NULL
@@ -434,7 +410,7 @@ public class TraffWidget extends AppWidgetProvider {
             }
         }
         //Colorize icons should be async
-        new Colorize().execute();
+        new Colorize().StartColorize(context);
 
         //set text font
         String font =  shrpr.getString(QuickstartPreferences.font, "n");
@@ -608,71 +584,7 @@ public class TraffWidget extends AppWidgetProvider {
     }
 
 
-    private class Colorize extends AsyncTask<Integer, String, String> {
 
-
-        @Override
-        public  String doInBackground(Integer... id) {
-
-            FileOutputStream out = null;
-            try {
-                SharedPreferences shrpr = PreferenceManager.getDefaultSharedPreferences(contextglobal);
-                int color =  shrpr.getInt(QuickstartPreferences.color, 0xffffffff);
-
-                //inet
-                Drawable icon_inet = ContextCompat.getDrawable(contextglobal, R.drawable.ic_language_white_48dp);
-                Bitmap b_icon_inet = ((BitmapDrawable) icon_inet).getBitmap();
-                b_icon_inet = colorize(b_icon_inet, color);
-
-
-                //Calls
-                Drawable icon_calls = ContextCompat.getDrawable(contextglobal, R.drawable.ic_local_phone_white_48dp);
-                Bitmap b_icon_calls = ((BitmapDrawable) icon_calls).getBitmap();
-                b_icon_calls = colorize(b_icon_calls, color);
-
-
-                //SMS
-                Drawable icon_sms = ContextCompat.getDrawable(contextglobal, R.drawable.ic_message_white_48dp);
-                Bitmap b_icon_sms = ((BitmapDrawable) icon_sms).getBitmap();
-                b_icon_sms = colorize(b_icon_sms, color);
-
-
-                PackageManager m = contextglobal.getPackageManager();
-                String s = contextglobal.getPackageName();
-                PackageInfo p = m.getPackageInfo(s, 0);
-                s = p.applicationInfo.dataDir;
-
-
-                String filename = s + "/inet.png";
-                Log.d(LOG_TAG, filename);
-                out = new FileOutputStream(filename);
-                b_icon_inet.compress(Bitmap.CompressFormat.PNG, 100, out);
-
-                filename = s + "/calls.png";
-                Log.d(LOG_TAG, filename);
-                out = new FileOutputStream(filename);
-                b_icon_calls.compress(Bitmap.CompressFormat.PNG, 100, out);
-
-                filename = s + "/sms.png";
-                Log.d(LOG_TAG, filename);
-                out = new FileOutputStream(filename);
-                b_icon_sms.compress(Bitmap.CompressFormat.PNG, 100, out);
-                // PNG is a lossless format, the compression factor (100) is ignored
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                try {
-                    if (out != null) {
-                        out.close();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            return Integer.toString(id[0]);
-        }
-
-    }
 
 
 
