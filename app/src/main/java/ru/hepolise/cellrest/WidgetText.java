@@ -236,7 +236,7 @@ public class WidgetText extends AppWidgetProvider {
             Log.d(LOG_TAG, "Success run");
         } catch (NullPointerException e) {
             Log.d(LOG_TAG, "First run");
-            p = "check_days check_bal check_bal";
+            p = "check_days check_bal check_ts";
         }
 
         Log.d(LOG_TAG, p);
@@ -365,7 +365,8 @@ public class WidgetText extends AppWidgetProvider {
                         "&token=" + URLEncoder.encode(token, "UTF-8") +
                         "&return=" + URLEncoder.encode(return_, "UTF-8") +
                         "&tz=" + URLEncoder.encode(tz, "UTF-8")
-                        //+ "&test"
+                        //testing new logic for dtr
+                        + "&test"
                 );
                 //Log.d(LOG_TAG, "URL: " + url);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();

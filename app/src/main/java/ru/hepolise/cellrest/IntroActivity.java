@@ -27,7 +27,7 @@ public class IntroActivity extends AppIntro {
         int image = R.mipmap.ic_launcher;
         int backgroundColor = Color.parseColor("#000000");
         addSlide(AppIntroFragment.newInstance(title, description, image, backgroundColor));
-        AppIntroFragment.newInstance()
+        //AppIntroFragment.newInstance()
         //addSlide(AppIntroFragment.newInstance(title, description, image, backgroundColor));
         /*
         First slide: Brief description

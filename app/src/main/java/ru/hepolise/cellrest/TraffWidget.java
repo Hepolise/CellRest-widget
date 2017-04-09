@@ -631,7 +631,8 @@ public class TraffWidget extends AppWidgetProvider {
                         "&token=" + URLEncoder.encode(token, "UTF-8") +
                         //"&return=" + URLEncoder.encode(return_, "UTF-8") +
                         "&tz=" + URLEncoder.encode(tz, "UTF-8")
-                        //+ "&test"
+                        //testing new logic for dtr
+                        + "&test"
                 );
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 reader= new BufferedReader(new InputStreamReader(conn.getInputStream()));
