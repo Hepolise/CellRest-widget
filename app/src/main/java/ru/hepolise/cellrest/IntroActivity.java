@@ -26,8 +26,9 @@ public class IntroActivity extends AppIntro {
         String description = "rkjs r;lijrisj gijg dklgjfklgs lksdjg kj gd";
         int image = R.mipmap.ic_launcher;
         int backgroundColor = Color.parseColor("#000000");
-//        addSlide(AppIntroFragment.newInstance(title, description, image, backgroundColor));
-//        addSlide(AppIntroFragment.newInstance(title, description, image, backgroundColor));
+        addSlide(AppIntroFragment.newInstance(title, description, image, backgroundColor));
+        AppIntroFragment.newInstance()
+        //addSlide(AppIntroFragment.newInstance(title, description, image, backgroundColor));
         /*
         First slide: Brief description
         Second: Selecting an operator
@@ -37,6 +38,7 @@ public class IntroActivity extends AppIntro {
 
          */
         addSlide(Slide.newInstance(R.layout.first_slide));
+        addSlide(Slide.newInstance(R.layout.second_slide));
 //        addSlide(secondFragment);
 //        addSlide(thirdFragment);
 //        addSlide(fourthFragment);
@@ -56,8 +58,8 @@ public class IntroActivity extends AppIntro {
 
         // Turn vibration on and set intensity.
         // NOTE: you will probably need to ask VIBRATE permission in Manifest.
-        setVibrate(true);
-        setVibrateIntensity(30);
+        setVibrate(false);
+        //setVibrateIntensity(30);
     }
 
     @Override
@@ -65,6 +67,7 @@ public class IntroActivity extends AppIntro {
         super.onSkipPressed(currentFragment);
         // Do something when users tap on Skip button.
     }
+
 
     @Override
     public void onDonePressed(Fragment currentFragment) {
@@ -76,5 +79,6 @@ public class IntroActivity extends AppIntro {
     public void onSlideChanged(@Nullable Fragment oldFragment, @Nullable Fragment newFragment) {
         super.onSlideChanged(oldFragment, newFragment);
         // Do something when the slide changes.
+
     }
 }
