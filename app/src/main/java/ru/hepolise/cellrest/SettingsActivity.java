@@ -170,6 +170,13 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Boolean intro = checkIntroComplete(this);
+        if (!intro) {
+            Intent intent = new Intent(this, IntroActivity.class);
+            startActivity(intent);
+        }
+
+
         //setupActionBar();
         if (checkPlayServices()) {
             // Start IntentService to register this application with GCM.
@@ -216,6 +223,14 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // Show the Up button in the action bar.
             actionBar.setDisplayHomeAsUpEnabled(false);
         }
+    }
+
+
+
+    private boolean checkIntroComplete(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        String op = sharedPreferences.getString(QuickstartPreferences.op_list, "");
+        return (!op.equals(""));
     }
     @Override
     public boolean onIsMultiPane() {

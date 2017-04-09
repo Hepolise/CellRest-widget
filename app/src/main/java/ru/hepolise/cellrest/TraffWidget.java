@@ -68,7 +68,10 @@ public class TraffWidget extends AppWidgetProvider {
 
     @Override
     public void onEnabled(Context context) {
+
         super.onEnabled(context);
+
+
     }
 
     @Override
