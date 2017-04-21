@@ -22,14 +22,15 @@ public class IntroActivity extends AppIntro {
 
         // Add your slide fragments here.
         // AppIntro will automatically generate the dots indicator and buttons.
-        String title = "sdfghkrgs herkugshrkhrgkdljgh sdklfjgshdfkljghsdkflgjhdfkljg ";
-        String description = "rkjs r;lijrisj gijg dklgjfklgs lksdjg kj gd";
+        String title = getApplicationContext().getString(R.string.app_name);
+        String description = getApplicationContext().getString(R.string.updating);
         int image = R.mipmap.ic_launcher;
         int backgroundColor = Color.parseColor("#000000");
         addSlide(AppIntroFragment.newInstance(title, description, image, backgroundColor));
         //AppIntroFragment.newInstance()
         //addSlide(AppIntroFragment.newInstance(title, description, image, backgroundColor));
         /*
+        TODO
         First slide: Brief description
         Second: Selecting an operator
         Third: Phone number
