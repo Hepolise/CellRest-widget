@@ -25,9 +25,15 @@ public class IntroActivity extends AppIntro {
         // Add your slide fragments here.
         // AppIntro will automatically generate the dots indicator and buttons.
         String title = getApplicationContext().getString(R.string.app_name);
-        String description = getApplicationContext().getString(R.string.updating);
+        String description = getApplicationContext().getString(R.string.about_description);
         int image = R.mipmap.ic_launcher;
-        int backgroundColor = Color.parseColor("#000000");
+        int backgroundColor = Color.parseColor("#303F9F");
+        addSlide(AppIntroFragment.newInstance(title, description, image, backgroundColor));
+
+        title = getApplicationContext().getString(R.string.fill_obligatory);
+        description = getApplicationContext().getString(R.string.fill_obligatory_desc);
+        image = R.mipmap.ic_launcher;
+        backgroundColor = Color.parseColor("#303F9F");
         addSlide(AppIntroFragment.newInstance(title, description, image, backgroundColor));
         //AppIntroFragment.newInstance()
         //addSlide(AppIntroFragment.newInstance(title, description, image, backgroundColor));
@@ -40,8 +46,8 @@ public class IntroActivity extends AppIntro {
 
 
          */
-        addSlide(Slide.newInstance(R.layout.first_slide));
-        addSlide(Slide.newInstance(R.layout.second_slide));
+//        addSlide(Slide.newInstance(R.layout.first_slide));
+//        addSlide(Slide.newInstance(R.layout.second_slide));
 //        addSlide(secondFragment);
 //        addSlide(thirdFragment);
 //        addSlide(fourthFragment);
