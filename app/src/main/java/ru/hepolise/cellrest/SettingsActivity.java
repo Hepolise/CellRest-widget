@@ -229,9 +229,10 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
     private boolean checkIntroComplete(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        String op = sharedPreferences.getString(QuickstartPreferences.op_list, "");
-        return (!op.equals(""));
+        return (sharedPreferences.getBoolean(QuickstartPreferences.intro_done, false));
     }
+
+
     @Override
     public boolean onIsMultiPane() {
         return isXLargeTablet(this);
