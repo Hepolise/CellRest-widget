@@ -8,13 +8,14 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
 import com.github.paolorotolo.appintro.AppIntro;
+import com.github.paolorotolo.appintro.AppIntro2;
 import com.github.paolorotolo.appintro.AppIntroFragment;
 
 /**
  * Created by hepolise on 24.03.17.
  */
 
-public class IntroActivity extends AppIntro {
+public class IntroActivity extends AppIntro2 {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,25 +33,17 @@ public class IntroActivity extends AppIntro {
 
         title = getApplicationContext().getString(R.string.fill_obligatory);
         description = getApplicationContext().getString(R.string.fill_obligatory_desc);
-        image = R.mipmap.ic_launcher;
+        image = R.mipmap.gen_settigs;
         backgroundColor = Color.parseColor("#303F9F");
         addSlide(AppIntroFragment.newInstance(title, description, image, backgroundColor));
-        //AppIntroFragment.newInstance()
-        //addSlide(AppIntroFragment.newInstance(title, description, image, backgroundColor));
-        /*
-        TODO
-        First slide: Brief description
-        Second: Selecting an operator
-        Third: Phone number
-        Fourth: pass or PIN-code, depending by selected operator
 
+        new Colorize().StartColorize(getBaseContext());
+//        title = getApplicationContext().getString(R.string.fill_obligatory);
+//        description = getApplicationContext().getString(R.string.fill_obligatory_desc);
+//        image = R.mipmap.other_settings;
+//        backgroundColor = Color.parseColor("#303F9F");
+//        addSlide(AppIntroFragment.newInstance(title, description, image, backgroundColor));
 
-         */
-//        addSlide(Slide.newInstance(R.layout.first_slide));
-//        addSlide(Slide.newInstance(R.layout.second_slide));
-//        addSlide(secondFragment);
-//        addSlide(thirdFragment);
-//        addSlide(fourthFragment);
 
         // Instead of fragments, you can also use our default slide
         // Just set a title, description, background and image. AppIntro will do the rest.
@@ -58,11 +51,11 @@ public class IntroActivity extends AppIntro {
 
         // OPTIONAL METHODS
         // Override bar/separator color.
-        setBarColor(Color.parseColor("#3F51B5"));
-        setSeparatorColor(Color.parseColor("#2196F3"));
+//        setBarColor(Color.parseColor("#3F51B5"));
+//        setSeparatorColor(Color.parseColor("#2196F3"));
 
         // Hide Skip/Done button.
-        showSkipButton(false);
+        showSkipButton(true);
         setProgressButtonEnabled(true);
 
         // Turn vibration on and set intensity.
@@ -74,6 +67,9 @@ public class IntroActivity extends AppIntro {
     @Override
     public void onSkipPressed(Fragment currentFragment) {
         super.onSkipPressed(currentFragment);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        sharedPreferences.edit().putBoolean(QuickstartPreferences.intro_done, true).apply();
+        finish();
         // Do something when users tap on Skip button.
     }
 
@@ -83,6 +79,7 @@ public class IntroActivity extends AppIntro {
         super.onDonePressed(currentFragment);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         sharedPreferences.edit().putBoolean(QuickstartPreferences.intro_done, true).apply();
+        finish();
         // Do something when users tap on Done button.
     }
 

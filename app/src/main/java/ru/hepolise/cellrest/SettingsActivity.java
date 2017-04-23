@@ -171,8 +171,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Boolean intro = checkIntroComplete(this);
+        Intent intent;
         if (!intro) {
-            Intent intent = new Intent(this, IntroActivity.class);
+            intent = new Intent(this, IntroActivity.class);
             startActivity(intent);
         }
 
@@ -180,7 +181,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         //setupActionBar();
         if (checkPlayServices()) {
             // Start IntentService to register this application with GCM.
-            Intent intent = new Intent(this, RegistrationIntentService.class);
+            intent = new Intent(this, RegistrationIntentService.class);
             startService(intent);
             // Инициализация AppMetrica SDK
             YandexMetrica.activate(getApplicationContext(), "b7dc00b5-0eba-48e4-b2df-6ce98c35ccc0");
@@ -241,6 +242,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public void onBuildHeaders(List<Header> target) {
         loadHeadersFromResource(R.xml.pref_headers, target);
+
+
     }
 
 

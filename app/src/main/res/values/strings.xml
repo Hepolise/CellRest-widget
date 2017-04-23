@@ -20,7 +20,11 @@
     <string name="widget_settings_color">General settings</string>
 
     <string name="fill_obligatory">Fill obligatory fields</string>
-    <string name="fill_obligatory_desc">Please fill fields in General settings of app. Don\'t forget to choose the cellular operator :)</string>
+    <string name="fill_obligatory_desc">Please fill fields in General settings of app. Cellular operator, login and password/PIN are obligatory fields</string>
+
+
+
+
 
     <string name="pattern_title">Pattern for text</string>
     <!--<string name="pattern_desc">Change all the text in widget. \n
@@ -157,5 +161,8 @@
     </string-array>
     <string name="pref_account_login">Login</string>
     <string name="button_colorpicker_desc">Choose color for widget</string>
+
+
+    <string name="action_settings">Settings</string>
 
 </resources>

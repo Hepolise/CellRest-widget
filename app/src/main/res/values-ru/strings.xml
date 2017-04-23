@@ -118,7 +118,7 @@
     <string name="only_text_widget">Только текстовый виджет</string>
     <string name="pattern_title">Паттерн для текста</string>
     <string name="pattern_desc">Какие строки Вы хотите видеть в текстовом виджете</string>
-    <string name="fill_obligatory_desc">Пожалуйста, заполните поля в общих настройках. Не забудьте указать оператора сотовой связи :)</string>
+    <string name="fill_obligatory_desc">Пожалуйста, заполните поля в общих настройках. Оператор, логин и пароль/ПИН-код являются обязательными полями</string>
     <string name="fill_obligatory">Заполните обязательные поля</string>
     <!--<string name="pattern_desc">Изменить весь текст в виджете. \n
         %dtr% - days to reestablish; \n

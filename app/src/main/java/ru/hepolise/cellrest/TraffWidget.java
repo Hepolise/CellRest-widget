@@ -68,10 +68,7 @@ public class TraffWidget extends AppWidgetProvider {
 
     @Override
     public void onEnabled(Context context) {
-
         super.onEnabled(context);
-
-
     }
 
     @Override
@@ -448,17 +445,19 @@ public class TraffWidget extends AppWidgetProvider {
             shrpr.edit().putBoolean(QuickstartPreferences.f_update, false).apply();
         } else {
 
-            if (ok.equals("")) {
-                //if we have no data by server on first run
-                if (font.equals("n")) {
-                    widgetView.setTextViewText(R.id.text_upd, context.getString(R.string.error));
-                    widgetView.setTextColor(R.id.text_upd, color);
-                } else if (font.equals("i")) {
-                    widgetView.setTextViewText(R.id.text_upd_italic, context.getString(R.string.error));
-                    widgetView.setTextColor(R.id.text_upd_italic, color);
-                } else if (font.equals("b")) {
-                    widgetView.setTextViewText(R.id.text_upd_bold, context.getString(R.string.error));
-                    widgetView.setTextColor(R.id.text_upd_bold, color);
+            if (ok.equals(""))  {
+                if (!content.equals(context.getString(R.string.updating))) {
+                    //if we have no data by server on first run
+                    if (font.equals("n")) {
+                        widgetView.setTextViewText(R.id.text_upd, context.getString(R.string.error));
+                        widgetView.setTextColor(R.id.text_upd, color);
+                    } else if (font.equals("i")) {
+                        widgetView.setTextViewText(R.id.text_upd_italic, context.getString(R.string.error));
+                        widgetView.setTextColor(R.id.text_upd_italic, color);
+                    } else if (font.equals("b")) {
+                        widgetView.setTextViewText(R.id.text_upd_bold, context.getString(R.string.error));
+                        widgetView.setTextColor(R.id.text_upd_bold, color);
+                    }
                 }
             } else {
                 String sms;
