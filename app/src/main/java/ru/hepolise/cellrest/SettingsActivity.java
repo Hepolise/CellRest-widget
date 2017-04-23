@@ -25,6 +25,7 @@ import android.support.v7.app.AlertDialog;
 //import android.support.v7;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -194,8 +195,11 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
 
         menu.add(0, 1, 0, getString(R.string.help_title));
-        menu.add(0, 2, 0, getString(R.string.about_title));
 
+
+        menu.add(0, 2, 0, getString(R.string.about_title));
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
     @Override
@@ -209,6 +213,10 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         }
         if (id.equals("2")) {
             Intent intent = new Intent(this, AboutActivity.class);
+            startActivity(intent);
+        }
+        if (item.getItemId() == R.id.add) {
+            Intent intent = new Intent(this, AccountManager.class);
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);

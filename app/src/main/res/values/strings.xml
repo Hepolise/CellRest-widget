@@ -162,7 +162,7 @@
     <string name="pref_account_login">Login</string>
     <string name="button_colorpicker_desc">Choose color for widget</string>
 
+    <string name="add_account">Add account</string>
 
-    <string name="action_settings">Settings</string>
 
 </resources>
