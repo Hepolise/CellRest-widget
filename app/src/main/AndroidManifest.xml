@@ -56,6 +56,9 @@
         <activity
             android:name=".IntroActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <!--<activity-->
+            <!--android:name=".Account"-->
+            <!--android:theme="@style/AppTheme" />-->
         <!-- <activity android:name=".SettingsActivity"></activity> -->
         <!-- [START gcm_receiver] -->
         <receiver

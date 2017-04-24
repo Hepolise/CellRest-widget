@@ -20,13 +20,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@android:id/list">
-
-    </ListView>
-    <include layout="@layout/content_account" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -35,5 +28,10 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@drawable/ic_person_add_white_48dp" />
+
+    <include layout="@layout/content_account" />
+
+
+
 
 </android.support.design.widget.CoordinatorLayout>

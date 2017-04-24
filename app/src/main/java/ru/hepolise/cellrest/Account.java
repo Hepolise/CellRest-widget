@@ -29,9 +29,9 @@ public class Account extends ListActivity {
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setContentView(R.layout.activity_account);
-        String[] values = new String[] { "null", "first", "second" };
+        String[] values = new String[] { "first", "second", "third" };
 
-        final int len = values.length - 1;
+        final int len = values.length;
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, values);
         setListAdapter(adapter);
@@ -39,6 +39,7 @@ public class Account extends ListActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //Toast.makeText(getApplicationContext(), Integer.toString(len), Toast.LENGTH_SHORT).show();
                 SharedPreferences myPrefs = getSharedPreferences("prefs_" + Integer.toString(len), MODE_PRIVATE);
                 SharedPreferences.Editor prefsEditor;
                 prefsEditor = myPrefs.edit();
