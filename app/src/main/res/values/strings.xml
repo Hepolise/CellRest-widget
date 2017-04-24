@@ -23,9 +23,6 @@
     <string name="fill_obligatory_desc">Please fill fields in General settings of app. Cellular operator, login and password/PIN are obligatory fields</string>
 
 
-
-
-
     <string name="pattern_title">Pattern for text</string>
     <!--<string name="pattern_desc">Change all the text in widget. \n
         %dtr% - days to reestablish; \n
@@ -163,6 +160,7 @@
     <string name="button_colorpicker_desc">Choose color for widget</string>
 
     <string name="add_account">Add account</string>
+    <string name="title_activity_account">Account</string>
 
 
 </resources>

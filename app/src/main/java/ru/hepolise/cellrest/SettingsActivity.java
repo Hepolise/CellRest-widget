@@ -216,7 +216,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             startActivity(intent);
         }
         if (item.getItemId() == R.id.add) {
-            Intent intent = new Intent(this, AccountManager.class);
+            Intent intent = new Intent(this, Account.class);
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
