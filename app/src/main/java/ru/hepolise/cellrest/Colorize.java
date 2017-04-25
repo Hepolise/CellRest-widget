@@ -23,16 +23,17 @@ import java.io.IOException;
  */
 
 
-//TODO: move pictures to files folder to folder with account id
 public class Colorize {
     Context contextglobal;
     String LOG_TAG = "cellLogs";
+    String d_id;
 
 
 
-    public String StartColorize(Context ctx) {
+    public String StartColorize(Context ctx, String profile_id) {
 
         contextglobal = ctx;
+        d_id = profile_id;
         new ColorizeBitmap().execute();
         return "";
     }
@@ -96,17 +97,17 @@ public class Colorize {
                 s = p.applicationInfo.dataDir;
 
 
-                String filename = s + "/inet.png";
+                String filename = s + "/files/inet" + d_id + ".png";
                 Log.d(LOG_TAG, filename);
                 out = new FileOutputStream(filename);
                 b_icon_inet.compress(Bitmap.CompressFormat.PNG, 100, out);
 
-                filename = s + "/calls.png";
+                filename = s + "/files/calls" + d_id + ".png";
                 Log.d(LOG_TAG, filename);
                 out = new FileOutputStream(filename);
                 b_icon_calls.compress(Bitmap.CompressFormat.PNG, 100, out);
 
-                filename = s + "/sms.png";
+                filename = s + "/files/sms" + d_id + ".png";
                 Log.d(LOG_TAG, filename);
                 out = new FileOutputStream(filename);
                 b_icon_sms.compress(Bitmap.CompressFormat.PNG, 100, out);

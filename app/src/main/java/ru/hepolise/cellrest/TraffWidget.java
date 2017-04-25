@@ -410,7 +410,8 @@ public class TraffWidget extends AppWidgetProvider {
             }
         }
         //Colorize icons should be async
-        new Colorize().StartColorize(context);
+        //TODO
+        new Colorize().StartColorize(context , "a_id");
 
         //set text font
         String font =  shrpr.getString(QuickstartPreferences.font, "n");

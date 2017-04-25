@@ -180,6 +180,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             intent = new Intent(this, IntroActivity.class);
             startActivity(intent);
         }
+        if (isFirstStart(this)) {
+            placeAccountId(this);
+        }
 
 
         //setupActionBar();
@@ -242,6 +245,17 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     private boolean checkIntroComplete(Context context) {
         SharedPreferences sharedPreferences = getSharedPreferences("MainPrefs", MODE_PRIVATE);
         return (sharedPreferences.getBoolean(QuickstartPreferences.intro_done, false));
+    }
+
+
+    private boolean isFirstStart(Context context) {
+        SharedPreferences sharedPreferences = getSharedPreferences("MainPrefs", MODE_PRIVATE);
+        return (sharedPreferences.getBoolean(QuickstartPreferences.first_start, true));
+    }
+
+    private void placeAccountId(Context context) {
+        SharedPreferences sharedPreferences = getSharedPreferences("MainPrefs", MODE_PRIVATE);
+        sharedPreferences.edit().putString("wokring_prefs", "prefs_0").putBoolean(QuickstartPreferences.first_start, false).apply();
     }
 
 
@@ -434,7 +448,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                             String hexColor = String.format("#%06X", (0xFFFFFF & color));
                             editor.putString(QuickstartPreferences.color_text, hexColor).apply();
                             bindPreferenceSummaryToValue(findPreference("color_text"));
-                            new Colorize().StartColorize(ctx);
+                            new Colorize().StartColorize(ctx, ""); //TODO
                         }
 
                         @Override

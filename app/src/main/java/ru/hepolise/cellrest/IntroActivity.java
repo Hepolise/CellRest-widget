@@ -37,7 +37,7 @@ public class IntroActivity extends AppIntro2 {
         backgroundColor = Color.parseColor("#303F9F");
         addSlide(AppIntroFragment.newInstance(title, description, image, backgroundColor));
 
-        new Colorize().StartColorize(getBaseContext());
+        new Colorize().StartColorize(getBaseContext(), "full");
 //        title = getApplicationContext().getString(R.string.fill_obligatory);
 //        description = getApplicationContext().getString(R.string.fill_obligatory_desc);
 //        image = R.mipmap.other_settings;
