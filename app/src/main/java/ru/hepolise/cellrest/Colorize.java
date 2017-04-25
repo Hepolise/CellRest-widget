@@ -22,6 +22,8 @@ import java.io.IOException;
  * Created by hepolise on 25.03.17.
  */
 
+
+//TODO: move pictures to files folder to folder with account id
 public class Colorize {
     Context contextglobal;
     String LOG_TAG = "cellLogs";

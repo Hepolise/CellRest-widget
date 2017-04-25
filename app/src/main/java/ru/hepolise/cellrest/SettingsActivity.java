@@ -2,6 +2,7 @@ package ru.hepolise.cellrest;
 
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
@@ -168,11 +169,13 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
     }
 
+    public static Activity fa;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Boolean intro = checkIntroComplete(this);
         Intent intent;
+        fa = this;
         if (!intro) {
             intent = new Intent(this, IntroActivity.class);
             startActivity(intent);
@@ -237,7 +240,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
 
     private boolean checkIntroComplete(Context context) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences sharedPreferences = getSharedPreferences("MainPrefs", MODE_PRIVATE);
         return (sharedPreferences.getBoolean(QuickstartPreferences.intro_done, false));
     }
 

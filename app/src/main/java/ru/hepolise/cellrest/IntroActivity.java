@@ -67,7 +67,7 @@ public class IntroActivity extends AppIntro2 {
     @Override
     public void onSkipPressed(Fragment currentFragment) {
         super.onSkipPressed(currentFragment);
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences sharedPreferences = getSharedPreferences("MainPrefs", MODE_PRIVATE);
         sharedPreferences.edit().putBoolean(QuickstartPreferences.intro_done, true).apply();
         finish();
         // Do something when users tap on Skip button.
@@ -77,7 +77,7 @@ public class IntroActivity extends AppIntro2 {
     @Override
     public void onDonePressed(Fragment currentFragment) {
         super.onDonePressed(currentFragment);
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences sharedPreferences = getSharedPreferences("MainPrefs", MODE_PRIVATE);
         sharedPreferences.edit().putBoolean(QuickstartPreferences.intro_done, true).apply();
         finish();
         // Do something when users tap on Done button.
