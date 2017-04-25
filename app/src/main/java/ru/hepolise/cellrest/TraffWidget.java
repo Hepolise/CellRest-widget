@@ -8,6 +8,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -47,6 +48,7 @@ import static android.appwidget.AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT;
 import static android.appwidget.AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH;
 import static android.appwidget.AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT;
 import static android.appwidget.AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH;
+import static android.content.Context.MODE_PRIVATE;
 
 public class TraffWidget extends AppWidgetProvider {
     Context contextglobal;
@@ -75,7 +77,23 @@ public class TraffWidget extends AppWidgetProvider {
     public void onUpdate(Context context, AppWidgetManager appWidgetManager,
                          int[] appWidgetIds) {
         super.onUpdate(context, appWidgetManager, appWidgetIds);
+        SharedPreferences sharedPreferences = context.getSharedPreferences("MainPrefs", MODE_PRIVATE);
+        String account = sharedPreferences.getString(Integer.toString(appWidgetIds[0]), "");
+        String login = "";
 
+        if (account.equals("")) {
+
+            SharedPreferences sh;
+
+            int accounts = sharedPreferences.getInt("account", 0);
+            for (int i=0; i<=accounts; i++) {
+                sh = context.getSharedPreferences("prefs_" + Integer.toString(i), MODE_PRIVATE);
+                login = sh.getString(QuickstartPreferences.login, "");
+
+            }
+            sharedPreferences.edit().putString(Integer.toString(appWidgetIds[0]), login).apply();
+
+        }
 
         for (int id : appWidgetIds) {
             updateWidget(context, appWidgetManager, id, context.getString(R.string.updating));
@@ -99,11 +117,13 @@ public class TraffWidget extends AppWidgetProvider {
 //        //make only inet for small widget
 //        Toast.makeText(context, Integer.toString(max_w) + ": max_w; " + Integer.toString(max_h) + ": max_h; " +
 //                Integer.toString(min_w) + ": min_w; " + Integer.toString(min_h) + ": min_h;", Toast.LENGTH_LONG).show();
+
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+
         if (max_w < 250) {
-            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
             sharedPreferences.edit().putBoolean(QuickstartPreferences.inet_only, true).apply();
         } else {
-            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
             sharedPreferences.edit().putBoolean(QuickstartPreferences.inet_only, false).apply();
         }
         Intent updateIntent = new Intent(context, TraffWidget.class);
@@ -121,6 +141,8 @@ public class TraffWidget extends AppWidgetProvider {
     public void onReceive(Context context, Intent intent)
     {
         super.onReceive(context, intent);
+
+
         if (intent.getAction().equalsIgnoreCase(ACTION_APPWIDGET_FORCE_UPDATE)) {
             int id = AppWidgetManager.INVALID_APPWIDGET_ID;
             Bundle extras = intent.getExtras();
@@ -411,7 +433,7 @@ public class TraffWidget extends AppWidgetProvider {
         }
         //Colorize icons should be async
         //TODO
-        new Colorize().StartColorize(context , "a_id");
+        new Colorize().StartColorize(context);
 
         //set text font
         String font =  shrpr.getString(QuickstartPreferences.font, "n");

@@ -17,6 +17,9 @@ import android.util.Log;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by hepolise on 25.03.17.
@@ -26,14 +29,14 @@ import java.io.IOException;
 public class Colorize {
     Context contextglobal;
     String LOG_TAG = "cellLogs";
-    String d_id;
+    //String d_id;
 
 
 
-    public String StartColorize(Context ctx, String profile_id) {
+    public String StartColorize(Context ctx) {
 
         contextglobal = ctx;
-        d_id = profile_id;
+        //d_id = profile_id;
         new ColorizeBitmap().execute();
         return "";
     }
@@ -96,21 +99,34 @@ public class Colorize {
                 PackageInfo p = m.getPackageInfo(s, 0);
                 s = p.applicationInfo.dataDir;
 
+                ArrayList<String> values = new ArrayList<String>();
+                String login;
+                SharedPreferences sh;
+                SharedPreferences sharedPreferences = contextglobal.getSharedPreferences("MainPrefs", MODE_PRIVATE);
+                int accounts = sharedPreferences.getInt("account", 0);
+                for (int i=0; i<=accounts; i++) {
 
-                String filename = s + "/files/inet" + d_id + ".png";
-                Log.d(LOG_TAG, filename);
-                out = new FileOutputStream(filename);
-                b_icon_inet.compress(Bitmap.CompressFormat.PNG, 100, out);
+                    sh = contextglobal.getSharedPreferences("prefs_" + Integer.toString(i), MODE_PRIVATE);
 
-                filename = s + "/files/calls" + d_id + ".png";
-                Log.d(LOG_TAG, filename);
-                out = new FileOutputStream(filename);
-                b_icon_calls.compress(Bitmap.CompressFormat.PNG, 100, out);
+                    String filename = s + "/files/inet" + Integer.toString(i) + ".png";
+                    Log.d(LOG_TAG, filename);
+                    out = new FileOutputStream(filename);
+                    b_icon_inet.compress(Bitmap.CompressFormat.PNG, 100, out);
 
-                filename = s + "/files/sms" + d_id + ".png";
-                Log.d(LOG_TAG, filename);
-                out = new FileOutputStream(filename);
-                b_icon_sms.compress(Bitmap.CompressFormat.PNG, 100, out);
+                    filename = s + "/files/calls" + Integer.toString(i) + ".png";
+                    Log.d(LOG_TAG, filename);
+                    out = new FileOutputStream(filename);
+                    b_icon_calls.compress(Bitmap.CompressFormat.PNG, 100, out);
+
+                    filename = s + "/files/sms" + Integer.toString(i) + ".png";
+                    Log.d(LOG_TAG, filename);
+                    out = new FileOutputStream(filename);
+                    b_icon_sms.compress(Bitmap.CompressFormat.PNG, 100, out);
+                }
+
+
+
+
                 // PNG is a lossless format, the compression factor (100) is ignored
             } catch (Exception e) {
                 e.printStackTrace();

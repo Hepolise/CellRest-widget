@@ -83,7 +83,7 @@ public class Account extends ListActivity {
 
     private void saveSettings() {
         SharedPreferences sharedPreferences = getSharedPreferences("MainPrefs", MODE_PRIVATE);
-        String id = sharedPreferences.getString("wokring_prefs", null);
+        String id = sharedPreferences.getString("wokring_prefs", "prefs_0");
         //SettingsActivity.fa.finish();
 
 

@@ -448,7 +448,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                             String hexColor = String.format("#%06X", (0xFFFFFF & color));
                             editor.putString(QuickstartPreferences.color_text, hexColor).apply();
                             bindPreferenceSummaryToValue(findPreference("color_text"));
-                            new Colorize().StartColorize(ctx, ""); //TODO
+                            new Colorize().StartColorize(ctx); //TODO
                         }
 
                         @Override
