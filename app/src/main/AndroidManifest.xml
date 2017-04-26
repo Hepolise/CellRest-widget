@@ -51,8 +51,10 @@
 
         <activity
             android:name=".HelpActivity"
-            android:label="@string/help_title" />
-        <activity android:name=".AboutActivity" />
+            android:label="@string/help_title"
+            android:theme="@style/AppTheme"/>
+        <activity android:name=".AboutActivity"
+            android:theme="@style/AppTheme"/>
         <activity
             android:name=".IntroActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -99,7 +101,12 @@
             android:exported="false" />
 
         <activity
-            android:name=".Account"
+            android:name=".AccountChoser"
+            android:label="@string/title_activity_account"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <activity
+            android:name=".AccountManager"
             android:label="@string/title_activity_account"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>

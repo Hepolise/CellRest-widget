@@ -170,8 +170,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     }
 
     public static Activity fa;
-    public static Activity fa2;
-    public static Activity fa3;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -224,7 +222,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             startActivity(intent);
         }
         if (item.getItemId() == R.id.add) {
-            Intent intent = new Intent(this, Account.class);
+            Intent intent = new Intent(this, AccountManager.class);
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
@@ -394,7 +392,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             addPreferencesFromResource(R.xml.pref_general);
             setHasOptionsMenu(true);
 
-            fa2 = this.getActivity();
             Preference button = (Preference)findPreference(getString(R.string.button));
             button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override

@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+
+import android.accounts.Account;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
@@ -83,15 +85,19 @@ public class TraffWidget extends AppWidgetProvider {
 
         if (account.equals("")) {
 
-            SharedPreferences sh;
+//            SharedPreferences sh;
 
-            int accounts = sharedPreferences.getInt("account", 0);
-            for (int i=0; i<=accounts; i++) {
-                sh = context.getSharedPreferences("prefs_" + Integer.toString(i), MODE_PRIVATE);
-                login = sh.getString(QuickstartPreferences.login, "");
 
-            }
-            sharedPreferences.edit().putString(Integer.toString(appWidgetIds[0]), login).apply();
+            Intent intent = new Intent(context, AccountChoser.class);
+            context.startActivity(intent);
+
+//            int accounts = sharedPreferences.getInt("account", 0);
+//            for (int i=0; i<=accounts; i++) {
+//                sh = context.getSharedPreferences("prefs_" + Integer.toString(i), MODE_PRIVATE);
+//                login = sh.getString(QuickstartPreferences.login, "");
+//
+//            }
+//            sharedPreferences.edit().putString(Integer.toString(appWidgetIds[0]), login).apply();
 
         }
 

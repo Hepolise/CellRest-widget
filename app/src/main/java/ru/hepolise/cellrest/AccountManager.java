@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.app.ListActivity;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
@@ -12,10 +13,12 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -29,7 +32,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
-public class Account extends ListActivity {
+public class AccountManager extends ListActivity {
 
 //    @Override
 //    protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +102,35 @@ public class Account extends ListActivity {
         }
     }
 
+    private void restartApp(int pos) {
+        SharedPreferences sharedPreferences = getSharedPreferences("MainPrefs", MODE_PRIVATE);
+        SettingsActivity.fa.finishAffinity();
+
+        saveSettings();
+
+
+        sharedPreferences.edit().putString("working_prefs", "prefs_" + Integer.toString(pos)).putInt("account", pos).commit();
+        //copy file
+        try {
+            PackageManager m = getApplicationContext().getPackageManager();
+            String s = getApplicationContext().getPackageName();
+            PackageInfo p = m.getPackageInfo(s, 0);
+            copyFile(p.applicationInfo.dataDir + "/shared_prefs/", "prefs_" + Integer.toString(pos) + ".xml", getApplicationContext().getPackageName() + "_preferences.xml");
+        } catch (Exception e) {
+            Log.d ("cellLogs", e.getMessage());
+        }
+
+
+
+        Log.d("cellLogs", "Exiting...");
+        Intent mStartActivity = new Intent(getApplicationContext(), SettingsActivity.class);
+        int mPendingIntentId = 123456;
+        PendingIntent mPendingIntent = PendingIntent.getActivity(getApplicationContext(), mPendingIntentId, mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
+        AlarmManager mgr = (AlarmManager)getApplicationContext().getSystemService(Context.ALARM_SERVICE);
+        mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 500, mPendingIntent);
+        System.exit(0);
+    }
+
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setContentView(R.layout.activity_account);
@@ -132,6 +164,76 @@ public class Account extends ListActivity {
                 android.R.layout.simple_list_item_1, values);
         setListAdapter(adapter);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
+        getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+            @Override
+            public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+                                           int arg2, long arg3) {
+
+
+
+                Log.d("cellLogs", Integer.toString(arg2) + " " + Long.toString(arg3) );
+
+
+
+
+
+
+
+
+
+                final Context context = AccountManager.this;
+                ///TODO: move to strings
+                String title = "Удалить аккаунт?";
+                String message = "Выбери пищу";
+                String button1String = "Вкусная пища";
+                String button2String = "Здоровая пища";
+
+                AlertDialog.Builder ad = new AlertDialog.Builder(context);
+                ad.setTitle(title);  // заголовок
+                ad.setMessage(message); // сообщение
+                ad.setPositiveButton(button1String, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int arg1) {
+                        Toast.makeText(context, "Вы сделали правильный выбор",
+                                Toast.LENGTH_LONG).show();
+                    }
+                });
+                ad.setNegativeButton(button2String, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int arg1) {
+                        Toast.makeText(context, "Возможно вы правы " + Integer.toString(arg1), Toast.LENGTH_LONG)
+                                .show();
+                    }
+                });
+                ad.setCancelable(true);
+                ad.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    public void onCancel(DialogInterface dialog) {
+                        Toast.makeText(context, "Вы ничего не выбрали",
+                                Toast.LENGTH_LONG).show();
+                    }
+                });
+                ad.show();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                return true;
+            }
+        });
+
+
+        //fab
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -142,32 +244,7 @@ public class Account extends ListActivity {
 //strVersionName->Any value to be stored
                 prefsEditor.putString("CHECKVALUE", "HEH");
                 prefsEditor.commit();
-                SharedPreferences sharedPreferences = getSharedPreferences("MainPrefs", MODE_PRIVATE);
-                SettingsActivity.fa.finish();
-
-                saveSettings();
-
-
-                sharedPreferences.edit().putString("working_prefs", "prefs_" + Integer.toString(len)).putInt("account", len).commit();
-                //copy file
-                try {
-                    PackageManager m = getApplicationContext().getPackageManager();
-                    String s = getApplicationContext().getPackageName();
-                    PackageInfo p = m.getPackageInfo(s, 0);
-                    copyFile(p.applicationInfo.dataDir + "/shared_prefs/", "prefs_" + Integer.toString(len) + ".xml", getApplicationContext().getPackageName() + "_preferences.xml");
-                } catch (Exception e) {
-                    Log.d ("cellLogs", e.getMessage());
-                }
-
-
-
-                Log.d("cellLogs", "Exiting...");
-                Intent mStartActivity = new Intent(getApplicationContext(), SettingsActivity.class);
-                int mPendingIntentId = 123456;
-                PendingIntent mPendingIntent = PendingIntent.getActivity(getApplicationContext(), mPendingIntentId, mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
-                AlarmManager mgr = (AlarmManager)getApplicationContext().getSystemService(Context.ALARM_SERVICE);
-                mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 1000, mPendingIntent);
-                System.exit(0);
+                restartApp(len);
 
             }
         });
@@ -175,36 +252,10 @@ public class Account extends ListActivity {
 
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
-        //String item = (String) getListAdapter().getItem(position);
-        Toast.makeText(this, Integer.toString(position) + " выбран", Toast.LENGTH_LONG).show();
-        SharedPreferences sharedPreferences = getSharedPreferences("MainPrefs", MODE_PRIVATE);
-        SettingsActivity.fa.finishAffinity();
-
-        saveSettings();
-
-        sharedPreferences.edit().putString("working_prefs", "prefs_" + Integer.toString(position)).commit();
-
-        //copy file
-        try {
-            PackageManager m = getApplicationContext().getPackageManager();
-            String s = getApplicationContext().getPackageName();
-            PackageInfo p = m.getPackageInfo(s, 0);
-            copyFile(p.applicationInfo.dataDir + "/shared_prefs/", "prefs_" + Integer.toString(position) + ".xml", getApplicationContext().getPackageName() + "_preferences.xml");
-        } catch (Exception e) {
-            Log.d ("cellLogs", e.getMessage());
-        }
-
-        Log.d("cellLogs", "Exiting...");
-        Intent mStartActivity = new Intent(getApplicationContext(), SettingsActivity.class);
-        int mPendingIntentId = 123456;
-        PendingIntent mPendingIntent = PendingIntent.getActivity(getApplicationContext(), mPendingIntentId, mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
-        mStartActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        AlarmManager mgr = (AlarmManager)getApplicationContext().getSystemService(Context.ALARM_SERVICE);
-        mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 1000, mPendingIntent);
-        System.exit(0);
-        //TODO: moving prefs_* to default prefs
-
+        restartApp(position);
     }
+
+
 }
 
 
