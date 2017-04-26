@@ -83,7 +83,7 @@ public class Account extends ListActivity {
 
     private void saveSettings() {
         SharedPreferences sharedPreferences = getSharedPreferences("MainPrefs", MODE_PRIVATE);
-        String id = sharedPreferences.getString("wokring_prefs", "prefs_0");
+        String prefs_id = sharedPreferences.getString("working_prefs", "prefs_0");
         //SettingsActivity.fa.finish();
 
 
@@ -93,7 +93,7 @@ public class Account extends ListActivity {
             PackageManager m = getApplicationContext().getPackageManager();
             String s = getApplicationContext().getPackageName();
             PackageInfo p = m.getPackageInfo(s, 0);
-            copyFile(p.applicationInfo.dataDir + "/shared_prefs/" ,getApplicationContext().getPackageName() + "_preferences.xml", id + ".xml" );
+            copyFile(p.applicationInfo.dataDir + "/shared_prefs/" ,getApplicationContext().getPackageName() + "_preferences.xml", prefs_id + ".xml" );
         } catch (Exception e) {
             Log.d ("cellLogs", e.getMessage());
         }
@@ -109,18 +109,25 @@ public class Account extends ListActivity {
         String login;
         SharedPreferences sh;
         SharedPreferences sharedPreferences = getSharedPreferences("MainPrefs", MODE_PRIVATE);
+        //account in shared_prefs is amount of accounts
         int accounts = sharedPreferences.getInt("account", 0);
+        String working_prefs = sharedPreferences.getString("working_prefs", "prefs_0");
         for (int i=0; i<=accounts; i++) {
-
-            sh = getSharedPreferences("prefs_" + Integer.toString(i), MODE_PRIVATE);
-
+            Log.d("cellLogs", working_prefs);
+            if (working_prefs.equals("prefs_" + Integer.toString(i))) {
+                Log.d("cellLogs", "default prefs");
+                sh = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            } else {
+                Log.d("cellLogs", "custom prefs");
+                sh = getSharedPreferences("prefs_" + Integer.toString(i), MODE_PRIVATE);
+            }
             login = sh.getString(QuickstartPreferences.login, "");
-
+            Log.d("cellLogs", login + " " + Integer.toString(i));
             values.add(i, login);
         }
-
-
         final int len = values.size();
+
+
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, values);
         setListAdapter(adapter);
@@ -141,7 +148,7 @@ public class Account extends ListActivity {
                 saveSettings();
 
 
-                sharedPreferences.edit().putString("wokring_prefs", "prefs_" + Integer.toString(len)).putInt("account", len).commit();
+                sharedPreferences.edit().putString("working_prefs", "prefs_" + Integer.toString(len)).putInt("account", len).commit();
                 //copy file
                 try {
                     PackageManager m = getApplicationContext().getPackageManager();
@@ -154,13 +161,12 @@ public class Account extends ListActivity {
 
 
 
-//                Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
-//                startActivity(intent);
+                Log.d("cellLogs", "Exiting...");
                 Intent mStartActivity = new Intent(getApplicationContext(), SettingsActivity.class);
                 int mPendingIntentId = 123456;
                 PendingIntent mPendingIntent = PendingIntent.getActivity(getApplicationContext(), mPendingIntentId, mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
                 AlarmManager mgr = (AlarmManager)getApplicationContext().getSystemService(Context.ALARM_SERVICE);
-                mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 3000, mPendingIntent);
+                mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 1000, mPendingIntent);
                 System.exit(0);
 
             }
@@ -172,11 +178,11 @@ public class Account extends ListActivity {
         //String item = (String) getListAdapter().getItem(position);
         Toast.makeText(this, Integer.toString(position) + " выбран", Toast.LENGTH_LONG).show();
         SharedPreferences sharedPreferences = getSharedPreferences("MainPrefs", MODE_PRIVATE);
-        SettingsActivity.fa.finish();
+        SettingsActivity.fa.finishAffinity();
 
         saveSettings();
 
-        sharedPreferences.edit().putString("wokring_prefs", "prefs_" + Integer.toString(position)).commit();
+        sharedPreferences.edit().putString("working_prefs", "prefs_" + Integer.toString(position)).commit();
 
         //copy file
         try {
@@ -188,11 +194,13 @@ public class Account extends ListActivity {
             Log.d ("cellLogs", e.getMessage());
         }
 
+        Log.d("cellLogs", "Exiting...");
         Intent mStartActivity = new Intent(getApplicationContext(), SettingsActivity.class);
         int mPendingIntentId = 123456;
         PendingIntent mPendingIntent = PendingIntent.getActivity(getApplicationContext(), mPendingIntentId, mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
+        mStartActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         AlarmManager mgr = (AlarmManager)getApplicationContext().getSystemService(Context.ALARM_SERVICE);
-        mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 3000, mPendingIntent);
+        mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 1000, mPendingIntent);
         System.exit(0);
         //TODO: moving prefs_* to default prefs
 
