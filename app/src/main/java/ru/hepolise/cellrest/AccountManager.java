@@ -109,7 +109,7 @@ public class AccountManager extends ListActivity {
         saveSettings();
 
 
-        sharedPreferences.edit().putString("working_prefs", "prefs_" + Integer.toString(pos)).putInt("account", pos).commit();
+        sharedPreferences.edit().putString("working_prefs", "prefs_" + Integer.toString(pos)).commit();
         //copy file
         try {
             PackageManager m = getApplicationContext().getPackageManager();
@@ -129,6 +129,17 @@ public class AccountManager extends ListActivity {
         AlarmManager mgr = (AlarmManager)getApplicationContext().getSystemService(Context.ALARM_SERVICE);
         mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 500, mPendingIntent);
         System.exit(0);
+    }
+
+
+    private void deleteFile(String inputPath, String inputFile) {
+        try {
+            // delete the original file
+            new File(inputPath + inputFile).delete();
+        }
+        catch (Exception e) {
+            Log.e("tag", e.getMessage());
+        }
     }
 
     public void onCreate(Bundle icicle) {
@@ -158,8 +169,6 @@ public class AccountManager extends ListActivity {
             values.add(i, login);
         }
         final int len = values.size();
-
-
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, values);
         setListAdapter(adapter);
@@ -169,11 +178,9 @@ public class AccountManager extends ListActivity {
 
             @Override
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
-                                           int arg2, long arg3) {
+                                           final int deleting, long deleting_long) {
 
 
-
-                Log.d("cellLogs", Integer.toString(arg2) + " " + Long.toString(arg3) );
 
 
 
@@ -186,30 +193,65 @@ public class AccountManager extends ListActivity {
                 final Context context = AccountManager.this;
                 ///TODO: move to strings
                 String title = "Удалить аккаунт?";
-                String message = "Выбери пищу";
-                String button1String = "Вкусная пища";
-                String button2String = "Здоровая пища";
+                String message = "Вы действительно хотите удалить аккаунт?";
+                String button1String = "Да";
+                String button2String = "Нет";
 
                 AlertDialog.Builder ad = new AlertDialog.Builder(context);
                 ad.setTitle(title);  // заголовок
                 ad.setMessage(message); // сообщение
                 ad.setPositiveButton(button1String, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int arg1) {
-                        Toast.makeText(context, "Вы сделали правильный выбор",
+                        String login;
+                        SharedPreferences sh;
+                        ArrayList<String> values = new ArrayList<String>();
+                        Toast.makeText(context, "Удаление...",
                                 Toast.LENGTH_LONG).show();
+
+                        //delete
+                        try {
+                            PackageManager m = getApplicationContext().getPackageManager();
+                            String s = getApplicationContext().getPackageName();
+                            PackageInfo p = m.getPackageInfo(s, 0);
+                            deleteFile(p.applicationInfo.dataDir + "/shared_prefs/", "prefs_" + Integer.toString(deleting) + ".xml");
+                        } catch (Exception e) {
+                            Log.d ("cellLogs", e.getMessage());
+                        }
+
+                        SharedPreferences sharedPreferences = getSharedPreferences("MainPrefs", MODE_PRIVATE);
+                        int accounts = len - 2;
+                        sharedPreferences.edit().putInt("account", accounts).apply();
+                        Log.d("cellLogs", Integer.toString(accounts));
+                        String working_prefs = sharedPreferences.getString("working_prefs", "prefs_0");
+                        for (int i=0; i<=accounts; i++) {
+                            Log.d("cellLogs", working_prefs);
+                            if (working_prefs.equals("prefs_" + Integer.toString(i))) {
+                                Log.d("cellLogs", "default prefs");
+                                sh = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                            } else {
+                                Log.d("cellLogs", "custom prefs");
+                                sh = getSharedPreferences("prefs_" + Integer.toString(i), MODE_PRIVATE);
+                            }
+                            login = sh.getString(QuickstartPreferences.login, "");
+                            Log.d("cellLogs", login + " " + Integer.toString(i));
+                            values.add(i, login);
+                        }
+                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(context,
+                                android.R.layout.simple_list_item_1, values);
+                        setListAdapter(adapter);
                     }
                 });
                 ad.setNegativeButton(button2String, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int arg1) {
-                        Toast.makeText(context, "Возможно вы правы " + Integer.toString(arg1), Toast.LENGTH_LONG)
-                                .show();
+//                        Toast.makeText(context, "Отмена", Toast.LENGTH_LONG)
+//                                .show();
                     }
                 });
                 ad.setCancelable(true);
                 ad.setOnCancelListener(new DialogInterface.OnCancelListener() {
                     public void onCancel(DialogInterface dialog) {
-                        Toast.makeText(context, "Вы ничего не выбрали",
-                                Toast.LENGTH_LONG).show();
+//                        Toast.makeText(context, "Отмена",
+//                                Toast.LENGTH_LONG).show();
                     }
                 });
                 ad.show();
@@ -244,6 +286,8 @@ public class AccountManager extends ListActivity {
 //strVersionName->Any value to be stored
                 prefsEditor.putString("CHECKVALUE", "HEH");
                 prefsEditor.commit();
+                SharedPreferences sharedPreferences = getSharedPreferences("MainPrefs", MODE_PRIVATE);
+                sharedPreferences.edit().putInt("account", len).apply();
                 restartApp(len);
 
             }

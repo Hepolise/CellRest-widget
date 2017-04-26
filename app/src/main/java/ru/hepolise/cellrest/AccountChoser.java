@@ -23,7 +23,7 @@ public class AccountChoser extends ListActivity {
 
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
-        setContentView(R.layout.activity_account);
+        setContentView(R.layout.activity_account_choser);
 
         ArrayList<String> values = new ArrayList<String>();
         String login;
