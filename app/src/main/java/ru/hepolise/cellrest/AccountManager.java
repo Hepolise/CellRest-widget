@@ -132,6 +132,56 @@ public class AccountManager extends ListActivity {
     }
 
 
+    public void listFilesForFolder(final File folder) {
+        for (final File fileEntry : folder.listFiles()) {
+            if (fileEntry.isDirectory()) {
+                listFilesForFolder(fileEntry);
+            } else {
+                System.out.println(fileEntry.getName());
+            }
+        }
+    }
+
+
+    private ArrayList genList() {
+        ArrayList<String> values = new ArrayList<String>();
+        String login;
+        SharedPreferences sh;
+        SharedPreferences sharedPreferences = getSharedPreferences("MainPrefs", MODE_PRIVATE);
+        //account in shared_prefs is amount of accounts
+        int accounts = sharedPreferences.getInt("account", 0);
+        String working_prefs = sharedPreferences.getString("working_prefs", "prefs_0");
+        Log.d("cellLogs", working_prefs);
+
+        for (int i=0; i<=accounts; i++) {
+            try {
+                PackageManager m = getApplicationContext().getPackageManager();
+                String s = getApplicationContext().getPackageName();
+                PackageInfo p = m.getPackageInfo(s, 0);
+                String d = p.applicationInfo.dataDir + "/shared_prefs/prefs_" + Integer.toString(i) + ".xml";
+                Log.d("cellLogs", "File path: " +  d);
+                File f = new File(d);
+                if(f.exists() && !f.isDirectory()) {
+                    if (working_prefs.equals("prefs_" + Integer.toString(i))) {
+                        Log.d("cellLogs", "default prefs");
+                        sh = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    } else {
+                        Log.d("cellLogs", "custom prefs");
+                        sh = getSharedPreferences("prefs_" + Integer.toString(i), MODE_PRIVATE);
+                    }
+                    login = sh.getString(QuickstartPreferences.login, "");
+                    Log.d("cellLogs", login + " " + Integer.toString(i));
+                    values.add(i, login);
+                } else {
+                    accounts = accounts + 1;
+                }
+            } catch (Exception e) {
+                Log.d ("cellLogs", e.getMessage());
+            }
+        }
+        return values;
+    }
+
     private void deleteFile(String inputPath, String inputFile) {
         try {
             // delete the original file
@@ -148,26 +198,14 @@ public class AccountManager extends ListActivity {
         saveSettings();
 
         //String[] values = new String[] {  "1"};
-        ArrayList<String> values = new ArrayList<String>();
-        String login;
-        SharedPreferences sh;
-        SharedPreferences sharedPreferences = getSharedPreferences("MainPrefs", MODE_PRIVATE);
-        //account in shared_prefs is amount of accounts
-        int accounts = sharedPreferences.getInt("account", 0);
-        String working_prefs = sharedPreferences.getString("working_prefs", "prefs_0");
-        for (int i=0; i<=accounts; i++) {
-            Log.d("cellLogs", working_prefs);
-            if (working_prefs.equals("prefs_" + Integer.toString(i))) {
-                Log.d("cellLogs", "default prefs");
-                sh = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-            } else {
-                Log.d("cellLogs", "custom prefs");
-                sh = getSharedPreferences("prefs_" + Integer.toString(i), MODE_PRIVATE);
-            }
-            login = sh.getString(QuickstartPreferences.login, "");
-            Log.d("cellLogs", login + " " + Integer.toString(i));
-            values.add(i, login);
-        }
+
+
+
+
+        ArrayList values = genList();
+
+
+
         final int len = values.size();
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, values);
@@ -179,16 +217,6 @@ public class AccountManager extends ListActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
                                            final int deleting, long deleting_long) {
-
-
-
-
-
-
-
-
-
-
 
                 final Context context = AccountManager.this;
                 ///TODO: move to strings
@@ -209,6 +237,12 @@ public class AccountManager extends ListActivity {
                                 Toast.LENGTH_LONG).show();
 
                         //delete
+
+
+
+                        //if working_prefs = deleting prefs mark as working prefs - 1
+
+                        
                         try {
                             PackageManager m = getApplicationContext().getPackageManager();
                             String s = getApplicationContext().getPackageName();
@@ -219,23 +253,17 @@ public class AccountManager extends ListActivity {
                         }
 
                         SharedPreferences sharedPreferences = getSharedPreferences("MainPrefs", MODE_PRIVATE);
-                        int accounts = len - 2;
-                        sharedPreferences.edit().putInt("account", accounts).apply();
-                        Log.d("cellLogs", Integer.toString(accounts));
-                        String working_prefs = sharedPreferences.getString("working_prefs", "prefs_0");
-                        for (int i=0; i<=accounts; i++) {
-                            Log.d("cellLogs", working_prefs);
-                            if (working_prefs.equals("prefs_" + Integer.toString(i))) {
-                                Log.d("cellLogs", "default prefs");
-                                sh = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                            } else {
-                                Log.d("cellLogs", "custom prefs");
-                                sh = getSharedPreferences("prefs_" + Integer.toString(i), MODE_PRIVATE);
-                            }
-                            login = sh.getString(QuickstartPreferences.login, "");
-                            Log.d("cellLogs", login + " " + Integer.toString(i));
-                            values.add(i, login);
-                        }
+                        int accounts = len - 1;
+                        sharedPreferences.edit().putInt("account", accounts).commit();
+                        Log.d("cellLogs", "account: " + Integer.toString(accounts));
+
+//                        if (working_prefs.equals("prefs_" + Integer.toString(deleting))) {
+//                            //TODO
+//                        }
+
+                        values = genList();
+
+
                         ArrayAdapter<String> adapter = new ArrayAdapter<String>(context,
                                 android.R.layout.simple_list_item_1, values);
                         setListAdapter(adapter);

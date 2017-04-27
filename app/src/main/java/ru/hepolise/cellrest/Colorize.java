@@ -65,7 +65,7 @@ public class Colorize {
 
         return dstBitmap;
     }
-    class ColorizeBitmap extends AsyncTask<Integer, String, String> {
+    private class ColorizeBitmap extends AsyncTask<Integer, String, String> {
 
 
         @Override
