@@ -160,7 +160,7 @@
     <string name="button_colorpicker_desc">Choose color for widget</string>
 
     <string name="add_account">Add account</string>
-    <string name="title_activity_account">Account</string>
+    <string name="title_activity_account" translatable="false">Account</string>
 
 
 </resources>

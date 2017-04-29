@@ -82,6 +82,7 @@ public class TraffWidget extends AppWidgetProvider {
         SharedPreferences sharedPreferences = context.getSharedPreferences("MainPrefs", MODE_PRIVATE);
         String account = sharedPreferences.getString(Integer.toString(appWidgetIds[0]), "");
 
+        Log.d(LOG_TAG, "account: " + account + ", widgetID: " + appWidgetIds[0]);
         if (account.equals("")) {
 
 

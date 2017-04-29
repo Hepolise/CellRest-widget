@@ -33,16 +33,9 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 
 public class AccountManager extends ListActivity {
+    String LOG_TAG = "cellLogs";
 
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_account);
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-//
 
-//    }
 
     private void copyFile(String inputPath, String inputFile, String outputFile) {
 
@@ -50,12 +43,6 @@ public class AccountManager extends ListActivity {
         OutputStream out = null;
         try {
 
-            //create output directory if it doesn't exist
-//            File dir = new File (outputPath);
-//            if (!dir.exists())
-//            {
-//                dir.mkdirs();
-//            }
 
 
             in = new FileInputStream(inputPath + inputFile);
@@ -75,10 +62,10 @@ public class AccountManager extends ListActivity {
             out = null;
 
         }  catch (FileNotFoundException fnfe1) {
-            Log.e("cellLogs", fnfe1.getMessage());
+            Log.e(LOG_TAG, fnfe1.getMessage());
         }
         catch (Exception e) {
-            Log.e("cellLogs", e.getMessage());
+            Log.e(LOG_TAG, e.getMessage());
         }
 
     }
@@ -87,9 +74,6 @@ public class AccountManager extends ListActivity {
     private void saveSettings() {
         SharedPreferences sharedPreferences = getSharedPreferences("MainPrefs", MODE_PRIVATE);
         String prefs_id = sharedPreferences.getString("working_prefs", "prefs_0");
-        //SettingsActivity.fa.finish();
-
-
 
         //copy file
         try {
@@ -98,7 +82,7 @@ public class AccountManager extends ListActivity {
             PackageInfo p = m.getPackageInfo(s, 0);
             copyFile(p.applicationInfo.dataDir + "/shared_prefs/" ,getApplicationContext().getPackageName() + "_preferences.xml", prefs_id + ".xml" );
         } catch (Exception e) {
-            Log.d ("cellLogs", e.getMessage());
+            Log.d (LOG_TAG, e.getMessage());
         }
     }
 
@@ -117,12 +101,12 @@ public class AccountManager extends ListActivity {
             PackageInfo p = m.getPackageInfo(s, 0);
             copyFile(p.applicationInfo.dataDir + "/shared_prefs/", "prefs_" + Integer.toString(pos) + ".xml", getApplicationContext().getPackageName() + "_preferences.xml");
         } catch (Exception e) {
-            Log.d ("cellLogs", e.getMessage());
+            Log.d (LOG_TAG, e.getMessage());
         }
 
 
 
-        Log.d("cellLogs", "Exiting...");
+        Log.d(LOG_TAG, "Exiting...");
         Intent mStartActivity = new Intent(getApplicationContext(), SettingsActivity.class);
         int mPendingIntentId = 123456;
         PendingIntent mPendingIntent = PendingIntent.getActivity(getApplicationContext(), mPendingIntentId, mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
@@ -148,40 +132,46 @@ public class AccountManager extends ListActivity {
         String login;
         SharedPreferences sh;
         SharedPreferences sharedPreferences = getSharedPreferences("MainPrefs", MODE_PRIVATE);
-        //account in shared_prefs is amount of accounts
-        int accounts = sharedPreferences.getInt("account", 0);
+        //accounts in shared_prefs is amount of accounts
+        int accounts = sharedPreferences.getInt("accounts", 0);
         String working_prefs = sharedPreferences.getString("working_prefs", "prefs_0");
-        Log.d("cellLogs", working_prefs);
+        Log.d(LOG_TAG, "working prefs: " + working_prefs);
+        Log.d(LOG_TAG, "accounts: " + accounts);
 
         int n = 0;
-        for (int i=0; i<=accounts; i++) {
+        for (int i=0; true; i++) {
             PackageManager m = getApplicationContext().getPackageManager();
             String s = getApplicationContext().getPackageName();
             PackageInfo p = null;
             try {
                 p = m.getPackageInfo(s, 0);
             } catch (Exception e) {
-                Log.e ("cellLogs", e.getMessage());
+                Log.e (LOG_TAG, e.getMessage());
             }
             String d = p.applicationInfo.dataDir + "/shared_prefs/prefs_" + Integer.toString(i) + ".xml";
-            Log.d("cellLogs", "File path: " +  d);
+            Log.d(LOG_TAG, "File path: " +  d);
             File f = new File(d);
             if(f.exists() && !f.isDirectory()) {
+                Log.d(LOG_TAG, "File " + d + " exists");
                 if (working_prefs.equals("prefs_" + Integer.toString(i))) {
-                    Log.d("cellLogs", "default prefs");
+                    Log.d(LOG_TAG, "Using default prefs");
                     sh = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 } else {
-                    Log.d("cellLogs", "custom prefs");
+                    Log.d(LOG_TAG, "Using custom prefs");
                     sh = getSharedPreferences("prefs_" + Integer.toString(i), MODE_PRIVATE);
                 }
                 login = sh.getString(QuickstartPreferences.login, "");
-                Log.d("cellLogs", login + " " + Integer.toString(i));
+                Log.d(LOG_TAG, "added to list: " + login + " " + Integer.toString(i));
                 values.add(i - n, login);
+                accounts = accounts - 1;
             } else {
                 n = n + 1;
-                Log.e ("cellLogs", "Does not exists account: " + Integer.toString(i));
+                Log.e (LOG_TAG, "Does not exists account: " + Integer.toString(i));
             }
-            Log.d("cellLogs", "Accounts: " + Integer.toString(accounts));
+            //Log.d(LOG_TAG, "Accounts: " + Integer.toString(accounts));
+            if (accounts <= 0) {
+                break;
+            }
 
         }
         return values;
@@ -189,11 +179,13 @@ public class AccountManager extends ListActivity {
 
     private void deleteFile(String inputPath, String inputFile) {
         try {
+            Log.d(LOG_TAG, "del file: " + inputPath + inputFile);
             // delete the original file
-            new File(inputPath + inputFile).delete();
+            Boolean res = new File(inputPath + inputFile).delete();
+            Log.d(LOG_TAG, "res delete: " + res);
         }
         catch (Exception e) {
-            Log.e("tag", e.getMessage());
+            Log.e(LOG_TAG, e.getMessage());
         }
     }
 
@@ -235,36 +227,29 @@ public class AccountManager extends ListActivity {
                 ad.setMessage(message); // сообщение
                 ad.setPositiveButton(button1String, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int arg1) {
-                        String login;
-                        SharedPreferences sh;
                         ArrayList<String> values = new ArrayList<String>();
-                        Toast.makeText(context, "Удаление...",
-                                Toast.LENGTH_LONG).show();
+                        //Toast.makeText(context, "Удаление...",
+                                //Toast.LENGTH_LONG).show();
 
-                        //delete
-
-
-
-                        //if working_prefs = deleting prefs mark as working prefs - 1
-
-                        
+                        Log.d(LOG_TAG, "deleting: " + deleting);
                         try {
                             PackageManager m = getApplicationContext().getPackageManager();
                             String s = getApplicationContext().getPackageName();
                             PackageInfo p = m.getPackageInfo(s, 0);
                             deleteFile(p.applicationInfo.dataDir + "/shared_prefs/", "prefs_" + Integer.toString(deleting) + ".xml");
                         } catch (Exception e) {
-                            Log.d ("cellLogs", e.getMessage());
+                            Log.d (LOG_TAG, e.getMessage());
                         }
 
                         SharedPreferences sharedPreferences = getSharedPreferences("MainPrefs", MODE_PRIVATE);
-                        int accounts = len - 1;
-                        sharedPreferences.edit().putInt("account", accounts).commit();
-                        Log.d("cellLogs", "account: " + Integer.toString(accounts));
+                        int accounts = sharedPreferences.getInt("accounts", 0);
+                        sharedPreferences.edit().putInt("accounts", accounts - 1).commit();
+                        Log.d(LOG_TAG, "New accounts: " + Integer.toString(accounts - 1));
 
-//                        if (working_prefs.equals("prefs_" + Integer.toString(deleting))) {
-//                            //TODO
-//                        }
+                        String working_prefs = sharedPreferences.getString("working_prefs", "prefs_0");
+                        if (working_prefs.equals("prefs_" + Integer.toString(deleting))) {
+                            Log.d (LOG_TAG, "working prefs = deleting id");
+                        }
 
                         values = genList();
 
@@ -320,7 +305,7 @@ public class AccountManager extends ListActivity {
                 prefsEditor.putString("CHECKVALUE", "HEH");
                 prefsEditor.commit();
                 SharedPreferences sharedPreferences = getSharedPreferences("MainPrefs", MODE_PRIVATE);
-                sharedPreferences.edit().putInt("account", len).apply();
+                sharedPreferences.edit().putInt("accounts", len + 1).apply();
                 restartApp(len);
 
             }
