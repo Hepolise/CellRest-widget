@@ -81,23 +81,22 @@ public class TraffWidget extends AppWidgetProvider {
         super.onUpdate(context, appWidgetManager, appWidgetIds);
         SharedPreferences sharedPreferences = context.getSharedPreferences("MainPrefs", MODE_PRIVATE);
         String account = sharedPreferences.getString(Integer.toString(appWidgetIds[0]), "");
-        String login = "";
 
         if (account.equals("")) {
 
-//            SharedPreferences sh;
 
 
-            Intent intent = new Intent(context, AccountChoser.class);
-            context.startActivity(intent);
+            SharedPreferences shrpr = PreferenceManager.getDefaultSharedPreferences(context);
+            UPD = shrpr.getString(QuickstartPreferences.update, "0");
 
-//            int accounts = sharedPreferences.getInt("account", 0);
-//            for (int i=0; i<=accounts; i++) {
-//                sh = context.getSharedPreferences("prefs_" + Integer.toString(i), MODE_PRIVATE);
-//                login = sh.getString(QuickstartPreferences.login, "");
-//
-//            }
-//            sharedPreferences.edit().putString(Integer.toString(appWidgetIds[0]), login).apply();
+
+            if (UPD.equals("1")) {
+                Intent intent = new Intent(context, AccountChoser.class);
+                intent.putExtra("id", appWidgetIds[0]);
+                context.startActivity(intent);
+            }
+
+
 
         }
 
@@ -321,11 +320,15 @@ public class TraffWidget extends AppWidgetProvider {
         contextglobal = context;
         appWidgetManagerglobal = appWidgetManager;
 
-        SharedPreferences shrpr = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences shrp = PreferenceManager.getDefaultSharedPreferences(context);
+
+        SharedPreferences sh = context.getSharedPreferences("MainPrefs", MODE_PRIVATE);
+        String account = sh.getString(Integer.toString(widgetID), "0");
+        SharedPreferences shrpr = context.getSharedPreferences("prefs_" + account, MODE_PRIVATE);
         //Load vars
         login = shrpr.getString(QuickstartPreferences.login, "");
         op = shrpr.getString(QuickstartPreferences.op_list, "");
-        token = shrpr.getString(QuickstartPreferences.TOKEN, "");
+        token = shrp.getString(QuickstartPreferences.TOKEN, "");
         Boolean f_update = shrpr.getBoolean(QuickstartPreferences.f_update, false);
         Boolean inet_only = shrpr.getBoolean(QuickstartPreferences.inet_only, false);
 
@@ -487,6 +490,18 @@ public class TraffWidget extends AppWidgetProvider {
                         widgetView.setTextViewText(R.id.text_upd_bold, context.getString(R.string.error));
                         widgetView.setTextColor(R.id.text_upd_bold, color);
                     }
+                } else {
+                    //TODO: move to strings
+                    if (font.equals("n")) {
+                        widgetView.setTextViewText(R.id.text_upd, "Нажмите для выбора аккаунта");
+                        widgetView.setTextColor(R.id.text_upd, color);
+                    } else if (font.equals("i")) {
+                        widgetView.setTextViewText(R.id.text_upd_italic, "Нажмите для выбора аккаунта");
+                        widgetView.setTextColor(R.id.text_upd_italic, color);
+                    } else if (font.equals("b")) {
+                        widgetView.setTextViewText(R.id.text_upd_bold, "Нажмите для выбора аккаунта");
+                        widgetView.setTextColor(R.id.text_upd_bold, color);
+                    }
                 }
             } else {
                 String sms;
@@ -553,10 +568,10 @@ public class TraffWidget extends AppWidgetProvider {
 
 
 
-                    Bitmap b_icon_sms = BitmapFactory.decodeFile(s + "/sms.png");
+                    Bitmap b_icon_sms = BitmapFactory.decodeFile(s + "/files/sms" + account + ".png");
                     widgetView.setImageViewBitmap(R.id.sms_logo, b_icon_sms);
 
-                    Bitmap b_icon_calls = BitmapFactory.decodeFile(s + "/calls.png");
+                    Bitmap b_icon_calls = BitmapFactory.decodeFile(s + "/files/calls" + account + ".png");
                     widgetView.setImageViewBitmap(R.id.calls_logo, b_icon_calls);
 
                     widgetView.setTextColor(getStringResourceByName("calls" + res, context), color);
@@ -596,7 +611,7 @@ public class TraffWidget extends AppWidgetProvider {
 
 
                 //get icon from data folder
-                Bitmap b_icon_inet = BitmapFactory.decodeFile(s + "/inet.png");
+                Bitmap b_icon_inet = BitmapFactory.decodeFile(s  + "/files/inet" + account + ".png");
                 widgetView.setImageViewBitmap(R.id.inet_logo, b_icon_inet);
 
             }
@@ -685,7 +700,11 @@ public class TraffWidget extends AppWidgetProvider {
                     String left = jsonObject.getString("left");
                     String balance = jsonObject.getString("balance");
                     String null_ = jsonObject.getString("null");
-                    SharedPreferences shrpr = PreferenceManager.getDefaultSharedPreferences(contextglobal);
+//                    SharedPreferences shrpr = PreferenceManager.getDefaultSharedPreferences(contextglobal);
+
+                    SharedPreferences sh = contextglobal.getSharedPreferences("MainPrefs", MODE_PRIVATE);
+                    String account = sh.getString(Integer.toString(id), "0");
+                    SharedPreferences shrpr = contextglobal.getSharedPreferences("prefs_" + account, MODE_PRIVATE);
                     //save data
                     shrpr.edit().putString(QuickstartPreferences.time, time).apply();
                     shrpr.edit().putString(QuickstartPreferences.ok, ok).apply();

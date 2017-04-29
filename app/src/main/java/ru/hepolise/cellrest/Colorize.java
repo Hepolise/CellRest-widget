@@ -73,6 +73,7 @@ public class Colorize {
 
             FileOutputStream out = null;
             try {
+                //TODO: choose color
                 SharedPreferences shrpr = PreferenceManager.getDefaultSharedPreferences(contextglobal);
                 int color =  shrpr.getInt(QuickstartPreferences.color, 0xffffffff);
 

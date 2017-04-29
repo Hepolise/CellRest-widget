@@ -153,31 +153,36 @@ public class AccountManager extends ListActivity {
         String working_prefs = sharedPreferences.getString("working_prefs", "prefs_0");
         Log.d("cellLogs", working_prefs);
 
+        int n = 0;
         for (int i=0; i<=accounts; i++) {
+            PackageManager m = getApplicationContext().getPackageManager();
+            String s = getApplicationContext().getPackageName();
+            PackageInfo p = null;
             try {
-                PackageManager m = getApplicationContext().getPackageManager();
-                String s = getApplicationContext().getPackageName();
-                PackageInfo p = m.getPackageInfo(s, 0);
-                String d = p.applicationInfo.dataDir + "/shared_prefs/prefs_" + Integer.toString(i) + ".xml";
-                Log.d("cellLogs", "File path: " +  d);
-                File f = new File(d);
-                if(f.exists() && !f.isDirectory()) {
-                    if (working_prefs.equals("prefs_" + Integer.toString(i))) {
-                        Log.d("cellLogs", "default prefs");
-                        sh = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                    } else {
-                        Log.d("cellLogs", "custom prefs");
-                        sh = getSharedPreferences("prefs_" + Integer.toString(i), MODE_PRIVATE);
-                    }
-                    login = sh.getString(QuickstartPreferences.login, "");
-                    Log.d("cellLogs", login + " " + Integer.toString(i));
-                    values.add(i, login);
-                } else {
-                    accounts = accounts + 1;
-                }
+                p = m.getPackageInfo(s, 0);
             } catch (Exception e) {
-                Log.d ("cellLogs", e.getMessage());
+                Log.e ("cellLogs", e.getMessage());
             }
+            String d = p.applicationInfo.dataDir + "/shared_prefs/prefs_" + Integer.toString(i) + ".xml";
+            Log.d("cellLogs", "File path: " +  d);
+            File f = new File(d);
+            if(f.exists() && !f.isDirectory()) {
+                if (working_prefs.equals("prefs_" + Integer.toString(i))) {
+                    Log.d("cellLogs", "default prefs");
+                    sh = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                } else {
+                    Log.d("cellLogs", "custom prefs");
+                    sh = getSharedPreferences("prefs_" + Integer.toString(i), MODE_PRIVATE);
+                }
+                login = sh.getString(QuickstartPreferences.login, "");
+                Log.d("cellLogs", login + " " + Integer.toString(i));
+                values.add(i - n, login);
+            } else {
+                n = n + 1;
+                Log.e ("cellLogs", "Does not exists account: " + Integer.toString(i));
+            }
+            Log.d("cellLogs", "Accounts: " + Integer.toString(accounts));
+
         }
         return values;
     }

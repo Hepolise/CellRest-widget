@@ -1,6 +1,9 @@
 package ru.hepolise.cellrest;
 
 import android.app.ListActivity;
+import android.appwidget.AppWidgetManager;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -9,6 +12,8 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import java.util.ArrayList;
+
+import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE;
 
 /**
  * Created by hepolise on 26.04.17.
@@ -24,6 +29,8 @@ public class AccountChoser extends ListActivity {
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setContentView(R.layout.activity_account_choser);
+
+        int id = getIntent().getIntExtra("id", 0);
 
         ArrayList<String> values = new ArrayList<String>();
         String login;
@@ -54,6 +61,21 @@ public class AccountChoser extends ListActivity {
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
 
+        SharedPreferences sharedPreferences = getSharedPreferences("MainPrefs", MODE_PRIVATE);
+
+
+
+
+        int appWidgetId = getIntent().getIntExtra("id", 0);
+
+        sharedPreferences.edit().putString(Integer.toString(appWidgetId), Integer.toString(position)).apply();
+        Context context = getApplicationContext();
+        Intent updateIntent = new Intent(context, TraffWidget.class);
+        updateIntent.setAction(ACTION_APPWIDGET_UPDATE);
+        updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS,
+                new int[] { appWidgetId });
+        context.sendBroadcast(updateIntent);
+        finish();
 
     }
 }
