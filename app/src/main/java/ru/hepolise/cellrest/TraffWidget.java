@@ -124,12 +124,14 @@ public class TraffWidget extends AppWidgetProvider {
 //                Integer.toString(min_w) + ": min_w; " + Integer.toString(min_h) + ": min_h;", Toast.LENGTH_LONG).show();
 
 
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences sh = context.getSharedPreferences("MainPrefs", MODE_PRIVATE);
+        String account = sh.getString(Integer.toString(appWidgetId), "0");
+        SharedPreferences shrpr = context.getSharedPreferences("prefs_" + account, MODE_PRIVATE);
 
         if (max_w < 250) {
-            sharedPreferences.edit().putBoolean(QuickstartPreferences.inet_only, true).apply();
+            shrpr.edit().putBoolean(QuickstartPreferences.inet_only, true).apply();
         } else {
-            sharedPreferences.edit().putBoolean(QuickstartPreferences.inet_only, false).apply();
+            shrpr.edit().putBoolean(QuickstartPreferences.inet_only, false).apply();
         }
         Intent updateIntent = new Intent(context, TraffWidget.class);
         updateIntent.setAction(ACTION_APPWIDGET_UPDATE);
@@ -157,17 +159,18 @@ public class TraffWidget extends AppWidgetProvider {
                         AppWidgetManager.INVALID_APPWIDGET_ID);
 
             }
-            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-            Boolean setting_update = sharedPreferences.getBoolean(QuickstartPreferences.setting_update, true);
+            SharedPreferences sh = context.getSharedPreferences("MainPrefs", MODE_PRIVATE);
+            String account = sh.getString(Integer.toString(id), "0");
+            SharedPreferences shrpr = context.getSharedPreferences("prefs_" + account, MODE_PRIVATE);
+            Boolean setting_update = shrpr.getBoolean(QuickstartPreferences.setting_update, true);
             if (setting_update.equals(true)) {
                 //if in the settings update on tap is set
                 UPD = "1";
             } else {
                 UPD = "0";
             }
-            SharedPreferences shpr = PreferenceManager.getDefaultSharedPreferences(context);
-            shpr.edit().putString(QuickstartPreferences.update, UPD).apply();
-            shpr.edit().putBoolean(QuickstartPreferences.f_update, true).apply();
+            shrpr.edit().putString(QuickstartPreferences.update, UPD).apply();
+            shrpr.edit().putBoolean(QuickstartPreferences.f_update, true).apply();
             Intent updateIntent = new Intent(context, TraffWidget.class);
             updateIntent.setAction(ACTION_APPWIDGET_UPDATE);
             updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS,
