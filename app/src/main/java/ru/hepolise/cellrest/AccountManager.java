@@ -166,7 +166,7 @@ public class AccountManager extends ListActivity {
                 accounts = accounts - 1;
             } else {
                 n = n + 1;
-                Log.e (LOG_TAG, "Does not exists account: " + Integer.toString(i));
+                Log.e (LOG_TAG, "Does not exist account: " + Integer.toString(i));
             }
             //Log.d(LOG_TAG, "Accounts: " + Integer.toString(accounts));
             if (accounts <= 0) {
