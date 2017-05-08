@@ -183,8 +183,7 @@ public class AccountManager extends ListActivity {
             // delete the original file
             Boolean res = new File(inputPath + inputFile).delete();
             Log.d(LOG_TAG, "res delete: " + res);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Log.e(LOG_TAG, e.getMessage());
         }
     }
@@ -193,16 +192,7 @@ public class AccountManager extends ListActivity {
         super.onCreate(icicle);
         setContentView(R.layout.activity_account);
         saveSettings();
-
-        //String[] values = new String[] {  "1"};
-
-
-
-
         ArrayList values = genList();
-
-
-
         final int len = values.size();
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, values);
