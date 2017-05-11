@@ -69,12 +69,12 @@ public class AccountChoser extends ListActivity {
         int appWidgetId = getIntent().getIntExtra("id", 0);
 
         sharedPreferences.edit().putString(Integer.toString(appWidgetId), Integer.toString(position)).commit();
-        Context context = getApplicationContext();
-        Intent updateIntent = new Intent(context, TraffWidget.class);
+        //Context context = getApplicationContext();
+        Intent updateIntent = new Intent(getApplicationContext(), TraffWidget.class);
         updateIntent.setAction(ACTION_APPWIDGET_UPDATE);
         updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS,
                 new int[] { appWidgetId });
-        context.sendBroadcast(updateIntent);
+        getApplicationContext().sendBroadcast(updateIntent);
         finish();
 
     }
