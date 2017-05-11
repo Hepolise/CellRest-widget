@@ -724,8 +724,10 @@ public class TraffWidget extends AppWidgetProvider {
                     String working_prefs = sh.getString("working_prefs", "prefs_0");
                     SharedPreferences shrpr;
                     if (working_prefs.equals("prefs_" + account)) {
+                        Log.d(LOG_TAG, "Using default prefs for save data");
                         shrpr = PreferenceManager.getDefaultSharedPreferences(contextglobal);
                     } else {
+                        Log.d(LOG_TAG, "Using prefs_" + account + "for save data");
                         shrpr = contextglobal.getSharedPreferences("prefs_" + account, MODE_PRIVATE);
                     }
                     //save data

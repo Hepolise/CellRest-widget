@@ -75,9 +75,17 @@ public class Colorize {
                 SharedPreferences sh;
                 SharedPreferences sharedPreferences = contextglobal.getSharedPreferences("MainPrefs", MODE_PRIVATE);
                 int accounts = sharedPreferences.getInt("account", 0);
+                String working_prefs = sharedPreferences.getString("working_prefs", "prefs_0");
 
                 for (int i=0; i<=accounts; i++) {
-                    sh = contextglobal.getSharedPreferences("prefs_" + Integer.toString(i), MODE_PRIVATE);
+
+                    if (working_prefs.equals("prefs_" + i)) {
+                        Log.d(LOG_TAG, "Using default prefs for save data");
+                        sh = PreferenceManager.getDefaultSharedPreferences(contextglobal);
+                    } else {
+                        Log.d(LOG_TAG, "Using prefs_" + i + "for save data");
+                        sh = contextglobal.getSharedPreferences("prefs_" + i, MODE_PRIVATE);
+                    }
 
 
                     int color =  sh.getInt(QuickstartPreferences.color, 0xffffffff);
