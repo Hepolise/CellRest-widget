@@ -127,7 +127,14 @@ public class TraffWidget extends AppWidgetProvider {
 
         SharedPreferences sh = context.getSharedPreferences("MainPrefs", MODE_PRIVATE);
         String account = sh.getString(Integer.toString(appWidgetId), "0");
-        SharedPreferences shrpr = context.getSharedPreferences("prefs_" + account, MODE_PRIVATE);
+
+        String working_prefs = sh.getString("working_prefs", "prefs_0");
+        SharedPreferences shrpr;
+        if (working_prefs.equals("prefs_" + account)) {
+            shrpr = PreferenceManager.getDefaultSharedPreferences(context);
+        } else {
+            shrpr = context.getSharedPreferences("prefs_" + account, MODE_PRIVATE);
+        }
 
         if (max_w < 250) {
             shrpr.edit().putBoolean(QuickstartPreferences.inet_only, true).apply();
@@ -328,7 +335,13 @@ public class TraffWidget extends AppWidgetProvider {
 
         SharedPreferences sh = context.getSharedPreferences("MainPrefs", MODE_PRIVATE);
         String account = sh.getString(Integer.toString(widgetID), "0");
-        SharedPreferences shrpr = context.getSharedPreferences("prefs_" + account, MODE_PRIVATE);
+        String working_prefs = sh.getString("working_prefs", "prefs_0");
+        SharedPreferences shrpr;
+        if (working_prefs.equals("prefs_" + account)) {
+            shrpr = PreferenceManager.getDefaultSharedPreferences(context);
+        } else {
+            shrpr = context.getSharedPreferences("prefs_" + account, MODE_PRIVATE);
+        }
         //Load vars
         login = shrpr.getString(QuickstartPreferences.login, "");
         op = shrpr.getString(QuickstartPreferences.op_list, "");
@@ -708,7 +721,13 @@ public class TraffWidget extends AppWidgetProvider {
 
                     SharedPreferences sh = contextglobal.getSharedPreferences("MainPrefs", MODE_PRIVATE);
                     String account = sh.getString(Integer.toString(id), "0");
-                    SharedPreferences shrpr = contextglobal.getSharedPreferences("prefs_" + account, MODE_PRIVATE);
+                    String working_prefs = sh.getString("working_prefs", "prefs_0");
+                    SharedPreferences shrpr;
+                    if (working_prefs.equals("prefs_" + account)) {
+                        shrpr = PreferenceManager.getDefaultSharedPreferences(contextglobal);
+                    } else {
+                        shrpr = contextglobal.getSharedPreferences("prefs_" + account, MODE_PRIVATE);
+                    }
                     //save data
                     shrpr.edit().putString(QuickstartPreferences.time, time).apply();
                     shrpr.edit().putString(QuickstartPreferences.ok, ok).apply();
