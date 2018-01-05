@@ -255,7 +255,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
     private void placeAccountId(Context context) {
         SharedPreferences sharedPreferences = getSharedPreferences("MainPrefs", MODE_PRIVATE);
-        sharedPreferences.edit().putString("wokring_prefs", "prefs_0").putBoolean(QuickstartPreferences.first_start, false).apply();
+        sharedPreferences.edit().putString("working", "prefs_0").putBoolean(QuickstartPreferences.first_start, false).apply();
     }
 
 
