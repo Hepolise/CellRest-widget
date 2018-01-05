@@ -91,10 +91,10 @@ public class WidgetText extends AppWidgetProvider {
                                            AppWidgetManager appWidgetManager,
                                            int appWidgetId,
                                            Bundle newOptions) {
-        int max_h = newOptions.getInt(OPTION_APPWIDGET_MAX_HEIGHT);
-        int max_w = newOptions.getInt(OPTION_APPWIDGET_MAX_WIDTH);
-        int min_h = newOptions.getInt(OPTION_APPWIDGET_MIN_HEIGHT);
-        int min_w = newOptions.getInt(OPTION_APPWIDGET_MIN_WIDTH);
+//        int max_h = newOptions.getInt(OPTION_APPWIDGET_MAX_HEIGHT);
+//        int max_w = newOptions.getInt(OPTION_APPWIDGET_MAX_WIDTH);
+//        int min_h = newOptions.getInt(OPTION_APPWIDGET_MIN_HEIGHT);
+//        int min_w = newOptions.getInt(OPTION_APPWIDGET_MIN_WIDTH);
 //        Log.d(LOG_TAG, "max_h: " + max_h);
 //        Log.d(LOG_TAG, "max_w: " + max_w);
 //        Log.d(LOG_TAG, "min_h: " + min_h);
