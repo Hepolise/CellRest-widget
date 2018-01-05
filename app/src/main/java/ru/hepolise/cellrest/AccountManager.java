@@ -85,9 +85,26 @@ public class AccountManager extends ListActivity {
                         Log.d(LOG_TAG, "New accounts: " + Integer.toString(accounts - 1));
 
                         String working_prefs = sharedPreferences.getString("working_prefs", "prefs_0");
+                        if (deleting != accounts - 1) {
+                            Log.d(LOG_TAG, "deleting is less than accounts, moving up");
+                            int i;
+                            for (i = deleting + 1; i < accounts; i++) {
+                                Log.d(LOG_TAG, "Moving: " + i);
+                                try {
+                                    PackageManager m = getApplicationContext().getPackageManager();
+                                    String s = getApplicationContext().getPackageName();
+                                    PackageInfo p = m.getPackageInfo(s, 0);
+                                    Utils.copyFile(p.applicationInfo.dataDir + "/shared_prefs/",
+                                            "prefs_" + i + ".xml",
+                                            "prefs_" + (i - 1) + ".xml");
+                                } catch (Exception e) {
+                                }
+                            }
+                            Utils.clearFile("prefs_" + i, getApplicationContext());
+                        }
                         if (working_prefs.equals("prefs_" + Integer.toString(deleting))) {
                             Log.d (LOG_TAG, "working prefs = deleting id");
-                            switchTo(0);
+                            switchTo(deleting - 1);
                         }
 
                         values = genList();
