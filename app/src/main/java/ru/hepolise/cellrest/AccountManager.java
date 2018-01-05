@@ -104,8 +104,6 @@ public class AccountManager extends ListActivity {
             Log.d (LOG_TAG, e.getMessage());
         }
 
-
-
         Log.d(LOG_TAG, "Exiting...");
         Intent mStartActivity = new Intent(getApplicationContext(), SettingsActivity.class);
         int mPendingIntentId = 123456;
