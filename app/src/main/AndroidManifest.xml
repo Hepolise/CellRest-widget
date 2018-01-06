@@ -106,7 +106,7 @@
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name=".AccountManager"
+            android:name=".AccountSwitcher"
             android:label="@string/title_activity_account"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>

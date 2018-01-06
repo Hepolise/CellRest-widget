@@ -20,6 +20,10 @@ public class IntroActivity extends AppIntro2 {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // making the first account the part of multi account
+        SharedPreferences sharedPreferences = getSharedPreferences("MainPrefs", MODE_PRIVATE);
+        long ts = System.currentTimeMillis();
+        sharedPreferences.edit().putString("loaded_prefs", "prefs_" + ts).putLong("0", ts).commit();
 
         // Note here that we DO NOT use setContentView();
 
