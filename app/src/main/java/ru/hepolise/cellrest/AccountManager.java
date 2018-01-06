@@ -46,12 +46,32 @@ public class AccountManager extends ListActivity {
         setListAdapter(adapter);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
-        getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        //fab
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Toast.makeText(getApplicationContext(), Integer.toString(len), Toast.LENGTH_SHORT).show();
+                long ts = System.currentTimeMillis();
+                SharedPreferences myPrefs = getSharedPreferences("prefs_" + Long.toString(ts), MODE_PRIVATE);
+                SharedPreferences.Editor prefsEditor;
+                prefsEditor = myPrefs.edit();
+//strVersionName->Any value to be stored
+                prefsEditor.putString("thisPrefs", "pref:" + Long.toString(ts));
+                prefsEditor.commit();
+                SharedPreferences sharedPreferences = getSharedPreferences("MainPrefs", MODE_PRIVATE);
+                sharedPreferences.edit()
+                        .putInt("accounts", len + 1)
+                        .putLong(Integer.toString(len+1), ts)
+                        .commit();
+                switchTo(ts);
 
+            }
+        });
+
+        getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
                                            final int deleting, long deleting_long) {
-
                 final Context context = AccountManager.this;
                 ///TODO: move to strings
                 String title = "Удалить аккаунт?";
@@ -132,25 +152,6 @@ public class AccountManager extends ListActivity {
                 return true;
             }
         });
-
-
-        //fab
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Toast.makeText(getApplicationContext(), Integer.toString(len), Toast.LENGTH_SHORT).show();
-                SharedPreferences myPrefs = getSharedPreferences("prefs_" + Integer.toString(len), MODE_PRIVATE);
-                SharedPreferences.Editor prefsEditor;
-                prefsEditor = myPrefs.edit();
-//strVersionName->Any value to be stored
-                //prefsEditor.putString("CHECKVALUE", "HEH");
-                prefsEditor.commit();
-                SharedPreferences sharedPreferences = getSharedPreferences("MainPrefs", MODE_PRIVATE);
-                sharedPreferences.edit().putInt("accounts", len + 1).apply();
-                switchTo(len);
-
-            }
-        });
     }
 
     @Override
@@ -176,20 +177,20 @@ public class AccountManager extends ListActivity {
         }
     }
 
-    private void switchTo(int pos) {
+    private void switchTo(long ts) {
         SharedPreferences sharedPreferences = getSharedPreferences("MainPrefs", MODE_PRIVATE);
         SettingsActivity.fa.finishAffinity();
 
         saveSettings();
 
 
-        sharedPreferences.edit().putString("working_prefs", "prefs_" + Integer.toString(pos)).commit();
+        sharedPreferences.edit().putString("working_prefs", "prefs_" + Long.toString(ts)).apply();
         //copy file
         try {
             PackageManager m = getApplicationContext().getPackageManager();
             String s = getApplicationContext().getPackageName();
             PackageInfo p = m.getPackageInfo(s, 0);
-            Utils.copyFile(p.applicationInfo.dataDir + "/shared_prefs/", "prefs_" + Integer.toString(pos) + ".xml", getApplicationContext().getPackageName() + "_preferences.xml");
+            Utils.copyFile(p.applicationInfo.dataDir + "/shared_prefs/", "prefs_" + Long.toString(ts) + ".xml", getApplicationContext().getPackageName() + "_preferences.xml");
         } catch (Exception e) {
             Log.d (LOG_TAG, e.getMessage());
         }
@@ -214,12 +215,13 @@ public class AccountManager extends ListActivity {
         SharedPreferences sh;
         SharedPreferences sharedPreferences = getSharedPreferences("MainPrefs", MODE_PRIVATE);
         //accounts in shared_prefs is amount of accounts
-        int accounts = sharedPreferences.getInt("accounts", 0);
+        int accounts = sharedPreferences.getInt("accounts", 1);
         String working_prefs = sharedPreferences.getString("working_prefs", "prefs_0");
         Log.d(LOG_TAG, "working prefs: " + working_prefs);
         Log.d(LOG_TAG, "accounts: " + accounts);
 
         int n = 0;
+        long ts;
         for (int i=0; true; i++) {
             PackageManager m = getApplicationContext().getPackageManager();
             String s = getApplicationContext().getPackageName();
@@ -229,20 +231,23 @@ public class AccountManager extends ListActivity {
             } catch (Exception e) {
                 Log.e (LOG_TAG, e.getMessage());
             }
-            String d = p.applicationInfo.dataDir + "/shared_prefs/prefs_" + Integer.toString(i) + ".xml";
+            ts = sharedPreferences.getLong(Integer.toString(i), 0);
+            Log.d(LOG_TAG, "TS: " + ts);
+            Log.d(LOG_TAG, "i: " + i);
+            String d = p.applicationInfo.dataDir + "/shared_prefs/prefs_" + Long.toString(ts) + ".xml";
             Log.d(LOG_TAG, "File path: " +  d);
             File f = new File(d);
             if(f.exists() && !f.isDirectory()) {
                 Log.d(LOG_TAG, "File " + d + " exists");
-                if (working_prefs.equals("prefs_" + Integer.toString(i))) {
+                if (working_prefs.equals("prefs_" + Long.toString(ts))) {
                     Log.d(LOG_TAG, "Using default prefs");
                     sh = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 } else {
                     Log.d(LOG_TAG, "Using custom prefs");
-                    sh = getSharedPreferences("prefs_" + Integer.toString(i), MODE_PRIVATE);
+                    sh = getSharedPreferences("prefs_" + Long.toString(ts), MODE_PRIVATE);
                 }
                 login = sh.getString(QuickstartPreferences.login, "");
-                Log.d(LOG_TAG, "added to list: " + login + " " + Integer.toString(i));
+                Log.d(LOG_TAG, "added to list: " + login + " " + i);
                 values.add(i - n, login);
                 accounts = accounts - 1;
             } else {
