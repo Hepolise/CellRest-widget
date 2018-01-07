@@ -42,19 +42,7 @@ public class AccountSwitcher  extends ListActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                long ts = System.currentTimeMillis();
-                SharedPreferences myPrefs = getSharedPreferences("prefs_" + Long.toString(ts), MODE_PRIVATE);
-                SharedPreferences.Editor prefsEditor;
-                prefsEditor = myPrefs.edit();
-//strVersionName->Any value to be stored
-                prefsEditor.putString("thisPrefs", "pref:" + Long.toString(ts));
-                prefsEditor.commit();
-                SharedPreferences sharedPreferences = getSharedPreferences("MainPrefs", MODE_PRIVATE);
-                sharedPreferences.edit()
-                        .putInt("length", length + 1)
-                        .putLong(Integer.toString(length), ts)
-                        .commit();
-                Utils.switchTo(ts, getApplicationContext());
+                Utils.addUser(getApplicationContext(), length);
             }
         });
 
@@ -109,6 +97,10 @@ public class AccountSwitcher  extends ListActivity {
                         if (loaded_prefs.equals("prefs_" + Long.toString(ts_del))) {
                             Log.d (L, "working prefs = deleting id");
                             long t = sharedPreferences.getLong(Integer.toString(deleting - 1), 0);
+                            if (deleting == 0) {
+                                Log.d(L, "last user");
+                                Utils.addUser(getApplicationContext(), 0);
+                            }
                             Utils.switchTo(t, getApplicationContext());
                         }
 

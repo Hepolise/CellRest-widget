@@ -163,4 +163,19 @@ public class Utils {
         }
         restartApp(c.getApplicationContext());
     }
+    static void addUser(Context c, int length) {
+        long ts = System.currentTimeMillis();
+        SharedPreferences myPrefs = c.getSharedPreferences("prefs_" + Long.toString(ts), MODE_PRIVATE);
+        SharedPreferences.Editor prefsEditor;
+        prefsEditor = myPrefs.edit();
+//strVersionName->Any value to be stored
+        prefsEditor.putString("thisPrefs", "pref:" + Long.toString(ts));
+        prefsEditor.commit();
+        SharedPreferences sharedPreferences = c.getSharedPreferences("MainPrefs", MODE_PRIVATE);
+        sharedPreferences.edit()
+                .putInt("length", length + 1)
+                .putLong(Integer.toString(length), ts)
+                .commit();
+        Utils.switchTo(ts, c.getApplicationContext());
+    }
 }
