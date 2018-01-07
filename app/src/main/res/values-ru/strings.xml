@@ -121,6 +121,7 @@
     <string name="fill_obligatory_desc">Пожалуйста, заполните поля в общих настройках. Оператор, логин и пароль/ПИН-код являются обязательными полями</string>
     <string name="fill_obligatory">Заполните обязательные поля</string>
     <string name="add_account">Добавить аккаунт</string>
+    <string name="choose_account">Коснитесь для выбора аккаунта</string>
     <!--<string name="pattern_desc">Изменить весь текст в виджете. \n
         %dtr% - days to reestablish; \n
         Вы можете использовать данные переменные: \n

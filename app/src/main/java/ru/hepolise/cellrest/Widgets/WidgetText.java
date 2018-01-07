@@ -32,6 +32,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.RemoteViews;
 
+import ru.hepolise.cellrest.Activities.AccountChooser;
 import ru.hepolise.cellrest.BuildConfig;
 import ru.hepolise.cellrest.R;
 import ru.hepolise.cellrest.Utils.QuickstartPreferences;
@@ -41,6 +42,7 @@ import static android.appwidget.AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT;
 import static android.appwidget.AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH;
 import static android.appwidget.AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT;
 import static android.appwidget.AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH;
+import static android.content.Context.MODE_PRIVATE;
 
 
 public class WidgetText extends AppWidgetProvider {
@@ -123,16 +125,15 @@ public class WidgetText extends AppWidgetProvider {
                         AppWidgetManager.INVALID_APPWIDGET_ID);
 
             }
-            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+            SharedPreferences sharedPreferences = context.getSharedPreferences("MainPrefs", MODE_PRIVATE);
             Boolean setting_update = sharedPreferences.getBoolean(QuickstartPreferences.setting_update, true);
             if (setting_update.equals(true)) {
                 UPD = "1";
             } else {
                 UPD = "0";
             }
-            SharedPreferences shpr = PreferenceManager.getDefaultSharedPreferences(context);
-            shpr.edit().putString(QuickstartPreferences.update, UPD).apply();
-            shpr.edit().putBoolean(QuickstartPreferences.f_update, true).apply();
+            sharedPreferences.edit().putString(QuickstartPreferences.update, UPD).apply();
+            sharedPreferences.edit().putBoolean(QuickstartPreferences.f_update, true).apply();
             Intent updateIntent = new Intent(context, WidgetText.class);
             updateIntent.setAction(ACTION_APPWIDGET_UPDATE);
             updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS,
@@ -146,29 +147,41 @@ public class WidgetText extends AppWidgetProvider {
         //Log.d(LOG_TAG, "upd 11");
 
 
-        SharedPreferences shrpr = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences sharedPreferences = context.getSharedPreferences("MainPrefs", MODE_PRIVATE);
+        long ts = sharedPreferences.getLong("widget_id_"+Integer.toString(widgetID), 0);
+        Log.d(LOG_TAG, "widget id: " + widgetID);
+
+        Intent updateIntent;
+        RemoteViews widgetView = new RemoteViews(context.getPackageName(),
+                R.layout.widget_text);
+        android.app.PendingIntent pIntent;
+        if (ts == 0) {
+            content = context.getString(R.string.choose_account);
+
+            Log.d(LOG_TAG, "ts is null");
+            updateIntent = new Intent(context, AccountChooser.class);
+            updateIntent.putExtra("id", widgetID);
+            updateIntent.putExtra("from", "WidgetText");
+            pIntent = PendingIntent.getActivity(context, 0, updateIntent, 0);
+        } else {
+            updateIntent = new Intent(context, WidgetText.class);
+            updateIntent.setAction(ACTION_APPWIDGET_FORCE_UPDATE);
+            updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetID);
+            pIntent = PendingIntent.getBroadcast(context, widgetID, updateIntent, 0);
+        }
+        String loaded = sharedPreferences.getString("loaded_prefs", "prefs_0");
+        SharedPreferences shrpr;
+        if (loaded.equals("prefs_" + Long.toString(ts))) {
+            Log.d(LOG_TAG, "Loaded prefs equals (from widget)");
+            shrpr = PreferenceManager.getDefaultSharedPreferences(context);
+        } else {
+            shrpr = context.getSharedPreferences("prefs_" + Long.toString(ts), MODE_PRIVATE);
+        }
         //Load vars
         login = shrpr.getString(QuickstartPreferences.login, "");
         op = shrpr.getString(QuickstartPreferences.op_list, "");
         token = shrpr.getString(QuickstartPreferences.TOKEN, "");
         Boolean f_update = shrpr.getBoolean(QuickstartPreferences.f_update, false);
-
-//        String language_code = "en_US";
-//
-//        Resources res1 = context.getResources();
-//        // Change locale settings in the app.
-//        DisplayMetrics dm = res1.getDisplayMetrics();
-//        android.content.res.Configuration conf = res1.getConfiguration();
-//        conf.locale = new Locale(language_code.toLowerCase());
-//        res1.updateConfiguration(conf, dm);
-//
-//        String languageToLoad  = "en"; // your language
-//        Locale locale1 = new Locale(languageToLoad);
-//        Locale.setDefault(locale1);
-//        Configuration config = new Configuration();
-//        config.locale = locale1;
-//        context.getResources().updateConfiguration(config,
-//                context.getResources().getDisplayMetrics());
 
         //in case of error loading new data
         if (content.startsWith("error")) {
@@ -215,6 +228,7 @@ public class WidgetText extends AppWidgetProvider {
         version = Integer.toString(versionCode);
 
         if (content.equals(context.getString(R.string.updating))) {
+             Log.d(LOG_TAG, "The content is for update");
             if (f_update) {
                 shrpr.edit().putBoolean(QuickstartPreferences.f_update, false).apply();
             } else {
@@ -226,8 +240,10 @@ public class WidgetText extends AppWidgetProvider {
             new ProgressTask().execute(params);
             shrpr.edit().putString(QuickstartPreferences.update, "1").apply();
         } else {
-            //Save new content
-            shrpr.edit().putString(QuickstartPreferences.content, content).apply();
+            if (!content.equals(context.getString(R.string.choose_account))) {
+                //Save new content
+                shrpr.edit().putString(QuickstartPreferences.content, content).apply();
+            }
         }
 
 
@@ -254,7 +270,7 @@ public class WidgetText extends AppWidgetProvider {
         //Log.d(LOG_TAG, Integer.toString(f) + " " + Integer.toString(s) + " " + Integer.toString(t) + " " + Integer.toString(a));
         //int lines = 3;
         String newContent = "";
-        if ( ! content.equals(context.getString(R.string.error)) && ! content.equals(context.getString(R.string.updating)) ) {
+        if ( ! content.equals(context.getString(R.string.error)) && ! content.equals(context.getString(R.string.updating)) && ! content.equals(context.getString(R.string.choose_account)) ) {
             if (p.contains("check_days")) {
                 newContent = content.substring(0, f) + "\n";
             }
@@ -273,11 +289,6 @@ public class WidgetText extends AppWidgetProvider {
 //        Log.d(LOG_TAG, "c: " + content);
 
 
-
-        // set Widget view
-
-        RemoteViews widgetView = new RemoteViews(context.getPackageName(),
-                R.layout.widget_text);
 
 
         //set text size
@@ -324,11 +335,7 @@ public class WidgetText extends AppWidgetProvider {
         //Setting content to widget and updating it
         widgetView.setTextViewText(res, content);
         widgetView.setTextColor(res, color);
-        Intent updateIntent = new Intent(context, WidgetText.class);
-        updateIntent.setAction(ACTION_APPWIDGET_FORCE_UPDATE);
-
-        updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetID);
-        android.app.PendingIntent pIntent = PendingIntent.getBroadcast(context, widgetID, updateIntent, 0);
+        Log.d(LOG_TAG, "setting pending intent");
         widgetView.setOnClickPendingIntent(res, pIntent);
         appWidgetManager.updateAppWidget(widgetID, widgetView);
         return (null);
@@ -373,7 +380,7 @@ public class WidgetText extends AppWidgetProvider {
                         //testing new logic for dtr
                         + "&test"
                 );
-                //Log.d(LOG_TAG, "URL: " + url);
+                Log.d(LOG_TAG, "URL: " + url);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 reader= new BufferedReader(new InputStreamReader(conn.getInputStream()));
                 StringBuilder buf=new StringBuilder();

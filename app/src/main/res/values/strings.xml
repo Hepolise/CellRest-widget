@@ -162,5 +162,7 @@
     <string name="add_account">Add account</string>
     <string name="title_activity_account" translatable="false">Account</string>
 
+    <string name="choose_account">Tap to choose account</string>
+
 
 </resources>

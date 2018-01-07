@@ -13,7 +13,7 @@ android {
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
-        release {
+        CellRest_release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig getSigningConfig()
