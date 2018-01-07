@@ -126,14 +126,14 @@ public class WidgetText extends AppWidgetProvider {
                         AppWidgetManager.INVALID_APPWIDGET_ID);
 
             }
-            SharedPreferences sharedPreferences = contextglobal.getSharedPreferences("MainPrefs", MODE_PRIVATE);;
+            SharedPreferences sharedPreferences = context.getSharedPreferences("MainPrefs", MODE_PRIVATE);;
             String working_prefs = sharedPreferences.getString("loaded_prefs", "prefs_0");
             long ts = sharedPreferences.getLong(Integer.toString(id), 0);
             if (working_prefs.equals("prefs_" + ts)) {
                 Log.d(LOG_TAG, "Using default prefs for updatewidget");
-                sharedPreferences = PreferenceManager.getDefaultSharedPreferences(contextglobal);
+                sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
             } else {
-                sharedPreferences = contextglobal.getSharedPreferences("prefs_" + ts, MODE_PRIVATE);
+                sharedPreferences = context.getSharedPreferences("prefs_" + ts, MODE_PRIVATE);
             }
             Boolean setting_update = sharedPreferences.getBoolean(QuickstartPreferences.setting_update, true);
             if (setting_update.equals(true)) {
