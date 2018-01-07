@@ -377,7 +377,7 @@ public class WidgetText extends AppWidgetProvider {
 
             try {
 
-                URL url = new URL("https://srvr.tk/traf.php?cmd=widget&upd=" + URLEncoder.encode(UPD, "UTF-8") +
+                URL url = new URL("https://srvr.su/traf.php?cmd=widget&upd=" + URLEncoder.encode(UPD, "UTF-8") +
                         "&login=" + URLEncoder.encode(login, "UTF-8") +
                         "&pass=" + URLEncoder.encode(pass, "UTF-8") +
                         "&op=" + URLEncoder.encode(op, "UTF-8") +

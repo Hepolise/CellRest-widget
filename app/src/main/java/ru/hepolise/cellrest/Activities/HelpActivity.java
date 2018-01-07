@@ -46,7 +46,7 @@ public class HelpActivity extends AppCompatActivity {
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         //Log.d("traff: ", locale);
-        mWebView.loadUrl("https://srvr.tk/traffic/help.php?l=" + locale + "&v=" + version);
+        mWebView.loadUrl("https://srvr.su/traffic/help.php?l=" + locale + "&v=" + version);
         mWebView.setDownloadListener(new DownloadListener() {
             public void onDownloadStart(String url, String userAgent,
                                         String contentDisposition, String mimetype,

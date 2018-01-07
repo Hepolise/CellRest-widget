@@ -73,7 +73,7 @@ public class RegistrationIntentService extends IntentService {
 
         try {
 
-            URL url = new URL("https://srvr.tk/traffic/gcm.php?user=" + usr + "&token=" + token);
+            URL url = new URL("https://srvr.su/traffic/gcm.php?user=" + usr + "&token=" + token);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setDoOutput(true);
             OutputStream outputStream = conn.getOutputStream();

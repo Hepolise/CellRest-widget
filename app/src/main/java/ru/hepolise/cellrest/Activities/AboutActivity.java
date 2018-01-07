@@ -27,7 +27,7 @@ public class AboutActivity extends AppCompatActivity {
         contact.setMovementMethod(LinkMovementMethod.getInstance());
         TextView write = (TextView) findViewById(R.id.about_write);
         write.setText(Html.fromHtml(String.format(getString(R.string.about_write),
-                "mailto:admin@srvr.tk")));
+                "mailto:admin@srvr.su")));
         write.setMovementMethod(LinkMovementMethod.getInstance());
     }
 }

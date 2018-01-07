@@ -132,20 +132,20 @@ public class Colorize {
                     PackageInfo p = m.getPackageInfo(s, 0);
                     s = p.applicationInfo.dataDir;
 
-                    ArrayList<String> values = new ArrayList<String>();
+                    //ArrayList<String> values = new ArrayList<String>();
 
 
-                    String filename = s + "/files/inet" + Integer.toString(i) + ".png";
+                    String filename = s + "/files/inet_" + ts + ".png";
                     Log.d(LOG_TAG, filename);
                     out = new FileOutputStream(filename);
                     b_icon_inet.compress(Bitmap.CompressFormat.PNG, 100, out);
 
-                    filename = s + "/files/calls" + Integer.toString(i) + ".png";
+                    filename = s + "/files/calls_" + ts + ".png";
                     Log.d(LOG_TAG, filename);
                     out = new FileOutputStream(filename);
                     b_icon_calls.compress(Bitmap.CompressFormat.PNG, 100, out);
 
-                    filename = s + "/files/sms" + Integer.toString(i) + ".png";
+                    filename = s + "/files/sms_" + ts + ".png";
                     Log.d(LOG_TAG, filename);
                     out = new FileOutputStream(filename);
                     b_icon_sms.compress(Bitmap.CompressFormat.PNG, 100, out);

@@ -357,7 +357,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 int versionCode = BuildConfig.VERSION_CODE;
                 version = Integer.toString(versionCode);
                 try {
-                    URL url = new URL("https://srvr.tk/traf.php?cmd=widget&upd=" + UPD +
+                    URL url = new URL("https://srvr.su/traf.php?cmd=widget&upd=" + UPD +
                             "&login=" + URLEncoder.encode(login, "UTF-8") +
                             "&pass=" + URLEncoder.encode(pass, "UTF-8") +
                             "&op=" + URLEncoder.encode(op, "UTF-8") +
