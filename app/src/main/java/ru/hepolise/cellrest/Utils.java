@@ -75,7 +75,6 @@ public class Utils {
         editor.commit();
     }
     static ArrayList genList(Context c) {
-        //saveSettings(c);
         ArrayList<String> values = new ArrayList<String>();
         String login;
         SharedPreferences sh;
@@ -86,26 +85,19 @@ public class Utils {
         Log.d(L, "length: " + length);
 
         long ts;
-//        PackageManager m = c.getPackageManager();
-//        String s = c.getPackageName();
-//        PackageInfo p = null;
-//        String prefsFile;
         for (int i=0; i<length; i++) {
             try {
-                //p = m.getPackageInfo(s, 0);
                 ts = sharedPreferences.getLong(Integer.toString(i), 0);
                 Log.d(L, "TS: " + ts);
                 Log.d(L, "i: " + i);
-//                prefsFile = p.applicationInfo.dataDir + "/shared_prefs/prefs_" + Long.toString(ts) + ".xml";
-//                Log.d(L, "File path: " +  prefsFile);
-//                File prefs = new File(prefsFile);
                 if (loaded_prefs.equals("prefs_" + Long.toString(ts))) { // cause we are not able to load new prefs without restarting app
                     Log.d(L, "This is loaded prefs");
                     sh = PreferenceManager.getDefaultSharedPreferences(c);
+                    login = sh.getString(QuickstartPreferences.login, "")+" (loaded)"; // TODO : move to strings
                 } else {
                     sh = c.getSharedPreferences("prefs_" + Long.toString(ts), MODE_PRIVATE);
+                    login = sh.getString(QuickstartPreferences.login, "");
                 }
-                login = sh.getString(QuickstartPreferences.login, "");
                 Log.d(L, "login: " + login);
                 values.add(i, login);
             } catch (Exception e) {
@@ -163,7 +155,7 @@ public class Utils {
         }
         restartApp(c.getApplicationContext());
     }
-    static void addUser(Context c, int length) {
+    static void addUser(Context c) {
         long ts = System.currentTimeMillis();
         SharedPreferences myPrefs = c.getSharedPreferences("prefs_" + Long.toString(ts), MODE_PRIVATE);
         SharedPreferences.Editor prefsEditor;
@@ -172,6 +164,7 @@ public class Utils {
         prefsEditor.putString("thisPrefs", "pref:" + Long.toString(ts));
         prefsEditor.commit();
         SharedPreferences sharedPreferences = c.getSharedPreferences("MainPrefs", MODE_PRIVATE);
+        int length = sharedPreferences.getInt("length", 0);
         sharedPreferences.edit()
                 .putInt("length", length + 1)
                 .putLong(Integer.toString(length), ts)

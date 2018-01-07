@@ -37,12 +37,12 @@ public class AccountSwitcher  extends ListActivity {
         final int length = sharedPreferences.getInt("length", 1);
 
         // fab
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Utils.addUser(getApplicationContext(), length);
+                Utils.addUser(getApplicationContext());
             }
         });
 
@@ -99,7 +99,7 @@ public class AccountSwitcher  extends ListActivity {
                             long t = sharedPreferences.getLong(Integer.toString(deleting - 1), 0);
                             if (deleting == 0) {
                                 Log.d(L, "last user");
-                                Utils.addUser(getApplicationContext(), 0);
+                                Utils.addUser(getApplicationContext());
                             }
                             Utils.switchTo(t, getApplicationContext());
                         }
