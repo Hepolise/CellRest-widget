@@ -29,13 +29,14 @@ public class AccountChooser extends ListActivity {
     String L = "cellLogs";
 
 
+//    @Override
+//    protected void onNewIntent(Intent intent) {
+//        super.onNewIntent(intent);
+//        this.setIntent(intent);
+//    }
 
 
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        this.setIntent(intent);
-    }
-
+    @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setContentView(R.layout.activity_account_choser);
@@ -56,6 +57,8 @@ public class AccountChooser extends ListActivity {
         int appWidgetId = getIntent().getIntExtra("id", 0);
         Log.d(L, "widget id (from activity): " + appWidgetId);
         String from = getIntent().getStringExtra("from");
+        getIntent().removeExtra("from");
+        getIntent().removeExtra("id");
 
         long ts = sharedPreferences.getLong(Integer.toString(position), 0);
         sharedPreferences.edit().putLong("widget_id_"+Integer.toString(appWidgetId), ts).commit();

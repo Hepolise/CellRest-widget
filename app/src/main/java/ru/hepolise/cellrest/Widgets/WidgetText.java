@@ -17,6 +17,7 @@ import java.util.TimeZone;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -159,10 +160,12 @@ public class WidgetText extends AppWidgetProvider {
             content = context.getString(R.string.choose_account);
 
             Log.d(LOG_TAG, "ts is null");
-            updateIntent = new Intent(context, AccountChooser.class);
+            //updateIntent = new Intent(context, AccountChooser.class);
+            updateIntent = Intent.makeRestartActivityTask(new ComponentName(context, AccountChooser.class));
+            updateIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             updateIntent.putExtra("id", widgetID);
             updateIntent.putExtra("from", "WidgetText");
-            pIntent = PendingIntent.getActivity(context, 0, updateIntent, 0);
+            pIntent = PendingIntent.getActivity(context, 0, updateIntent, PendingIntent.FLAG_CANCEL_CURRENT);
         } else {
             updateIntent = new Intent(context, WidgetText.class);
             updateIntent.setAction(ACTION_APPWIDGET_FORCE_UPDATE);

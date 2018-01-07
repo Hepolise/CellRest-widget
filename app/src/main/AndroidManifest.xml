@@ -103,7 +103,10 @@
         <activity
             android:name=".Activities.AccountChooser"
             android:label="@string/title_activity_account"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"
+>
+
+        </activity>
 
         <activity
             android:name=".Activities.AccountSwitcher"
