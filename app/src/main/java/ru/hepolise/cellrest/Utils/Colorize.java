@@ -73,14 +73,14 @@ public class Colorize {
 
             FileOutputStream out = null;
             try {
-
+                long ts;
                 SharedPreferences sh;
                 SharedPreferences sharedPreferences = contextglobal.getSharedPreferences("MainPrefs", MODE_PRIVATE);
-                int accounts = sharedPreferences.getInt("account", 0);
-                String working_prefs = sharedPreferences.getString("working_prefs", "prefs_0");
+                int accounts = sharedPreferences.getInt("length", 1);
+                String working_prefs = sharedPreferences.getString("loaded_prefs", "prefs_0");
 
                 for (int i=0; i<=accounts; i++) {
-
+                    ts = sharedPreferences.getLong(Integer.toString(i), 0);
                     if (working_prefs.equals("prefs_" + i)) {
                         Log.d(LOG_TAG, "Using default prefs for save data");
                         sh = PreferenceManager.getDefaultSharedPreferences(contextglobal);
