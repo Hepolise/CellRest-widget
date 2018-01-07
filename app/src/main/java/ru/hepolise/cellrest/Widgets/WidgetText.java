@@ -128,11 +128,12 @@ public class WidgetText extends AppWidgetProvider {
             }
             SharedPreferences sharedPreferences = context.getSharedPreferences("MainPrefs", MODE_PRIVATE);;
             String working_prefs = sharedPreferences.getString("loaded_prefs", "prefs_0");
-            long ts = sharedPreferences.getLong(Integer.toString(id), 0);
+            long ts = sharedPreferences.getLong("widget_id_" + Integer.toString(id), 0);
             if (working_prefs.equals("prefs_" + ts)) {
-                Log.d(LOG_TAG, "Using default prefs for updatewidget");
+                Log.d(LOG_TAG, "Using default prefs for update widget");
                 sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
             } else {
+                Log.d(LOG_TAG, "Using prefs_" + ts +" for update widget");
                 sharedPreferences = context.getSharedPreferences("prefs_" + ts, MODE_PRIVATE);
             }
             Boolean setting_update = sharedPreferences.getBoolean(QuickstartPreferences.setting_update, true);
@@ -239,8 +240,9 @@ public class WidgetText extends AppWidgetProvider {
         version = Integer.toString(versionCode);
 
         if (content.equals(context.getString(R.string.updating))) {
-             Log.d(LOG_TAG, "The content is for update");
+            Log.d(LOG_TAG, "The content is for update");
             if (f_update) {
+                Log.d(LOG_TAG, "force update");
                 shrpr.edit().putBoolean(QuickstartPreferences.f_update, false).apply();
             } else {
                 content = shrpr.getString(QuickstartPreferences.content, context.getString(R.string.error));
