@@ -180,9 +180,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             intent = new Intent(this, IntroActivity.class);
             startActivity(intent);
         }
-        if (isFirstStart(this)) {
-            placeAccountId(this);
-        }
+//        if (isFirstStart(this)) {
+//            placeAccountId(this);
+//        }
 
 
         //setupActionBar();
@@ -253,10 +253,10 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         return (sharedPreferences.getBoolean(QuickstartPreferences.first_start, true));
     }
 
-    private void placeAccountId(Context context) {
-        SharedPreferences sharedPreferences = getSharedPreferences("MainPrefs", MODE_PRIVATE);
-        sharedPreferences.edit().putString("working", "prefs_0").putBoolean(QuickstartPreferences.first_start, false).apply();
-    }
+//    private void placeAccountId(Context context) {
+//        SharedPreferences sharedPreferences = getSharedPreferences("MainPrefs", MODE_PRIVATE);
+//        sharedPreferences.edit().putString("working", "prefs_0").putBoolean(QuickstartPreferences.first_start, false).apply();
+//    }
 
 
     @Override

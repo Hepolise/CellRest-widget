@@ -145,6 +145,12 @@ public class Utils {
         saveSettings(c);
 
 
+        if (ts == 0) {
+            Log.d(L, "TS is null, Switching to the first account");
+            ts = sharedPreferences.getLong(Integer.toString(0), 0);
+        }
+        Log.d(L, "Switching to: " + ts);
+
         sharedPreferences.edit().putString("loaded_prefs", "prefs_" + Long.toString(ts)).commit();
         //copy file
         try {
