@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package ru.hepolise.cellrest;
+package ru.hepolise.cellrest.Utils;
 
 public class QuickstartPreferences {
 

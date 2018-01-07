@@ -1,4 +1,4 @@
-package ru.hepolise.cellrest;
+package ru.hepolise.cellrest.Activities;
 
 import android.app.ListActivity;
 import android.content.Context;
@@ -14,6 +14,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+
+import ru.hepolise.cellrest.R;
+import ru.hepolise.cellrest.Utils.Utils;
 
 /**
  * Created by hepolise on 06.01.18.

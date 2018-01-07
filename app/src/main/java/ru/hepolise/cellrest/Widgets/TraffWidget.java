@@ -1,4 +1,4 @@
-package ru.hepolise.cellrest;
+package ru.hepolise.cellrest.Widgets;
 
 import java.io.BufferedReader;
 import java.io.FileOutputStream;
@@ -44,6 +44,13 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+
+import ru.hepolise.cellrest.Activities.AccountChooser;
+import ru.hepolise.cellrest.BuildConfig;
+import ru.hepolise.cellrest.R;
+import ru.hepolise.cellrest.Utils.Colorize;
+import ru.hepolise.cellrest.Utils.QuickstartPreferences;
+import ru.hepolise.cellrest.Utils.Utils;
 
 import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE;
 import static android.appwidget.AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT;
@@ -92,7 +99,7 @@ public class TraffWidget extends AppWidgetProvider {
 
 
             if (UPD.equals("1")) {
-                Intent intent = new Intent(context, AccountChoser.class);
+                Intent intent = new Intent(context, AccountChooser.class);
                 intent.putExtra("id", appWidgetIds[0]);
                 context.startActivity(intent);
             }

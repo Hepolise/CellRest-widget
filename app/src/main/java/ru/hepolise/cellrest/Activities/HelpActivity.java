@@ -1,4 +1,4 @@
-package ru.hepolise.cellrest;
+package ru.hepolise.cellrest.Activities;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
@@ -15,6 +15,8 @@ import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 import java.util.Locale;
+
+import ru.hepolise.cellrest.R;
 
 import static android.R.attr.versionCode;
 

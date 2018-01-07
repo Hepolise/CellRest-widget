@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package ru.hepolise.cellrest;
+package ru.hepolise.cellrest.GCM;
 
 import android.app.IntentService;
 import android.content.Intent;
@@ -35,6 +35,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import ru.hepolise.cellrest.R;
+import ru.hepolise.cellrest.Utils.QuickstartPreferences;
 
 public class RegistrationIntentService extends IntentService {
 

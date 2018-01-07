@@ -1,4 +1,4 @@
-package ru.hepolise.cellrest;
+package ru.hepolise.cellrest.Activities;
 
 import android.app.ListActivity;
 import android.appwidget.AppWidgetManager;
@@ -13,13 +13,16 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import java.util.ArrayList;
 
+import ru.hepolise.cellrest.R;
+import ru.hepolise.cellrest.Widgets.TraffWidget;
+
 import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE;
 
 /**
  * Created by hepolise on 26.04.17.
  */
 
-public class AccountChoser extends ListActivity {
+public class AccountChooser extends ListActivity {
 
 
 
@@ -47,7 +50,7 @@ public class AccountChoser extends ListActivity {
                 Log.d("cellLogs", "custom prefs");
                 sh = getSharedPreferences("prefs_" + Integer.toString(i), MODE_PRIVATE);
             }
-            login = sh.getString(QuickstartPreferences.login, "");
+            login = sh.getString(ru.hepolise.cellrest.Utils.QuickstartPreferences.login, "");
             Log.d("cellLogs", login + " " + Integer.toString(i));
             values.add(i, login);
         }

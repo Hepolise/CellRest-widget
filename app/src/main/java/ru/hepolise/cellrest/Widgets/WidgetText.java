@@ -1,4 +1,4 @@
-package ru.hepolise.cellrest;
+package ru.hepolise.cellrest.Widgets;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -31,6 +31,11 @@ import android.provider.Settings;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.RemoteViews;
+
+import ru.hepolise.cellrest.BuildConfig;
+import ru.hepolise.cellrest.R;
+import ru.hepolise.cellrest.Utils.QuickstartPreferences;
+
 import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE;
 import static android.appwidget.AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT;
 import static android.appwidget.AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH;

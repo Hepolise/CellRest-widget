@@ -1,4 +1,4 @@
-package ru.hepolise.cellrest;
+package ru.hepolise.cellrest.Disabled;
 
 import android.app.AlarmManager;
 import android.app.ListActivity;
@@ -32,7 +32,12 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
-public class AccountManager extends ListActivity {
+import ru.hepolise.cellrest.SettingsActivity;
+import ru.hepolise.cellrest.R;
+import ru.hepolise.cellrest.Utils.QuickstartPreferences;
+import ru.hepolise.cellrest.Utils.Utils;
+
+public class AccountManager extends ListActivity { // disabled
     String LOG_TAG = "cellLogs";
 
     public void onCreate(Bundle icicle) {

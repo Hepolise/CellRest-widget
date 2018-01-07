@@ -1,4 +1,4 @@
-package ru.hepolise.cellrest;
+package ru.hepolise.cellrest.Utils;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,6 +18,8 @@ import android.util.Log;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import ru.hepolise.cellrest.R;
 
 import static android.content.Context.MODE_PRIVATE;
 

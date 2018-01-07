@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package ru.hepolise.cellrest;
+package ru.hepolise.cellrest.GCM;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -29,6 +29,9 @@ import android.util.Log;
 import com.google.android.gms.gcm.GcmListenerService;
 
 import java.util.Date;
+
+import ru.hepolise.cellrest.SettingsActivity;
+import ru.hepolise.cellrest.R;
 
 
 public class MyGcmListenerService extends GcmListenerService {

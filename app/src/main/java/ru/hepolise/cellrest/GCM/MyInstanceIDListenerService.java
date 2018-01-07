@@ -14,11 +14,13 @@
  * limitations under the License.
  */
 
-package ru.hepolise.cellrest;
+package ru.hepolise.cellrest.GCM;
 
 import android.content.Intent;
 
 import com.google.android.gms.iid.InstanceIDListenerService;
+
+import ru.hepolise.cellrest.GCM.RegistrationIntentService;
 
 public class MyInstanceIDListenerService extends InstanceIDListenerService {
 

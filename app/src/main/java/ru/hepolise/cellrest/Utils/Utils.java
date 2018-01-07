@@ -1,5 +1,6 @@
-package ru.hepolise.cellrest;
+package ru.hepolise.cellrest.Utils;
 
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -18,6 +19,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
+import ru.hepolise.cellrest.SettingsActivity;
+
 import static android.content.Context.MODE_PRIVATE;
 
 /**
@@ -26,7 +29,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class Utils {
     static String L = "cellLogs";
-    static void copyFile(String inputPath, String inputFile, String outputFile) {
+    public static void copyFile(String inputPath, String inputFile, String outputFile) {
 
         InputStream in;
         OutputStream out;
@@ -56,7 +59,7 @@ public class Utils {
         }
 
     }
-    static void deleteFile(String inputPath, String inputFile) {
+    public static void deleteFile(String inputPath, String inputFile) {
         try {
             Log.d(L, "del file: " + inputPath + inputFile);
             // delete the original file
@@ -66,7 +69,7 @@ public class Utils {
             Log.e(L, e.getMessage());
         }
     }
-    static void clearFile(String prefs, Context c) {
+    public static void clearFile(String prefs, Context c) {
         Log.d(L, "clearing: " + prefs);
         SharedPreferences sharedPreferences = c.getSharedPreferences(prefs, 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -74,7 +77,7 @@ public class Utils {
         editor.clear();
         editor.commit();
     }
-    static ArrayList genList(Context c) {
+    public static ArrayList genList(Context c) {
         ArrayList<String> values = new ArrayList<String>();
         String login;
         SharedPreferences sh;
@@ -106,7 +109,7 @@ public class Utils {
         }
         return values;
     }
-    static void restartApp(Context c) {
+    public static void restartApp(Context c) {
         Log.d(L, "Exiting...");
         Intent mStartActivity = new Intent(c, SettingsActivity.class);
         int mPendingIntentId = 123456;
@@ -130,7 +133,7 @@ public class Utils {
         }
     }
 
-    static void switchTo(long ts, Context c) {
+    public static void switchTo(long ts, Context c) {
         SharedPreferences sharedPreferences = c.getSharedPreferences("MainPrefs", MODE_PRIVATE);
         SettingsActivity.fa.finishAffinity();
 
@@ -155,7 +158,7 @@ public class Utils {
         }
         restartApp(c.getApplicationContext());
     }
-    static void addUser(Context c) {
+    public static void addUser(Context c) {
         long ts = System.currentTimeMillis();
         SharedPreferences myPrefs = c.getSharedPreferences("prefs_" + Long.toString(ts), MODE_PRIVATE);
         SharedPreferences.Editor prefsEditor;

@@ -1,4 +1,4 @@
-package ru.hepolise.cellrest;
+package ru.hepolise.cellrest.Activities;
 
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -10,6 +10,10 @@ import android.support.v4.app.Fragment;
 import com.github.paolorotolo.appintro.AppIntro;
 import com.github.paolorotolo.appintro.AppIntro2;
 import com.github.paolorotolo.appintro.AppIntroFragment;
+
+import ru.hepolise.cellrest.R;
+import ru.hepolise.cellrest.Utils.Colorize;
+import ru.hepolise.cellrest.Utils.QuickstartPreferences;
 
 /**
  * Created by hepolise on 24.03.17.

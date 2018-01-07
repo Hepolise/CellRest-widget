@@ -23,7 +23,7 @@
         </activity>
 
         <receiver
-            android:name=".TraffWidget"
+            android:name=".Widgets.TraffWidget"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/widget_name">
             <intent-filter>
@@ -36,7 +36,7 @@
                 android:resource="@xml/widget_metadata" />
         </receiver>
         <receiver
-            android:name=".WidgetText"
+            android:name=".Widgets.WidgetText"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/widget_name">
             <intent-filter>
@@ -50,13 +50,13 @@
         </receiver>
 
         <activity
-            android:name=".HelpActivity"
+            android:name=".Activities.HelpActivity"
             android:label="@string/help_title"
             android:theme="@style/AppTheme"/>
-        <activity android:name=".AboutActivity"
+        <activity android:name=".Activities.AboutActivity"
             android:theme="@style/AppTheme"/>
         <activity
-            android:name=".IntroActivity"
+            android:name=".Activities.IntroActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <!--<activity-->
             <!--android:name=".Account"-->
@@ -78,7 +78,7 @@
 
         <!-- [START gcm_listener] -->
         <service
-            android:name=".MyGcmListenerService"
+            android:name=".GCM.MyGcmListenerService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
@@ -89,7 +89,7 @@
 
         <!-- [START instanceId_listener] -->
         <service
-            android:name=".MyInstanceIDListenerService"
+            android:name=".GCM.MyInstanceIDListenerService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.android.gms.iid.InstanceID" />
@@ -97,16 +97,16 @@
         </service>
         <!-- [END instanceId_listener] -->
         <service
-            android:name=".RegistrationIntentService"
+            android:name=".GCM.RegistrationIntentService"
             android:exported="false" />
 
         <activity
-            android:name=".AccountChoser"
+            android:name=".Activities.AccountChooser"
             android:label="@string/title_activity_account"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name=".AccountSwitcher"
+            android:name=".Activities.AccountSwitcher"
             android:label="@string/title_activity_account"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>

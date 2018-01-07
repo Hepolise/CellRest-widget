@@ -47,6 +47,16 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import ru.hepolise.cellrest.Activities.AboutActivity;
+import ru.hepolise.cellrest.Activities.AccountSwitcher;
+import ru.hepolise.cellrest.Activities.AppCompatPreferenceActivity;
+import ru.hepolise.cellrest.Activities.HelpActivity;
+import ru.hepolise.cellrest.Activities.IntroActivity;
+import ru.hepolise.cellrest.BuildConfig;
+import ru.hepolise.cellrest.R;
+import ru.hepolise.cellrest.GCM.RegistrationIntentService;
+import ru.hepolise.cellrest.Utils.Colorize;
+import ru.hepolise.cellrest.Utils.QuickstartPreferences;
 import yuku.ambilwarna.AmbilWarnaDialog;
 
 import static ru.hepolise.cellrest.R.string.pref_account_login;
