@@ -48,7 +48,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import ru.hepolise.cellrest.Activities.AboutActivity;
-import ru.hepolise.cellrest.Activities.AccountSwitcher;
+import ru.hepolise.cellrest.Activities.AccountManager;
 import ru.hepolise.cellrest.Activities.AppCompatPreferenceActivity;
 import ru.hepolise.cellrest.Activities.HelpActivity;
 import ru.hepolise.cellrest.Activities.IntroActivity;
@@ -232,7 +232,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             startActivity(intent);
         }
         if (item.getItemId() == R.id.add) {
-            Intent intent = new Intent(this, AccountSwitcher.class);
+            Intent intent = new Intent(this, AccountManager.class);
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);

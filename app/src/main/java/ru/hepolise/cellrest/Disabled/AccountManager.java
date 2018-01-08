@@ -42,7 +42,7 @@ public class AccountManager extends ListActivity { // disabled
 
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
-        setContentView(R.layout.activity_account);
+        setContentView(R.layout.activity_account_manager);
         saveSettings();
         ArrayList values = genList();
         final int len = values.size();

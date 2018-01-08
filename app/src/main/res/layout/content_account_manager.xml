@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="ru.hepolise.cellrest.Activities.AccountChooser"
-    tools:showIn="@layout/activity_account">
+    tools:context="ru.hepolise.cellrest.Activities.AccountManager"
+    tools:showIn="@layout/activity_account_manager">
 
     <ListView
         android:id="@android:id/list"

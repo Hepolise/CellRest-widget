@@ -40,7 +40,7 @@ public class AccountChooser extends ListActivity {
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
-        setContentView(R.layout.activity_account_choser);
+        setContentView(R.layout.activity_account_chooser);
 
         ArrayList<String> values = Utils.genList(getApplicationContext());
 

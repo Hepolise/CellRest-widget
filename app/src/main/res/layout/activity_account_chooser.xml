@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ru.hepolise.cellrest.Activities.AccountChoser">
+    tools:context="ru.hepolise.cellrest.Activities.AccountChooser">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -16,12 +16,22 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+        <TextView
+            android:id="@+id/chooser_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="start|center"
+            android:text="@string/title_activity_account_chooser"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:fontFamily="sans-serif-medium" />
+    </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 
 
-    <include layout="@layout/content_account" />
+    <include layout="@layout/content_account_chooser" />
 
 
 

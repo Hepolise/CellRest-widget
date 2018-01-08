@@ -22,12 +22,12 @@ import ru.hepolise.cellrest.Utils.Utils;
  * Created by hepolise on 06.01.18.
  */
 
-public class AccountSwitcher  extends ListActivity {
+public class AccountManager  extends ListActivity {
     String L = "cellLogs";
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         // view
-        setContentView(R.layout.activity_account);
+        setContentView(R.layout.activity_account_manager);
 
         // list
         ArrayList values = Utils.genList(getApplicationContext());
@@ -55,7 +55,7 @@ public class AccountSwitcher  extends ListActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
                                            final int deleting, long deleting_long) {
-                final Context context = AccountSwitcher.this;
+                final Context context = AccountManager.this;
                 ///TODO: move to strings
                 String title = "Удалить аккаунт?";
                 String message = "Вы действительно хотите удалить аккаунт?";

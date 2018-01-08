@@ -58,6 +58,15 @@
         <activity
             android:name=".Activities.IntroActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activities.AccountChooser"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".Activities.AccountManager"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
         <!--<activity-->
             <!--android:name=".Account"-->
             <!--android:theme="@style/AppTheme" />-->
@@ -100,18 +109,7 @@
             android:name=".GCM.RegistrationIntentService"
             android:exported="false" />
 
-        <activity
-            android:name=".Activities.AccountChooser"
-            android:label="@string/title_activity_account"
-            android:theme="@style/AppTheme.NoActionBar"
->
 
-        </activity>
-
-        <activity
-            android:name=".Activities.AccountSwitcher"
-            android:label="@string/title_activity_account"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

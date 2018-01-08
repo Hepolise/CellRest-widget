@@ -122,6 +122,8 @@
     <string name="fill_obligatory">Заполните обязательные поля</string>
     <string name="add_account">Добавить аккаунт</string>
     <string name="choose_account">Коснитесь для выбора аккаунта</string>
+    <string name="title_activity_account_manager">Менеджер аккаунтов</string>
+    <string name="title_activity_account_chooser">Выбор аккаунта</string>
     <!--<string name="pattern_desc">Изменить весь текст в виджете. \n
         %dtr% - days to reestablish; \n
         Вы можете использовать данные переменные: \n
