@@ -86,7 +86,7 @@ public class AccountManager  extends ListActivity {
                         int widgetId = sharedPreferences.getInt("TraffWidget_by_ts_" + ts, 0);
                         sharedPreferences.edit()
                                 .remove(Integer.toString(deleting))
-                                .remove("TraffWidget_by_ts_" + ts)
+                                .remove("WidgetText_by_ts_" + ts)
                                 .remove("TraffWidget_by_ts_" + ts)
                                 .remove("widget_id_"+textWidgetId)
                                 .remove("widget_id_"+widgetId)
