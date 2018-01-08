@@ -14,6 +14,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 import ru.hepolise.cellrest.R;
+import ru.hepolise.cellrest.SettingsActivity;
 import ru.hepolise.cellrest.Utils.Utils;
 import ru.hepolise.cellrest.Widgets.TraffWidget;
 import ru.hepolise.cellrest.Widgets.WidgetText;
@@ -61,6 +62,10 @@ public class AccountChooser extends ListActivity {
         getIntent().removeExtra("id");
 
         long ts = sharedPreferences.getLong(Integer.toString(position), 0);
+        if (ts == 0) {
+            startActivity(new Intent(this, SettingsActivity.class));
+            finish();
+        }
         sharedPreferences.edit().putLong("widget_id_"+Integer.toString(appWidgetId), ts).commit();
         //Context context = getApplicationContext();
         Intent updateIntent;

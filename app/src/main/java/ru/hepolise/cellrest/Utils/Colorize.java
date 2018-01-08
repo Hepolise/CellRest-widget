@@ -30,7 +30,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class Colorize {
     Context contextglobal;
-    String LOG_TAG = "cellLogs";
+    String LOG_TAG = "cellLogsColorize";
 
 
 
@@ -81,74 +81,76 @@ public class Colorize {
 
                 for (int i=0; i<=length; i++) {
                     ts = sharedPreferences.getLong(Integer.toString(i), 0);
-                    if (working_prefs.equals("prefs_" + ts)) {
-                        Log.d(LOG_TAG, "Using default prefs for save data");
-                        sh = PreferenceManager.getDefaultSharedPreferences(contextglobal);
-                    } else {
-                        Log.d(LOG_TAG, "Using prefs_" + ts + "for save data");
-                        sh = contextglobal.getSharedPreferences("prefs_" + ts, MODE_PRIVATE);
-                    }
+                    if (ts != 0) {
+                        if (working_prefs.equals("prefs_" + ts)) {
+                            //Log.d(LOG_TAG, "Using default prefs for save data");
+                            sh = PreferenceManager.getDefaultSharedPreferences(contextglobal);
+                        } else {
+                            //Log.d(LOG_TAG, "Using prefs_" + ts + "for save data");
+                            sh = contextglobal.getSharedPreferences("prefs_" + ts, MODE_PRIVATE);
+                        }
 
 
-                    int color =  sh.getInt(QuickstartPreferences.color, 0xffffffff);
+                        int color = sh.getInt(QuickstartPreferences.color, 0xffffffff);
 
 
-                    //set text color
-                    String color_text = sh.getString(QuickstartPreferences.color_text, "null");
-                    if (color_text.equals("null")){
-                        String hexColor = String.format("#%06X", (0xFFFFFF & color));
-                        sh.edit().putString(QuickstartPreferences.color_text, hexColor).apply();
-                    } else {
-                        try {
-                            color = Color.parseColor(color_text);
-                            sh.edit().putInt(QuickstartPreferences.color, color).apply();
-                        } catch (IllegalArgumentException e) {
-                            color = 0xffffffff;
+                        //set text color
+                        String color_text = sh.getString(QuickstartPreferences.color_text, "null");
+                        if (color_text.equals("null")) {
                             String hexColor = String.format("#%06X", (0xFFFFFF & color));
                             sh.edit().putString(QuickstartPreferences.color_text, hexColor).apply();
+                        } else {
+                            try {
+                                color = Color.parseColor(color_text);
+                                sh.edit().putInt(QuickstartPreferences.color, color).apply();
+                            } catch (IllegalArgumentException e) {
+                                color = 0xffffffff;
+                                String hexColor = String.format("#%06X", (0xFFFFFF & color));
+                                sh.edit().putString(QuickstartPreferences.color_text, hexColor).apply();
+                            }
                         }
+
+                        //inet
+                        Drawable icon_inet = ContextCompat.getDrawable(contextglobal, R.drawable.ic_language_white_48dp);
+                        Bitmap b_icon_inet = ((BitmapDrawable) icon_inet).getBitmap();
+                        b_icon_inet = colorize(b_icon_inet, color);
+
+
+                        //Calls
+                        Drawable icon_calls = ContextCompat.getDrawable(contextglobal, R.drawable.ic_local_phone_white_48dp);
+                        Bitmap b_icon_calls = ((BitmapDrawable) icon_calls).getBitmap();
+                        b_icon_calls = colorize(b_icon_calls, color);
+
+
+                        //SMS
+                        Drawable icon_sms = ContextCompat.getDrawable(contextglobal, R.drawable.ic_message_white_48dp);
+                        Bitmap b_icon_sms = ((BitmapDrawable) icon_sms).getBitmap();
+                        b_icon_sms = colorize(b_icon_sms, color);
+
+
+                        PackageManager m = contextglobal.getPackageManager();
+                        String s = contextglobal.getPackageName();
+                        PackageInfo p = m.getPackageInfo(s, 0);
+                        s = p.applicationInfo.dataDir;
+
+                        //ArrayList<String> values = new ArrayList<String>();
+
+
+                        String filename = s + "/files/inet_" + ts + ".png";
+                        //Log.d(LOG_TAG, filename);
+                        out = new FileOutputStream(filename);
+                        b_icon_inet.compress(Bitmap.CompressFormat.PNG, 100, out);
+
+                        filename = s + "/files/calls_" + ts + ".png";
+                        //Log.d(LOG_TAG, filename);
+                        out = new FileOutputStream(filename);
+                        b_icon_calls.compress(Bitmap.CompressFormat.PNG, 100, out);
+
+                        filename = s + "/files/sms_" + ts + ".png";
+                        //Log.d(LOG_TAG, filename);
+                        out = new FileOutputStream(filename);
+                        b_icon_sms.compress(Bitmap.CompressFormat.PNG, 100, out);
                     }
-
-                    //inet
-                    Drawable icon_inet = ContextCompat.getDrawable(contextglobal, R.drawable.ic_language_white_48dp);
-                    Bitmap b_icon_inet = ((BitmapDrawable) icon_inet).getBitmap();
-                    b_icon_inet = colorize(b_icon_inet, color);
-
-
-                    //Calls
-                    Drawable icon_calls = ContextCompat.getDrawable(contextglobal, R.drawable.ic_local_phone_white_48dp);
-                    Bitmap b_icon_calls = ((BitmapDrawable) icon_calls).getBitmap();
-                    b_icon_calls = colorize(b_icon_calls, color);
-
-
-                    //SMS
-                    Drawable icon_sms = ContextCompat.getDrawable(contextglobal, R.drawable.ic_message_white_48dp);
-                    Bitmap b_icon_sms = ((BitmapDrawable) icon_sms).getBitmap();
-                    b_icon_sms = colorize(b_icon_sms, color);
-
-
-                    PackageManager m = contextglobal.getPackageManager();
-                    String s = contextglobal.getPackageName();
-                    PackageInfo p = m.getPackageInfo(s, 0);
-                    s = p.applicationInfo.dataDir;
-
-                    //ArrayList<String> values = new ArrayList<String>();
-
-
-                    String filename = s + "/files/inet_" + ts + ".png";
-                    Log.d(LOG_TAG, filename);
-                    out = new FileOutputStream(filename);
-                    b_icon_inet.compress(Bitmap.CompressFormat.PNG, 100, out);
-
-                    filename = s + "/files/calls_" + ts + ".png";
-                    Log.d(LOG_TAG, filename);
-                    out = new FileOutputStream(filename);
-                    b_icon_calls.compress(Bitmap.CompressFormat.PNG, 100, out);
-
-                    filename = s + "/files/sms_" + ts + ".png";
-                    Log.d(LOG_TAG, filename);
-                    out = new FileOutputStream(filename);
-                    b_icon_sms.compress(Bitmap.CompressFormat.PNG, 100, out);
                 }
 
 

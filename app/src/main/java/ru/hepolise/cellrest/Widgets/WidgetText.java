@@ -71,7 +71,7 @@ public class WidgetText extends AppWidgetProvider {
     @Override
     public void onEnabled(Context context) {
         super.onEnabled(context);
-        //Log.d(LOG_TAG, "onEnabled: ");
+        Log.d(LOG_TAG, "onEnabled: ");
     }
 
     @Override
@@ -154,7 +154,7 @@ public class WidgetText extends AppWidgetProvider {
 
     public String updateWidget(Context context, AppWidgetManager appWidgetManager,
                                int widgetID, String content) {
-        //Log.d(LOG_TAG, "upd 11");
+        Log.d(LOG_TAG, "upd 11");
 
 
         SharedPreferences sharedPreferences = context.getSharedPreferences("MainPrefs", MODE_PRIVATE);
@@ -174,7 +174,7 @@ public class WidgetText extends AppWidgetProvider {
             updateIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             updateIntent.putExtra("id", widgetID);
             updateIntent.putExtra("from", "WidgetText");
-            pIntent = PendingIntent.getActivity(context, 0, updateIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+            pIntent = PendingIntent.getActivity(context, widgetID, updateIntent, PendingIntent.FLAG_CANCEL_CURRENT);
         } else {
             updateIntent = new Intent(context, WidgetText.class);
             updateIntent.setAction(ACTION_APPWIDGET_FORCE_UPDATE);
@@ -203,10 +203,10 @@ public class WidgetText extends AppWidgetProvider {
         //Reformat login
         if (login.startsWith("+7")) {
             login = login.substring(2);
-            //Log.d(LOG_TAG, "+7 change: " + login);
+            Log.d(LOG_TAG, "+7 change: " + login);
         } else if (login.startsWith("7") || login.startsWith("8")){
             login = login.substring(1);
-            //Log.d(LOG_TAG, "7/8 change: " + login);
+            Log.d(LOG_TAG, "7/8 change: " + login);
         }
         
 
@@ -233,7 +233,7 @@ public class WidgetText extends AppWidgetProvider {
 
         //Load timezone
         tz = TimeZone.getDefault().getID();
-        //Log.d(LOG_TAG, tz);
+        Log.d(LOG_TAG, tz);
 
         //loading app version
         int versionCode = BuildConfig.VERSION_CODE;
@@ -245,7 +245,7 @@ public class WidgetText extends AppWidgetProvider {
                 Log.d(LOG_TAG, "force update");
                 shrpr.edit().putBoolean(QuickstartPreferences.f_update, false).apply();
             } else {
-                content = shrpr.getString(QuickstartPreferences.content, context.getString(R.string.error));
+                content = shrpr.getString(QuickstartPreferences.content, context.getString(R.string.updating));
             }
 
             //Starting to load content
@@ -280,7 +280,7 @@ public class WidgetText extends AppWidgetProvider {
         int s = content.indexOf("\n", f+1);
         int t = content.indexOf("\n", s+1);
         int a = content.length();
-        //Log.d(LOG_TAG, Integer.toString(f) + " " + Integer.toString(s) + " " + Integer.toString(t) + " " + Integer.toString(a));
+        Log.d(LOG_TAG, Integer.toString(f) + " " + Integer.toString(s) + " " + Integer.toString(t) + " " + Integer.toString(a));
         //int lines = 3;
         String newContent = "";
         if ( ! content.equals(context.getString(R.string.error)) && ! content.equals(context.getString(R.string.updating)) && ! content.equals(context.getString(R.string.choose_account)) ) {
@@ -411,7 +411,7 @@ public class WidgetText extends AppWidgetProvider {
                 return(buffer);
 
             } catch (IOException e) {
-                //Log.d(LOG_TAG, e.getMessage());
+                Log.d(LOG_TAG, e.getMessage());
                 updateWidget(contextglobal, appWidgetManagerglobal, id, "error");
                 return e.getMessage();
             }

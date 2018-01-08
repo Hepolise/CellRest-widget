@@ -75,7 +75,7 @@ public class TraffWidget extends AppWidgetProvider {
     String tz;
 
 
-    final String LOG_TAG = "cellLogs";
+    final String LOG_TAG = "cellLogsWidget";
 
     @Override
     public void onEnabled(Context context) {
@@ -86,27 +86,27 @@ public class TraffWidget extends AppWidgetProvider {
     public void onUpdate(Context context, AppWidgetManager appWidgetManager,
                          int[] appWidgetIds) {
         super.onUpdate(context, appWidgetManager, appWidgetIds);
-        SharedPreferences sharedPreferences = context.getSharedPreferences("MainPrefs", MODE_PRIVATE);
-        String account = sharedPreferences.getString(Integer.toString(appWidgetIds[0]), "");
-
-        Log.d(LOG_TAG, "account: " + account + ", widgetID: " + appWidgetIds[0]);
-        if (account.equals("")) {
-
-
-
-            SharedPreferences shrpr = PreferenceManager.getDefaultSharedPreferences(context);
-            UPD = shrpr.getString(QuickstartPreferences.update, "0");
-
-
-            if (UPD.equals("1")) {
-                Intent intent = new Intent(context, AccountChooser.class);
-                intent.putExtra("id", appWidgetIds[0]);
-                context.startActivity(intent);
-            }
-
-
-
-        }
+//        SharedPreferences sharedPreferences = context.getSharedPreferences("MainPrefs", MODE_PRIVATE);
+//        String account = sharedPreferences.getString(Integer.toString(appWidgetIds[0]), "");
+//
+//        //Log.d(LOG_TAG, "account: " + account + ", widgetID: " + appWidgetIds[0]);
+//        if (account.equals("")) {
+//
+//
+//
+//            SharedPreferences shrpr = PreferenceManager.getDefaultSharedPreferences(context);
+//            UPD = shrpr.getString(QuickstartPreferences.update, "0");
+//
+//
+//            if (UPD.equals("1")) {
+//                Intent intent = new Intent(context, AccountChooser.class);
+//                intent.putExtra("id", appWidgetIds[0]);
+//                context.startActivity(intent);
+//            }
+//
+//
+//
+//        }
 
         for (int id : appWidgetIds) {
             updateWidget(context, appWidgetManager, id, context.getString(R.string.updating));
@@ -132,15 +132,16 @@ public class TraffWidget extends AppWidgetProvider {
 //                Integer.toString(min_w) + ": min_w; " + Integer.toString(min_h) + ": min_h;", Toast.LENGTH_LONG).show();
 
 
-        SharedPreferences sh = context.getSharedPreferences("MainPrefs", MODE_PRIVATE);
-        String account = sh.getString(Integer.toString(appWidgetId), "0");
-
-        String working_prefs = sh.getString("working_prefs", "prefs_0");
         SharedPreferences shrpr;
-        if (working_prefs.equals("prefs_" + account)) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("MainPrefs", MODE_PRIVATE);;
+        String working_prefs = sharedPreferences.getString("loaded_prefs", "prefs_0");
+        long ts = sharedPreferences.getLong("widget_id_" + Integer.toString(appWidgetId), 0);
+        if (working_prefs.equals("prefs_" + ts)) {
+            //Log.d(LOG_TAG, "Using default prefs for update widget");
             shrpr = PreferenceManager.getDefaultSharedPreferences(context);
         } else {
-            shrpr = context.getSharedPreferences("prefs_" + account, MODE_PRIVATE);
+            //Log.d(LOG_TAG, "Using prefs_" + ts +" for update widget");
+            shrpr = context.getSharedPreferences("prefs_" + ts, MODE_PRIVATE);
         }
 
         if (max_w < 250) {
@@ -174,9 +175,17 @@ public class TraffWidget extends AppWidgetProvider {
                         AppWidgetManager.INVALID_APPWIDGET_ID);
 
             }
-            SharedPreferences sh = context.getSharedPreferences("MainPrefs", MODE_PRIVATE);
-            String account = sh.getString(Integer.toString(id), "0");
-            SharedPreferences shrpr = context.getSharedPreferences("prefs_" + account, MODE_PRIVATE);
+            SharedPreferences shrpr;
+            SharedPreferences sharedPreferences = context.getSharedPreferences("MainPrefs", MODE_PRIVATE);;
+            String working_prefs = sharedPreferences.getString("loaded_prefs", "prefs_0");
+            long ts = sharedPreferences.getLong("widget_id_" + Integer.toString(id), 0);
+            if (working_prefs.equals("prefs_" + ts)) {
+                //Log.d(LOG_TAG, "Using default prefs for update widget");
+                shrpr = PreferenceManager.getDefaultSharedPreferences(context);
+            } else {
+                //Log.d(LOG_TAG, "Using prefs_" + ts +" for update widget");
+                shrpr = context.getSharedPreferences("prefs_" + ts, MODE_PRIVATE);
+            }
             Boolean setting_update = shrpr.getBoolean(QuickstartPreferences.setting_update, true);
             if (setting_update.equals(true)) {
                 //if in the settings update on tap is set
@@ -272,15 +281,16 @@ public class TraffWidget extends AppWidgetProvider {
     }
 
 
-    public void setIntent(RemoteViews widgetView, Context context, int widgetID, String res) {
+    public void setIntent(RemoteViews widgetView, Context context, String res, android.app.PendingIntent pIntent) {
         //set intent to reload widget on tap
 
-        Intent updateIntent = new Intent(context, TraffWidget.class);
-        updateIntent.setAction(ACTION_APPWIDGET_FORCE_UPDATE);
+//        Intent updateIntent = new Intent(context, TraffWidget.class);
+//        updateIntent.setAction(ACTION_APPWIDGET_FORCE_UPDATE);
+//
+//        updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
+//        pIntent = PendingIntent.getBroadcast(context, widgetId, updateIntent, 0);
 
-        updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetID);
-        android.app.PendingIntent pIntent = PendingIntent.getBroadcast(context, widgetID, updateIntent, 0);
-
+        //Log.d(LOG_TAG, "setting intent");
         widgetView.setOnClickPendingIntent(getStringResourceByName("inet" + res, context), pIntent);
         widgetView.setOnClickPendingIntent(getStringResourceByName("calls" + res, context), pIntent);
         widgetView.setOnClickPendingIntent(getStringResourceByName("sms" + res, context), pIntent);
@@ -329,7 +339,7 @@ public class TraffWidget extends AppWidgetProvider {
         widgetView.setFloat(getStringResourceByName("sms" + res, context), "setTextSize", size);
     }
 
-    public String updateWidget(Context context, AppWidgetManager appWidgetManager,
+    public void updateWidget(Context context, AppWidgetManager appWidgetManager,
                                int widgetID, String content) {
         //Get data && update widget
 
@@ -338,21 +348,44 @@ public class TraffWidget extends AppWidgetProvider {
         contextglobal = context;
         appWidgetManagerglobal = appWidgetManager;
 
-        SharedPreferences shrp = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences sharedPreferences = context.getSharedPreferences("MainPrefs", MODE_PRIVATE);
+        long ts = sharedPreferences.getLong("widget_id_"+Integer.toString(widgetID), 0);
+        //Log.d(LOG_TAG, "widget id: " + widgetID);
 
-        SharedPreferences sh = context.getSharedPreferences("MainPrefs", MODE_PRIVATE);
-        String account = sh.getString(Integer.toString(widgetID), "0");
-        String working_prefs = sh.getString("working_prefs", "prefs_0");
+        Intent updateIntent;
+        RemoteViews widgetView = new RemoteViews(context.getPackageName(),
+                R.layout.widget);
+        android.app.PendingIntent pIntent;
+        if (ts == 0) {
+            content = context.getString(R.string.choose_account);
+
+            //Log.d(LOG_TAG, "ts is null");
+            //updateIntent = new Intent(context, AccountChooser.class);
+            updateIntent = Intent.makeRestartActivityTask(new ComponentName(context, AccountChooser.class));
+            updateIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            updateIntent.putExtra("id", widgetID);
+            updateIntent.putExtra("from", "TraffWidget");
+            pIntent = PendingIntent.getActivity(context, widgetID, updateIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+        } else {
+            updateIntent = new Intent(context, TraffWidget.class);
+            updateIntent.setAction(ACTION_APPWIDGET_FORCE_UPDATE);
+            updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetID);
+            pIntent = PendingIntent.getBroadcast(context, widgetID, updateIntent, 0);
+        }
+        String loaded = sharedPreferences.getString("loaded_prefs", "prefs_0");
         SharedPreferences shrpr;
-        if (working_prefs.equals("prefs_" + account)) {
+        //Log.d(LOG_TAG, "TS: " + ts + "; loaded: " + loaded);
+        if (loaded.equals("prefs_" + Long.toString(ts))) {
+            //Log.d(LOG_TAG, "Loaded prefs equals (from traff widget)");
             shrpr = PreferenceManager.getDefaultSharedPreferences(context);
         } else {
-            shrpr = context.getSharedPreferences("prefs_" + account, MODE_PRIVATE);
+            //Log.d(LOG_TAG, "Loaded prefs by TS (from traff widget)");
+            shrpr = context.getSharedPreferences("prefs_" + Long.toString(ts), MODE_PRIVATE);
         }
         //Load vars
         login = shrpr.getString(QuickstartPreferences.login, "");
         op = shrpr.getString(QuickstartPreferences.op_list, "");
-        token = shrp.getString(QuickstartPreferences.TOKEN, "");
+        token = shrpr.getString(QuickstartPreferences.TOKEN, "");
         Boolean f_update = shrpr.getBoolean(QuickstartPreferences.f_update, false);
         Boolean inet_only = shrpr.getBoolean(QuickstartPreferences.inet_only, false);
 
@@ -439,8 +472,8 @@ public class TraffWidget extends AppWidgetProvider {
         int versionCode = BuildConfig.VERSION_CODE;
         version = Integer.toString(versionCode);
 
-        RemoteViews widgetView = new RemoteViews(context.getPackageName(),
-                R.layout.widget);
+//        RemoteViews widgetView = new RemoteViews(context.getPackageName(),
+//                R.layout.widget);
 
 
 
@@ -473,7 +506,7 @@ public class TraffWidget extends AppWidgetProvider {
 
         //update
         if (content.equals(context.getString(R.string.updating))) {
-            Log.d(LOG_TAG, "update");
+            //Log.d(LOG_TAG, "update");
 
             Integer[] params = { widgetID };
             new ProgressTask().execute(params);
@@ -484,6 +517,7 @@ public class TraffWidget extends AppWidgetProvider {
 
         setAllTextTuNull(widgetView);
         if (f_update) {
+            //Log.d(LOG_TAG, "force update");
             //if widget is reloaded by tap
             shrpr.edit().putString(QuickstartPreferences.update, "1").apply();
 
@@ -502,7 +536,8 @@ public class TraffWidget extends AppWidgetProvider {
         } else {
 
             if (ok.equals(""))  {
-                if (!content.equals(context.getString(R.string.updating))) {
+                //Log.d(LOG_TAG, "ok is empty");
+                if (!content.equals(context.getString(R.string.updating)) && !content.equals(context.getString(R.string.choose_account))) {
                     //if we have no data by server on first run
                     if (font.equals("n")) {
                         widgetView.setTextViewText(R.id.text_upd, context.getString(R.string.error));
@@ -515,19 +550,34 @@ public class TraffWidget extends AppWidgetProvider {
                         widgetView.setTextColor(R.id.text_upd_bold, color);
                     }
                 } else {
-                    //TODO: move to strings
-                    if (font.equals("n")) {
-                        widgetView.setTextViewText(R.id.text_upd, "Нажмите для выбора аккаунта");
-                        widgetView.setTextColor(R.id.text_upd, color);
-                    } else if (font.equals("i")) {
-                        widgetView.setTextViewText(R.id.text_upd_italic, "Нажмите для выбора аккаунта");
-                        widgetView.setTextColor(R.id.text_upd_italic, color);
-                    } else if (font.equals("b")) {
-                        widgetView.setTextViewText(R.id.text_upd_bold, "Нажмите для выбора аккаунта");
-                        widgetView.setTextColor(R.id.text_upd_bold, color);
+                    //Log.d(LOG_TAG, "But content is update");
+                    if (content.equals(context.getString(R.string.choose_account))) {
+                        //Log.d(LOG_TAG, "content is to choose account");
+                        if (font.equals("n")) {
+                            widgetView.setTextViewText(R.id.text_upd, context.getString(R.string.choose_account));
+                            widgetView.setTextColor(R.id.text_upd, color);
+                        } else if (font.equals("i")) {
+                            widgetView.setTextViewText(R.id.text_upd_italic, context.getString(R.string.choose_account));
+                            widgetView.setTextColor(R.id.text_upd_italic, color);
+                        } else if (font.equals("b")) {
+                            widgetView.setTextViewText(R.id.text_upd_bold, context.getString(R.string.choose_account));
+                            widgetView.setTextColor(R.id.text_upd_bold, color);
+                        }
+                    } else {
+                        if (font.equals("n")) {
+                            widgetView.setTextViewText(R.id.text_upd, context.getString(R.string.updating));
+                            widgetView.setTextColor(R.id.text_upd, color);
+                        } else if (font.equals("i")) {
+                            widgetView.setTextViewText(R.id.text_upd_italic, context.getString(R.string.updating));
+                            widgetView.setTextColor(R.id.text_upd_italic, color);
+                        } else if (font.equals("b")) {
+                            widgetView.setTextViewText(R.id.text_upd_bold, context.getString(R.string.updating));
+                            widgetView.setTextColor(R.id.text_upd_bold, color);
+                        }
                     }
                 }
             } else {
+                //Log.d(LOG_TAG, "Everything is OK, setting full widget view");
                 String sms;
                 String min;
                 String inet;
@@ -592,10 +642,10 @@ public class TraffWidget extends AppWidgetProvider {
 
 
 
-                    Bitmap b_icon_sms = BitmapFactory.decodeFile(s + "/files/sms" + account + ".png");
+                    Bitmap b_icon_sms = BitmapFactory.decodeFile(s + "/files/sms_" + ts + ".png");
                     widgetView.setImageViewBitmap(R.id.sms_logo, b_icon_sms);
 
-                    Bitmap b_icon_calls = BitmapFactory.decodeFile(s + "/files/calls" + account + ".png");
+                    Bitmap b_icon_calls = BitmapFactory.decodeFile(s + "/files/calls_" + ts + ".png");
                     widgetView.setImageViewBitmap(R.id.calls_logo, b_icon_calls);
 
                     widgetView.setTextColor(getStringResourceByName("calls" + res, context), color);
@@ -635,7 +685,7 @@ public class TraffWidget extends AppWidgetProvider {
 
 
                 //get icon from data folder
-                Bitmap b_icon_inet = BitmapFactory.decodeFile(s  + "/files/inet" + account + ".png");
+                Bitmap b_icon_inet = BitmapFactory.decodeFile(s  + "/files/inet_" + ts + ".png");
                 widgetView.setImageViewBitmap(R.id.inet_logo, b_icon_inet);
 
             }
@@ -645,12 +695,11 @@ public class TraffWidget extends AppWidgetProvider {
 
 
         //make widget responsive to taps
-        setIntent(widgetView, context, widgetID, res);
+        setIntent(widgetView, context, res, pIntent);
 
         //redraw widget
         appWidgetManager.updateAppWidget(widgetID, widgetView);
 
-        return "";
     }
 
 
@@ -701,6 +750,7 @@ public class TraffWidget extends AppWidgetProvider {
                         //testing new logic for dtr
                         + "&test"
                 );
+                //Log.d(LOG_TAG, url.toString());
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 reader= new BufferedReader(new InputStreamReader(conn.getInputStream()));
                 StringBuilder buf=new StringBuilder();
@@ -726,16 +776,16 @@ public class TraffWidget extends AppWidgetProvider {
                     String null_ = jsonObject.getString("null");
 //                    SharedPreferences shrpr = PreferenceManager.getDefaultSharedPreferences(contextglobal);
 
-                    SharedPreferences sh = contextglobal.getSharedPreferences("MainPrefs", MODE_PRIVATE);
-                    String account = sh.getString(Integer.toString(id), "0");
-                    String working_prefs = sh.getString("working_prefs", "prefs_0");
                     SharedPreferences shrpr;
-                    if (working_prefs.equals("prefs_" + account)) {
-                        Log.d(LOG_TAG, "Using default prefs for save data");
+                    SharedPreferences sharedPreferences = contextglobal.getSharedPreferences("MainPrefs", MODE_PRIVATE);;
+                    String working_prefs = sharedPreferences.getString("loaded_prefs", "prefs_0");
+                    long ts = sharedPreferences.getLong("widget_id_" + Integer.toString(id), 0);
+                    if (working_prefs.equals("prefs_" + ts)) {
+                        //Log.d(LOG_TAG, "Using default prefs for update widget");
                         shrpr = PreferenceManager.getDefaultSharedPreferences(contextglobal);
                     } else {
-                        Log.d(LOG_TAG, "Using prefs_" + account + "for save data");
-                        shrpr = contextglobal.getSharedPreferences("prefs_" + account, MODE_PRIVATE);
+                        //Log.d(LOG_TAG, "Using prefs_" + ts +" for update widget");
+                        shrpr = contextglobal.getSharedPreferences("prefs_" + ts, MODE_PRIVATE);
                     }
                     //save data
                     shrpr.edit().putString(QuickstartPreferences.time, time).apply();
