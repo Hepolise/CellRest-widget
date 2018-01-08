@@ -164,6 +164,15 @@
 
     <string name="title_activity_account_chooser">Account Chooser</string>
     <string name="choose_account">Tap to choose account</string>
+    <string name="manager_dialog_remove_title">Delete account</string>
+    <string name="manager_dialog_remove_message">Are you sure to delete account?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="ok">OK</string>
+    <string name="active">Active</string>
+    <string name="switcher_dialog_remove_title">Switch account</string>
+    <string name="switcher_dialog_remove_message">The app will restart</string>
+
 
 
 </resources>

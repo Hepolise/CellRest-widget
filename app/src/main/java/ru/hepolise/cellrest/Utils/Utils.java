@@ -4,12 +4,15 @@ import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -19,6 +22,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
+import ru.hepolise.cellrest.R;
 import ru.hepolise.cellrest.SettingsActivity;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -96,7 +100,8 @@ public class Utils {
                 if (loaded_prefs.equals("prefs_" + Long.toString(ts))) { // cause we are not able to load new prefs without restarting app
                     Log.d(L, "This is loaded prefs");
                     sh = PreferenceManager.getDefaultSharedPreferences(c);
-                    login = sh.getString(QuickstartPreferences.login, "")+" (loaded)"; // TODO : move to strings
+                    String active = c.getString(R.string.active);
+                    login = sh.getString(QuickstartPreferences.login, "")+" ("+active+")";
                 } else {
                     sh = c.getSharedPreferences("prefs_" + Long.toString(ts), MODE_PRIVATE);
                     login = sh.getString(QuickstartPreferences.login, "");
@@ -133,30 +138,39 @@ public class Utils {
         }
     }
 
-    public static void switchTo(long ts, Context c) {
-        SharedPreferences sharedPreferences = c.getSharedPreferences("MainPrefs", MODE_PRIVATE);
-        SettingsActivity.fa.finishAffinity();
+    public static void switchTo(final long timestamp, final Context c) {
+        AlertDialog.Builder ad = new AlertDialog.Builder(c);
+        ad.setTitle(c.getString(R.string.switcher_dialog_remove_title));
+        ad.setMessage(c.getString(R.string.switcher_dialog_remove_message));
+        ad.setPositiveButton(c.getString(R.string.ok), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int arg1) {
+                long ts = timestamp;
+                SharedPreferences sharedPreferences = c.getSharedPreferences("MainPrefs", MODE_PRIVATE);
+                SettingsActivity.fa.finishAffinity();
+                saveSettings(c);
 
-        saveSettings(c);
 
+                if (ts == 0) {
+                    Log.d(L, "TS is null, Switching to the first account");
+                    ts = sharedPreferences.getLong(Integer.toString(0), 0);
+                }
+                Log.d(L, "Switching to: " + ts);
 
-        if (ts == 0) {
-            Log.d(L, "TS is null, Switching to the first account");
-            ts = sharedPreferences.getLong(Integer.toString(0), 0);
-        }
-        Log.d(L, "Switching to: " + ts);
-
-        sharedPreferences.edit().putString("loaded_prefs", "prefs_" + Long.toString(ts)).commit();
-        //copy file
-        try {
-            PackageManager m = c.getApplicationContext().getPackageManager();
-            String s = c.getApplicationContext().getPackageName();
-            PackageInfo p = m.getPackageInfo(s, 0);
-            Utils.copyFile(p.applicationInfo.dataDir + "/shared_prefs/", "prefs_" + Long.toString(ts) + ".xml", c.getApplicationContext().getPackageName() + "_preferences.xml");
-        } catch (Exception e) {
-            Log.d (L, e.getMessage());
-        }
-        restartApp(c.getApplicationContext());
+                sharedPreferences.edit().putString("loaded_prefs", "prefs_" + Long.toString(ts)).commit();
+                //copy file
+                try {
+                    PackageManager m = c.getApplicationContext().getPackageManager();
+                    String s = c.getApplicationContext().getPackageName();
+                    PackageInfo p = m.getPackageInfo(s, 0);
+                    Utils.copyFile(p.applicationInfo.dataDir + "/shared_prefs/", "prefs_" + Long.toString(ts) + ".xml", c.getApplicationContext().getPackageName() + "_preferences.xml");
+                } catch (Exception e) {
+                    Log.d (L, e.getMessage());
+                }
+                restartApp(c.getApplicationContext());
+            }
+        });
+        ad.setCancelable(false);
+        ad.show();
     }
     public static void addUser(Context c) {
         long ts = System.currentTimeMillis();
@@ -172,6 +186,6 @@ public class Utils {
                 .putInt("length", length + 1)
                 .putLong(Integer.toString(length), ts)
                 .commit();
-        Utils.switchTo(ts, c.getApplicationContext());
+        switchTo(ts, c);
     }
 }

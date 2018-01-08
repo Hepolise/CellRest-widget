@@ -66,20 +66,25 @@ public class AccountChooser extends ListActivity {
             startActivity(new Intent(this, SettingsActivity.class));
             finish();
         }
-        sharedPreferences.edit().putLong("widget_id_"+Integer.toString(appWidgetId), ts).commit();
+        sharedPreferences.edit()
+                .putLong("widget_id_"+Integer.toString(appWidgetId), ts)
+                .putInt(from+"_by_ts_" + Long.toString(ts), appWidgetId)
+                .commit();
         //Context context = getApplicationContext();
-        Intent updateIntent;
+        Intent updateIntent = null;
         if (from.equals("WidgetText")) {
              updateIntent = new Intent(getApplicationContext(), WidgetText.class);
-        } else {
+        } else if (from.equals("TraffWidget")) {
             updateIntent = new Intent(getApplicationContext(), TraffWidget.class);
         }
 
-        updateIntent.setAction(ACTION_APPWIDGET_UPDATE);
-        updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS,
-                new int[] { appWidgetId });
-        getApplicationContext().sendBroadcast(updateIntent);
-        finish();
+        if (null != updateIntent) {
+            updateIntent.setAction(ACTION_APPWIDGET_UPDATE);
+            updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS,
+                    new int[]{appWidgetId});
+            getApplicationContext().sendBroadcast(updateIntent);
+            finish();
+        }
 
     }
 }

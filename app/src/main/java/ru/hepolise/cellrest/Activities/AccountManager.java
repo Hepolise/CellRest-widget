@@ -39,13 +39,16 @@ public class AccountManager  extends ListActivity {
         final SharedPreferences sharedPreferences = getSharedPreferences("MainPrefs", MODE_PRIVATE);
         final int length = sharedPreferences.getInt("length", 1);
 
+        // Activity Context
+        final Context activityContext = this;
+
         // fab
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Utils.addUser(getApplicationContext());
+                Utils.addUser(activityContext);
             }
         });
 
@@ -57,10 +60,10 @@ public class AccountManager  extends ListActivity {
                                            final int deleting, long deleting_long) {
                 final Context context = AccountManager.this;
                 ///TODO: move to strings
-                String title = "Удалить аккаунт?";
-                String message = "Вы действительно хотите удалить аккаунт?";
-                String button1String = "Да";
-                String button2String = "Нет";
+                String title = context.getString(R.string.manager_dialog_remove_title);
+                String message = context.getString(R.string.manager_dialog_remove_message);
+                String button1String = context.getString(R.string.yes);
+                String button2String = context.getString(R.string.no);
                 //long ts;
 
                 AlertDialog.Builder ad = new AlertDialog.Builder(context);
@@ -79,7 +82,15 @@ public class AccountManager  extends ListActivity {
                         // deleting
                         ts = sharedPreferences.getLong(Integer.toString(deleting), 0);
                         long ts_del = sharedPreferences.getLong(Integer.toString(deleting), 0);
-                        sharedPreferences.edit().remove(Integer.toString(deleting)).commit();
+                        int textWidgetId = sharedPreferences.getInt("WidgetText_by_ts_" + ts, 0);
+                        int widgetId = sharedPreferences.getInt("TraffWidget_by_ts_" + ts, 0);
+                        sharedPreferences.edit()
+                                .remove(Integer.toString(deleting))
+                                .remove("TraffWidget_by_ts_" + ts)
+                                .remove("TraffWidget_by_ts_" + ts)
+                                .remove("widget_id_"+textWidgetId)
+                                .remove("widget_id_"+widgetId)
+                                .commit();
                         Utils.clearFile("prefs_" + Long.toString(ts), getApplicationContext());
 
                         String loaded_prefs = sharedPreferences.getString("loaded_prefs", "prefs_0");
@@ -102,9 +113,10 @@ public class AccountManager  extends ListActivity {
                             long t = sharedPreferences.getLong(Integer.toString(deleting - 1), 0);
                             if (deleting == 0) {
                                 Log.d(L, "last user");
-                                Utils.addUser(getApplicationContext());
+                                Utils.addUser(activityContext);
+                            } else {
+                                Utils.switchTo(t, activityContext);
                             }
-                            Utils.switchTo(t, getApplicationContext());
                         }
 
                         values = Utils.genList(getApplicationContext());
@@ -132,7 +144,7 @@ public class AccountManager  extends ListActivity {
     protected void onListItemClick(ListView l, View v, int position, long id) {
         final SharedPreferences sharedPreferences = getSharedPreferences("MainPrefs", MODE_PRIVATE);
         long ts = sharedPreferences.getLong(Integer.toString(position), 0);
-        Utils.switchTo(ts, getApplicationContext());
+        Utils.switchTo(ts, this);
     }
 
 }

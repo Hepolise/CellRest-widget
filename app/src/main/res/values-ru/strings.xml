@@ -124,6 +124,14 @@
     <string name="choose_account">Коснитесь для выбора аккаунта</string>
     <string name="title_activity_account_manager">Менеджер аккаунтов</string>
     <string name="title_activity_account_chooser">Выбор аккаунта</string>
+    <string name="manager_dialog_remove_message">Вы действительно хотите удалить аккаунт?</string>
+    <string name="manager_dialog_remove_title">Удаление аккаунта</string>
+    <string name="yes">Да</string>
+    <string name="ok">ОК</string>
+    <string name="no">Нет</string>
+    <string name="active">активен</string>
+    <string name="switcher_dialog_remove_title">Смена аккаунта</string>
+    <string name="switcher_dialog_remove_message">Приложение перезапустится</string>
     <!--<string name="pattern_desc">Изменить весь текст в виджете. \n
         %dtr% - days to reestablish; \n
         Вы можете использовать данные переменные: \n
