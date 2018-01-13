@@ -132,6 +132,9 @@
     <string name="active">активен</string>
     <string name="switcher_dialog_remove_title">Смена аккаунта</string>
     <string name="switcher_dialog_remove_message">Приложение перезапустится</string>
+    <string name="slide3title">Мультиаккаунт</string>
+    <string name="slide3text">Вы можете добавить несколько аккаунтов.
+    После добавления виджета на рабочий стол нажмите на него, чтобы выбрать нужный аккаунт</string>
     <!--<string name="pattern_desc">Изменить весь текст в виджете. \n
         %dtr% - days to reestablish; \n
         Вы можете использовать данные переменные: \n

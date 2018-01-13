@@ -86,33 +86,38 @@ public class Utils {
         String login;
         SharedPreferences sh;
         SharedPreferences sharedPreferences = c.getSharedPreferences("MainPrefs", MODE_PRIVATE);
-        int length = sharedPreferences.getInt("length", 1);
-        String loaded_prefs = sharedPreferences.getString("loaded_prefs", "prefs_0");
-        Log.d(L, "loaded_prefs: " + loaded_prefs);
-        Log.d(L, "length: " + length);
+        int length = sharedPreferences.getInt("length", -1); // cannot be default here
+        if (length != -1) {
+            String loaded_prefs = sharedPreferences.getString("loaded_prefs", "prefs_0");
+            Log.d(L, "loaded_prefs: " + loaded_prefs);
+            Log.d(L, "length: " + length);
 
-        long ts;
-        for (int i=0; i<length; i++) {
-            try {
-                ts = sharedPreferences.getLong(Integer.toString(i), 0);
-                Log.d(L, "TS: " + ts);
-                Log.d(L, "i: " + i);
-                if (loaded_prefs.equals("prefs_" + Long.toString(ts))) { // cause we are not able to load new prefs without restarting app
-                    Log.d(L, "This is loaded prefs");
-                    sh = PreferenceManager.getDefaultSharedPreferences(c);
-                    String active = c.getString(R.string.active);
-                    login = sh.getString(QuickstartPreferences.login, "")+" ("+active+")";
-                } else {
-                    sh = c.getSharedPreferences("prefs_" + Long.toString(ts), MODE_PRIVATE);
-                    login = sh.getString(QuickstartPreferences.login, "");
+            long ts;
+            for (int i = 0; i < length; i++) {
+                try {
+                    ts = sharedPreferences.getLong(Integer.toString(i), 0);
+                    Log.d(L, "TS: " + ts);
+                    Log.d(L, "i: " + i);
+                    if (loaded_prefs.equals("prefs_" + Long.toString(ts))) { // cause we are not able to load new prefs without restarting app
+                        Log.d(L, "This is loaded prefs");
+                        sh = PreferenceManager.getDefaultSharedPreferences(c);
+                        String active = c.getString(R.string.active);
+                        login = sh.getString(QuickstartPreferences.login, "") + " (" + active + ")";
+                    } else {
+                        sh = c.getSharedPreferences("prefs_" + Long.toString(ts), MODE_PRIVATE);
+                        login = sh.getString(QuickstartPreferences.login, "");
+                    }
+                    Log.d(L, "login: " + login);
+                    values.add(i, login);
+                } catch (Exception e) {
+                    Log.e(L, e.getMessage());
                 }
-                Log.d(L, "login: " + login);
-                values.add(i, login);
-            } catch (Exception e) {
-                Log.e (L, e.getMessage());
             }
+            return values;
+        } else {
+            Log.e(L + " Chooser", "length is -1");
+            return null;
         }
-        return values;
     }
     public static void restartApp(Context c) {
         Log.d(L, "Exiting...");

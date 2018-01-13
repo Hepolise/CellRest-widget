@@ -516,7 +516,7 @@ public class TraffWidget extends AppWidgetProvider {
         }
 
         setAllTextTuNull(widgetView);
-        if (f_update) {
+        if (f_update && ts != 0) {
             Log.d(LOG_TAG, "force update");
             //if widget is reloaded by tap
             shrpr.edit().putString(QuickstartPreferences.update, "1").apply();

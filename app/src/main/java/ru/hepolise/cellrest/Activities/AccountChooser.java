@@ -44,10 +44,15 @@ public class AccountChooser extends ListActivity {
 
         ArrayList<String> values = Utils.genList(getApplicationContext());
 
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, values);
-        setListAdapter(adapter);
+        if (values == null) {
+            Log.e(L, "null array returned by genList()");
+            startActivity(new Intent(this, SettingsActivity.class));
+            finish();
+        } else {
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_list_item_1, values);
+            setListAdapter(adapter);
+        }
     }
 
     @Override

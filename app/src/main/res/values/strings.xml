@@ -172,7 +172,9 @@
     <string name="active">Active</string>
     <string name="switcher_dialog_remove_title">Switch account</string>
     <string name="switcher_dialog_remove_message">The app will restart</string>
-
+    <string name="slide3title">Multi Account</string>
+    <string name="slide3text">You can add more than one account.
+        After adding the widget to the desktop, click on it to select the account</string>
 
 
 </resources>

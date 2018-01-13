@@ -51,14 +51,14 @@ dependencies {
 
 
     compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:support-v4:25.3.1'
-    compile 'com.android.support:support-vector-drawable:25.3.1'
+    compile 'com.android.support:support-v4:25.4.0'
+    compile 'com.android.support:support-vector-drawable:25.4.0'
     compile 'com.github.yukuku:ambilwarna:2.0.1'
-    compile 'com.google.android.gms:play-services-gcm:10.2.1'
+    compile 'com.google.android.gms:play-services-gcm:11.8.0'
     compile 'com.pavelsikun:material-seekbar-preference:2.3.0'
-    compile 'com.github.paolorotolo:appintro:4.1.0'
+    compile 'com.github.apl-devs:appintro:v4.2.2'
     compile 'com.yandex.android:mobmetricalib:2.62'
-    compile 'com.android.support:design:25.3.1'
+    compile 'com.android.support:design:25.4.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
 }

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.widget.Toolbar;
 
 import com.github.paolorotolo.appintro.AppIntro;
 import com.github.paolorotolo.appintro.AppIntro2;
@@ -24,16 +25,14 @@ public class IntroActivity extends AppIntro2 {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // making the first account the part of multi account
-        SharedPreferences sharedPreferences = getSharedPreferences("MainPrefs", MODE_PRIVATE);
-        long ts = System.currentTimeMillis();
-        sharedPreferences.edit()
-                .putString("loaded_prefs", "prefs_" + ts)
-                .putLong("0", ts)
-                .putInt("length", 1)
-                .commit();
 
+        new Colorize().StartColorize(getBaseContext());
 
+//        setFadeAnimation();
+        setZoomAnimation();
+//        setDepthAnimation();
+
+        setBarColor(Color.parseColor("#3F51B5"));
         // Note here that we DO NOT use setContentView();
 
         // Add your slide fragments here.
@@ -41,21 +40,22 @@ public class IntroActivity extends AppIntro2 {
         String title = getApplicationContext().getString(R.string.app_name);
         String description = getApplicationContext().getString(R.string.about_description);
         int image = R.mipmap.ic_launcher;
-        int backgroundColor = Color.parseColor("#303F9F");
+        int backgroundColor = Color.parseColor("#303F9F"); // Do not change colors because of
         addSlide(AppIntroFragment.newInstance(title, description, image, backgroundColor));
 
         title = getApplicationContext().getString(R.string.fill_obligatory);
         description = getApplicationContext().getString(R.string.fill_obligatory_desc);
-        image = R.mipmap.gen_settigs;
+        image = R.drawable.gen_settigs;
         backgroundColor = Color.parseColor("#303F9F");
         addSlide(AppIntroFragment.newInstance(title, description, image, backgroundColor));
 
-        new Colorize().StartColorize(getBaseContext());
-//        title = getApplicationContext().getString(R.string.fill_obligatory);
-//        description = getApplicationContext().getString(R.string.fill_obligatory_desc);
-//        image = R.mipmap.other_settings;
-//        backgroundColor = Color.parseColor("#303F9F");
-//        addSlide(AppIntroFragment.newInstance(title, description, image, backgroundColor));
+        title = getApplicationContext().getString(R.string.slide3title);
+        description = getApplicationContext().getString(R.string.slide3text);
+        image = R.drawable.choose_account;
+        backgroundColor = Color.parseColor("#303F9F");
+        addSlide(AppIntroFragment.newInstance(title, description, image, backgroundColor));
+
+        //setBarColor(Color.parseColor("#009688"));
 
 
         // Instead of fragments, you can also use our default slide
@@ -64,7 +64,6 @@ public class IntroActivity extends AppIntro2 {
 
         // OPTIONAL METHODS
         // Override bar/separator color.
-//        setBarColor(Color.parseColor("#3F51B5"));
 //        setSeparatorColor(Color.parseColor("#2196F3"));
 
         // Hide Skip/Done button.
@@ -80,20 +79,22 @@ public class IntroActivity extends AppIntro2 {
     @Override
     public void onSkipPressed(Fragment currentFragment) {
         super.onSkipPressed(currentFragment);
-        SharedPreferences sharedPreferences = getSharedPreferences("MainPrefs", MODE_PRIVATE);
-        sharedPreferences.edit().putBoolean(QuickstartPreferences.intro_done, true).apply();
-        finish();
+//        SharedPreferences sharedPreferences = getSharedPreferences("MainPrefs", MODE_PRIVATE);
+//        sharedPreferences.edit().putBoolean(QuickstartPreferences.intro_done, true).apply();
+//        finish();
         // Do something when users tap on Skip button.
+        apply();
     }
 
 
     @Override
     public void onDonePressed(Fragment currentFragment) {
         super.onDonePressed(currentFragment);
-        SharedPreferences sharedPreferences = getSharedPreferences("MainPrefs", MODE_PRIVATE);
-        sharedPreferences.edit().putBoolean(QuickstartPreferences.intro_done, true).apply();
-        finish();
+//        SharedPreferences sharedPreferences = getSharedPreferences("MainPrefs", MODE_PRIVATE);
+//        sharedPreferences.edit().putBoolean(QuickstartPreferences.intro_done, true).apply();
+//        finish();
         // Do something when users tap on Done button.
+        apply();
     }
 
     @Override
@@ -101,5 +102,17 @@ public class IntroActivity extends AppIntro2 {
         super.onSlideChanged(oldFragment, newFragment);
         // Do something when the slide changes.
 
+    }
+    private void apply() {
+        // making the first account the part of multi account
+        SharedPreferences sharedPreferences = getSharedPreferences("MainPrefs", MODE_PRIVATE);
+        long ts = System.currentTimeMillis();
+        sharedPreferences.edit()
+                .putString("loaded_prefs", "prefs_" + ts)
+                .putLong("0", ts)
+                .putInt("length", 1)
+                .putBoolean(QuickstartPreferences.intro_done, true)
+                .commit();
+        finish();
     }
 }
