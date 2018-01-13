@@ -143,7 +143,7 @@ public class Utils {
         }
     }
 
-    public static void switchTo(final long timestamp, final Context c) {
+    public static void switchTo(final long timestamp, final Context c, final Boolean cancelable) {
         AlertDialog.Builder ad = new AlertDialog.Builder(c);
         ad.setTitle(c.getString(R.string.switcher_dialog_remove_title));
         ad.setMessage(c.getString(R.string.switcher_dialog_remove_message));
@@ -174,13 +174,17 @@ public class Utils {
                 restartApp(c.getApplicationContext());
             }
         });
-        ad.setOnCancelListener(new DialogInterface.OnCancelListener() {
-            public void onCancel(DialogInterface dialog) {}
-        });
-        ad.setNegativeButton(c.getString(R.string.cancel), new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int arg1) {}
-        });
-        ad.setCancelable(true);
+        if (cancelable) {
+            ad.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                public void onCancel(DialogInterface dialog) {
+                }
+            });
+            ad.setNegativeButton(c.getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int arg1) {
+                }
+            });
+        }
+        ad.setCancelable(cancelable);
         ad.show();
     }
     public static void addUser(Context c) {
@@ -197,7 +201,7 @@ public class Utils {
                 .putInt("length", length + 1)
                 .putLong(Integer.toString(length), ts)
                 .commit();
-        switchTo(ts, c);
+        switchTo(ts, c, false);
     }
     static public boolean checkIntroComplete(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("MainPrefs", MODE_PRIVATE);

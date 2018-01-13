@@ -29,11 +29,7 @@ public class AccountManager  extends ListActivity {
         // view
         setContentView(R.layout.activity_account_manager);
 
-        // list
-        ArrayList values = Utils.genList(getApplicationContext());
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, values);
-        setListAdapter(adapter);
+        setList();
 
         // length
         final SharedPreferences sharedPreferences = getSharedPreferences("MainPrefs", MODE_PRIVATE);
@@ -49,6 +45,7 @@ public class AccountManager  extends ListActivity {
             @Override
             public void onClick(View view) {
                 Utils.addUser(activityContext);
+                setList();
             }
         });
 
@@ -115,16 +112,11 @@ public class AccountManager  extends ListActivity {
                                 Log.d(L, "last user");
                                 Utils.addUser(activityContext);
                             } else {
-                                Utils.switchTo(t, activityContext);
+                                Utils.switchTo(t, activityContext, false);
                             }
                         }
 
-                        values = Utils.genList(getApplicationContext());
-
-
-                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(context,
-                                android.R.layout.simple_list_item_1, values);
-                        setListAdapter(adapter);
+                        setList();
                     }
                 });
                 ad.setNegativeButton(button2String, new DialogInterface.OnClickListener() {
@@ -139,12 +131,20 @@ public class AccountManager  extends ListActivity {
             }
         });
     }
+    private void setList() {
+        // list
+        Log.d(L, "setList()");
+        ArrayList values = Utils.genList(getApplicationContext());
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, values);
+        setListAdapter(adapter);
+    }
 
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         final SharedPreferences sharedPreferences = getSharedPreferences("MainPrefs", MODE_PRIVATE);
         long ts = sharedPreferences.getLong(Integer.toString(position), 0);
-        Utils.switchTo(ts, this);
+        Utils.switchTo(ts, this, true);
     }
 
 }
