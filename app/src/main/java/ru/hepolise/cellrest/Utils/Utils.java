@@ -174,7 +174,13 @@ public class Utils {
                 restartApp(c.getApplicationContext());
             }
         });
-        ad.setCancelable(false);
+        ad.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            public void onCancel(DialogInterface dialog) {}
+        });
+        ad.setNegativeButton(c.getString(R.string.cancel), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int arg1) {}
+        });
+        ad.setCancelable(true);
         ad.show();
     }
     public static void addUser(Context c) {
