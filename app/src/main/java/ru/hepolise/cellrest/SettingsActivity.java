@@ -57,6 +57,7 @@ import ru.hepolise.cellrest.R;
 import ru.hepolise.cellrest.GCM.RegistrationIntentService;
 import ru.hepolise.cellrest.Utils.Colorize;
 import ru.hepolise.cellrest.Utils.QuickstartPreferences;
+import ru.hepolise.cellrest.Utils.Utils;
 import yuku.ambilwarna.AmbilWarnaDialog;
 
 import static ru.hepolise.cellrest.R.string.pref_account_login;
@@ -183,7 +184,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Boolean intro = checkIntroComplete(this);
+        Boolean intro = Utils.checkIntroComplete(this);
         Intent intent;
         fa = this;
         if (!intro) {
@@ -252,16 +253,12 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
 
 
-    private boolean checkIntroComplete(Context context) {
-        SharedPreferences sharedPreferences = getSharedPreferences("MainPrefs", MODE_PRIVATE);
-        return (sharedPreferences.getBoolean(QuickstartPreferences.intro_done, false));
-    }
 
 
-    private boolean isFirstStart(Context context) {
-        SharedPreferences sharedPreferences = getSharedPreferences("MainPrefs", MODE_PRIVATE);
-        return (sharedPreferences.getBoolean(QuickstartPreferences.first_start, true));
-    }
+//    private boolean isFirstStart(Context context) {
+//        SharedPreferences sharedPreferences = getSharedPreferences("MainPrefs", MODE_PRIVATE);
+//        return (sharedPreferences.getBoolean(QuickstartPreferences.first_start, true));
+//    }
 
 //    private void placeAccountId(Context context) {
 //        SharedPreferences sharedPreferences = getSharedPreferences("MainPrefs", MODE_PRIVATE);

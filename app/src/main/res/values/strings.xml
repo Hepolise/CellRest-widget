@@ -175,6 +175,8 @@
     <string name="slide3title">Multi Account</string>
     <string name="slide3text">You can add more than one account.
         After adding the widget to the desktop, click on it to select the account</string>
+    <string name="slide4title">Errors</string>
+    <string name="slide4text">If the widget is not updated or if there appears an error message, try to perform a test connection in the general settings and find out what went wrong</string>
 
 
 </resources>

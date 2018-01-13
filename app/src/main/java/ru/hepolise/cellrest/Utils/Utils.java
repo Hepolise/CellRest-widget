@@ -193,4 +193,9 @@ public class Utils {
                 .commit();
         switchTo(ts, c);
     }
+    static public boolean checkIntroComplete(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("MainPrefs", MODE_PRIVATE);
+        return (sharedPreferences.getBoolean(QuickstartPreferences.intro_done, false));
+    }
+
 }

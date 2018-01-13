@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.widget.Toolbar;
 
 import com.github.paolorotolo.appintro.AppIntro;
@@ -21,12 +22,12 @@ import ru.hepolise.cellrest.Utils.QuickstartPreferences;
  */
 
 public class IntroActivity extends AppIntro2 {
+    String L = "cellLogs";
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
 
-        new Colorize().StartColorize(getBaseContext());
 
 //        setFadeAnimation();
         setZoomAnimation();
@@ -52,6 +53,12 @@ public class IntroActivity extends AppIntro2 {
         title = getApplicationContext().getString(R.string.slide3title);
         description = getApplicationContext().getString(R.string.slide3text);
         image = R.drawable.choose_account;
+        backgroundColor = Color.parseColor("#303F9F");
+        addSlide(AppIntroFragment.newInstance(title, description, image, backgroundColor));
+
+        title = getApplicationContext().getString(R.string.slide4title);
+        description = getApplicationContext().getString(R.string.slide4text);
+        image = R.drawable.error;
         backgroundColor = Color.parseColor("#303F9F");
         addSlide(AppIntroFragment.newInstance(title, description, image, backgroundColor));
 
@@ -113,6 +120,10 @@ public class IntroActivity extends AppIntro2 {
                 .putInt("length", 1)
                 .putBoolean(QuickstartPreferences.intro_done, true)
                 .commit();
+        new Colorize().StartColorize(getBaseContext());
         finish();
+    }
+    public void onBackPressed() {
+        Log.d(L, "onBackPressed");
     }
 }
