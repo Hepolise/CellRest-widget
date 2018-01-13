@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$USER_HOME$/development/cellrest/app/app.iml" filepath="$USER_HOME$/development/cellrest/app/app.iml" />
-      <module fileurl="file://$USER_HOME$/development/cellrest/cellrest.iml" filepath="$USER_HOME$/development/cellrest/cellrest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CellRest-widget.iml" filepath="$PROJECT_DIR$/CellRest-widget.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://C:\Users\Hepolise\development\cellrest\app\app.iml" filepath="C:\Users\Hepolise\development\cellrest\app\app.iml" />
+      <module fileurl="file://C:\Users\Hepolise\development\cellrest\cellrest.iml" filepath="C:\Users\Hepolise\development\cellrest\cellrest.iml" />
     </modules>
   </component>
 </project>

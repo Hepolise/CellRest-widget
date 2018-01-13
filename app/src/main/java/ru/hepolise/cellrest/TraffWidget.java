@@ -1,4 +1,4 @@
-package ru.hepolise.cellrest.Widgets;
+package ru.hepolise.cellrest;
 
 import java.io.BufferedReader;
 import java.io.FileOutputStream;
@@ -89,7 +89,7 @@ public class TraffWidget extends AppWidgetProvider {
 //        SharedPreferences sharedPreferences = context.getSharedPreferences("MainPrefs", MODE_PRIVATE);
 //        String account = sharedPreferences.getString(Integer.toString(appWidgetIds[0]), "");
 //
-//        //Log.d(LOG_TAG, "account: " + account + ", widgetID: " + appWidgetIds[0]);
+//        Log.d(LOG_TAG, "account: " + account + ", widgetID: " + appWidgetIds[0]);
 //        if (account.equals("")) {
 //
 //
@@ -137,10 +137,10 @@ public class TraffWidget extends AppWidgetProvider {
         String working_prefs = sharedPreferences.getString("loaded_prefs", "prefs_0");
         long ts = sharedPreferences.getLong("widget_id_" + Integer.toString(appWidgetId), 0);
         if (working_prefs.equals("prefs_" + ts)) {
-            //Log.d(LOG_TAG, "Using default prefs for update widget");
+            Log.d(LOG_TAG, "Using default prefs for update widget");
             shrpr = PreferenceManager.getDefaultSharedPreferences(context);
         } else {
-            //Log.d(LOG_TAG, "Using prefs_" + ts +" for update widget");
+            Log.d(LOG_TAG, "Using prefs_" + ts +" for update widget");
             shrpr = context.getSharedPreferences("prefs_" + ts, MODE_PRIVATE);
         }
 
@@ -180,10 +180,10 @@ public class TraffWidget extends AppWidgetProvider {
             String working_prefs = sharedPreferences.getString("loaded_prefs", "prefs_0");
             long ts = sharedPreferences.getLong("widget_id_" + Integer.toString(id), 0);
             if (working_prefs.equals("prefs_" + ts)) {
-                //Log.d(LOG_TAG, "Using default prefs for update widget");
+                Log.d(LOG_TAG, "Using default prefs for update widget");
                 shrpr = PreferenceManager.getDefaultSharedPreferences(context);
             } else {
-                //Log.d(LOG_TAG, "Using prefs_" + ts +" for update widget");
+                Log.d(LOG_TAG, "Using prefs_" + ts +" for update widget");
                 shrpr = context.getSharedPreferences("prefs_" + ts, MODE_PRIVATE);
             }
             Boolean setting_update = shrpr.getBoolean(QuickstartPreferences.setting_update, true);
@@ -290,7 +290,7 @@ public class TraffWidget extends AppWidgetProvider {
 //        updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
 //        pIntent = PendingIntent.getBroadcast(context, widgetId, updateIntent, 0);
 
-        //Log.d(LOG_TAG, "setting intent");
+        Log.d(LOG_TAG, "setting intent");
         widgetView.setOnClickPendingIntent(getStringResourceByName("inet" + res, context), pIntent);
         widgetView.setOnClickPendingIntent(getStringResourceByName("calls" + res, context), pIntent);
         widgetView.setOnClickPendingIntent(getStringResourceByName("sms" + res, context), pIntent);
@@ -317,14 +317,14 @@ public class TraffWidget extends AppWidgetProvider {
         }
         p = p * 10;
         if (Float.toString(p).endsWith("0")) {
-            //Log.d(LOG_TAG, "a true " + Integer.toString(Math.round(p/10)));
+            Log.d(LOG_TAG, "a true " + Integer.toString(Math.round(p/10)));
             return Integer.toString(Math.round(p/10)) + result;
         } else {
-            //Log.d(LOG_TAG, "Received: " + Float.toString(p));
+            Log.d(LOG_TAG, "Received: " + Float.toString(p));
             p = Math.round(p);
-            //Log.d(LOG_TAG, "round: " + Float.toString(p));
+            Log.d(LOG_TAG, "round: " + Float.toString(p));
             p = p / 10;
-            //Log.d(LOG_TAG, "division: " + Float.toString(p));
+            Log.d(LOG_TAG, "division: " + Float.toString(p));
             return Float.toString(p) + result;
         }
 
@@ -350,7 +350,7 @@ public class TraffWidget extends AppWidgetProvider {
 
         SharedPreferences sharedPreferences = context.getSharedPreferences("MainPrefs", MODE_PRIVATE);
         long ts = sharedPreferences.getLong("widget_id_"+Integer.toString(widgetID), 0);
-        //Log.d(LOG_TAG, "widget id: " + widgetID);
+        Log.d(LOG_TAG, "widget id: " + widgetID);
 
         Intent updateIntent;
         RemoteViews widgetView = new RemoteViews(context.getPackageName(),
@@ -359,7 +359,7 @@ public class TraffWidget extends AppWidgetProvider {
         if (ts == 0) {
             content = context.getString(R.string.choose_account);
 
-            //Log.d(LOG_TAG, "ts is null");
+            Log.d(LOG_TAG, "ts is null");
             //updateIntent = new Intent(context, AccountChooser.class);
             updateIntent = Intent.makeRestartActivityTask(new ComponentName(context, AccountChooser.class));
             updateIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -374,12 +374,12 @@ public class TraffWidget extends AppWidgetProvider {
         }
         String loaded = sharedPreferences.getString("loaded_prefs", "prefs_0");
         SharedPreferences shrpr;
-        //Log.d(LOG_TAG, "TS: " + ts + "; loaded: " + loaded);
+        Log.d(LOG_TAG, "TS: " + ts + "; loaded: " + loaded);
         if (loaded.equals("prefs_" + Long.toString(ts))) {
-            //Log.d(LOG_TAG, "Loaded prefs equals (from traff widget)");
+            Log.d(LOG_TAG, "Loaded prefs equals (from traff widget)");
             shrpr = PreferenceManager.getDefaultSharedPreferences(context);
         } else {
-            //Log.d(LOG_TAG, "Loaded prefs by TS (from traff widget)");
+            Log.d(LOG_TAG, "Loaded prefs by TS (from traff widget)");
             shrpr = context.getSharedPreferences("prefs_" + Long.toString(ts), MODE_PRIVATE);
         }
         //Load vars
@@ -506,7 +506,7 @@ public class TraffWidget extends AppWidgetProvider {
 
         //update
         if (content.equals(context.getString(R.string.updating))) {
-            //Log.d(LOG_TAG, "update");
+            Log.d(LOG_TAG, "update");
 
             Integer[] params = { widgetID };
             new ProgressTask().execute(params);
@@ -517,7 +517,7 @@ public class TraffWidget extends AppWidgetProvider {
 
         setAllTextTuNull(widgetView);
         if (f_update) {
-            //Log.d(LOG_TAG, "force update");
+            Log.d(LOG_TAG, "force update");
             //if widget is reloaded by tap
             shrpr.edit().putString(QuickstartPreferences.update, "1").apply();
 
@@ -535,8 +535,8 @@ public class TraffWidget extends AppWidgetProvider {
             shrpr.edit().putBoolean(QuickstartPreferences.f_update, false).apply();
         } else {
 
-            if (ok.equals(""))  {
-                //Log.d(LOG_TAG, "ok is empty");
+            if (ok.equals("") || ts == 0)  {
+                Log.d(LOG_TAG, "ok is empty or ts is null");
                 if (!content.equals(context.getString(R.string.updating)) && !content.equals(context.getString(R.string.choose_account))) {
                     //if we have no data by server on first run
                     if (font.equals("n")) {
@@ -550,9 +550,9 @@ public class TraffWidget extends AppWidgetProvider {
                         widgetView.setTextColor(R.id.text_upd_bold, color);
                     }
                 } else {
-                    //Log.d(LOG_TAG, "But content is update");
+                    Log.d(LOG_TAG, "But content is update");
                     if (content.equals(context.getString(R.string.choose_account))) {
-                        //Log.d(LOG_TAG, "content is to choose account");
+                        Log.d(LOG_TAG, "content is to choose account");
                         if (font.equals("n")) {
                             widgetView.setTextViewText(R.id.text_upd, context.getString(R.string.choose_account));
                             widgetView.setTextColor(R.id.text_upd, color);
@@ -577,7 +577,7 @@ public class TraffWidget extends AppWidgetProvider {
                     }
                 }
             } else {
-                //Log.d(LOG_TAG, "Everything is OK, setting full widget view");
+                Log.d(LOG_TAG, "Everything is OK, setting full widget view");
                 String sms;
                 String min;
                 String inet;
@@ -750,7 +750,7 @@ public class TraffWidget extends AppWidgetProvider {
                         //testing new logic for dtr
                         + "&test"
                 );
-                //Log.d(LOG_TAG, url.toString());
+                Log.d(LOG_TAG, url.toString());
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 reader= new BufferedReader(new InputStreamReader(conn.getInputStream()));
                 StringBuilder buf=new StringBuilder();
@@ -781,10 +781,10 @@ public class TraffWidget extends AppWidgetProvider {
                     String working_prefs = sharedPreferences.getString("loaded_prefs", "prefs_0");
                     long ts = sharedPreferences.getLong("widget_id_" + Integer.toString(id), 0);
                     if (working_prefs.equals("prefs_" + ts)) {
-                        //Log.d(LOG_TAG, "Using default prefs for update widget");
+                        Log.d(LOG_TAG, "Using default prefs for update widget");
                         shrpr = PreferenceManager.getDefaultSharedPreferences(contextglobal);
                     } else {
-                        //Log.d(LOG_TAG, "Using prefs_" + ts +" for update widget");
+                        Log.d(LOG_TAG, "Using prefs_" + ts +" for update widget");
                         shrpr = contextglobal.getSharedPreferences("prefs_" + ts, MODE_PRIVATE);
                     }
                     //save data

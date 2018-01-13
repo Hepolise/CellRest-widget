@@ -16,8 +16,8 @@ import java.util.ArrayList;
 import ru.hepolise.cellrest.R;
 import ru.hepolise.cellrest.SettingsActivity;
 import ru.hepolise.cellrest.Utils.Utils;
-import ru.hepolise.cellrest.Widgets.TraffWidget;
-import ru.hepolise.cellrest.Widgets.WidgetText;
+import ru.hepolise.cellrest.TraffWidget;
+import ru.hepolise.cellrest.WidgetText;
 
 import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE;
 

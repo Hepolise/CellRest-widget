@@ -23,7 +23,7 @@
         </activity>
 
         <receiver
-            android:name=".Widgets.TraffWidget"
+            android:name=".TraffWidget"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/widget_name">
             <intent-filter>
@@ -36,7 +36,7 @@
                 android:resource="@xml/widget_metadata" />
         </receiver>
         <receiver
-            android:name=".Widgets.WidgetText"
+            android:name=".WidgetText"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/widget_name">
             <intent-filter>

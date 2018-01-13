@@ -1,4 +1,4 @@
-package ru.hepolise.cellrest.Widgets;
+package ru.hepolise.cellrest;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -71,7 +71,7 @@ public class WidgetText extends AppWidgetProvider {
     @Override
     public void onEnabled(Context context) {
         super.onEnabled(context);
-        Log.d(LOG_TAG, "onEnabled: ");
+        //Log.d(LOG_TAG, "onEnabled: ");
     }
 
     @Override
@@ -103,10 +103,10 @@ public class WidgetText extends AppWidgetProvider {
 //        int max_w = newOptions.getInt(OPTION_APPWIDGET_MAX_WIDTH);
 //        int min_h = newOptions.getInt(OPTION_APPWIDGET_MIN_HEIGHT);
 //        int min_w = newOptions.getInt(OPTION_APPWIDGET_MIN_WIDTH);
-////        Log.d(LOG_TAG, "max_h: " + max_h);
-////        Log.d(LOG_TAG, "max_w: " + max_w);
-////        Log.d(LOG_TAG, "min_h: " + min_h);
-////        Log.d(LOG_TAG, "min_w: " + min_w);
+////        //Log.d(LOG_TAG, "max_h: " + max_h);
+////        //Log.d(LOG_TAG, "max_w: " + max_w);
+////        //Log.d(LOG_TAG, "min_h: " + min_h);
+////        //Log.d(LOG_TAG, "min_w: " + min_w);
 //    }
 
     @Override
@@ -130,10 +130,10 @@ public class WidgetText extends AppWidgetProvider {
             String working_prefs = sharedPreferences.getString("loaded_prefs", "prefs_0");
             long ts = sharedPreferences.getLong("widget_id_" + Integer.toString(id), 0);
             if (working_prefs.equals("prefs_" + ts)) {
-                Log.d(LOG_TAG, "Using default prefs for update widget");
+                //Log.d(LOG_TAG, "Using default prefs for update widget");
                 sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
             } else {
-                Log.d(LOG_TAG, "Using prefs_" + ts +" for update widget");
+                //Log.d(LOG_TAG, "Using prefs_" + ts +" for update widget");
                 sharedPreferences = context.getSharedPreferences("prefs_" + ts, MODE_PRIVATE);
             }
             Boolean setting_update = sharedPreferences.getBoolean(QuickstartPreferences.setting_update, true);
@@ -154,12 +154,12 @@ public class WidgetText extends AppWidgetProvider {
 
     public String updateWidget(Context context, AppWidgetManager appWidgetManager,
                                int widgetID, String content) {
-        Log.d(LOG_TAG, "upd 11");
+        //Log.d(LOG_TAG, "upd 11");
 
 
         SharedPreferences sharedPreferences = context.getSharedPreferences("MainPrefs", MODE_PRIVATE);
         long ts = sharedPreferences.getLong("widget_id_"+Integer.toString(widgetID), 0);
-        Log.d(LOG_TAG, "widget id: " + widgetID);
+        //Log.d(LOG_TAG, "widget id: " + widgetID);
 
         Intent updateIntent;
         RemoteViews widgetView = new RemoteViews(context.getPackageName(),
@@ -168,7 +168,7 @@ public class WidgetText extends AppWidgetProvider {
         if (ts == 0) {
             content = context.getString(R.string.choose_account);
 
-            Log.d(LOG_TAG, "ts is null");
+            //Log.d(LOG_TAG, "ts is null");
             //updateIntent = new Intent(context, AccountChooser.class);
             updateIntent = Intent.makeRestartActivityTask(new ComponentName(context, AccountChooser.class));
             updateIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -184,7 +184,7 @@ public class WidgetText extends AppWidgetProvider {
         String loaded = sharedPreferences.getString("loaded_prefs", "prefs_0");
         SharedPreferences shrpr;
         if (loaded.equals("prefs_" + Long.toString(ts))) {
-            Log.d(LOG_TAG, "Loaded prefs equals (from widget)");
+            //Log.d(LOG_TAG, "Loaded prefs equals (from widget)");
             shrpr = PreferenceManager.getDefaultSharedPreferences(context);
         } else {
             shrpr = context.getSharedPreferences("prefs_" + Long.toString(ts), MODE_PRIVATE);
@@ -203,10 +203,10 @@ public class WidgetText extends AppWidgetProvider {
         //Reformat login
         if (login.startsWith("+7")) {
             login = login.substring(2);
-            Log.d(LOG_TAG, "+7 change: " + login);
+            //Log.d(LOG_TAG, "+7 change: " + login);
         } else if (login.startsWith("7") || login.startsWith("8")){
             login = login.substring(1);
-            Log.d(LOG_TAG, "7/8 change: " + login);
+            //Log.d(LOG_TAG, "7/8 change: " + login);
         }
         
 
@@ -229,20 +229,20 @@ public class WidgetText extends AppWidgetProvider {
         if (loc.equals("def")) {
             loc = locale;
         }
-        Log.d(LOG_TAG, loc);
+        //Log.d(LOG_TAG, loc);
 
         //Load timezone
         tz = TimeZone.getDefault().getID();
-        Log.d(LOG_TAG, tz);
+        //Log.d(LOG_TAG, tz);
 
         //loading app version
         int versionCode = BuildConfig.VERSION_CODE;
         version = Integer.toString(versionCode);
 
         if (content.equals(context.getString(R.string.updating))) {
-            Log.d(LOG_TAG, "The content is for update");
+            //Log.d(LOG_TAG, "The content is for update");
             if (f_update) {
-                Log.d(LOG_TAG, "force update");
+                //Log.d(LOG_TAG, "force update");
                 shrpr.edit().putBoolean(QuickstartPreferences.f_update, false).apply();
             } else {
                 content = shrpr.getString(QuickstartPreferences.content, context.getString(R.string.updating));
@@ -267,20 +267,20 @@ public class WidgetText extends AppWidgetProvider {
         String p = "";
         try {
             p = pattern.toString();
-            Log.d(LOG_TAG, "Success run");
+            //Log.d(LOG_TAG, "Success run");
         } catch (NullPointerException e) {
-            Log.d(LOG_TAG, "First run");
+            //Log.d(LOG_TAG, "First run");
             p = "check_days check_bal check_ts";
         }
 
-        Log.d(LOG_TAG, p);
+        //Log.d(LOG_TAG, p);
 
 
         int f = content.indexOf("\n");
         int s = content.indexOf("\n", f+1);
         int t = content.indexOf("\n", s+1);
         int a = content.length();
-        Log.d(LOG_TAG, Integer.toString(f) + " " + Integer.toString(s) + " " + Integer.toString(t) + " " + Integer.toString(a));
+        //Log.d(LOG_TAG, Integer.toString(f) + " " + Integer.toString(s) + " " + Integer.toString(t) + " " + Integer.toString(a));
         //int lines = 3;
         String newContent = "";
         if ( ! content.equals(context.getString(R.string.error)) && ! content.equals(context.getString(R.string.updating)) && ! content.equals(context.getString(R.string.choose_account)) ) {
@@ -298,8 +298,8 @@ public class WidgetText extends AppWidgetProvider {
             content = newContent;
         }
 
-//        Log.d(LOG_TAG, "newc: " + newContent);
-//        Log.d(LOG_TAG, "c: " + content);
+//        //Log.d(LOG_TAG, "newc: " + newContent);
+//        //Log.d(LOG_TAG, "c: " + content);
 
 
 
@@ -348,7 +348,7 @@ public class WidgetText extends AppWidgetProvider {
         //Setting content to widget and updating it
         widgetView.setTextViewText(res, content);
         widgetView.setTextColor(res, color);
-        Log.d(LOG_TAG, "setting pending intent");
+        //Log.d(LOG_TAG, "setting pending intent");
         widgetView.setOnClickPendingIntent(res, pIntent);
         appWidgetManager.updateAppWidget(widgetID, widgetView);
         return (null);
@@ -393,7 +393,7 @@ public class WidgetText extends AppWidgetProvider {
                         //testing new logic for dtr
                         + "&test"
                 );
-                Log.d(LOG_TAG, "URL: " + url);
+                //Log.d(LOG_TAG, "URL: " + url);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 reader= new BufferedReader(new InputStreamReader(conn.getInputStream()));
                 StringBuilder buf=new StringBuilder();
@@ -411,7 +411,7 @@ public class WidgetText extends AppWidgetProvider {
                 return(buffer);
 
             } catch (IOException e) {
-                Log.d(LOG_TAG, e.getMessage());
+                //Log.d(LOG_TAG, e.getMessage());
                 updateWidget(contextglobal, appWidgetManagerglobal, id, "error");
                 return e.getMessage();
             }
