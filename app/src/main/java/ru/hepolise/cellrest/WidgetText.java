@@ -270,7 +270,7 @@ public class WidgetText extends AppWidgetProvider {
             //Log.d(LOG_TAG, "Success run");
         } catch (NullPointerException e) {
             //Log.d(LOG_TAG, "First run");
-            p = "check_days check_bal check_ts";
+            p = "check_days check_data check_bal check_ts";
         }
 
         //Log.d(LOG_TAG, p);
@@ -283,11 +283,15 @@ public class WidgetText extends AppWidgetProvider {
         //Log.d(LOG_TAG, Integer.toString(f) + " " + Integer.toString(s) + " " + Integer.toString(t) + " " + Integer.toString(a));
         //int lines = 3;
         String newContent = "";
-        if ( ! content.equals(context.getString(R.string.error)) && ! content.equals(context.getString(R.string.updating)) && ! content.equals(context.getString(R.string.choose_account)) ) {
+        if ( ! content.equals(context.getString(R.string.error))
+                && ! content.equals(context.getString(R.string.updating))
+                && ! content.equals(context.getString(R.string.choose_account)) ) {
             if (p.contains("check_days")) {
-                newContent = content.substring(0, f) + "\n";
+                newContent = content.substring(0, f);
             }
-            newContent = newContent +  content.substring(f+1, s);
+            if (p.contains("check_data")) {
+                newContent = newContent + content.substring(f, s);
+            }
             if (p.contains("check_bal")) {
                 newContent = newContent + content.substring(s, t);
             }

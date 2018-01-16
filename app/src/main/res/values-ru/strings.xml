@@ -55,28 +55,29 @@
         <item>full</item>
         <item>calc</item>
     </string-array>
-    <string-array name="pattern_values">
-        <item>check_days</item>
-        <!--<item>check_inet</item>
-        <item>check_mins</item>
-        <item>check_sms</item>-->
-        <item>check_bal</item>
-        <item>check_ts</item>
-    </string-array>
+    <!--<string-array name="pattern_values">-->
+        <!--<item>check_days</item>-->
+        <!--&lt;!&ndash;<item>check_inet</item>-->
+        <!--<item>check_mins</item>-->
+        <!--<item>check_sms</item>&ndash;&gt;-->
+        <!--<item>check_bal</item>-->
+        <!--<item>check_ts</item>-->
+    <!--</string-array>-->
     <string-array name="pattern_titles">
         <item>Дни до cброса и восстановления</item>
+        <item>Данные</item>
         <!--<item>Интернет</item>
         <item>Минуты</item>
         <item>СМС</item>-->
         <item>Баланс</item>
         <item>Время обновления</item>
     </string-array>
-    <string-array name="pattern_def_values">
-        <item>check_days</item>
-        <item>check_bal</item>
-        <item>check_ts</item>
-        <item>hidden</item>
-    </string-array>
+    <!--<string-array name="pattern_def_values">-->
+        <!--<item>check_days</item>-->
+        <!--<item>check_bal</item>-->
+        <!--<item>check_ts</item>-->
+        <!--<item>hidden</item>-->
+    <!--</string-array>-->
     <string name="button_desc">Подключается к серверу для тестирования входа в аккаунт</string>
     <string name="button_title">Пробное подключение</string>
     <string name="button_colorpicker_desc">Выбор цвета виджета</string>
