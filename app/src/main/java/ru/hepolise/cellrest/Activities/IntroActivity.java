@@ -113,13 +113,16 @@ public class IntroActivity extends AppIntro2 {
     private void apply() {
         // making the first account the part of multi account
         SharedPreferences sharedPreferences = getSharedPreferences("MainPrefs", MODE_PRIVATE);
-        long ts = System.currentTimeMillis();
-        sharedPreferences.edit()
-                .putString("loaded_prefs", "prefs_" + ts)
-                .putLong("0", ts)
-                .putInt("length", 1)
-                .putBoolean(QuickstartPreferences.intro_done, true)
-                .commit();
+        if (!sharedPreferences.getBoolean(QuickstartPreferences.intro_done, false)) {
+            Log.d(L,"Intro is not done");
+            long ts = System.currentTimeMillis();
+            sharedPreferences.edit()
+                    .putString("loaded_prefs", "prefs_" + ts)
+                    .putLong("0", ts)
+                    .putInt("length", 1)
+                    .putBoolean(QuickstartPreferences.intro_done, true)
+                    .commit();
+        }
         new Colorize().StartColorize(getBaseContext());
         finish();
     }

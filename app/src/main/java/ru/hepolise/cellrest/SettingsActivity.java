@@ -212,9 +212,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
 
         menu.add(0, 1, 0, getString(R.string.help_title));
-
-
         menu.add(0, 2, 0, getString(R.string.about_title));
+        menu.add(0, 3, 0, getString(R.string.intro));
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
         return super.onCreateOptionsMenu(menu);
@@ -230,6 +229,10 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         }
         if (id.equals("2")) {
             Intent intent = new Intent(this, AboutActivity.class);
+            startActivity(intent);
+        }
+        if (id.equals("3")) {
+            Intent intent = new Intent(this, IntroActivity.class);
             startActivity(intent);
         }
         if (item.getItemId() == R.id.add) {
