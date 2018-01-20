@@ -286,16 +286,23 @@ public class WidgetText extends AppWidgetProvider {
         if ( ! content.equals(context.getString(R.string.error))
                 && ! content.equals(context.getString(R.string.updating))
                 && ! content.equals(context.getString(R.string.choose_account)) ) {
+            Boolean nl = false;
             if (p.contains("check_days")) {
                 newContent = content.substring(0, f);
+                nl = true;
             }
             if (p.contains("check_data")) {
+                if (!nl) f=f+1;
                 newContent = newContent + content.substring(f, s);
+                nl = true;
             }
             if (p.contains("check_bal")) {
+                if (!nl) s=s+1;
                 newContent = newContent + content.substring(s, t);
+                nl = true;
             }
             if (p.contains("check_ts")) {
+                if (!nl) t=t+1;
                 newContent = newContent + content.substring(t, a);
             }
 
