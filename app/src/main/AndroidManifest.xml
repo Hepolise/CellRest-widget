@@ -60,7 +60,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activities.AccountChooser"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:excludeFromRecents="true">
         </activity>
         <activity
             android:name=".Activities.AccountManager"

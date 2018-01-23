@@ -44,7 +44,7 @@ public class AccountManager  extends ListActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Utils.addUser(activityContext);
+                Utils.addUser(activityContext, true);
                 setList();
             }
         });
@@ -79,16 +79,17 @@ public class AccountManager  extends ListActivity {
                         // deleting
                         ts = sharedPreferences.getLong(Integer.toString(deleting), 0);
                         long ts_del = sharedPreferences.getLong(Integer.toString(deleting), 0);
-                        int textWidgetId = sharedPreferences.getInt("WidgetText_by_ts_" + ts, 0);
-                        int widgetId = sharedPreferences.getInt("TraffWidget_by_ts_" + ts, 0);
-                        sharedPreferences.edit()
-                                .remove(Integer.toString(deleting))
-                                .remove("WidgetText_by_ts_" + ts)
-                                .remove("TraffWidget_by_ts_" + ts)
-                                .remove("widget_id_"+textWidgetId)
-                                .remove("widget_id_"+widgetId)
-                                .commit();
-                        Utils.clearFile("prefs_" + Long.toString(ts), getApplicationContext());
+//                        int textWidgetId = sharedPreferences.getInt("WidgetText_by_ts_" + ts, 0);
+//                        int widgetId = sharedPreferences.getInt("TraffWidget_by_ts_" + ts, 0);
+//                        sharedPreferences.edit()
+//                                .remove(Integer.toString(deleting))
+//                                .remove("WidgetText_by_ts_" + ts)
+//                                .remove("TraffWidget_by_ts_" + ts)
+//                                .remove("widget_id_"+textWidgetId)
+//                                .remove("widget_id_"+widgetId)
+//                                .commit();
+                        //Utils.clearFile("prefs_" + Long.toString(ts), getApplicationContext());
+                        Utils.deletePrefs("prefs_" + Long.toString(ts), getApplicationContext());
 
                         String loaded_prefs = sharedPreferences.getString("loaded_prefs", "prefs_0");
                         if (deleting != length - 1) { // if we delete not last account
@@ -110,9 +111,9 @@ public class AccountManager  extends ListActivity {
                             long t = sharedPreferences.getLong(Integer.toString(deleting - 1), 0);
                             if (deleting == 0) {
                                 Log.d(L, "last user");
-                                Utils.addUser(activityContext);
+                                Utils.addUser(activityContext, false);
                             } else {
-                                Utils.switchTo(t, activityContext, false);
+                                Utils.switchTo(t, activityContext, false, false);
                             }
                         }
 
@@ -144,7 +145,7 @@ public class AccountManager  extends ListActivity {
     protected void onListItemClick(ListView l, View v, int position, long id) {
         final SharedPreferences sharedPreferences = getSharedPreferences("MainPrefs", MODE_PRIVATE);
         long ts = sharedPreferences.getLong(Integer.toString(position), 0);
-        Utils.switchTo(ts, this, true);
+        Utils.switchTo(ts, this, true, true);
     }
 
 }

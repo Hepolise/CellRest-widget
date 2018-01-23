@@ -92,6 +92,9 @@ public class WidgetText extends AppWidgetProvider {
     @Override
     public void onDeleted(Context context, int[] appWidgetIds) {
         super.onDeleted(context, appWidgetIds);
+        Log.i(LOG_TAG, "deleted: " + appWidgetIds[0]);
+        SharedPreferences sharedPreferences = context.getSharedPreferences("MainPrefs", MODE_PRIVATE);
+        sharedPreferences.edit().remove("widget_id_" + Integer.toString(appWidgetIds[0])).commit();
     }
 
 //    @Override
@@ -161,11 +164,21 @@ public class WidgetText extends AppWidgetProvider {
         long ts = sharedPreferences.getLong("widget_id_"+Integer.toString(widgetID), 0);
         //Log.d(LOG_TAG, "widget id: " + widgetID);
 
+        String loaded = sharedPreferences.getString("loaded_prefs", "prefs_0");
+        SharedPreferences shrpr;
+        if (loaded.equals("prefs_" + Long.toString(ts))) {
+            //Log.d(LOG_TAG, "Loaded prefs equals (from widget)");
+            shrpr = PreferenceManager.getDefaultSharedPreferences(context);
+        } else {
+            shrpr = context.getSharedPreferences("prefs_" + Long.toString(ts), MODE_PRIVATE);
+        }
+
+
         Intent updateIntent;
         RemoteViews widgetView = new RemoteViews(context.getPackageName(),
                 R.layout.widget_text);
         android.app.PendingIntent pIntent;
-        if (ts == 0) {
+        if (ts == 0 || "def".equals(shrpr.getString("thisPrefs", "def"))) {
             content = context.getString(R.string.choose_account);
 
             //Log.d(LOG_TAG, "ts is null");
@@ -181,14 +194,7 @@ public class WidgetText extends AppWidgetProvider {
             updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetID);
             pIntent = PendingIntent.getBroadcast(context, widgetID, updateIntent, 0);
         }
-        String loaded = sharedPreferences.getString("loaded_prefs", "prefs_0");
-        SharedPreferences shrpr;
-        if (loaded.equals("prefs_" + Long.toString(ts))) {
-            //Log.d(LOG_TAG, "Loaded prefs equals (from widget)");
-            shrpr = PreferenceManager.getDefaultSharedPreferences(context);
-        } else {
-            shrpr = context.getSharedPreferences("prefs_" + Long.toString(ts), MODE_PRIVATE);
-        }
+
         //Load vars
         login = shrpr.getString(QuickstartPreferences.login, "");
         op = shrpr.getString(QuickstartPreferences.op_list, "");

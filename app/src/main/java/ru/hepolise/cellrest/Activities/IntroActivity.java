@@ -122,6 +122,10 @@ public class IntroActivity extends AppIntro2 {
                     .putInt("length", 1)
                     .putBoolean(QuickstartPreferences.intro_done, true)
                     .commit();
+            sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            sharedPreferences.edit()
+                    .putString("thisPrefs", "pref:" + Long.toString(ts))
+                    .commit();
         }
         new Colorize().StartColorize(getBaseContext());
         finish();

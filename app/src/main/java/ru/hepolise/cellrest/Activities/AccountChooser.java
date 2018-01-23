@@ -98,7 +98,7 @@ public class AccountChooser extends ListActivity {
         }
         sharedPreferences.edit()
                 .putLong("widget_id_"+Integer.toString(appWidgetId), ts)
-                .putInt(from+"_by_ts_" + Long.toString(ts), appWidgetId)
+                //.putInt(from+"_by_ts_" + Long.toString(ts), appWidgetId)
                 .commit();
         //Context context = getApplicationContext();
         Intent updateIntent = null;

@@ -117,6 +117,9 @@ public class TraffWidget extends AppWidgetProvider {
     @Override
     public void onDeleted(Context context, int[] appWidgetIds) {
         super.onDeleted(context, appWidgetIds);
+        Log.i(LOG_TAG, "deleted: " + appWidgetIds[0]);
+        SharedPreferences sharedPreferences = context.getSharedPreferences("MainPrefs", MODE_PRIVATE);
+        sharedPreferences.edit().remove("widget_id_" + Integer.toString(appWidgetIds[0])).commit();
     }
     @Override
     public void onAppWidgetOptionsChanged (Context context,
@@ -133,7 +136,7 @@ public class TraffWidget extends AppWidgetProvider {
 
 
         SharedPreferences shrpr;
-        SharedPreferences sharedPreferences = context.getSharedPreferences("MainPrefs", MODE_PRIVATE);;
+        SharedPreferences sharedPreferences = context.getSharedPreferences("MainPrefs", MODE_PRIVATE);
         String working_prefs = sharedPreferences.getString("loaded_prefs", "prefs_0");
         long ts = sharedPreferences.getLong("widget_id_" + Integer.toString(appWidgetId), 0);
         if (working_prefs.equals("prefs_" + ts)) {
@@ -352,14 +355,26 @@ public class TraffWidget extends AppWidgetProvider {
         long ts = sharedPreferences.getLong("widget_id_"+Integer.toString(widgetID), 0);
         Log.d(LOG_TAG, "widget id: " + widgetID);
 
+        String loaded = sharedPreferences.getString("loaded_prefs", "prefs_0");
+        SharedPreferences shrpr;
+        Log.d(LOG_TAG, "TS: " + ts + "; loaded: " + loaded);
+        if (loaded.equals("prefs_" + Long.toString(ts))) {
+            Log.d(LOG_TAG, "Loaded prefs equals (from traff widget)");
+            shrpr = PreferenceManager.getDefaultSharedPreferences(context);
+        } else {
+            Log.d(LOG_TAG, "Loaded prefs by TS (from traff widget)");
+            shrpr = context.getSharedPreferences("prefs_" + Long.toString(ts), MODE_PRIVATE);
+        }
+
+
         Intent updateIntent;
         RemoteViews widgetView = new RemoteViews(context.getPackageName(),
                 R.layout.widget);
         android.app.PendingIntent pIntent;
-        if (ts == 0) {
+        if (ts == 0 || "def".equals(shrpr.getString("thisPrefs", "def"))) {
             content = context.getString(R.string.choose_account);
 
-            Log.d(LOG_TAG, "ts is null");
+            Log.d(LOG_TAG, "ts is null or shared prefs are not initialized");
             //updateIntent = new Intent(context, AccountChooser.class);
             updateIntent = Intent.makeRestartActivityTask(new ComponentName(context, AccountChooser.class));
             updateIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -372,16 +387,7 @@ public class TraffWidget extends AppWidgetProvider {
             updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetID);
             pIntent = PendingIntent.getBroadcast(context, widgetID, updateIntent, 0);
         }
-        String loaded = sharedPreferences.getString("loaded_prefs", "prefs_0");
-        SharedPreferences shrpr;
-        Log.d(LOG_TAG, "TS: " + ts + "; loaded: " + loaded);
-        if (loaded.equals("prefs_" + Long.toString(ts))) {
-            Log.d(LOG_TAG, "Loaded prefs equals (from traff widget)");
-            shrpr = PreferenceManager.getDefaultSharedPreferences(context);
-        } else {
-            Log.d(LOG_TAG, "Loaded prefs by TS (from traff widget)");
-            shrpr = context.getSharedPreferences("prefs_" + Long.toString(ts), MODE_PRIVATE);
-        }
+
         //Load vars
         login = shrpr.getString(QuickstartPreferences.login, "");
         op = shrpr.getString(QuickstartPreferences.op_list, "");
@@ -516,7 +522,7 @@ public class TraffWidget extends AppWidgetProvider {
         }
 
         setAllTextTuNull(widgetView);
-        if (f_update && ts != 0) {
+        if (f_update && ! content.equals(context.getString(R.string.choose_account))) {
             Log.d(LOG_TAG, "force update");
             //if widget is reloaded by tap
             shrpr.edit().putString(QuickstartPreferences.update, "1").apply();
@@ -535,8 +541,8 @@ public class TraffWidget extends AppWidgetProvider {
             shrpr.edit().putBoolean(QuickstartPreferences.f_update, false).apply();
         } else {
 
-            if (ok.equals("") || ts == 0)  {
-                Log.d(LOG_TAG, "ok is empty or ts is null");
+            if (ok.equals("") || content.equals(context.getString(R.string.choose_account)))  {
+                Log.d(LOG_TAG, "ok is empty or ts is null or prefs are not init");
                 if (!content.equals(context.getString(R.string.updating)) && !content.equals(context.getString(R.string.choose_account))) {
                     //if we have no data by server on first run
                     if (font.equals("n")) {

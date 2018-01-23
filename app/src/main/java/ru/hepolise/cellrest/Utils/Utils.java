@@ -63,11 +63,14 @@ public class Utils {
         }
 
     }
-    public static void deleteFile(String inputPath, String inputFile) {
+    public static void deletePrefs(String prefs, Context c) {
         try {
-            Log.d(L, "del file: " + inputPath + inputFile);
+            PackageManager m = c.getPackageManager();
+            String s = c.getPackageName();
+            PackageInfo p = m.getPackageInfo(s, 0);
+            Log.d(L, "del file: " + p.applicationInfo.dataDir + "/shared_prefs/" + prefs + ".xml");
             // delete the original file
-            Boolean res = new File(inputPath + inputFile).delete();
+            Boolean res = new File(p.applicationInfo.dataDir + "/shared_prefs/" + prefs + ".xml").delete();
             Log.d(L, "res delete: " + res);
         } catch (Exception e) {
             Log.e(L, e.getMessage());
@@ -75,11 +78,11 @@ public class Utils {
     }
     public static void clearFile(String prefs, Context c) {
         Log.d(L, "clearing: " + prefs);
-        SharedPreferences sharedPreferences = c.getSharedPreferences(prefs, 0);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("Deleted_prefs", "this");
-        editor.clear();
-        editor.commit();
+        SharedPreferences sharedPreferences = c.getSharedPreferences(prefs, Context.MODE_PRIVATE);
+        sharedPreferences.edit()
+                .putString("Deleted_prefs", "this")
+                .clear()
+                .commit();
     }
     public static ArrayList genList(Context c) {
         ArrayList<String> values = new ArrayList<String>();
@@ -143,7 +146,7 @@ public class Utils {
         }
     }
 
-    public static void switchTo(final long timestamp, final Context c, final Boolean cancelable) {
+    public static void switchTo(final long timestamp, final Context c, final Boolean cancelable, final Boolean saveSettings) {
         AlertDialog.Builder ad = new AlertDialog.Builder(c);
         ad.setTitle(c.getString(R.string.switcher_dialog_remove_title));
         ad.setMessage(c.getString(R.string.switcher_dialog_remove_message));
@@ -152,7 +155,11 @@ public class Utils {
                 long ts = timestamp;
                 SharedPreferences sharedPreferences = c.getSharedPreferences("MainPrefs", MODE_PRIVATE);
                 SettingsActivity.fa.finishAffinity();
-                saveSettings(c);
+                if (saveSettings) {
+                    saveSettings(c);
+                    Log.d(L, "Save settings: true");
+                }
+
 
 
                 if (ts == 0) {
@@ -187,13 +194,13 @@ public class Utils {
         ad.setCancelable(cancelable);
         ad.show();
     }
-    public static void addUser(Context c) {
+    public static void addUser(Context c, Boolean saveSettings) {
         long ts = System.currentTimeMillis();
         SharedPreferences myPrefs = c.getSharedPreferences("prefs_" + Long.toString(ts), MODE_PRIVATE);
         SharedPreferences.Editor prefsEditor;
         prefsEditor = myPrefs.edit();
 //strVersionName->Any value to be stored
-        prefsEditor.putString("thisPrefs", "pref:" + Long.toString(ts));
+        prefsEditor.putString("thisPrefs", "pref:" + Long.toString(ts)); // do not delete
         prefsEditor.commit();
         SharedPreferences sharedPreferences = c.getSharedPreferences("MainPrefs", MODE_PRIVATE);
         int length = sharedPreferences.getInt("length", 0);
@@ -201,7 +208,7 @@ public class Utils {
                 .putInt("length", length + 1)
                 .putLong(Integer.toString(length), ts)
                 .commit();
-        switchTo(ts, c, false);
+        switchTo(ts, c, false, saveSettings);
     }
     static public boolean checkIntroComplete(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("MainPrefs", MODE_PRIVATE);
