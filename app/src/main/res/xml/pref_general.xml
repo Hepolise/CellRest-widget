@@ -47,7 +47,7 @@
     </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/tele2">
-        <EditTextPreference
+        <!--<EditTextPreference
             android:capitalize="words"
             android:inputType="phone"
             android:key="pin_code"
@@ -55,7 +55,10 @@
             android:maxLines="1"
             android:selectAllOnFocus="true"
             android:singleLine="true"
-            android:title="@string/pin_code_title" />
+            android:title="@string/pin_code_title" />-->
+        <Preference android:title="@string/tele2_reg_title"
+            android:key="@string/tele2_reg"
+            android:summary="@string/tele2_reg_desc"/>
 
     </PreferenceCategory>
 

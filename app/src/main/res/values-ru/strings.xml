@@ -140,6 +140,10 @@
     <string name="slide4text">Если виджет не обновляется или показывает сообщение об ошибке, следует из общих настроек выполнить пробное подключение и выяснить, что пошло не так</string>
     <string name="cancel">Отмена</string>
     <string name="intro">Интро</string>
+    <string name="tele2_reg_title">Регистрация Теле2</string>
+    <string name="tele2_reg_desc">Выполнить регистрацию Теле2</string>
+    <string name="wait_30_sec">Может длиться до 30 секунд</string>
+    <string name="tele2_success_reg">Регистрация выполнена успешно</string>
 
     <!--<string name="pattern_desc">Изменить весь текст в виджете. \n
         %dtr% - days to reestablish; \n

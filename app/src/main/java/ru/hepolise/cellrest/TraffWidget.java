@@ -813,6 +813,7 @@ public class TraffWidget extends AppWidgetProvider {
 
                 } catch (JSONException e){
                     //update widget with old data
+                    Log.e(LOG_TAG, "JSON Exception: " + e.getLocalizedMessage());
                     updateWidget(contextglobal, appWidgetManagerglobal, id, "error: JSONException: " + e.getMessage());
                     return e.getMessage();
                 }

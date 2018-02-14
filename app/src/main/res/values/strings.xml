@@ -182,6 +182,11 @@
     <string name="slide4text">If the widget is not updated or if there appears an error message, try to perform a test connection in the general settings and find out what went wrong</string>
     <string name="cancel">Cancel</string>
     <string name="intro">Intro</string>
+    <string name="tele2_reg" translatable="false">tele2_reg</string>
+    <string name="tele2_reg_title">Tele2 registration</string>
+    <string name="tele2_reg_desc">Complete registration for Tele2</string>
+    <string name="wait_30_sec">May be up to 30 seconds</string>
+    <string name="tele2_success_reg">Registration is completed successfully</string>
 
 
 </resources>

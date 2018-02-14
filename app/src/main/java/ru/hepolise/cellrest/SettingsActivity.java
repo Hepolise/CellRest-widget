@@ -35,6 +35,9 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.yandex.metrica.YandexMetrica;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -368,7 +371,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                             "&token=" + URLEncoder.encode(token, "UTF-8") +
                             "&return=" + URLEncoder.encode(return_, "UTF-8") +
                             "&tz=" + URLEncoder.encode(tz, "UTF-8")
-                            //+ "&test"
+                            + "&test"
                     );
                     Log.d(LOG_TAG, "URL: " + url);
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -380,6 +383,92 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                     }
                     String buffer = buf.toString();
                     buffer = buffer.replace(" NEWLINE ", "\n");
+                    content = buffer;
+                    return (buffer);
+
+                } catch (IOException e) {
+                    if (e.getMessage().equals("No route to host")) {
+                        content = ctx.getString(R.string.server_down);
+                        return ctx.getString(R.string.server_down);
+                    } else {
+                        content = e.getMessage();
+                        return e.getMessage();
+                    }
+                }
+            }
+        }
+
+
+        class Tele2Register extends AsyncTask<String, Void, String> {
+            String content = "";
+            @Override
+            public String doInBackground(String... path) {
+
+                try {
+                    getContent(getActivity());
+                } catch (IOException ex) {
+                }
+                return null;
+            }
+            @Override
+            protected void onPostExecute(String result) {
+                try {
+                    //parse answer
+                    JSONObject jsonObject = new JSONObject(content);
+                    String pin = jsonObject.getString("pin");
+                    SharedPreferences shrpr = PreferenceManager.getDefaultSharedPreferences(getContext());
+                    shrpr.edit().putString(QuickstartPreferences.pin_code, pin).commit();
+                    Toast.makeText(getActivity(), getContext().getString(R.string.tele2_success_reg), Toast.LENGTH_SHORT).show();
+                } catch (JSONException e) {
+                    Log.e(LOG_TAG, "JSONException: " + e.getLocalizedMessage());
+                    Toast.makeText(getActivity(), content, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            private String getContent(Context ctx) throws IOException {
+                BufferedReader reader;
+                SharedPreferences shrpr = PreferenceManager.getDefaultSharedPreferences(ctx);
+                String version = "";
+                String login = shrpr.getString(QuickstartPreferences.login, "");
+                String op = shrpr.getString(QuickstartPreferences.op_list, "");
+                String android_id;
+                android_id = Settings.Secure.getString(ctx.getContentResolver(), Settings.Secure.ANDROID_ID);
+                Locale currentLocale = Locale.getDefault();
+                String locale = currentLocale.toString();
+                String loc = shrpr.getString(QuickstartPreferences.loc, "def");
+                if (loc.equals("def")) {
+                    loc = locale;
+                }
+                if (login.startsWith("+7")) {
+                    login = login.substring(2);
+                    //Log.d(LOG_TAG, "+7 change: " + login);
+                } else if (login.startsWith("7") || login.startsWith("8")){
+                    login = login.substring(1);
+                    //Log.d(LOG_TAG, "7/8 change: " + login);
+                }
+                if (op.equals("tele2")) {
+                    login = "7" + login;
+                }
+
+                int versionCode = BuildConfig.VERSION_CODE;
+                version = Integer.toString(versionCode);
+                try {
+                    URL url = new URL("https://srvr.su/traf.php?tele2_register" +
+                            "&login=" + URLEncoder.encode(login, "UTF-8") +
+                            "&devid=" + URLEncoder.encode(android_id, "UTF-8") +
+                            "&loc=" + URLEncoder.encode(loc, "UTF-8") +
+                            "&version=" + URLEncoder.encode(version, "UTF-8")
+                            //+ "&test"
+                    );
+                    Log.d(LOG_TAG, "URL: " + url);
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    StringBuilder buf = new StringBuilder();
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        buf.append(line + " ");
+                    }
+                    String buffer = buf.toString();
                     content = buffer;
                     return (buffer);
 
@@ -411,13 +500,23 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                     return true;
                 }
             });
+
+            Preference tele2Reg = (Preference)findPreference(getString(R.string.tele2_reg));
+            tele2Reg.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    Toast.makeText(getActivity(), getActivity().getString(R.string.request_sent) + "\n" + getActivity().getString(R.string.wait_30_sec), Toast.LENGTH_SHORT).show();
+                    new Tele2Register().execute();
+                    return true;
+                }
+            });
             // Bind the summaries of EditText/List/Dialog/Ringtone preferences
             // to their values. When their values change, their summaries are
             // updated to reflect the new value, per the Android Design
             // guidelines.
             bindPreferenceSummaryToValue(findPreference("login"));
             bindPreferenceSummaryToValue(findPreference("op_list"));
-            bindPreferenceSummaryToValue(findPreference("pin_code"));
+            //bindPreferenceSummaryToValue(findPreference("pin_code"));
         }
     }
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
