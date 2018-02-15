@@ -312,7 +312,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             }
             @Override
             protected void onPostExecute(String result){
-                    Toast.makeText(getActivity(), content, Toast.LENGTH_SHORT).show();
+                final Preference testConn = findPreference(getString(R.string.button));
+                testConn.setEnabled(true);
+                Toast.makeText(getActivity(), content, Toast.LENGTH_SHORT).show();
             }
 
             private String getContent(Context ctx) throws IOException {
@@ -412,6 +414,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             }
             @Override
             protected void onPostExecute(String result) {
+                final Preference tele2Reg = findPreference(getString(R.string.tele2_reg));
+                tele2Reg.setEnabled(true);
                 try {
                     //parse answer
                     JSONObject jsonObject = new JSONObject(content);
@@ -491,20 +495,22 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             addPreferencesFromResource(R.xml.pref_general);
             setHasOptionsMenu(true);
 
-            Preference button = (Preference)findPreference(getString(R.string.button));
-            button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            final Preference testConn = findPreference(getString(R.string.button));
+            testConn.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
+                    testConn.setEnabled(false);
                     Toast.makeText(getActivity(), getActivity().getString(R.string.request_sent), Toast.LENGTH_SHORT).show();
                     new ProgressTask().execute();
                     return true;
                 }
             });
 
-            Preference tele2Reg = (Preference)findPreference(getString(R.string.tele2_reg));
+            final Preference tele2Reg = findPreference(getString(R.string.tele2_reg));
             tele2Reg.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
+                    tele2Reg.setEnabled(false);
                     Toast.makeText(getActivity(), getActivity().getString(R.string.request_sent) + "\n" + getActivity().getString(R.string.wait_30_sec), Toast.LENGTH_SHORT).show();
                     new Tele2Register().execute();
                     return true;
