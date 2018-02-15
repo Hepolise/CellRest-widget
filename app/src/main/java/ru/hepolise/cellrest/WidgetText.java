@@ -414,6 +414,15 @@ public class WidgetText extends AppWidgetProvider {
             pin_code = shrpr.getString(QuickstartPreferences.pin_code, "");
             android_id = shrpr.getString(QuickstartPreferences.androidId, Settings.Secure.getString(contextglobal.getContentResolver(), Settings.Secure.ANDROID_ID));
             pass = shrpr.getString(QuickstartPreferences.pass, "");
+            //Reformat login
+            if (login.startsWith("+7")) {
+                login = login.substring(2);
+            } else if (login.startsWith("7") || login.startsWith("8")){
+                login = login.substring(1);
+            }
+            if (op.equals("tele2")) {
+                login = "7" + login;
+            }
         }
 //        @Override
 //        protected void onPostExecute(String result) {

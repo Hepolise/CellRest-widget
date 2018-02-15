@@ -507,7 +507,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                     preference.setEnabled(false);
                     sBindPreferenceSummaryToValueListener.onPreferenceChange(preference, getActivity().getString(R.string.requesting));
                     Toast.makeText(getActivity(), getActivity().getString(R.string.request_sent), Toast.LENGTH_SHORT).show();
-                    new ProgressTask().execute(); 
+                    new ProgressTask().execute();
                     return true;
                 }
             });
