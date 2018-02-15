@@ -52,11 +52,11 @@ public class WidgetText extends AppWidgetProvider {
     int idglobal;
     String UPD;
     String ACTION_APPWIDGET_FORCE_UPDATE = "";
-    String login;
-    String pass;
-    String op;
-    String android_id;
-    String pin_code;
+//    String login;
+//    String pass;
+//    String op;
+//    String android_id;
+//    String pin_code;
     String locale;
     String loc;
     String version;
@@ -160,6 +160,9 @@ public class WidgetText extends AppWidgetProvider {
         //Log.d(LOG_TAG, "upd 11");
 
 
+        String login;
+        String op;
+
         SharedPreferences sharedPreferences = context.getSharedPreferences("MainPrefs", MODE_PRIVATE);
         long ts = sharedPreferences.getLong("widget_id_"+Integer.toString(widgetID), 0);
         //Log.d(LOG_TAG, "widget id: " + widgetID);
@@ -219,9 +222,9 @@ public class WidgetText extends AppWidgetProvider {
         if (op.equals("tele2")) {
             login = "7" + login;
         }
-        pin_code = shrpr.getString(QuickstartPreferences.pin_code, "");
-        android_id = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
-        pass = shrpr.getString(QuickstartPreferences.pass, "");
+//        pin_code = shrpr.getString(QuickstartPreferences.pin_code, "");
+//        android_id = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+//        pass = shrpr.getString(QuickstartPreferences.pass, "");
         return_ = shrpr.getString(QuickstartPreferences.return_, "calc");
 
         
@@ -372,11 +375,17 @@ public class WidgetText extends AppWidgetProvider {
     }
 
     class ProgressTask extends AsyncTask<Integer, String, String> {
+        String login;
+        String pass;
+        String op;
+        String android_id;
+        String pin_code;
         @Override
         public String doInBackground(Integer... id) {
 
             try {
                 //Loading content
+                loadVars(id[0]);
                 getContent(id[0]);
             } catch (IOException ex) {
                 updateWidget(contextglobal, appWidgetManagerglobal, id[0], "error");
@@ -384,6 +393,24 @@ public class WidgetText extends AppWidgetProvider {
             return Integer.toString(id[0]);
         }
 
+        private void loadVars(int id) {
+            SharedPreferences shrpr;
+            SharedPreferences sharedPreferences = contextglobal.getSharedPreferences("MainPrefs", MODE_PRIVATE);;
+            String working_prefs = sharedPreferences.getString("loaded_prefs", "prefs_0");
+            long ts = sharedPreferences.getLong("widget_id_" + Integer.toString(id), 0);
+            if (working_prefs.equals("prefs_" + ts)) {
+                Log.d(LOG_TAG, "Using default prefs for load vars");
+                shrpr = PreferenceManager.getDefaultSharedPreferences(contextglobal);
+            } else {
+                Log.d(LOG_TAG, "Using prefs_" + ts +" for load vars");
+                shrpr = contextglobal.getSharedPreferences("prefs_" + ts, MODE_PRIVATE);
+            }
+            login = shrpr.getString(QuickstartPreferences.login, "");
+            op = shrpr.getString(QuickstartPreferences.op_list, "");
+            pin_code = shrpr.getString(QuickstartPreferences.pin_code, "");
+            android_id = Settings.Secure.getString(contextglobal.getContentResolver(), Settings.Secure.ANDROID_ID); // TODO
+            pass = shrpr.getString(QuickstartPreferences.pass, "");
+        }
 //        @Override
 //        protected void onPostExecute(String result) {
 //            int id = Integer.parseInt(result);

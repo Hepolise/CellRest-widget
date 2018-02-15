@@ -64,11 +64,11 @@ public class TraffWidget extends AppWidgetProvider {
     android.appwidget.AppWidgetManager appWidgetManagerglobal;
     String UPD;
     String ACTION_APPWIDGET_FORCE_UPDATE = "";
-    String login;
-    String pass;
-    String op;
-    String android_id;
-    String pin_code;
+    //String login;
+    //String pass;
+    //String op;
+    //String android_id;
+    //String pin_code;
     String version;
     String token;
     String return_;
@@ -109,6 +109,7 @@ public class TraffWidget extends AppWidgetProvider {
 //        }
 
         for (int id : appWidgetIds) {
+            Log.d(LOG_TAG, "Starting update: " + id);
             updateWidget(context, appWidgetManager, id, context.getString(R.string.updating));
 
         }
@@ -178,6 +179,7 @@ public class TraffWidget extends AppWidgetProvider {
                         AppWidgetManager.INVALID_APPWIDGET_ID);
 
             }
+            Log.d(LOG_TAG, "onReceive: " + id);
             SharedPreferences shrpr;
             SharedPreferences sharedPreferences = context.getSharedPreferences("MainPrefs", MODE_PRIVATE);;
             String working_prefs = sharedPreferences.getString("loaded_prefs", "prefs_0");
@@ -347,6 +349,13 @@ public class TraffWidget extends AppWidgetProvider {
         //Get data && update widget
 
 
+        String login;
+//        String pass;
+        String op;
+//        String android_id;
+//        String pin_code;
+
+
         //setting global vars
         contextglobal = context;
         appWidgetManagerglobal = appWidgetManager;
@@ -463,9 +472,10 @@ public class TraffWidget extends AppWidgetProvider {
         if (op.equals("tele2")) {
             login = "7" + login;
         }
-        pin_code = shrpr.getString(QuickstartPreferences.pin_code, "");
-        android_id = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
-        pass = shrpr.getString(QuickstartPreferences.pass, "");
+        Log.d(LOG_TAG, "login: "+login);
+//        pin_code = shrpr.getString(QuickstartPreferences.pin_code, "");
+//        android_id = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+//        pass = shrpr.getString(QuickstartPreferences.pass, "");
         return_ = shrpr.getString(QuickstartPreferences.return_, "calc");
 
         UPD = shrpr.getString(QuickstartPreferences.update, "1");
@@ -515,6 +525,7 @@ public class TraffWidget extends AppWidgetProvider {
             Log.d(LOG_TAG, "update");
 
             Integer[] params = { widgetID };
+            Log.d(LOG_TAG, "Starting progress task: " + widgetID);
             new ProgressTask().execute(params);
             if (null_.equals("false") && !inet_only) {
                 Toast.makeText(context, context.getString(R.string.reduce_widget), Toast.LENGTH_LONG).show();
@@ -583,22 +594,23 @@ public class TraffWidget extends AppWidgetProvider {
                     }
                 }
             } else {
-                Log.d(LOG_TAG, "Everything is OK, setting full widget view");
-                String sms;
-                String min;
-                String inet;
-                if (return_.equals("calc")) {
-                    sms = maxsms;
-                    min = maxmin;
-                    inet = max;
-                } else {
-                    sms = leftsms;
-                    min = leftmin;
-                    inet = left;
-                }
+                try {
+                    Log.d(LOG_TAG, "Everything is OK, setting full widget view");
+                    String sms;
+                    String min;
+                    String inet;
+                    if (return_.equals("calc")) {
+                        sms = maxsms;
+                        min = maxmin;
+                        inet = max;
+                    } else {
+                        sms = leftsms;
+                        min = leftmin;
+                        inet = left;
+                    }
 //                int string_re;
 //                String days;
-                Boolean minus = (Integer.parseInt(inet) < 0 || Integer.parseInt(min) < 0 || Integer.parseInt(sms) < 0);
+                    Boolean minus = (Integer.parseInt(inet) < 0 || Integer.parseInt(min) < 0 || Integer.parseInt(sms) < 0);
 //                if (minus) {
 //                    //if we have something < 0 we need to return days to regain (provided by server)
 //                    string_re = R.string.restore;
@@ -609,91 +621,85 @@ public class TraffWidget extends AppWidgetProvider {
 //                }
 
 
-
-                if (font.equals("n")) {
-                    res = "";
-                } else if (font.equals("i")){
-                    res = "_italic";
-                } else if (font.equals("b")) {
-                    res = "_bold";
-                }
-
-                widgetView.setTextViewText(getStringResourceByName("inet" + res, context), getSize(inet));
-
-
-
-                //get dada dir for get icons
-                PackageManager m = context.getPackageManager();
-                String s = context.getPackageName();
-                try {
-                    PackageInfo p = m.getPackageInfo(s, 0);
-                    s = p.applicationInfo.dataDir;
-                } catch (PackageManager.NameNotFoundException e) {
-
-                }
-
-
-                if (!null_.equals("false") && !inet_only) {
-                    //if cals and sms are available
-
-                    //for text in center of image
-                    if (sms.length() == 1){
-                        widgetView.setTextViewText(getStringResourceByName("sms" + res, context), sms + "  ");
-                    } else if (sms.length() == 2) {
-                        widgetView.setTextViewText(getStringResourceByName("sms" + res, context), sms + " ");
-                    } else {
-                        widgetView.setTextViewText(getStringResourceByName("sms" + res, context), sms + "");
+                    if (font.equals("n")) {
+                        res = "";
+                    } else if (font.equals("i")) {
+                        res = "_italic";
+                    } else if (font.equals("b")) {
+                        res = "_bold";
                     }
-                    widgetView.setTextViewText(getStringResourceByName("calls" + res, context), min);
+
+                    widgetView.setTextViewText(getStringResourceByName("inet" + res, context), getSize(inet));
 
 
+                    //get dada dir for get icons
+                    PackageManager m = context.getPackageManager();
+                    String s = context.getPackageName();
+                    try {
+                        PackageInfo p = m.getPackageInfo(s, 0);
+                        s = p.applicationInfo.dataDir;
+                    } catch (PackageManager.NameNotFoundException e) {
 
-                    Bitmap b_icon_sms = BitmapFactory.decodeFile(s + "/files/sms_" + ts + ".png");
-                    widgetView.setImageViewBitmap(R.id.sms_logo, b_icon_sms);
+                    }
 
-                    Bitmap b_icon_calls = BitmapFactory.decodeFile(s + "/files/calls_" + ts + ".png");
-                    widgetView.setImageViewBitmap(R.id.calls_logo, b_icon_calls);
 
-                    widgetView.setTextColor(getStringResourceByName("calls" + res, context), color);
-                    widgetView.setTextColor(getStringResourceByName("sms" + res, context), color);
+                    if (!null_.equals("false") && !inet_only) {
+                        //if cals and sms are available
+
+                        //for text in center of image
+                        if (sms.length() == 1) {
+                            widgetView.setTextViewText(getStringResourceByName("sms" + res, context), sms + "  ");
+                        } else if (sms.length() == 2) {
+                            widgetView.setTextViewText(getStringResourceByName("sms" + res, context), sms + " ");
+                        } else {
+                            widgetView.setTextViewText(getStringResourceByName("sms" + res, context), sms + "");
+                        }
+                        widgetView.setTextViewText(getStringResourceByName("calls" + res, context), min);
+
+
+                        Bitmap b_icon_sms = BitmapFactory.decodeFile(s + "/files/sms_" + ts + ".png");
+                        widgetView.setImageViewBitmap(R.id.sms_logo, b_icon_sms);
+
+                        Bitmap b_icon_calls = BitmapFactory.decodeFile(s + "/files/calls_" + ts + ".png");
+                        widgetView.setImageViewBitmap(R.id.calls_logo, b_icon_calls);
+                        widgetView.setTextColor(getStringResourceByName("calls" + res, context), color);
+                        widgetView.setTextColor(getStringResourceByName("sms" + res, context), color);
+                    }
+                    String inet_add = "";
+                    if (inet_only) {
+                        //load another text view from layout in case if widget is small
+                        inet_add = "_inet";
+                    }
+                    widgetView.setTextViewText(getStringResourceByName("balance" + res, context), " " + balance + " \u20BD");
+                    widgetView.setTextViewText(getStringResourceByName("date" + inet_add + res, context), date);
+                    String nl = "\n";
+                    if (inet_only && appWidgetManager.getAppWidgetOptions(widgetID).getInt(OPTION_APPWIDGET_MIN_WIDTH) > 140) {
+                        nl = " ";
+                    }
+                    if (!minus) {
+                        //everything is more than zero
+                        widgetView.setTextViewText(getStringResourceByName("renew" + inet_add + res, context), context.getString(R.string.renew_a) + nl + dtn);
+                    } else {
+                        widgetView.setTextViewText(getStringResourceByName("renew" + inet_add + res, context), context.getString(R.string.restore) + " " + dtr + "\n" + context.getString(R.string.renew) + " " + dtn);
+                    }
+                    widgetView.setTextColor(getStringResourceByName("inet" + res, context), color);
+
+
+                    //setTextSize
+                    setTextSize(widgetView, context, widgetID, res, appWidgetManager);
+                    //widgetView.set
+                    widgetView.setTextColor(getStringResourceByName("balance" + res, context), color);
+                    widgetView.setTextColor(getStringResourceByName("date" + inet_add + res, context), color);
+                    widgetView.setTextColor(getStringResourceByName("renew" + inet_add + res, context), color);
+
+
+                    //get icon from data folder
+                    Bitmap b_icon_inet = BitmapFactory.decodeFile(s + "/files/inet_" + ts + ".png");
+                    widgetView.setImageViewBitmap(R.id.inet_logo, b_icon_inet);
+
+                } catch (Exception e) {
+                    Log.e(LOG_TAG, "Exception: " + e.getLocalizedMessage());
                 }
-                String inet_add = "";
-                if (inet_only) {
-                    //load another text view from layout in case if widget is small
-                    inet_add = "_inet";
-                }
-
-                widgetView.setTextViewText(getStringResourceByName("balance" + res, context), " " + balance + " \u20BD");
-                widgetView.setTextViewText(getStringResourceByName("date" + inet_add  + res, context), date);
-                String nl = "\n";
-                if (inet_only && appWidgetManager.getAppWidgetOptions(widgetID).getInt(OPTION_APPWIDGET_MIN_WIDTH) > 140) {
-                    nl = " ";
-                }
-                if (!minus) {
-                    //everything is more than zero
-                    widgetView.setTextViewText(getStringResourceByName("renew" + inet_add + res, context), context.getString(R.string.renew_a) + nl + dtn);
-                } else {
-                    widgetView.setTextViewText(getStringResourceByName("renew" + inet_add + res, context), context.getString(R.string.restore) + " " + dtr + "\n" + context.getString(R.string.renew) + " " + dtn);
-                }
-
-                widgetView.setTextColor(getStringResourceByName("inet" + res, context), color);
-
-
-                //setTextSize
-                setTextSize(widgetView, context, widgetID, res, appWidgetManager);
-
-                //widgetView.set
-                widgetView.setTextColor(getStringResourceByName("balance" + res, context), color);
-                widgetView.setTextColor(getStringResourceByName("date" + inet_add  + res, context), color);
-                widgetView.setTextColor(getStringResourceByName("renew" + inet_add + res, context), color);
-
-
-
-
-                //get icon from data folder
-                Bitmap b_icon_inet = BitmapFactory.decodeFile(s  + "/files/inet_" + ts + ".png");
-                widgetView.setImageViewBitmap(R.id.inet_logo, b_icon_inet);
-
             }
 
 
@@ -702,7 +708,6 @@ public class TraffWidget extends AppWidgetProvider {
 
         //make widget responsive to taps
         setIntent(widgetView, context, res, pIntent);
-
         //redraw widget
         appWidgetManager.updateAppWidget(widgetID, widgetView);
 
@@ -714,6 +719,11 @@ public class TraffWidget extends AppWidgetProvider {
 
 
     private class ProgressTask extends AsyncTask<Integer, String, String> {
+        String login;
+        String pass;
+        String op;
+        String android_id;
+        String pin_code;
         //load new data from server
         @Override
         public String doInBackground(Integer... id) {
@@ -721,6 +731,7 @@ public class TraffWidget extends AppWidgetProvider {
 
             try {
                 //Loading content
+                loadVars(id[0]);
                 getContent(id[0]);
             } catch (IOException ex) {
                 updateWidget(contextglobal, appWidgetManagerglobal, id[0], "error: doInBackground");
@@ -737,11 +748,30 @@ public class TraffWidget extends AppWidgetProvider {
             updateWidget(contextglobal, appWidgetManagerglobal, id, "onPostExecute");
         }
 
+        private void loadVars(int id) {
+            SharedPreferences shrpr;
+            SharedPreferences sharedPreferences = contextglobal.getSharedPreferences("MainPrefs", MODE_PRIVATE);;
+            String working_prefs = sharedPreferences.getString("loaded_prefs", "prefs_0");
+            long ts = sharedPreferences.getLong("widget_id_" + Integer.toString(id), 0);
+            if (working_prefs.equals("prefs_" + ts)) {
+                Log.d(LOG_TAG, "Using default prefs for load vars");
+                shrpr = PreferenceManager.getDefaultSharedPreferences(contextglobal);
+            } else {
+                Log.d(LOG_TAG, "Using prefs_" + ts +" for load vars");
+                shrpr = contextglobal.getSharedPreferences("prefs_" + ts, MODE_PRIVATE);
+            }
+            login = shrpr.getString(QuickstartPreferences.login, "");
+            op = shrpr.getString(QuickstartPreferences.op_list, "");
+            pin_code = shrpr.getString(QuickstartPreferences.pin_code, "");
+            android_id = Settings.Secure.getString(contextglobal.getContentResolver(), Settings.Secure.ANDROID_ID); // TODO
+            pass = shrpr.getString(QuickstartPreferences.pass, "");
+        }
 
         private String getContent(Integer id) throws IOException {
             BufferedReader reader;
             try {
                 //connect to server
+                Log.d(LOG_TAG, "getContent: "+id + " Login: " + login);
                 URL url = new URL("https://srvr.su/traf.php?cmd=json&upd=" + URLEncoder.encode(UPD, "UTF-8") +
                         "&login=" + URLEncoder.encode(login, "UTF-8") +
                         "&pass=" + URLEncoder.encode(pass, "UTF-8") +
