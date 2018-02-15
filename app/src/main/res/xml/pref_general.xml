@@ -18,7 +18,7 @@
 
         <EditTextPreference
             android:capitalize="words"
-            android:inputType="phone"
+            android:inputType="number"
             android:key="login"
             android:maxLength="12"
             android:maxLines="1"

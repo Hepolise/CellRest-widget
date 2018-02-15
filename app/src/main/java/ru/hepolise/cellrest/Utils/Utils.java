@@ -21,6 +21,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import ru.hepolise.cellrest.R;
 import ru.hepolise.cellrest.SettingsActivity;
@@ -201,6 +202,7 @@ public class Utils {
         prefsEditor = myPrefs.edit();
 //strVersionName->Any value to be stored
         prefsEditor.putString("thisPrefs", "pref:" + Long.toString(ts)); // do not delete
+        prefsEditor.putString("android_id", UUID.randomUUID().toString().replace("-", ""));
         prefsEditor.commit();
         SharedPreferences sharedPreferences = c.getSharedPreferences("MainPrefs", MODE_PRIVATE);
         int length = sharedPreferences.getInt("length", 0);

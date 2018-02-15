@@ -13,6 +13,8 @@ import com.github.paolorotolo.appintro.AppIntro;
 import com.github.paolorotolo.appintro.AppIntro2;
 import com.github.paolorotolo.appintro.AppIntroFragment;
 
+import java.util.UUID;
+
 import ru.hepolise.cellrest.R;
 import ru.hepolise.cellrest.Utils.Colorize;
 import ru.hepolise.cellrest.Utils.QuickstartPreferences;
@@ -125,6 +127,7 @@ public class IntroActivity extends AppIntro2 {
             sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
             sharedPreferences.edit()
                     .putString("thisPrefs", "pref:" + Long.toString(ts))
+                    .putString("android_id", UUID.randomUUID().toString().replace("-", ""))
                     .commit();
         }
         new Colorize().StartColorize(getBaseContext());

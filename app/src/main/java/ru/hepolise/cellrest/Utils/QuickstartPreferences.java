@@ -56,6 +56,7 @@ public class QuickstartPreferences {
     public static final String pattern = "pattern";
     public static final String intro_done = "intro_done";
     public static final String first_start = "first_start";
+    public static final String androidId = "android_id";
 //    public static final String check_days = "check_days";
 //    public static final String check_inet = "check_inet";
 //    public static final String check_mins = "check_mins";

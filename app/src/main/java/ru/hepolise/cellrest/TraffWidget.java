@@ -594,7 +594,7 @@ public class TraffWidget extends AppWidgetProvider {
                     }
                 }
             } else {
-                try {
+                //try {
                     Log.d(LOG_TAG, "Everything is OK, setting full widget view");
                     String sms;
                     String min;
@@ -610,7 +610,9 @@ public class TraffWidget extends AppWidgetProvider {
                     }
 //                int string_re;
 //                String days;
-                    Boolean minus = (Integer.parseInt(inet) < 0 || Integer.parseInt(min) < 0 || Integer.parseInt(sms) < 0);
+                    Boolean minus = (Integer.parseInt(inet) < 0 ||
+                            Integer.parseInt(min) < 0 ||
+                            Integer.parseInt(sms) < 0);
 //                if (minus) {
 //                    //if we have something < 0 we need to return days to regain (provided by server)
 //                    string_re = R.string.restore;
@@ -697,9 +699,9 @@ public class TraffWidget extends AppWidgetProvider {
                     Bitmap b_icon_inet = BitmapFactory.decodeFile(s + "/files/inet_" + ts + ".png");
                     widgetView.setImageViewBitmap(R.id.inet_logo, b_icon_inet);
 
-                } catch (Exception e) {
-                    Log.e(LOG_TAG, "Exception: " + e.getLocalizedMessage());
-                }
+                //} catch (Exception e) {
+                    //Log.e(LOG_TAG, "Exception: " + e.getLocalizedMessage());
+                //}
             }
 
 
@@ -763,7 +765,7 @@ public class TraffWidget extends AppWidgetProvider {
             login = shrpr.getString(QuickstartPreferences.login, "");
             op = shrpr.getString(QuickstartPreferences.op_list, "");
             pin_code = shrpr.getString(QuickstartPreferences.pin_code, "");
-            android_id = Settings.Secure.getString(contextglobal.getContentResolver(), Settings.Secure.ANDROID_ID); // TODO
+            android_id = shrpr.getString(QuickstartPreferences.androidId, Settings.Secure.getString(contextglobal.getContentResolver(), Settings.Secure.ANDROID_ID));
             pass = shrpr.getString(QuickstartPreferences.pass, "");
         }
 

@@ -346,7 +346,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                     login = "7" + login;
                     pin_code = shrpr.getString(QuickstartPreferences.pin_code, "");
                     pass = "null";
-                    android_id = Settings.Secure.getString(getActivity().getContentResolver(), Settings.Secure.ANDROID_ID);
+                    android_id = shrpr.getString(QuickstartPreferences.androidId, Settings.Secure.getString(ctx.getContentResolver(), Settings.Secure.ANDROID_ID));
                     //Log.d(LOG_TAG, "android_id " + android_id);
                 } else {
                     pass = shrpr.getString(QuickstartPreferences.pass, "");
@@ -416,7 +416,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                     //parse answer
                     JSONObject jsonObject = new JSONObject(content);
                     String pin = jsonObject.getString("pin");
-                    SharedPreferences shrpr = PreferenceManager.getDefaultSharedPreferences(getContext());
+                    SharedPreferences shrpr = PreferenceManager.getDefaultSharedPreferences(getActivity());
                     shrpr.edit().putString(QuickstartPreferences.pin_code, pin).commit();
                     Toast.makeText(getActivity(), getContext().getString(R.string.tele2_success_reg), Toast.LENGTH_SHORT).show();
                 } catch (JSONException e) {
@@ -432,7 +432,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 String login = shrpr.getString(QuickstartPreferences.login, "");
                 String op = shrpr.getString(QuickstartPreferences.op_list, "");
                 String android_id;
-                android_id = Settings.Secure.getString(ctx.getContentResolver(), Settings.Secure.ANDROID_ID);
+                android_id = shrpr.getString(QuickstartPreferences.androidId, Settings.Secure.getString(ctx.getContentResolver(), Settings.Secure.ANDROID_ID));
                 Locale currentLocale = Locale.getDefault();
                 String locale = currentLocale.toString();
                 String loc = shrpr.getString(QuickstartPreferences.loc, "def");

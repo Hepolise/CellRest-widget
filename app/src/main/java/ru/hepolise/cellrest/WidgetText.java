@@ -291,31 +291,35 @@ public class WidgetText extends AppWidgetProvider {
         int a = content.length();
         //Log.d(LOG_TAG, Integer.toString(f) + " " + Integer.toString(s) + " " + Integer.toString(t) + " " + Integer.toString(a));
         //int lines = 3;
-        String newContent = "";
-        if ( ! content.equals(context.getString(R.string.error))
-                && ! content.equals(context.getString(R.string.updating))
-                && ! content.equals(context.getString(R.string.choose_account)) ) {
-            Boolean nl = false;
-            if (p.contains("check_days")) {
-                newContent = content.substring(0, f);
-                nl = true;
-            }
-            if (p.contains("check_data")) {
-                if (!nl) f=f+1;
-                newContent = newContent + content.substring(f, s);
-                nl = true;
-            }
-            if (p.contains("check_bal")) {
-                if (!nl) s=s+1;
-                newContent = newContent + content.substring(s, t);
-                nl = true;
-            }
-            if (p.contains("check_ts")) {
-                if (!nl) t=t+1;
-                newContent = newContent + content.substring(t, a);
-            }
+        try {
+            String newContent = "";
+            if (!content.equals(context.getString(R.string.error))
+                    && !content.equals(context.getString(R.string.updating))
+                    && !content.equals(context.getString(R.string.choose_account))) {
+                Boolean nl = false;
+                if (p.contains("check_days")) {
+                    newContent = content.substring(0, f);
+                    nl = true;
+                }
+                if (p.contains("check_data")) {
+                    if (!nl) f = f + 1;
+                    newContent = newContent + content.substring(f, s);
+                    nl = true;
+                }
+                if (p.contains("check_bal")) {
+                    if (!nl) s = s + 1;
+                    newContent = newContent + content.substring(s, t);
+                    nl = true;
+                }
+                if (p.contains("check_ts")) {
+                    if (!nl) t = t + 1;
+                    newContent = newContent + content.substring(t, a);
+                }
 
-            content = newContent;
+                content = newContent;
+            }
+        } catch (Exception e) {
+            Log.e(LOG_TAG, "Exception (text): " + e.getLocalizedMessage());
         }
 
 //        //Log.d(LOG_TAG, "newc: " + newContent);
@@ -408,7 +412,7 @@ public class WidgetText extends AppWidgetProvider {
             login = shrpr.getString(QuickstartPreferences.login, "");
             op = shrpr.getString(QuickstartPreferences.op_list, "");
             pin_code = shrpr.getString(QuickstartPreferences.pin_code, "");
-            android_id = Settings.Secure.getString(contextglobal.getContentResolver(), Settings.Secure.ANDROID_ID); // TODO
+            android_id = shrpr.getString(QuickstartPreferences.androidId, Settings.Secure.getString(contextglobal.getContentResolver(), Settings.Secure.ANDROID_ID));
             pass = shrpr.getString(QuickstartPreferences.pass, "");
         }
 //        @Override
