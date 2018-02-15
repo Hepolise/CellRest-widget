@@ -144,6 +144,10 @@
     <string name="tele2_reg_desc">Выполнить регистрацию Теле2</string>
     <string name="wait_30_sec">Может длиться до 30 секунд</string>
     <string name="tele2_success_reg">Регистрация выполнена успешно</string>
+    <string name="requesting">Выполняется&#8230;</string>
+    <string name="registered">Регистрация выполнена</string>
+    <string name="dialog_reg_tele2_title">Регистрация</string>
+    <string name="dialog_reg_tele2_desc">Выполнить регистрацию ещё раз?</string>
 
     <!--<string name="pattern_desc">Изменить весь текст в виджете. \n
         %dtr% - days to reestablish; \n

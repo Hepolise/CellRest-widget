@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -313,6 +314,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             @Override
             protected void onPostExecute(String result){
                 final Preference testConn = findPreference(getString(R.string.button));
+                sBindPreferenceSummaryToValueListener.onPreferenceChange(testConn, getActivity().getString(R.string.button_desc));
                 testConn.setEnabled(true);
                 Toast.makeText(getActivity(), content, Toast.LENGTH_SHORT).show();
             }
@@ -415,6 +417,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             @Override
             protected void onPostExecute(String result) {
                 final Preference tele2Reg = findPreference(getString(R.string.tele2_reg));
+                sBindPreferenceSummaryToValueListener.onPreferenceChange(tele2Reg, getActivity().getString(R.string.registered));
                 tele2Reg.setEnabled(true);
                 try {
                     //parse answer
@@ -495,24 +498,54 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             addPreferencesFromResource(R.xml.pref_general);
             setHasOptionsMenu(true);
 
+            SharedPreferences shrpr = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            final Boolean tele2RegComplete = (!"def".equals(shrpr.getString(QuickstartPreferences.pin_code, "def")));
             final Preference testConn = findPreference(getString(R.string.button));
             testConn.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
-                    testConn.setEnabled(false);
+                    preference.setEnabled(false);
+                    sBindPreferenceSummaryToValueListener.onPreferenceChange(preference, getActivity().getString(R.string.requesting));
                     Toast.makeText(getActivity(), getActivity().getString(R.string.request_sent), Toast.LENGTH_SHORT).show();
-                    new ProgressTask().execute();
+                    new ProgressTask().execute(); 
                     return true;
                 }
             });
 
             final Preference tele2Reg = findPreference(getString(R.string.tele2_reg));
             tele2Reg.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    tele2Reg.setEnabled(false);
+                private void request(Preference preference) {
+                    preference.setEnabled(false);
+                    //bindPreferenceSummaryToValue(findPreference(getString(R.string.tele2_reg)));
+                    sBindPreferenceSummaryToValueListener.onPreferenceChange(preference, getActivity().getString(R.string.requesting));
                     Toast.makeText(getActivity(), getActivity().getString(R.string.request_sent) + "\n" + getActivity().getString(R.string.wait_30_sec), Toast.LENGTH_SHORT).show();
                     new Tele2Register().execute();
+                }
+                @Override
+                public boolean onPreferenceClick(final Preference preference) {
+                    if (tele2RegComplete) {
+                        AlertDialog.Builder ad = new AlertDialog.Builder(getActivity());
+                        ad.setTitle(getActivity().getString(R.string.dialog_reg_tele2_title));
+                        ad.setMessage(getActivity().getString(R.string.dialog_reg_tele2_desc));
+                        ad.setPositiveButton(getActivity().getString(R.string.ok), new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int arg1) {
+                                request(preference);
+                            }
+                        });
+
+                        ad.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                            public void onCancel(DialogInterface dialog) {
+                            }
+                        });
+                        ad.setNegativeButton(getActivity().getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int arg1) {
+                            }
+                        });
+                        ad.setCancelable(true);
+                        ad.show();
+                    } else {
+                        request(preference);
+                    }
                     return true;
                 }
             });
@@ -520,6 +553,10 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // to their values. When their values change, their summaries are
             // updated to reflect the new value, per the Android Design
             // guidelines.
+
+            if (tele2RegComplete) {
+                sBindPreferenceSummaryToValueListener.onPreferenceChange(tele2Reg, getActivity().getString(R.string.registered));
+            }
             bindPreferenceSummaryToValue(findPreference("login"));
             bindPreferenceSummaryToValue(findPreference("op_list"));
             //bindPreferenceSummaryToValue(findPreference("pin_code"));

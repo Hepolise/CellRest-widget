@@ -187,6 +187,10 @@
     <string name="tele2_reg_desc">Complete registration for Tele2</string>
     <string name="wait_30_sec">May be up to 30 seconds</string>
     <string name="tele2_success_reg">Registration is completed successfully</string>
+    <string name="requesting">Requesting&#8230;</string>
+    <string name="registered">Registered</string>
+    <string name="dialog_reg_tele2_title">Registration</string>
+    <string name="dialog_reg_tele2_desc">Request registration?</string>
 
 
 </resources>
