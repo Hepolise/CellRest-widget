@@ -795,7 +795,7 @@ public class TraffWidget extends AppWidgetProvider {
                         //"&return=" + URLEncoder.encode(return_, "UTF-8") +
                         "&tz=" + URLEncoder.encode(tz, "UTF-8")
                         //testing new logic for dtr
-                        + "&test"
+                        //+ "&test"
                 );
                 Log.d(LOG_TAG, url.toString());
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -857,7 +857,7 @@ public class TraffWidget extends AppWidgetProvider {
                     try {
                         jsonObject = new JSONObject(buffer);
                         String err = jsonObject.getString("error");
-                        if (err.equals("Auth needed") || err.equals("Необходимо пройти регистрацию")) {
+                        if (err.contains("Auth needed") || err.contains("Необходимо пройти регистрацию")) {
                             SharedPreferences shrpr;
                             SharedPreferences sharedPreferences = contextglobal.getSharedPreferences("MainPrefs", MODE_PRIVATE);;
                             String working_prefs = sharedPreferences.getString("loaded_prefs", "prefs_0");

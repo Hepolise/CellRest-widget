@@ -448,7 +448,7 @@ public class WidgetText extends AppWidgetProvider {
                         "&return=" + URLEncoder.encode(return_, "UTF-8") +
                         "&tz=" + URLEncoder.encode(tz, "UTF-8")
                         //testing new logic for dtr
-                        + "&test"
+                        //+ "&test"
                 );
                 //Log.d(LOG_TAG, "URL: " + url);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();

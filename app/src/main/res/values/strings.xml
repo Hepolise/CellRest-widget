@@ -38,7 +38,7 @@
     <string name="widget_settings_color_text">Widget\'s color by code</string>
     <string name="widget_settings_color_text_desc">Set widget\'s color by code</string>
 
-    <string name="pref_title_update">Force reload</string>
+    <string name="pref_title_update">Forced update</string>
     <string name="pref_description_update">Force updates the widget information on click</string>
 
     <string name="pref_account_pass">Password</string>

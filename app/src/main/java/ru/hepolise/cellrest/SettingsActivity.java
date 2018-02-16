@@ -216,8 +216,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
 
         menu.add(0, 1, 0, getString(R.string.help_title));
-        menu.add(0, 2, 0, getString(R.string.about_title));
-        menu.add(0, 3, 0, getString(R.string.intro));
+        menu.add(0, 2, 0, getString(R.string.intro));
+        menu.add(0, 3, 0, getString(R.string.about_title));
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
         return super.onCreateOptionsMenu(menu);
@@ -232,11 +232,11 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             startActivity(intent);
         }
         if (id.equals("2")) {
-            Intent intent = new Intent(this, AboutActivity.class);
+            Intent intent = new Intent(this, IntroActivity.class);
             startActivity(intent);
         }
         if (id.equals("3")) {
-            Intent intent = new Intent(this, IntroActivity.class);
+            Intent intent = new Intent(this, AboutActivity.class);
             startActivity(intent);
         }
         if (item.getItemId() == R.id.add) {
@@ -375,7 +375,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                             "&token=" + URLEncoder.encode(token, "UTF-8") +
                             "&return=" + URLEncoder.encode(return_, "UTF-8") +
                             "&tz=" + URLEncoder.encode(tz, "UTF-8")
-                            + "&test"
+                            //+ "&test"
                     );
                     Log.d(LOG_TAG, "URL: " + url);
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
