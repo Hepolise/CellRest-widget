@@ -147,7 +147,7 @@
     <string name="registered">Регистрация выполнена</string>
     <string name="dialog_reg_tele2_title">Регистрация</string>
     <string name="dialog_reg_tele2_desc">Выполнить регистрацию ещё раз?</string>
-    <string name="fill_obligatory_desc">Пожалуйста, заполните поля в общих настройках. Оператор и логин являются обязательными полями. Для Теле2 необходимо зарагестрироваться, для Билайна/Мегафона ввести пароль от Личного Кабинета</string>
+    <string name="fill_obligatory_desc">Оператор и логин являются обязательными полями. Для Теле2 необходимо зарегистрироваться, для Билайна/Мегафона ввести пароль от Личного Кабинета</string>
 
     <!--<string name="pattern_desc">Изменить весь текст в виджете. \n
         %dtr% - days to reestablish; \n
