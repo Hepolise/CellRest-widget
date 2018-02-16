@@ -316,7 +316,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 final Preference testConn = findPreference(getString(R.string.button));
                 sBindPreferenceSummaryToValueListener.onPreferenceChange(testConn, getActivity().getString(R.string.button_desc));
                 testConn.setEnabled(true);
-                Toast.makeText(getActivity(), content, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), content, Toast.LENGTH_LONG).show();
             }
 
             private String getContent(Context ctx) throws IOException {
@@ -428,7 +428,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                     Toast.makeText(getActivity(), getContext().getString(R.string.tele2_success_reg), Toast.LENGTH_SHORT).show();
                 } catch (JSONException e) {
                     Log.e(LOG_TAG, "JSONException: " + e.getLocalizedMessage());
-                    Toast.makeText(getActivity(), content, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), content, Toast.LENGTH_LONG).show();
                 }
             }
 
