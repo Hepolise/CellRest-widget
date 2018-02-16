@@ -806,9 +806,10 @@ public class TraffWidget extends AppWidgetProvider {
                     buf.append(line);
                 }
                 String buffer = buf.toString();
+                JSONObject jsonObject;
                 try{
                     //parse answer
-                    JSONObject jsonObject = new JSONObject(buffer);
+                    jsonObject = new JSONObject(buffer);
                     String time = jsonObject.getString("time");
                     String ok = jsonObject.getString("ok");
                     String max = jsonObject.getString("max");
@@ -853,6 +854,26 @@ public class TraffWidget extends AppWidgetProvider {
                     return "Success";
 
                 } catch (JSONException e){
+                    try {
+                        jsonObject = new JSONObject(buffer);
+                        String err = jsonObject.getString("error");
+                        if (err.equals("Auth needed") || err.equals("Необходимо пройти регистрацию")) {
+                            SharedPreferences shrpr;
+                            SharedPreferences sharedPreferences = contextglobal.getSharedPreferences("MainPrefs", MODE_PRIVATE);;
+                            String working_prefs = sharedPreferences.getString("loaded_prefs", "prefs_0");
+                            long ts = sharedPreferences.getLong("widget_id_" + Integer.toString(id), 0);
+                            if (working_prefs.equals("prefs_" + ts)) {
+                                Log.d(LOG_TAG, "Using default prefs for load vars");
+                                shrpr = PreferenceManager.getDefaultSharedPreferences(contextglobal);
+                            } else {
+                                Log.d(LOG_TAG, "Using prefs_" + ts +" for load vars");
+                                shrpr = contextglobal.getSharedPreferences("prefs_" + ts, MODE_PRIVATE);
+                            }
+                            shrpr.edit().remove(QuickstartPreferences.pin_code).commit();
+                        }
+                    } catch (JSONException ej) {
+                        Log.e(LOG_TAG, "Catch JSONException while catch JSONException" + ej.getLocalizedMessage());
+                    }
                     //update widget with old data
                     Log.e(LOG_TAG, "JSON Exception: " + e.getLocalizedMessage());
                     updateWidget(contextglobal, appWidgetManagerglobal, id, "error: JSONException: " + e.getMessage());

@@ -459,8 +459,22 @@ public class WidgetText extends AppWidgetProvider {
                     buf.append(line + " ");
                 }
                 String buffer = buf.toString();
+                Log.d(LOG_TAG,"buffer: " + buffer);
                 if (buffer.contains("NEWLINE")) {
                     buffer = buffer.replace(" NEWLINE ", "\n");
+                } else if (buffer.contains("Error: Auth needed") || buffer.contains("Error: Необходимо пройти регистрацию")) {
+                    SharedPreferences shrpr;
+                    SharedPreferences sharedPreferences = contextglobal.getSharedPreferences("MainPrefs", MODE_PRIVATE);;
+                    String working_prefs = sharedPreferences.getString("loaded_prefs", "prefs_0");
+                    long ts = sharedPreferences.getLong("widget_id_" + Integer.toString(id), 0);
+                    if (working_prefs.equals("prefs_" + ts)) {
+                        Log.d(LOG_TAG, "Using default prefs for load vars");
+                        shrpr = PreferenceManager.getDefaultSharedPreferences(contextglobal);
+                    } else {
+                        Log.d(LOG_TAG, "Using prefs_" + ts +" for load vars");
+                        shrpr = contextglobal.getSharedPreferences("prefs_" + ts, MODE_PRIVATE);
+                    }
+                    shrpr.edit().remove(QuickstartPreferences.pin_code).commit();
                 } else {
                     buffer = "error";
                 }
