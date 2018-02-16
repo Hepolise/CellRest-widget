@@ -42,18 +42,21 @@ public class MyGcmListenerService extends GcmListenerService {
         String message = data.getString("message");
         String title = data.getString("title");
         String idd = data.getString("idd");
-        int id = Integer.valueOf(idd);
-        Log.d(TAG, "From: " + from);
-        Log.d(TAG, "Message: " + message);
-        Log.d(TAG, "Title: " + title);
-        if (id > 0) {
-            int notificationId = id;
-            sendNotification(message, title, notificationId);
-        } else {
-            long time = new Date().getTime();
-            String tmpStr = String.valueOf(time);
-            String last4Str = tmpStr.substring(tmpStr.length() - 5);
-            int notificationId = Integer.valueOf(last4Str);
+        String act = data.getString("act");
+        if ("send_notification".equals(act)) {
+            int id = Integer.valueOf(idd);
+            Log.d(TAG, "From: " + from);
+            Log.d(TAG, "Message: " + message);
+            Log.d(TAG, "Title: " + title);
+            int notificationId;
+            if (id > 0) {
+                notificationId = id;
+            } else {
+                long time = new Date().getTime();
+                String tmpStr = String.valueOf(time);
+                String last4Str = tmpStr.substring(tmpStr.length() - 5);
+                notificationId = Integer.valueOf(last4Str);
+            }
             sendNotification(message, title, notificationId);
         }
     }
