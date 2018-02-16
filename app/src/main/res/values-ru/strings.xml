@@ -119,7 +119,6 @@
     <string name="only_text_widget">Только текстовый виджет</string>
     <string name="pattern_title">Паттерн для текста</string>
     <string name="pattern_desc">Какие строки Вы хотите видеть в текстовом виджете</string>
-    <string name="fill_obligatory_desc">Пожалуйста, заполните поля в общих настройках. Оператор, логин и пароль/ПИН-код являются обязательными полями</string>
     <string name="fill_obligatory">Заполните обязательные поля</string>
     <string name="add_account">Добавить аккаунт</string>
     <string name="choose_account">Коснитесь для выбора аккаунта</string>
@@ -148,6 +147,7 @@
     <string name="registered">Регистрация выполнена</string>
     <string name="dialog_reg_tele2_title">Регистрация</string>
     <string name="dialog_reg_tele2_desc">Выполнить регистрацию ещё раз?</string>
+    <string name="fill_obligatory_desc">Пожалуйста, заполните поля в общих настройках. Оператор и логин являются обязательными полями. Для Теле2 необходимо зарагестрироваться, для Билайна/Мегафона ввести пароль от Личного Кабинета</string>
 
     <!--<string name="pattern_desc">Изменить весь текст в виджете. \n
         %dtr% - days to reestablish; \n

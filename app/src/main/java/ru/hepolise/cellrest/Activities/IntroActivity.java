@@ -48,7 +48,7 @@ public class IntroActivity extends AppIntro2 {
 
         title = getApplicationContext().getString(R.string.fill_obligatory);
         description = getApplicationContext().getString(R.string.fill_obligatory_desc);
-        image = R.drawable.gen_settings;
+        image = R.drawable.general_settings;
         backgroundColor = Color.parseColor("#303F9F");
         addSlide(AppIntroFragment.newInstance(title, description, image, backgroundColor));
 
