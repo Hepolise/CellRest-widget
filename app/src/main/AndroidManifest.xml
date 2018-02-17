@@ -68,10 +68,7 @@
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
-        <!--<activity-->
-            <!--android:name=".Account"-->
-            <!--android:theme="@style/AppTheme" />-->
-        <!-- <activity android:name=".SettingsActivity"></activity> -->
+
         <!-- [START gcm_receiver] -->
         <receiver
             android:name="com.google.android.gms.gcm.GcmReceiver"

@@ -1,6 +1,5 @@
 package ru.hepolise.cellrest.Utils;
 
-import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -12,7 +11,6 @@ import android.content.pm.PackageManager;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
-import android.widget.ArrayAdapter;
 
 import java.io.File;
 import java.io.FileInputStream;

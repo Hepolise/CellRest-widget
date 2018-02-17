@@ -3,14 +3,10 @@ package ru.hepolise.cellrest;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -20,11 +16,9 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.provider.Settings;
-import android.support.v7.app.ActionBar;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
-//import android.support.v7;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -45,8 +39,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.sql.Array;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -56,15 +48,12 @@ import ru.hepolise.cellrest.Activities.AccountManager;
 import ru.hepolise.cellrest.Activities.AppCompatPreferenceActivity;
 import ru.hepolise.cellrest.Activities.HelpActivity;
 import ru.hepolise.cellrest.Activities.IntroActivity;
-import ru.hepolise.cellrest.BuildConfig;
-import ru.hepolise.cellrest.R;
 import ru.hepolise.cellrest.GCM.RegistrationIntentService;
 import ru.hepolise.cellrest.Utils.Colorize;
 import ru.hepolise.cellrest.Utils.QuickstartPreferences;
 import ru.hepolise.cellrest.Utils.Utils;
 import yuku.ambilwarna.AmbilWarnaDialog;
 
-import static ru.hepolise.cellrest.R.string.pref_account_login;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
@@ -103,8 +92,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         @Override
         public boolean onPreferenceChange(Preference preference, Object value) {
             String stringValue = value.toString();
-            //String stringPref = preference.toString();
-            //Log.d("traffLog", "Changed " + stringPref + " to " + stringValue);
 
 
             if (preference instanceof ListPreference) {
@@ -172,7 +159,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             sBindPreferenceSummaryToValueListener.onPreferenceChange(preference,
                     PreferenceManager
                             .getDefaultSharedPreferences(preference.getContext())
-                            //set default desc to null
+                            // set default desc to null
                             .getString(preference.getKey(), ""));
         } else {
             sBindPreferenceSummaryToValueListener.onPreferenceChange(preference,
@@ -197,20 +184,11 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             startActivity(intent);
         }
         c = getApplicationContext();
-//        if (isFirstStart(this)) {
-//            placeAccountId(this);
-//        }
 
-
-        //setupActionBar();
         if (checkPlayServices()) {
             // Start IntentService to register this application with GCM.
             intent = new Intent(this, RegistrationIntentService.class);
             startService(intent);
-            // Инициализация AppMetrica SDK
-            YandexMetrica.activate(getApplicationContext(), "b7dc00b5-0eba-48e4-b2df-6ce98c35ccc0");
-            // Отслеживание активности пользователей
-            YandexMetrica.enableActivityAutoTracking(this.getApplication());
         }
     }
 
@@ -248,33 +226,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
-    /**
-     * Set up the {@link android.app.ActionBar}, if the API is available.
-     */
-    private void setupActionBar() {
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            // Show the Up button in the action bar.
-            actionBar.setDisplayHomeAsUpEnabled(false);
-        }
-    }
-
-
-
-
-
-//    private boolean isFirstStart(Context context) {
-//        SharedPreferences sharedPreferences = getSharedPreferences("MainPrefs", MODE_PRIVATE);
-//        return (sharedPreferences.getBoolean(QuickstartPreferences.first_start, true));
-//    }
-
-//    private void placeAccountId(Context context) {
-//        SharedPreferences sharedPreferences = getSharedPreferences("MainPrefs", MODE_PRIVATE);
-//        sharedPreferences.edit().putString("working", "prefs_0").putBoolean(QuickstartPreferences.first_start, false).apply();
-//    }
-
-
     @Override
     public boolean onIsMultiPane() {
         return isXLargeTablet(this);
@@ -302,14 +253,14 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class GeneralPreferenceFragment extends PreferenceFragment {
         String LOG_TAG="celllogs";
-        class ProgressTask extends AsyncTask<String, Void, String> {
+        class DownloadData extends AsyncTask<String, Void, String> {
             String content = "";
             @Override
             public String doInBackground(String... path) {
-
                 try {
                     getContent(getActivity());
                 } catch (IOException ex) {
+                    Log.e(LOG_TAG, ex.getLocalizedMessage());
                 }
                 return null;
             }
@@ -408,16 +359,14 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 }
             }
         }
-
-
         class Tele2Register extends AsyncTask<String, Void, String> {
             String content = "";
             @Override
             public String doInBackground(String... path) {
-
                 try {
                     getContent(getActivity());
                 } catch (IOException ex) {
+                    Log.e(LOG_TAG, ex.getLocalizedMessage());
                 }
                 return null;
             }
@@ -431,7 +380,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                     Log.e(LOG_TAG, "Preference wasn't found");
                 }
                 try {
-                    //parse answer
+                    // parse answer
                     JSONObject jsonObject = new JSONObject(content);
                     String pin = jsonObject.getString("pin");
                     SharedPreferences shrpr = PreferenceManager.getDefaultSharedPreferences(getActivity());
@@ -519,7 +468,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                     preference.setEnabled(false);
                     sBindPreferenceSummaryToValueListener.onPreferenceChange(preference, getActivity().getString(R.string.requesting));
                     Toast.makeText(getActivity(), getActivity().getString(R.string.request_sent), Toast.LENGTH_SHORT).show();
-                    new ProgressTask().execute();
+                    new DownloadData().execute();
                     return true;
                 }
             });
@@ -528,7 +477,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             tele2Reg.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 private void request(Preference preference) {
                     preference.setEnabled(false);
-                    //bindPreferenceSummaryToValue(findPreference(getString(R.string.tele2_reg)));
                     sBindPreferenceSummaryToValueListener.onPreferenceChange(preference, getActivity().getString(R.string.requesting));
                     Toast.makeText(getActivity(), getActivity().getString(R.string.request_sent) + "\n" + getActivity().getString(R.string.wait_30_sec), Toast.LENGTH_SHORT).show();
                     new Tele2Register().execute();
@@ -571,7 +519,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             }
             bindPreferenceSummaryToValue(findPreference("login"));
             bindPreferenceSummaryToValue(findPreference("op_list"));
-            //bindPreferenceSummaryToValue(findPreference("pin_code"));
         }
     }
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -584,7 +531,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             setHasOptionsMenu(true);
             final Context ctx = getActivity();
             final SharedPreferences shrpr = PreferenceManager.getDefaultSharedPreferences(ctx);
-            Preference button = (Preference)findPreference(getString(R.string.button_colorpicker));
+            Preference button = findPreference(getString(R.string.button_colorpicker));
             button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {

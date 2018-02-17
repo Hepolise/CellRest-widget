@@ -35,19 +35,12 @@ public class HelpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.webview);
-//        try {
-//            version = getPackageManager().getPackageInfo(getPackageName(), 0 ).versionName;
-//        } catch (PackageManager.NameNotFoundException e) {
-//
-//        }
         int versionCode = BuildConfig.VERSION_CODE;
         version = Integer.toString(versionCode);
         mWebView = (WebView) findViewById(R.id.activity_main_webview);
         // Enable Javascript
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
-        //Log.d("traff: ", locale);
-        //Log.d("cellL", ("https://srvr.su/traffic/help.php?l=" + locale + "&ver=" + version));
         mWebView.loadUrl("https://srvr.su/traffic/help.php?l=" + locale + "&ver=" + version);
         mWebView.setDownloadListener(new DownloadListener() {
             public void onDownloadStart(String url, String userAgent,

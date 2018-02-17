@@ -8,7 +8,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 25
         versionCode 12
-        versionName "2.2"
+        versionName "2.5"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
@@ -17,26 +17,7 @@ android {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig getSigningConfig()
-//            applicationVariants.all { variant ->
-//                variant.outputs.each { output ->
-//                    output.outputFile = new File(output.outputFile.parent,
-//                            output.outputFile.name.replace("app-release", "app-cellrest-release")
-//                    )
-//                }
-//            }
         }
-//        debug {
-//            minifyEnabled false
-//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-//            signingConfig getSigningConfig()
-////            applicationVariants.all { variant ->
-////                variant.outputs.each { output ->
-////                    output.outputFile = new File(output.outputFile.parent,
-////                            output.outputFile.name.replace("app-debug", "app-cellrest-debug")
-////                    )
-////                }
-////            }
-//        }
     }
 }
 
@@ -45,9 +26,6 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    //compile project(':library')
-
-    // AppMetrica from maven central.
 
 
     compile 'com.android.support:appcompat-v7:25.3.1'

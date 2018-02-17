@@ -20,8 +20,6 @@ import android.content.Intent;
 
 import com.google.android.gms.iid.InstanceIDListenerService;
 
-import ru.hepolise.cellrest.GCM.RegistrationIntentService;
-
 public class MyInstanceIDListenerService extends InstanceIDListenerService {
 
     //private static final String TAG = "cellLogs";

@@ -3,13 +3,9 @@ package ru.hepolise.cellrest;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 import java.util.TimeZone;
@@ -21,28 +17,18 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.provider.Settings;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.RemoteViews;
 
 import ru.hepolise.cellrest.Activities.AccountChooser;
-import ru.hepolise.cellrest.BuildConfig;
-import ru.hepolise.cellrest.R;
 import ru.hepolise.cellrest.Utils.QuickstartPreferences;
+import ru.hepolise.cellrest.Utils.WidgetUtils;
 
 import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE;
-import static android.appwidget.AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT;
-import static android.appwidget.AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH;
-import static android.appwidget.AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT;
-import static android.appwidget.AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH;
 import static android.content.Context.MODE_PRIVATE;
 
 
@@ -52,16 +38,11 @@ public class WidgetText extends AppWidgetProvider {
     int idglobal;
     String UPD;
     String ACTION_APPWIDGET_FORCE_UPDATE = "";
-//    String login;
-//    String pass;
-//    String op;
-//    String android_id;
-//    String pin_code;
+
     String locale;
     String loc;
     String version;
     String token;
-    String return_;
     String tz;
     Float size;
 
@@ -71,7 +52,6 @@ public class WidgetText extends AppWidgetProvider {
     @Override
     public void onEnabled(Context context) {
         super.onEnabled(context);
-        //Log.d(LOG_TAG, "onEnabled: ");
     }
 
     @Override
@@ -97,21 +77,6 @@ public class WidgetText extends AppWidgetProvider {
         sharedPreferences.edit().remove("widget_id_" + Integer.toString(appWidgetIds[0])).commit();
     }
 
-//    @Override
-//    public void onAppWidgetOptionsChanged (Context context,
-//                                           AppWidgetManager appWidgetManager,
-//                                           int appWidgetId,
-//                                           Bundle newOptions) {
-//        int max_h = newOptions.getInt(OPTION_APPWIDGET_MAX_HEIGHT);
-//        int max_w = newOptions.getInt(OPTION_APPWIDGET_MAX_WIDTH);
-//        int min_h = newOptions.getInt(OPTION_APPWIDGET_MIN_HEIGHT);
-//        int min_w = newOptions.getInt(OPTION_APPWIDGET_MIN_WIDTH);
-////        //Log.d(LOG_TAG, "max_h: " + max_h);
-////        //Log.d(LOG_TAG, "max_w: " + max_w);
-////        //Log.d(LOG_TAG, "min_h: " + min_h);
-////        //Log.d(LOG_TAG, "min_w: " + min_w);
-//    }
-
     @Override
     public void onDisabled(Context context) {
         super.onDisabled(context);
@@ -129,16 +94,7 @@ public class WidgetText extends AppWidgetProvider {
                         AppWidgetManager.INVALID_APPWIDGET_ID);
 
             }
-            SharedPreferences sharedPreferences = context.getSharedPreferences("MainPrefs", MODE_PRIVATE);;
-            String working_prefs = sharedPreferences.getString("loaded_prefs", "prefs_0");
-            long ts = sharedPreferences.getLong("widget_id_" + Integer.toString(id), 0);
-            if (working_prefs.equals("prefs_" + ts)) {
-                //Log.d(LOG_TAG, "Using default prefs for update widget");
-                sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-            } else {
-                //Log.d(LOG_TAG, "Using prefs_" + ts +" for update widget");
-                sharedPreferences = context.getSharedPreferences("prefs_" + ts, MODE_PRIVATE);
-            }
+            SharedPreferences sharedPreferences = WidgetUtils.getSharedPrefsByWidgetId(context, id);
             Boolean setting_update = sharedPreferences.getBoolean(QuickstartPreferences.setting_update, true);
             if (setting_update.equals(true)) {
                 UPD = "1";
@@ -157,24 +113,11 @@ public class WidgetText extends AppWidgetProvider {
 
     public String updateWidget(Context context, AppWidgetManager appWidgetManager,
                                int widgetID, String content) {
-        //Log.d(LOG_TAG, "upd 11");
-
-
-        String login;
-        String op;
 
         SharedPreferences sharedPreferences = context.getSharedPreferences("MainPrefs", MODE_PRIVATE);
         long ts = sharedPreferences.getLong("widget_id_"+Integer.toString(widgetID), 0);
-        //Log.d(LOG_TAG, "widget id: " + widgetID);
 
-        String loaded = sharedPreferences.getString("loaded_prefs", "prefs_0");
-        SharedPreferences shrpr;
-        if (loaded.equals("prefs_" + Long.toString(ts))) {
-            //Log.d(LOG_TAG, "Loaded prefs equals (from widget)");
-            shrpr = PreferenceManager.getDefaultSharedPreferences(context);
-        } else {
-            shrpr = context.getSharedPreferences("prefs_" + Long.toString(ts), MODE_PRIVATE);
-        }
+        SharedPreferences shrpr = WidgetUtils.getSharedPrefsByWidgetId(context, widgetID);
 
 
         Intent updateIntent;
@@ -183,9 +126,6 @@ public class WidgetText extends AppWidgetProvider {
         android.app.PendingIntent pIntent;
         if (ts == 0 || "def".equals(shrpr.getString("thisPrefs", "def"))) {
             content = context.getString(R.string.choose_account);
-
-            //Log.d(LOG_TAG, "ts is null");
-            //updateIntent = new Intent(context, AccountChooser.class);
             updateIntent = Intent.makeRestartActivityTask(new ComponentName(context, AccountChooser.class));
             updateIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             updateIntent.putExtra("id", widgetID);
@@ -198,40 +138,17 @@ public class WidgetText extends AppWidgetProvider {
             pIntent = PendingIntent.getBroadcast(context, widgetID, updateIntent, 0);
         }
 
-        //Load vars
-        login = shrpr.getString(QuickstartPreferences.login, "");
-        op = shrpr.getString(QuickstartPreferences.op_list, "");
+        // Load vars
         token = shrpr.getString(QuickstartPreferences.TOKEN, "");
         Boolean f_update = shrpr.getBoolean(QuickstartPreferences.f_update, false);
 
-        //in case of error loading new data
+        // in case of error loading new data
         if (content.startsWith("error")) {
             content = shrpr.getString(QuickstartPreferences.content, context.getString(R.string.error));
         }
 
-        //Reformat login
-        if (login.startsWith("+7")) {
-            login = login.substring(2);
-            //Log.d(LOG_TAG, "+7 change: " + login);
-        } else if (login.startsWith("7") || login.startsWith("8")){
-            login = login.substring(1);
-            //Log.d(LOG_TAG, "7/8 change: " + login);
-        }
-        
-
-        if (op.equals("tele2")) {
-            login = "7" + login;
-        }
-//        pin_code = shrpr.getString(QuickstartPreferences.pin_code, "");
-//        android_id = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
-//        pass = shrpr.getString(QuickstartPreferences.pass, "");
-        return_ = shrpr.getString(QuickstartPreferences.return_, "calc");
-
-        
         UPD = shrpr.getString(QuickstartPreferences.update, "1");
-        
-
-        //Load location variable
+        // Load location variable
         loc = shrpr.getString(QuickstartPreferences.loc, "def");
         Locale currentLocale = Locale.getDefault();
         locale = currentLocale.toString();
@@ -240,11 +157,11 @@ public class WidgetText extends AppWidgetProvider {
         }
         //Log.d(LOG_TAG, loc);
 
-        //Load timezone
+        // Load timezone
         tz = TimeZone.getDefault().getID();
         //Log.d(LOG_TAG, tz);
 
-        //loading app version
+        // loading app version
         int versionCode = BuildConfig.VERSION_CODE;
         version = Integer.toString(versionCode);
 
@@ -257,20 +174,16 @@ public class WidgetText extends AppWidgetProvider {
                 content = shrpr.getString(QuickstartPreferences.content, context.getString(R.string.updating));
             }
 
-            //Starting to load content
+            // Starting to load content
             Integer[] params = { widgetID };
-            new ProgressTask().execute(params);
+            new DownloadData().execute(params);
             shrpr.edit().putString(QuickstartPreferences.update, "1").apply();
         } else {
             if (!content.equals(context.getString(R.string.choose_account))) {
-                //Save new content
+                // Save new content
                 shrpr.edit().putString(QuickstartPreferences.content, content).apply();
             }
         }
-
-
-        //shrpr.getStringSet()
-
 
         Set<String> pattern =  shrpr.getStringSet(QuickstartPreferences.pattern, null);
         String p = "";
@@ -290,7 +203,6 @@ public class WidgetText extends AppWidgetProvider {
         int t = content.indexOf("\n", s+1);
         int a = content.length();
         //Log.d(LOG_TAG, Integer.toString(f) + " " + Integer.toString(s) + " " + Integer.toString(t) + " " + Integer.toString(a));
-        //int lines = 3;
         try {
             String newContent = "";
             if (!content.equals(context.getString(R.string.error))
@@ -328,17 +240,17 @@ public class WidgetText extends AppWidgetProvider {
 
 
 
-        //set text size
+        // set text size
         size = (float) shrpr.getInt(QuickstartPreferences.text_size, 16);
         widgetView.setFloat(R.id.text_light, "setTextSize", size);
         widgetView.setFloat(R.id.text_bold, "setTextSize", size);
         widgetView.setFloat(R.id.text_italic, "setTextSize",size);
 
-        //load color
+        // load color
         int color =  shrpr.getInt(QuickstartPreferences.color, 0xffffffff);
 
         int text;
-        //set text color
+        // set text color
         String color_text = shrpr.getString(QuickstartPreferences.color_text, "null");
         if (color_text.equals("null")){
             String hexColor = String.format("#%06X", (0xFFFFFF & color));
@@ -355,12 +267,12 @@ public class WidgetText extends AppWidgetProvider {
             }
         }
 
-        //Set all text to null
+        // Set all text to null
         widgetView.setTextViewText(R.id.text_light, "");
         widgetView.setTextViewText(R.id.text_bold, "");
         widgetView.setTextViewText(R.id.text_italic, "");
         int res = R.id.text_light;
-        //Changing text type
+        // Changing text type
         String font =  shrpr.getString(QuickstartPreferences.font, "n");
         if (font.equals("i")) {
             res = R.id.text_italic;
@@ -369,7 +281,7 @@ public class WidgetText extends AppWidgetProvider {
         }
 
 
-        //Setting content to widget and updating it
+        // Setting content to widget and updating it
         widgetView.setTextViewText(res, content);
         widgetView.setTextColor(res, color);
         //Log.d(LOG_TAG, "setting pending intent");
@@ -378,17 +290,18 @@ public class WidgetText extends AppWidgetProvider {
         return (null);
     }
 
-    class ProgressTask extends AsyncTask<Integer, String, String> {
+    class DownloadData extends AsyncTask<Integer, String, String> {
         String login;
         String pass;
         String op;
         String android_id;
         String pin_code;
+        String return_;
         @Override
         public String doInBackground(Integer... id) {
 
             try {
-                //Loading content
+                // Loading content
                 loadVars(id[0]);
                 getContent(id[0]);
             } catch (IOException ex) {
@@ -398,23 +311,14 @@ public class WidgetText extends AppWidgetProvider {
         }
 
         private void loadVars(int id) {
-            SharedPreferences shrpr;
-            SharedPreferences sharedPreferences = contextglobal.getSharedPreferences("MainPrefs", MODE_PRIVATE);;
-            String working_prefs = sharedPreferences.getString("loaded_prefs", "prefs_0");
-            long ts = sharedPreferences.getLong("widget_id_" + Integer.toString(id), 0);
-            if (working_prefs.equals("prefs_" + ts)) {
-                Log.d(LOG_TAG, "Using default prefs for load vars");
-                shrpr = PreferenceManager.getDefaultSharedPreferences(contextglobal);
-            } else {
-                Log.d(LOG_TAG, "Using prefs_" + ts +" for load vars");
-                shrpr = contextglobal.getSharedPreferences("prefs_" + ts, MODE_PRIVATE);
-            }
+            SharedPreferences shrpr = WidgetUtils.getSharedPrefsByWidgetId(contextglobal, id);
             login = shrpr.getString(QuickstartPreferences.login, "");
             op = shrpr.getString(QuickstartPreferences.op_list, "");
             pin_code = shrpr.getString(QuickstartPreferences.pin_code, "");
             android_id = shrpr.getString(QuickstartPreferences.androidId, Settings.Secure.getString(contextglobal.getContentResolver(), Settings.Secure.ANDROID_ID));
             pass = shrpr.getString(QuickstartPreferences.pass, "");
-            //Reformat login
+            return_ = shrpr.getString(QuickstartPreferences.return_, "calc");
+            // Reformat login
             if (login.startsWith("+7")) {
                 login = login.substring(2);
             } else if (login.startsWith("7") || login.startsWith("8")){
@@ -424,18 +328,9 @@ public class WidgetText extends AppWidgetProvider {
                 login = "7" + login;
             }
         }
-//        @Override
-//        protected void onPostExecute(String result) {
-//            int id = Integer.parseInt(result);
-//            //update widget after loading data
-//            updateWidget(contextglobal, appWidgetManagerglobal, id, "onPostExecute");
-//        }
-
         private String getContent(Integer id) throws IOException {
             BufferedReader reader;
-
             try {
-
                 URL url = new URL("https://srvr.su/traf.php?cmd=widget&upd=" + URLEncoder.encode(UPD, "UTF-8") +
                         "&login=" + URLEncoder.encode(login, "UTF-8") +
                         "&pass=" + URLEncoder.encode(pass, "UTF-8") +
@@ -447,7 +342,7 @@ public class WidgetText extends AppWidgetProvider {
                         "&token=" + URLEncoder.encode(token, "UTF-8") +
                         "&return=" + URLEncoder.encode(return_, "UTF-8") +
                         "&tz=" + URLEncoder.encode(tz, "UTF-8")
-                        //testing new logic for dtr
+                        // some server tests
                         //+ "&test"
                 );
                 //Log.d(LOG_TAG, "URL: " + url);
@@ -463,17 +358,7 @@ public class WidgetText extends AppWidgetProvider {
                 if (buffer.contains("NEWLINE")) {
                     buffer = buffer.replace(" NEWLINE ", "\n");
                 } else if (buffer.contains("Error: Auth needed") || buffer.contains("Error: Необходимо пройти регистрацию")) {
-                    SharedPreferences shrpr;
-                    SharedPreferences sharedPreferences = contextglobal.getSharedPreferences("MainPrefs", MODE_PRIVATE);;
-                    String working_prefs = sharedPreferences.getString("loaded_prefs", "prefs_0");
-                    long ts = sharedPreferences.getLong("widget_id_" + Integer.toString(id), 0);
-                    if (working_prefs.equals("prefs_" + ts)) {
-                        Log.d(LOG_TAG, "Using default prefs for load vars");
-                        shrpr = PreferenceManager.getDefaultSharedPreferences(contextglobal);
-                    } else {
-                        Log.d(LOG_TAG, "Using prefs_" + ts +" for load vars");
-                        shrpr = contextglobal.getSharedPreferences("prefs_" + ts, MODE_PRIVATE);
-                    }
+                    SharedPreferences shrpr = WidgetUtils.getSharedPrefsByWidgetId(contextglobal, id);
                     shrpr.edit().remove(QuickstartPreferences.pin_code).commit();
                 } else {
                     buffer = "error";

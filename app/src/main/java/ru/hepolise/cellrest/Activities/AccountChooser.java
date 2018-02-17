@@ -2,11 +2,9 @@ package ru.hepolise.cellrest.Activities;
 
 import android.app.ListActivity;
 import android.appwidget.AppWidgetManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -30,14 +28,6 @@ public class AccountChooser extends ListActivity {
     String L = "cellLogs";
     Boolean b;
 
-
-//    @Override
-//    protected void onNewIntent(Intent intent) {
-//        super.onNewIntent(intent);
-//        this.setIntent(intent);
-//    }
-
-
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
@@ -54,7 +44,6 @@ public class AccountChooser extends ListActivity {
                 i = new Intent(this, IntroActivity.class);
             }
             startActivity(i);
-            //finish();
         } else {
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                     android.R.layout.simple_list_item_1, values);
@@ -98,9 +87,7 @@ public class AccountChooser extends ListActivity {
         }
         sharedPreferences.edit()
                 .putLong("widget_id_"+Integer.toString(appWidgetId), ts)
-                //.putInt(from+"_by_ts_" + Long.toString(ts), appWidgetId)
                 .commit();
-        //Context context = getApplicationContext();
         Intent updateIntent = null;
         if (from.equals("WidgetText")) {
              updateIntent = new Intent(getApplicationContext(), WidgetText.class);

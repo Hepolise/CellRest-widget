@@ -19,7 +19,6 @@ package ru.hepolise.cellrest.GCM;
 import android.app.IntentService;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
@@ -41,7 +40,6 @@ public class RegistrationIntentService extends IntentService {
 
     private static final String TAG = "cellLogs";
     private static final String[] TOPICS = {"global"};
-    //String usr = "xg";
 
 
     public RegistrationIntentService() {

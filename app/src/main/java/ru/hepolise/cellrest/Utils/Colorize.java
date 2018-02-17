@@ -1,7 +1,6 @@
 package ru.hepolise.cellrest.Utils;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -11,13 +10,10 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
-import android.support.annotation.RequiresPermission;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import ru.hepolise.cellrest.R;
 

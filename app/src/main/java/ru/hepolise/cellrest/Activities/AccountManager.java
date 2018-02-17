@@ -79,15 +79,6 @@ public class AccountManager  extends ListActivity {
                         // deleting
                         ts = sharedPreferences.getLong(Integer.toString(deleting), 0);
                         long ts_del = sharedPreferences.getLong(Integer.toString(deleting), 0);
-//                        int textWidgetId = sharedPreferences.getInt("WidgetText_by_ts_" + ts, 0);
-//                        int widgetId = sharedPreferences.getInt("TraffWidget_by_ts_" + ts, 0);
-//                        sharedPreferences.edit()
-//                                .remove(Integer.toString(deleting))
-//                                .remove("WidgetText_by_ts_" + ts)
-//                                .remove("TraffWidget_by_ts_" + ts)
-//                                .remove("widget_id_"+textWidgetId)
-//                                .remove("widget_id_"+widgetId)
-//                                .commit();
                         //Utils.clearFile("prefs_" + Long.toString(ts), getApplicationContext());
                         Utils.deletePrefs("prefs_" + Long.toString(ts), getApplicationContext());
 
