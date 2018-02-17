@@ -59,9 +59,8 @@ public class TraffWidget extends AppWidgetProvider {
 
     String version;
     String token;
-    String return_;
     String tz;
-
+    Boolean calc;
 
     final String LOG_TAG = "cellLogsWidget";
 
@@ -165,7 +164,6 @@ public class TraffWidget extends AppWidgetProvider {
         long ts = sharedPreferences.getLong("widget_id_"+Integer.toString(widgetID), 0);
         Log.d(LOG_TAG, "widget id: " + widgetID);
 
-        String loaded = sharedPreferences.getString("loaded_prefs", "prefs_0");
         SharedPreferences shrpr = getSharedPrefsByWidgetId(context, widgetID);
 
 
@@ -196,7 +194,7 @@ public class TraffWidget extends AppWidgetProvider {
         token = shrpr.getString(QuickstartPreferences.TOKEN, "");
         Boolean f_update = shrpr.getBoolean(QuickstartPreferences.f_update, false);
         Boolean inet_only = shrpr.getBoolean(QuickstartPreferences.inet_only, false);
-
+        calc = shrpr.getBoolean(QuickstartPreferences.calc, true);
 
 
         String max;
@@ -260,8 +258,6 @@ public class TraffWidget extends AppWidgetProvider {
             login = "7" + login;
         }
         Log.d(LOG_TAG, "login: "+login);
-
-        return_ = shrpr.getString(QuickstartPreferences.return_, "calc");
 
         UPD = shrpr.getString(QuickstartPreferences.update, "1");
 
@@ -375,7 +371,7 @@ public class TraffWidget extends AppWidgetProvider {
                     String sms;
                     String min;
                     String inet;
-                    if (return_.equals("calc")) {
+                    if (calc) {
                         sms = maxsms;
                         min = maxmin;
                         inet = max;

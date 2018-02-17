@@ -20,7 +20,6 @@
     <string name="widget_settings_color">General settings</string>
 
     <string name="fill_obligatory">Fill obligatory fields</string>
-    <string name="fill_obligatory_desc">Cellular operator and login are obligatory fields. Fot Tele2 you must complete registration and for Beeline/Megafon fill password from you Personal Account</string>
 
 
     <string name="pattern_title">Pattern for text</string>
@@ -71,7 +70,7 @@
     <string name="pref_size_desc">Set all text widget size. Default: 16</string>
     <string name="widget_text">CellRest: Text widget</string>
 
-    <string name="other_settings">Test</string>
+    <string name="other_settings">Other</string>
     <string name="request_sent">Please wait&#8230;</string>
     <string name="help_title">Help</string>
     <string name="about_title">About</string>
@@ -191,6 +190,10 @@
     <string name="registered">Registered</string>
     <string name="dialog_reg_tele2_title">Registration</string>
     <string name="dialog_reg_tele2_desc">Request registration?</string>
+    <string name="calc_title">Calculations</string>
+    <string name="calc_desc">Make calculations for current day</string>
+    <string name="fill_obligatory_desc">Cellular operator and login are obligatory fields. Fot Tele2 you must complete registration and for Beeline/Megafon fill password from you Personal Account. Calculations checkbox allows you to choose what kind of data you want to see in a widget</string>
+    <string name="calc_desc_2">Return data from provider \"As Is\"</string>
 
 
 </resources>

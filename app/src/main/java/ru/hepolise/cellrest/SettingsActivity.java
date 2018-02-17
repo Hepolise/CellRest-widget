@@ -246,13 +246,171 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
     }
 
-    /**
-     * This fragment shows general preferences only. It is used when the
-     * activity is showing a two-pane settings UI.
-     */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public static class ColorPickerPreferenceFragment extends PreferenceFragment {
+
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            addPreferencesFromResource(R.xml.pref_widgetview);
+            setHasOptionsMenu(true);
+            final Context ctx = getActivity();
+            final SharedPreferences shrpr = PreferenceManager.getDefaultSharedPreferences(ctx);
+            Preference button = findPreference(getString(R.string.button_colorpicker));
+            button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    int initialColor =  shrpr.getInt(QuickstartPreferences.color, 0xffffffff);
+                    String color_text = shrpr.getString(QuickstartPreferences.color_text, "null");
+                    if (!color_text.equals("null")){
+                        int color;
+                        try {
+                            color = Color.parseColor(color_text);
+                            shrpr.edit().putInt(QuickstartPreferences.color, color).apply();
+                        } catch (IllegalArgumentException e) {
+                            color = 0xffffffff;
+                            String hexColor = String.format("#%06X", (0xFFFFFF & color));
+                            shrpr.edit().putString(QuickstartPreferences.color_text, hexColor).apply();
+                        }
+                        initialColor = color;
+                    }
+                    AmbilWarnaDialog dialog = new AmbilWarnaDialog(ctx, initialColor, new AmbilWarnaDialog.OnAmbilWarnaListener() {
+                        @Override
+                        public void onOk(AmbilWarnaDialog dialog, int color) {
+                            // color is the color selected by the user.
+                            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ctx);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putInt(QuickstartPreferences.color, color).apply();
+                            String hexColor = String.format("#%06X", (0xFFFFFF & color));
+                            editor.putString(QuickstartPreferences.color_text, hexColor).apply();
+                            bindPreferenceSummaryToValue(findPreference("color_text"));
+                            new Colorize().StartColorize(ctx); //TODO
+                        }
+
+                        @Override
+                        public void onCancel(AmbilWarnaDialog dialog) {}
+
+
+                    });
+                    dialog.show();
+                    return true;
+                }
+            });
+            bindPreferenceSummaryToValue(findPreference("font"));
+            bindPreferenceSummaryToValue(findPreference("color_text"));
+            bindPreferenceSummaryToValue(findPreference("loc"));
+        }
+
+    }
+
+
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class GeneralPreferenceFragment extends PreferenceFragment {
         String LOG_TAG="celllogs";
+
+
+
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            addPreferencesFromResource(R.xml.pref_general);
+            setHasOptionsMenu(true);
+
+            SharedPreferences shrpr = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            Boolean tele2RegComplete = (!"def".equals(shrpr.getString(QuickstartPreferences.pin_code, "def")));
+            Preference testConn = findPreference(getString(R.string.button));
+            testConn.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    preference.setEnabled(false);
+                    sBindPreferenceSummaryToValueListener.onPreferenceChange(preference, getActivity().getString(R.string.requesting));
+                    Toast.makeText(getActivity(), getActivity().getString(R.string.request_sent), Toast.LENGTH_SHORT).show();
+                    new DownloadData().execute();
+                    return true;
+                }
+            });
+
+            Preference tele2Reg = findPreference(getString(R.string.tele2_reg));
+            tele2Reg.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                private void request(Preference preference) {
+                    preference.setEnabled(false);
+                    sBindPreferenceSummaryToValueListener.onPreferenceChange(preference, getActivity().getString(R.string.requesting));
+                    Toast.makeText(getActivity(), getActivity().getString(R.string.request_sent) + "\n" + getActivity().getString(R.string.wait_30_sec), Toast.LENGTH_SHORT).show();
+                    new Tele2Register().execute();
+                }
+                @Override
+                public boolean onPreferenceClick(final Preference preference) {
+                    SharedPreferences shrpr = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                    Boolean tele2RegComplete = (!"def".equals(shrpr.getString(QuickstartPreferences.pin_code, "def")));
+                    if (tele2RegComplete) {
+                        AlertDialog.Builder ad = new AlertDialog.Builder(getActivity());
+                        ad.setTitle(getActivity().getString(R.string.dialog_reg_tele2_title));
+                        ad.setMessage(getActivity().getString(R.string.dialog_reg_tele2_desc));
+                        ad.setPositiveButton(getActivity().getString(R.string.ok), new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int arg1) {
+                                request(preference);
+                            }
+                        });
+
+                        ad.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                            public void onCancel(DialogInterface dialog) {
+                            }
+                        });
+                        ad.setNegativeButton(getActivity().getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int arg1) {
+                            }
+                        });
+                        ad.setCancelable(true);
+                        ad.show();
+                    } else {
+                        request(preference);
+                    }
+                    return true;
+                }
+            });
+
+
+            Preference calc = findPreference(QuickstartPreferences.calc);
+
+            calc.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    String data;
+                    Boolean checked = PreferenceManager
+                            .getDefaultSharedPreferences(preference.getContext())
+                            .getBoolean(preference.getKey(), true);
+                    if (checked) {
+                        data = preference.getContext().getString(R.string.calc_desc);
+                    } else {
+                        data = preference.getContext().getString(R.string.calc_desc_2);
+                    }
+                    sBindPreferenceSummaryToValueListener.onPreferenceChange(preference, data);
+                    return true;
+                }
+            });
+            // Bind the summaries of EditText/List/Dialog/Ringtone preferences
+            // to their values. When their values change, their summaries are
+            // updated to reflect the new value, per the Android Design
+            // guidelines.
+
+            if (tele2RegComplete) {
+                sBindPreferenceSummaryToValueListener.onPreferenceChange(tele2Reg, getActivity().getString(R.string.registered));
+            }
+            bindPreferenceSummaryToValue(findPreference(QuickstartPreferences.login));
+            bindPreferenceSummaryToValue(findPreference(QuickstartPreferences.op_list));
+            String data;
+            Boolean checked = PreferenceManager
+                    .getDefaultSharedPreferences(calc.getContext())
+                    .getBoolean(calc.getKey(), true);
+            if (checked) {
+                data = calc.getContext().getString(R.string.calc_desc);
+            } else {
+                data = calc.getContext().getString(R.string.calc_desc_2);
+            }
+            sBindPreferenceSummaryToValueListener.onPreferenceChange(calc, data);
+        }
+
+
         class DownloadData extends AsyncTask<String, Void, String> {
             String content = "";
             @Override
@@ -286,7 +444,13 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 String login = shrpr.getString(QuickstartPreferences.login, "");
                 String op = shrpr.getString(QuickstartPreferences.op_list, "");
                 String pin_code = shrpr.getString(QuickstartPreferences.pin_code, "");
-                String return_ = shrpr.getString(QuickstartPreferences.return_, "calc");
+                Boolean calc = shrpr.getBoolean(QuickstartPreferences.calc, true);
+                String return_;
+                if (calc) {
+                    return_ = "calc";
+                } else {
+                    return_ = "full";
+                }
                 String android_id = "";
                 Locale currentLocale = Locale.getDefault();
                 String loc = currentLocale.toString();
@@ -451,132 +615,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 }
             }
         }
-
-
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.pref_general);
-            setHasOptionsMenu(true);
-
-            SharedPreferences shrpr = PreferenceManager.getDefaultSharedPreferences(getActivity());
-            final Boolean tele2RegComplete = (!"def".equals(shrpr.getString(QuickstartPreferences.pin_code, "def")));
-            final Preference testConn = findPreference(getString(R.string.button));
-            testConn.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    preference.setEnabled(false);
-                    sBindPreferenceSummaryToValueListener.onPreferenceChange(preference, getActivity().getString(R.string.requesting));
-                    Toast.makeText(getActivity(), getActivity().getString(R.string.request_sent), Toast.LENGTH_SHORT).show();
-                    new DownloadData().execute();
-                    return true;
-                }
-            });
-
-            final Preference tele2Reg = findPreference(getString(R.string.tele2_reg));
-            tele2Reg.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                private void request(Preference preference) {
-                    preference.setEnabled(false);
-                    sBindPreferenceSummaryToValueListener.onPreferenceChange(preference, getActivity().getString(R.string.requesting));
-                    Toast.makeText(getActivity(), getActivity().getString(R.string.request_sent) + "\n" + getActivity().getString(R.string.wait_30_sec), Toast.LENGTH_SHORT).show();
-                    new Tele2Register().execute();
-                }
-                @Override
-                public boolean onPreferenceClick(final Preference preference) {
-                    if (tele2RegComplete) {
-                        AlertDialog.Builder ad = new AlertDialog.Builder(getActivity());
-                        ad.setTitle(getActivity().getString(R.string.dialog_reg_tele2_title));
-                        ad.setMessage(getActivity().getString(R.string.dialog_reg_tele2_desc));
-                        ad.setPositiveButton(getActivity().getString(R.string.ok), new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int arg1) {
-                                request(preference);
-                            }
-                        });
-
-                        ad.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                            public void onCancel(DialogInterface dialog) {
-                            }
-                        });
-                        ad.setNegativeButton(getActivity().getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int arg1) {
-                            }
-                        });
-                        ad.setCancelable(true);
-                        ad.show();
-                    } else {
-                        request(preference);
-                    }
-                    return true;
-                }
-            });
-            // Bind the summaries of EditText/List/Dialog/Ringtone preferences
-            // to their values. When their values change, their summaries are
-            // updated to reflect the new value, per the Android Design
-            // guidelines.
-
-            if (tele2RegComplete) {
-                sBindPreferenceSummaryToValueListener.onPreferenceChange(tele2Reg, getActivity().getString(R.string.registered));
-            }
-            bindPreferenceSummaryToValue(findPreference("login"));
-            bindPreferenceSummaryToValue(findPreference("op_list"));
-        }
     }
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public static class ColorPickerPreferenceFragment extends PreferenceFragment {
-
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.pref_widgetview);
-            setHasOptionsMenu(true);
-            final Context ctx = getActivity();
-            final SharedPreferences shrpr = PreferenceManager.getDefaultSharedPreferences(ctx);
-            Preference button = findPreference(getString(R.string.button_colorpicker));
-            button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    int initialColor =  shrpr.getInt(QuickstartPreferences.color, 0xffffffff);
-                    String color_text = shrpr.getString(QuickstartPreferences.color_text, "null");
-                    if (!color_text.equals("null")){
-                        int color;
-                        try {
-                            color = Color.parseColor(color_text);
-                            shrpr.edit().putInt(QuickstartPreferences.color, color).apply();
-                        } catch (IllegalArgumentException e) {
-                            color = 0xffffffff;
-                            String hexColor = String.format("#%06X", (0xFFFFFF & color));
-                            shrpr.edit().putString(QuickstartPreferences.color_text, hexColor).apply();
-                        }
-                        initialColor = color;
-                    }
-                    AmbilWarnaDialog dialog = new AmbilWarnaDialog(ctx, initialColor, new AmbilWarnaDialog.OnAmbilWarnaListener() {
-                        @Override
-                        public void onOk(AmbilWarnaDialog dialog, int color) {
-                            // color is the color selected by the user.
-                            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ctx);
-                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putInt(QuickstartPreferences.color, color).apply();
-                            String hexColor = String.format("#%06X", (0xFFFFFF & color));
-                            editor.putString(QuickstartPreferences.color_text, hexColor).apply();
-                            bindPreferenceSummaryToValue(findPreference("color_text"));
-                            new Colorize().StartColorize(ctx); //TODO
-                        }
-
-                        @Override
-                        public void onCancel(AmbilWarnaDialog dialog) {}
-
-
-                    });
-                    dialog.show();
-                    return true;
-                }
-            });
-            bindPreferenceSummaryToValue(findPreference("font"));
-            bindPreferenceSummaryToValue(findPreference("color_text"));
-            bindPreferenceSummaryToValue(findPreference("loc"));
-        }
-
-    }
-
 
 }

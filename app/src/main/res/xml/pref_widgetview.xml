@@ -89,26 +89,14 @@
             android:summary="@string/pattern_desc"
             />
 
-
-
-
     </PreferenceCategory>
 
     <PreferenceCategory
         android:title="@string/widget_other_pref">
-    <SwitchPreference
-        android:defaultValue="true"
-        android:key="setting_update"
-        android:summary="@string/pref_description_update"
-        android:title="@string/pref_title_update" />
-        <ListPreference
-            android:defaultValue="calc"
-            android:entries="@array/return_type_titles"
-            android:entryValues="@array/return_type_values"
-            android:key="return"
-            android:negativeButtonText="@null"
-            android:positiveButtonText="@null"
-            android:summary="@string/return_desc"
-            android:title="@string/return_title" />
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="setting_update"
+            android:summary="@string/pref_description_update"
+            android:title="@string/pref_title_update" />
     </PreferenceCategory>
 </PreferenceScreen>

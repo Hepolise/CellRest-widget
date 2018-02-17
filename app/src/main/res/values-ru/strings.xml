@@ -98,9 +98,9 @@
     <string name="about_title">О приложении</string>
     <string name="about_write"><![CDATA[<a href="%1$s">Связаться с автором приложения</a>]]></string>
     <string name="widget_name">CellRest виджет</string>
-    <string name="other_settings">Проверка</string>
+    <string name="other_settings">Прочее</string>
     <string name="return_title">Вид возвращаемых данных</string>
-    <string name="return_desc">Выбрать тип данных в виджете: с расчётом на текущий день и без</string>
+    <string name="return_desc">Выбрать тип данных в виджете: с расчётом на текущий день или полные данные</string>
     <string name="server_down">В данный момент сервер не доступен, пожалуйста, попробуйте позже</string>
     <string name="widget_settings_color">Общие настройки</string>
     <string name="widget_settings_color_text">Цвет виджета по коду</string>
@@ -147,7 +147,10 @@
     <string name="registered">Регистрация выполнена</string>
     <string name="dialog_reg_tele2_title">Регистрация</string>
     <string name="dialog_reg_tele2_desc">Выполнить регистрацию ещё раз?</string>
-    <string name="fill_obligatory_desc">Оператор и логин являются обязательными полями. Для Теле2 необходимо зарегистрироваться, для Билайна/Мегафона ввести пароль от Личного Кабинета</string>
+    <string name="fill_obligatory_desc">Оператор и логин являются обязательными полями. Для Теле2 необходимо зарегистрироваться, для Билайна/Мегафона ввести пароль от Личного Кабинета. Настройка \"Расчёт\" позволяет выбрать, какие данные Вы хотите видеть в виджете.</string>
+    <string name="calc_title">Расчёт</string>
+    <string name="calc_desc">Рассчитывать данные на текущий день</string>
+    <string name="calc_desc_2">Возвращать данные оператора \"Как есть\"</string>
 
     <!--<string name="pattern_desc">Изменить весь текст в виджете. \n
         %dtr% - days to reestablish; \n

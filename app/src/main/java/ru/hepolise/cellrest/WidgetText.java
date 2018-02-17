@@ -317,7 +317,12 @@ public class WidgetText extends AppWidgetProvider {
             pin_code = shrpr.getString(QuickstartPreferences.pin_code, "");
             android_id = shrpr.getString(QuickstartPreferences.androidId, Settings.Secure.getString(contextglobal.getContentResolver(), Settings.Secure.ANDROID_ID));
             pass = shrpr.getString(QuickstartPreferences.pass, "");
-            return_ = shrpr.getString(QuickstartPreferences.return_, "calc");
+            Boolean calc = shrpr.getBoolean(QuickstartPreferences.calc, true);
+            if (calc) {
+                return_ = "calc";
+            } else {
+                return_ = "full";
+            }
             // Reformat login
             if (login.startsWith("+7")) {
                 login = login.substring(2);

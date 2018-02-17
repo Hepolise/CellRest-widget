@@ -100,7 +100,7 @@ public class IntroActivity extends AppIntro2 {
 
     }
     private void apply() {
-        // making the first account the part of multi account
+        // making the first account like part of multi account
         SharedPreferences sharedPreferences = getSharedPreferences("MainPrefs", MODE_PRIVATE);
         if (!sharedPreferences.getBoolean(QuickstartPreferences.intro_done, false)) {
             Log.d(L,"Intro is not done");
@@ -112,9 +112,11 @@ public class IntroActivity extends AppIntro2 {
                     .putBoolean(QuickstartPreferences.intro_done, true)
                     .commit();
             sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            Boolean calc = ("calc".equals(sharedPreferences.getString(QuickstartPreferences.return_, "calc")));
             sharedPreferences.edit()
                     .putString("thisPrefs", "pref:" + Long.toString(ts))
                     .putString("android_id", UUID.randomUUID().toString().replace("-", ""))
+                    .putBoolean(QuickstartPreferences.calc, calc)
                     .commit();
         }
         new Colorize().StartColorize(getBaseContext());

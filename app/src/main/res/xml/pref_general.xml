@@ -62,12 +62,16 @@
 
     </PreferenceCategory>
 
-
     <PreferenceCategory
-    android:title="@string/other_settings">
-    <Preference android:title="@string/button_title"
-        android:key="@string/button"
-        android:summary="@string/button_desc"/>
+        android:title="@string/other_settings">
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="calc"
+            android:summary="@string/calc_desc"
+            android:title="@string/calc_title" />
+        <Preference android:title="@string/button_title"
+            android:key="@string/button"
+            android:summary="@string/button_desc"/>
     </PreferenceCategory>
     <!--
     <PreferenceCategory
