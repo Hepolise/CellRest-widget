@@ -185,6 +185,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     }
 
     public static Activity fa;
+    public static Context c;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -195,6 +196,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             intent = new Intent(this, IntroActivity.class);
             startActivity(intent);
         }
+        c = getApplicationContext();
 //        if (isFirstStart(this)) {
 //            placeAccountId(this);
 //        }
@@ -313,10 +315,14 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             }
             @Override
             protected void onPostExecute(String result){
-                final Preference testConn = findPreference(getString(R.string.button));
-                sBindPreferenceSummaryToValueListener.onPreferenceChange(testConn, getActivity().getString(R.string.button_desc));
-                testConn.setEnabled(true);
-                Toast.makeText(getActivity(), content, Toast.LENGTH_LONG).show();
+                try {
+                    final Preference testConn = findPreference(getString(R.string.button));
+                    sBindPreferenceSummaryToValueListener.onPreferenceChange(testConn, getActivity().getString(R.string.button_desc));
+                    testConn.setEnabled(true);
+                } catch (Exception e) {
+                    Log.e(LOG_TAG, "Preference wasn't found");
+                }
+                Toast.makeText(c.getApplicationContext(), content, Toast.LENGTH_LONG).show();
             }
 
             private String getContent(Context ctx) throws IOException {
@@ -332,11 +338,12 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 String return_ = shrpr.getString(QuickstartPreferences.return_, "calc");
                 String android_id = "";
                 Locale currentLocale = Locale.getDefault();
-                String locale = currentLocale.toString();
-                String loc = shrpr.getString(QuickstartPreferences.loc, "def");
-                if (loc.equals("def")) {
-                    loc = locale;
-                }
+                String loc = currentLocale.toString();
+                //String locale = currentLocale.toString();
+//                String loc = shrpr.getString(QuickstartPreferences.loc, "def");
+//                if (loc.equals("def")) {
+//                    loc = locale;
+//                }
                 String tz = TimeZone.getDefault().getID();
                 if (login.startsWith("+7")) {
                     login = login.substring(2);
@@ -416,19 +423,23 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             }
             @Override
             protected void onPostExecute(String result) {
-                final Preference tele2Reg = findPreference(getString(R.string.tele2_reg));
-                sBindPreferenceSummaryToValueListener.onPreferenceChange(tele2Reg, getActivity().getString(R.string.registered));
-                tele2Reg.setEnabled(true);
+                try {
+                    final Preference tele2Reg = findPreference(getString(R.string.tele2_reg));
+                    sBindPreferenceSummaryToValueListener.onPreferenceChange(tele2Reg, getActivity().getString(R.string.registered));
+                    tele2Reg.setEnabled(true);
+                } catch (Exception e) {
+                    Log.e(LOG_TAG, "Preference wasn't found");
+                }
                 try {
                     //parse answer
                     JSONObject jsonObject = new JSONObject(content);
                     String pin = jsonObject.getString("pin");
                     SharedPreferences shrpr = PreferenceManager.getDefaultSharedPreferences(getActivity());
                     shrpr.edit().putString(QuickstartPreferences.pin_code, pin).commit();
-                    Toast.makeText(getActivity(), getContext().getString(R.string.tele2_success_reg), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(c.getApplicationContext(), getContext().getString(R.string.tele2_success_reg), Toast.LENGTH_SHORT).show();
                 } catch (JSONException e) {
                     Log.e(LOG_TAG, "JSONException: " + e.getLocalizedMessage());
-                    Toast.makeText(getActivity(), content, Toast.LENGTH_LONG).show();
+                    Toast.makeText(c.getApplicationContext(), content, Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -441,11 +452,12 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 String android_id;
                 android_id = shrpr.getString(QuickstartPreferences.androidId, Settings.Secure.getString(ctx.getContentResolver(), Settings.Secure.ANDROID_ID));
                 Locale currentLocale = Locale.getDefault();
-                String locale = currentLocale.toString();
-                String loc = shrpr.getString(QuickstartPreferences.loc, "def");
-                if (loc.equals("def")) {
-                    loc = locale;
-                }
+                String loc = currentLocale.toString();
+//                String locale = currentLocale.toString();
+//                String loc = shrpr.getString(QuickstartPreferences.loc, "def");
+//                if (loc.equals("def")) {
+//                    loc = locale;
+//                }
                 if (login.startsWith("+7")) {
                     login = login.substring(2);
                     //Log.d(LOG_TAG, "+7 change: " + login);
