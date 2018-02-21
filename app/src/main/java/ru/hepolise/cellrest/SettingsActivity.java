@@ -318,7 +318,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
             SharedPreferences shrpr = PreferenceManager.getDefaultSharedPreferences(getActivity());
             Boolean tele2RegComplete = (!"def".equals(shrpr.getString(QuickstartPreferences.pin_code, "def")) &&
-                    !shrpr.getBoolean(QuickstartPreferences.tele2AuthDisabled, false));
+                    !shrpr.getBoolean(QuickstartPreferences.tele2AuthDisabled, true));
+            Log.d(LOG_TAG, "tele2Auth: " + shrpr.getBoolean(QuickstartPreferences.tele2AuthDisabled, true));
+            Log.d(LOG_TAG, "pin: " + "def".equals(shrpr.getString(QuickstartPreferences.pin_code, "def")));
             Preference testConn = findPreference(getString(R.string.button));
             testConn.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
@@ -343,7 +345,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 public boolean onPreferenceClick(final Preference preference) {
                     SharedPreferences shrpr = PreferenceManager.getDefaultSharedPreferences(getActivity());
                     Boolean tele2RegComplete = (!"def".equals(shrpr.getString(QuickstartPreferences.pin_code, "def")) &&
-                            !shrpr.getBoolean(QuickstartPreferences.tele2AuthDisabled, false));
+                            !shrpr.getBoolean(QuickstartPreferences.tele2AuthDisabled, true));
                     if (tele2RegComplete) {
                         AlertDialog.Builder ad = new AlertDialog.Builder(getActivity());
                         ad.setTitle(getActivity().getString(R.string.dialog_reg_tele2_title));
