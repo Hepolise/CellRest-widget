@@ -317,7 +317,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             setHasOptionsMenu(true);
 
             SharedPreferences shrpr = PreferenceManager.getDefaultSharedPreferences(getActivity());
-            Boolean tele2RegComplete = (!"def".equals(shrpr.getString(QuickstartPreferences.pin_code, "def")));
+            Boolean tele2RegComplete = (!"def".equals(shrpr.getString(QuickstartPreferences.pin_code, "def")) &&
+                    !shrpr.getBoolean(QuickstartPreferences.tele2AuthDisabled, false));
             Preference testConn = findPreference(getString(R.string.button));
             testConn.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
@@ -341,7 +342,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 @Override
                 public boolean onPreferenceClick(final Preference preference) {
                     SharedPreferences shrpr = PreferenceManager.getDefaultSharedPreferences(getActivity());
-                    Boolean tele2RegComplete = (!"def".equals(shrpr.getString(QuickstartPreferences.pin_code, "def")));
+                    Boolean tele2RegComplete = (!"def".equals(shrpr.getString(QuickstartPreferences.pin_code, "def")) &&
+                            !shrpr.getBoolean(QuickstartPreferences.tele2AuthDisabled, false));
                     if (tele2RegComplete) {
                         AlertDialog.Builder ad = new AlertDialog.Builder(getActivity());
                         ad.setTitle(getActivity().getString(R.string.dialog_reg_tele2_title));
@@ -538,7 +540,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             protected void onPostExecute(String result) {
                 try {
                     final Preference tele2Reg = findPreference(getString(R.string.tele2_reg));
-                    sBindPreferenceSummaryToValueListener.onPreferenceChange(tele2Reg, getActivity().getString(R.string.registered));
                     tele2Reg.setEnabled(true);
                 } catch (Exception e) {
                     Log.e(LOG_TAG, "Preference wasn't found");
@@ -548,7 +549,16 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                     JSONObject jsonObject = new JSONObject(content);
                     String pin = jsonObject.getString("pin");
                     SharedPreferences shrpr = PreferenceManager.getDefaultSharedPreferences(getActivity());
-                    shrpr.edit().putString(QuickstartPreferences.pin_code, pin).commit();
+                    shrpr.edit()
+                            .putBoolean(QuickstartPreferences.tele2AuthDisabled, false)
+                            .putString(QuickstartPreferences.pin_code, pin)
+                            .commit();
+                    try {
+                        final Preference tele2Reg = findPreference(getString(R.string.tele2_reg));
+                        sBindPreferenceSummaryToValueListener.onPreferenceChange(tele2Reg, getActivity().getString(R.string.registered));
+                    } catch (Exception e) {
+                        Log.e(LOG_TAG, "Preference was not found");
+                    }
                     Toast.makeText(c.getApplicationContext(), getContext().getString(R.string.tele2_success_reg), Toast.LENGTH_SHORT).show();
                 } catch (JSONException e) {
                     Log.e(LOG_TAG, "JSONException: " + e.getLocalizedMessage());

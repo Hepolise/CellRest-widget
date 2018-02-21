@@ -364,7 +364,8 @@ public class WidgetText extends AppWidgetProvider {
                     buffer = buffer.replace(" NEWLINE ", "\n");
                 } else if (buffer.contains("Error: Auth needed") || buffer.contains("Error: Необходимо пройти регистрацию")) {
                     SharedPreferences shrpr = WidgetUtils.getSharedPrefsByWidgetId(contextglobal, id);
-                    shrpr.edit().remove(QuickstartPreferences.pin_code).commit();
+                    //shrpr.edit().remove(QuickstartPreferences.pin_code).commit();
+                    shrpr.edit().putBoolean(QuickstartPreferences.tele2AuthDisabled, true).commit();
                 } else {
                     buffer = "error";
                 }

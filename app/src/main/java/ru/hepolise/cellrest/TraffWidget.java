@@ -585,7 +585,8 @@ public class TraffWidget extends AppWidgetProvider {
                         String err = jsonObject.getString("error");
                         if (err.contains("Auth needed") || err.contains("Необходимо пройти регистрацию")) {
                             SharedPreferences shrpr = getSharedPrefsByWidgetId(contextglobal, id);
-                            shrpr.edit().remove(QuickstartPreferences.pin_code).commit();
+                            //shrpr.edit().remove(QuickstartPreferences.pin_code).commit();
+                            shrpr.edit().putBoolean(QuickstartPreferences.tele2AuthDisabled, true).commit();
                         }
                     } catch (JSONException ej) {
                         Log.e(LOG_TAG, "Catch JSONException while catch JSONException" + ej.getLocalizedMessage());
