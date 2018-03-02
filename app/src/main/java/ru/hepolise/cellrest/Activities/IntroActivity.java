@@ -14,6 +14,7 @@ import com.yandex.metrica.YandexMetrica;
 
 import java.util.UUID;
 
+import ru.hepolise.cellrest.BuildConfig;
 import ru.hepolise.cellrest.R;
 import ru.hepolise.cellrest.Utils.Colorize;
 import ru.hepolise.cellrest.Utils.QuickstartPreferences;
@@ -100,12 +101,16 @@ public class IntroActivity extends AppIntro2 {
 
     }
     private void apply() {
+        //load app version
+        int versionCode = BuildConfig.VERSION_CODE;
+
         // making the first account like part of multi account
         SharedPreferences sharedPreferences = getSharedPreferences("MainPrefs", MODE_PRIVATE);
         if (!sharedPreferences.getBoolean(QuickstartPreferences.intro_done, false)) {
             Log.d(L,"Intro is not done");
             long ts = System.currentTimeMillis();
             sharedPreferences.edit()
+                    .putInt(QuickstartPreferences.version, versionCode)
                     .putString("loaded_prefs", "prefs_" + ts)
                     .putLong("0", ts)
                     .putInt("length", 1)
