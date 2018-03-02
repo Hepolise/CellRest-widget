@@ -52,17 +52,17 @@ import static ru.hepolise.cellrest.Utils.WidgetUtils.setIntent;
 import static ru.hepolise.cellrest.Utils.WidgetUtils.setTextSize;
 
 public class TraffWidget extends AppWidgetProvider {
-    Context contextglobal;
-    android.appwidget.AppWidgetManager appWidgetManagerglobal;
-    String UPD;
-    String ACTION_APPWIDGET_FORCE_UPDATE = "";
+    static Context contextglobal;
+    static android.appwidget.AppWidgetManager appWidgetManagerglobal;
+    static String UPD;
+    static String ACTION_APPWIDGET_FORCE_UPDATE = "";
 
-    String version;
-    String token;
-    String tz;
-    Boolean calc;
+    static String version;
+    static String token;
+    static String tz;
+    static Boolean calc;
 
-    final String LOG_TAG = "cellLogsWidget";
+    final static String LOG_TAG = "cellLogsWidget";
 
     @Override
     public void onEnabled(Context context) {
@@ -149,7 +149,7 @@ public class TraffWidget extends AppWidgetProvider {
 
 
 
-    public void updateWidget(Context context, AppWidgetManager appWidgetManager,
+    static public void updateWidget(Context context, AppWidgetManager appWidgetManager,
                                int widgetID, String content) {
         // Get data && update widget
 
@@ -475,7 +475,7 @@ public class TraffWidget extends AppWidgetProvider {
 
 
 
-    private class DownloadData extends AsyncTask<Integer, String, String> {
+    static private class DownloadData extends AsyncTask<Integer, String, String> {
         String login;
         String pass;
         String op;
@@ -589,7 +589,7 @@ public class TraffWidget extends AppWidgetProvider {
                             shrpr.edit().putBoolean(QuickstartPreferences.tele2AuthDisabled, true).commit();
                         }
                     } catch (JSONException ej) {
-                        Log.e(LOG_TAG, "Catch JSONException while catch JSONException" + ej.getLocalizedMessage());
+                        Log.e(LOG_TAG, "Catch JSONException while catching JSONException" + ej.getLocalizedMessage());
                     }
                     // update widget with old data
                     Log.e(LOG_TAG, "JSON Exception: " + e.getLocalizedMessage());

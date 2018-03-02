@@ -33,21 +33,21 @@ import static android.content.Context.MODE_PRIVATE;
 
 
 public class WidgetText extends AppWidgetProvider {
-    Context contextglobal;
-    android.appwidget.AppWidgetManager appWidgetManagerglobal;
+    static Context contextglobal;
+    static android.appwidget.AppWidgetManager appWidgetManagerglobal;
     int idglobal;
-    String UPD;
-    String ACTION_APPWIDGET_FORCE_UPDATE = "";
+    static String UPD;
+    static String ACTION_APPWIDGET_FORCE_UPDATE = "";
 
-    String locale;
-    String loc;
-    String version;
-    String token;
-    String tz;
-    Float size;
+    static String locale;
+    static String loc;
+    static String version;
+    static String token;
+    static String tz;
+    static Float size;
 
 
-    final String LOG_TAG = "cellLogs";
+    final static String LOG_TAG = "cellLogs";
 
     @Override
     public void onEnabled(Context context) {
@@ -111,9 +111,9 @@ public class WidgetText extends AppWidgetProvider {
         }
     }
 
-    public String updateWidget(Context context, AppWidgetManager appWidgetManager,
+    static public void updateWidget(Context context, AppWidgetManager appWidgetManager,
                                int widgetID, String content) {
-
+        context.getApplicationContext();
         SharedPreferences sharedPreferences = context.getSharedPreferences("MainPrefs", MODE_PRIVATE);
         long ts = sharedPreferences.getLong("widget_id_"+Integer.toString(widgetID), 0);
 
@@ -287,10 +287,9 @@ public class WidgetText extends AppWidgetProvider {
         //Log.d(LOG_TAG, "setting pending intent");
         widgetView.setOnClickPendingIntent(res, pIntent);
         appWidgetManager.updateAppWidget(widgetID, widgetView);
-        return (null);
     }
 
-    class DownloadData extends AsyncTask<Integer, String, String> {
+    static class DownloadData extends AsyncTask<Integer, String, String> {
         String login;
         String pass;
         String op;
@@ -333,7 +332,7 @@ public class WidgetText extends AppWidgetProvider {
                 login = "7" + login;
             }
         }
-        private String getContent(Integer id) throws IOException {
+        private void getContent(Integer id) throws IOException {
             BufferedReader reader;
             try {
                 URL url = new URL("https://srvr.su/traf.php?cmd=widget&upd=" + URLEncoder.encode(UPD, "UTF-8") +
@@ -370,12 +369,12 @@ public class WidgetText extends AppWidgetProvider {
                     buffer = "error";
                 }
                 updateWidget(contextglobal, appWidgetManagerglobal, id, buffer);
-                return(buffer);
+                //return(buffer);
 
             } catch (IOException e) {
-                //Log.d(LOG_TAG, e.getMessage());
+                Log.e(LOG_TAG, e.getMessage());
                 updateWidget(contextglobal, appWidgetManagerglobal, id, "error");
-                return e.getMessage();
+                //return e.getMessage();
             }
 
         }
