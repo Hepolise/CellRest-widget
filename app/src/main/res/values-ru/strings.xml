@@ -151,6 +151,8 @@
     <string name="calc_title">Расчёт</string>
     <string name="calc_desc">Рассчитывать данные на текущий день</string>
     <string name="calc_desc_2">Возвращать данные оператора \"Как есть\"</string>
+    <string name="show_login_desc">Показывать последние 4 символа номера телефона в виджете</string>
+    <string name="show_login_title">Показывать номер телефона</string>
 
     <!--<string name="pattern_desc">Изменить весь текст в виджете. \n
         %dtr% - days to reestablish; \n

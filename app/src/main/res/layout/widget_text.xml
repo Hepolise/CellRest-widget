@@ -49,4 +49,15 @@
         android:textColor="#ffffff"
         android:textSize="13sp">
     </TextView>
+    <TextView
+        android:id="@+id/login"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:gravity="end|bottom"
+        android:fontFamily="sans-serif-light"
+        android:textStyle="italic"
+        android:textColor="#ffffff"
+        android:textSize="12sp">
+    </TextView>
 </RelativeLayout>

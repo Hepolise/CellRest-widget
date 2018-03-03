@@ -37,6 +37,12 @@
             android:positiveButtonText="@null"
             android:title="@string/pref_title_font" />
 
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="show_login"
+            android:summary="@string/show_login_desc"
+            android:title="@string/show_login_title" />
+
         </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/only_text_widget">

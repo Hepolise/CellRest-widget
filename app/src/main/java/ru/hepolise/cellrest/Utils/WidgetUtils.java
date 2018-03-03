@@ -37,14 +37,18 @@ public class WidgetUtils {
         return shrpr;
     }
 
-    public static String getDate(long timeStamp){
+    public static String getDate(long timeStamp, Boolean l, String login){
 
         try{
             DateFormat data = DateFormat.getDateInstance(DateFormat.SHORT);
             Locale currentLocale = Locale.getDefault();
             DateFormat time = DateFormat.getTimeInstance(DateFormat.SHORT, currentLocale);
             Date netDate = (new Date(timeStamp));
-            return time.format(netDate) + "\n" + data.format(netDate);
+            if (l) {
+                return "(" + login + ") " + time.format(netDate) + "\n" + data.format(netDate);
+            } else {
+                return time.format(netDate) + "\n" + data.format(netDate);
+            }
         }
         catch(Exception ex){
             return "0";

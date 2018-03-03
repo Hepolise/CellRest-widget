@@ -224,12 +224,11 @@ public class TraffWidget extends AppWidgetProvider {
         left = shrpr.getString(QuickstartPreferences.left, "");
         balance = shrpr.getString(QuickstartPreferences.balance, "");
         null_ = shrpr.getString(QuickstartPreferences.null_, "");
-
-
+        Boolean showLogin = shrpr.getBoolean(QuickstartPreferences.show_login, false);
         try {
             // convert unix epoch timestamp (seconds) to milliseconds
             long timestamp = Long.parseLong(time) * 1000L;
-            date = WidgetUtils.getDate(timestamp);
+            date = WidgetUtils.getDate(timestamp, showLogin, login.substring(login.length() - 4));
 
 
             long days_to_new = Long.parseLong(dtn);
@@ -442,7 +441,8 @@ public class TraffWidget extends AppWidgetProvider {
                     }
                     if (!minus) {
                         //everything is more than zero
-                        widgetView.setTextViewText(getStringResourceByName("renew" + inet_add + res, context), context.getString(R.string.renew_a) + nl + dtn);
+                        widgetView.setTextViewText(getStringResourceByName("renew" + inet_add + res, context),
+                                context.getString(R.string.renew_a) + nl + dtn);
                     } else {
                         widgetView.setTextViewText(getStringResourceByName("renew" + inet_add + res, context), context.getString(R.string.restore) + " " + dtr + "\n" + context.getString(R.string.renew) + " " + dtn);
                     }

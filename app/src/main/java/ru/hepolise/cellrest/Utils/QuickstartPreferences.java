@@ -60,6 +60,7 @@ public class QuickstartPreferences {
     public static final String calc = "calc";
     public static final String tele2AuthDisabled = "tele2AuthDisabled";
     public static final String version = "version";
+    public static final String show_login = "show_login";
 //    public static final String check_days = "check_days";
 //    public static final String check_inet = "check_inet";
 //    public static final String check_mins = "check_mins";

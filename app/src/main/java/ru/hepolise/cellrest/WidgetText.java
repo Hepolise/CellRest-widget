@@ -281,6 +281,16 @@ public class WidgetText extends AppWidgetProvider {
         }
 
 
+        // Setting login
+        Boolean showLogin = shrpr.getBoolean(QuickstartPreferences.show_login, false);
+        if (showLogin) {
+            String login = shrpr.getString(QuickstartPreferences.login, "0000");
+            widgetView.setTextViewText(R.id.login, login.substring(login.length() - 4));
+            widgetView.setTextColor(R.id.login, color);
+        } else {
+            widgetView.setTextViewText(R.id.login, "");
+        }
+
         // Setting content to widget and updating it
         widgetView.setTextViewText(res, content);
         widgetView.setTextColor(res, color);
