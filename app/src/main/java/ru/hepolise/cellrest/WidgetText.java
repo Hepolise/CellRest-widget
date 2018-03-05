@@ -39,8 +39,7 @@ public class WidgetText extends AppWidgetProvider {
     static String UPD;
     static String ACTION_APPWIDGET_FORCE_UPDATE = "";
 
-    static String locale;
-    static String loc;
+
     static String version;
     static String token;
     static String tz;
@@ -148,13 +147,6 @@ public class WidgetText extends AppWidgetProvider {
         }
 
         UPD = shrpr.getString(QuickstartPreferences.update, "1");
-        // Load location variable
-        loc = shrpr.getString(QuickstartPreferences.loc, "def");
-        Locale currentLocale = Locale.getDefault();
-        locale = currentLocale.toString();
-        if (loc.equals("def")) {
-            loc = locale;
-        }
         //Log.d(LOG_TAG, loc);
 
         // Load timezone
@@ -306,6 +298,8 @@ public class WidgetText extends AppWidgetProvider {
         String android_id;
         String pin_code;
         String return_;
+        String locale;
+        String loc;
         @Override
         public String doInBackground(Integer... id) {
 
@@ -326,6 +320,12 @@ public class WidgetText extends AppWidgetProvider {
             pin_code = shrpr.getString(QuickstartPreferences.pin_code, "");
             android_id = shrpr.getString(QuickstartPreferences.androidId, Settings.Secure.getString(contextglobal.getContentResolver(), Settings.Secure.ANDROID_ID));
             pass = shrpr.getString(QuickstartPreferences.pass, "");
+            loc = shrpr.getString(QuickstartPreferences.loc, "def");
+            Locale currentLocale = Locale.getDefault();
+            locale = currentLocale.toString();
+            if (loc.equals("def")) {
+                loc = locale;
+            }
             Boolean calc = shrpr.getBoolean(QuickstartPreferences.calc, true);
             if (calc) {
                 return_ = "calc";
