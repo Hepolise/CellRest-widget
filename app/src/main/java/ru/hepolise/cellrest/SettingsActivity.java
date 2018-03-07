@@ -621,6 +621,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                     // parse answer
                     JSONObject jsonObject = new JSONObject(content);
                     String pin = jsonObject.getString("pin");
+                    Log.d(LOG_TAG, "pin (by ussd): " + pin);
                     SharedPreferences shrpr = PreferenceManager.getDefaultSharedPreferences(getActivity());
                     shrpr.edit()
                             .putBoolean(QuickstartPreferences.tele2AuthDisabled, false)
@@ -634,7 +635,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                     } catch (Exception e) {
                         Log.e(LOG_TAG, "Preference was not found");
                     }
-                    Toast.makeText(c.getApplicationContext(), getContext().getString(R.string.tele2_success_reg), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(c.getApplicationContext(), c.getString(R.string.tele2_success_reg), Toast.LENGTH_SHORT).show();
                 } catch (JSONException e) {
                     try {
                         // catch auth by sms code
@@ -739,6 +740,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                     JSONObject jsonObject = new JSONObject(content);
                     String pin = jsonObject.getString("pin");
                     SharedPreferences shrpr = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                    Log.d(LOG_TAG, "pin (by sms): " + pin);
                     shrpr.edit()
                             .putBoolean(QuickstartPreferences.tele2AuthDisabled, false)
                             .putString(QuickstartPreferences.pin_code, pin)
@@ -749,7 +751,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                     } catch (Exception e) {
                         Log.e(LOG_TAG, "Preference was not found");
                     }
-                    Toast.makeText(c.getApplicationContext(), getContext().getString(R.string.tele2_success_reg), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(c.getApplicationContext(), c.getString(R.string.tele2_success_reg), Toast.LENGTH_SHORT).show();
                 } catch (JSONException e) {
                     Log.e(LOG_TAG, "JSONException: " + e.getLocalizedMessage());
                     try {

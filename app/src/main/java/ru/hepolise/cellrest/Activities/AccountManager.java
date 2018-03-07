@@ -13,9 +13,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+//import com.melnykov.fab.FloatingActionButton;
+
 import java.util.ArrayList;
 
 import ru.hepolise.cellrest.R;
+import ru.hepolise.cellrest.Utils.QuickstartPreferences;
 import ru.hepolise.cellrest.Utils.Utils;
 
 /**
@@ -31,16 +34,15 @@ public class AccountManager  extends ListActivity {
 
         setList();
 
-        // length
+        // shared prefs
         final SharedPreferences sharedPreferences = getSharedPreferences("MainPrefs", MODE_PRIVATE);
-        final int length = sharedPreferences.getInt("length", 1);
 
         // Activity Context
         final Context activityContext = this;
 
         // fab
-        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.bringToFront();
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -48,7 +50,6 @@ public class AccountManager  extends ListActivity {
                 setList();
             }
         });
-
 
         // switcher
         getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -68,11 +69,11 @@ public class AccountManager  extends ListActivity {
                 ad.setMessage(message);
                 ad.setPositiveButton(button1String, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int arg1) {
-                        ArrayList<String> values;
                         long ts;
 
 
                         Log.d(L, "deleting id: " + deleting);
+                        int length = sharedPreferences.getInt("length", 1);
                         sharedPreferences.edit().putInt("length", length - 1).commit();
                         Log.d(L, "New length: " + Integer.toString(length - 1));
 
@@ -107,7 +108,6 @@ public class AccountManager  extends ListActivity {
                                 Utils.switchTo(t, activityContext, false, false);
                             }
                         }
-
                         setList();
                     }
                 });

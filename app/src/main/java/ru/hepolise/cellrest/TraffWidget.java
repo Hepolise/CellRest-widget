@@ -244,7 +244,7 @@ public class TraffWidget extends AppWidgetProvider {
                     context.getString(R.string.days2),
                     context.getString(R.string.days));
 
-        } catch (NumberFormatException e){
+        } catch (Exception e ){
             Log.e(LOG_TAG, e.getMessage());
         }
         // Reformat login
