@@ -19,10 +19,16 @@ import android.provider.Settings;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
+import android.text.InputFilter;
+import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 
@@ -307,6 +313,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class GeneralPreferenceFragment extends PreferenceFragment {
         String LOG_TAG="celllogs";
+        String code;
 
 
 
@@ -528,6 +535,71 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             }
         }
         class Tele2Register extends AsyncTask<String, Void, String> {
+            void askForTele2SmsCode(Context c) {
+                final AlertDialog.Builder mBuilder = new AlertDialog.Builder(c);
+
+                // Setting Dialog Title
+                mBuilder.setTitle(c.getString(R.string.enter_code_d_title));
+
+                // Setting Dialog Message
+                mBuilder.setMessage(c.getString(R.string.enter_code_d_msg));
+
+                // Set up the input
+                final EditText input = new EditText(c);
+                // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+                input.setInputType(InputType.TYPE_CLASS_NUMBER);
+                input.setSingleLine();
+                InputFilter[] filterArray = new InputFilter[1];
+                filterArray[0] = new InputFilter.LengthFilter(4);
+                input.setFilters(filterArray);
+                FrameLayout container = new FrameLayout(c);
+                FrameLayout.LayoutParams params = new  FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                params.leftMargin = c.getResources().getDimensionPixelSize(R.dimen.location_dialog_left);
+                input.setLayoutParams(params);
+                container.addView(input);
+
+                mBuilder.setView(container);
+
+                // On pressing Send button
+                mBuilder.setPositiveButton(c.getString(R.string.send), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        code = input.getText().toString();
+                        Log.d(LOG_TAG, "code: " + code);
+                        new Tele2SendCode().execute();
+                    }
+                });
+
+                // on pressing cancel button
+                mBuilder.setNegativeButton(c.getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        try {
+                            final Preference tele2Reg = findPreference(getString(R.string.tele2_reg));
+                            tele2Reg.setEnabled(true);
+                            sBindPreferenceSummaryToValueListener.onPreferenceChange(tele2Reg, getActivity().getString(R.string.tele2_reg_desc));
+                        } catch (Exception er) {
+                            Log.e(LOG_TAG, "Preference was not found");
+                        }
+                        dialog.cancel();
+                    }
+                });
+
+                mBuilder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    public void onCancel(DialogInterface dialog) {
+                        try {
+                            final Preference tele2Reg = findPreference(getString(R.string.tele2_reg));
+                            tele2Reg.setEnabled(true);
+                            sBindPreferenceSummaryToValueListener.onPreferenceChange(tele2Reg, getActivity().getString(R.string.tele2_reg_desc));
+                        } catch (Exception er) {
+                            Log.e(LOG_TAG, "Preference was not found");
+                        }
+                    }
+                });
+
+                // Showing Alert Message
+                final AlertDialog dialog = mBuilder.create();
+                dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+                dialog.show();
+            }
             String content = "";
             @Override
             public String doInBackground(String... path) {
@@ -540,12 +612,11 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             }
             @Override
             protected void onPostExecute(String result) {
-                try {
-                    final Preference tele2Reg = findPreference(getString(R.string.tele2_reg));
-                    tele2Reg.setEnabled(true);
-                } catch (Exception e) {
-                    Log.e(LOG_TAG, "Preference wasn't found");
-                }
+//                try {
+//                    final Preference tele2Reg = findPreference(getString(R.string.tele2_reg));
+//                } catch (Exception e) {
+//                    Log.e(LOG_TAG, "Preference wasn't found");
+//                }
                 try {
                     // parse answer
                     JSONObject jsonObject = new JSONObject(content);
@@ -555,18 +626,38 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                             .putBoolean(QuickstartPreferences.tele2AuthDisabled, false)
                             .putString(QuickstartPreferences.pin_code, pin)
                             .commit();
+
                     try {
                         final Preference tele2Reg = findPreference(getString(R.string.tele2_reg));
+                        tele2Reg.setEnabled(true);
                         sBindPreferenceSummaryToValueListener.onPreferenceChange(tele2Reg, getActivity().getString(R.string.registered));
                     } catch (Exception e) {
                         Log.e(LOG_TAG, "Preference was not found");
                     }
                     Toast.makeText(c.getApplicationContext(), getContext().getString(R.string.tele2_success_reg), Toast.LENGTH_SHORT).show();
                 } catch (JSONException e) {
-                    Log.e(LOG_TAG, "JSONException: " + e.getLocalizedMessage());
-                    Toast.makeText(c.getApplicationContext(), content, Toast.LENGTH_LONG).show();
+                    try {
+                        // catch auth by sms code
+                        JSONObject jsonObject = new JSONObject(content);
+                        String pin = jsonObject.getString("sms");
+                        Log.d(LOG_TAG, "Returned auth by SMS: " + pin);
+                        askForTele2SmsCode(fa);
+                    } catch (JSONException jd) {
+                        // catch another exceptions
+                        Log.e(LOG_TAG, "JSONException: " + e.getLocalizedMessage());
+                        try {
+                            final Preference tele2Reg = findPreference(getString(R.string.tele2_reg));
+                            tele2Reg.setEnabled(true);
+                            sBindPreferenceSummaryToValueListener.onPreferenceChange(tele2Reg, getActivity().getString(R.string.tele2_reg_desc));
+                        } catch (Exception er) {
+                            Log.e(LOG_TAG, "Preference was not found");
+                        }
+                        Toast.makeText(c.getApplicationContext(), content, Toast.LENGTH_LONG).show();
+                    }
                 }
             }
+
+
 
             private String getContent(Context ctx) throws IOException {
                 BufferedReader reader;
@@ -578,11 +669,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 android_id = shrpr.getString(QuickstartPreferences.androidId, Settings.Secure.getString(ctx.getContentResolver(), Settings.Secure.ANDROID_ID));
                 Locale currentLocale = Locale.getDefault();
                 String loc = currentLocale.toString();
-//                String locale = currentLocale.toString();
-//                String loc = shrpr.getString(QuickstartPreferences.loc, "def");
-//                if (loc.equals("def")) {
-//                    loc = locale;
-//                }
                 if (login.startsWith("+7")) {
                     login = login.substring(2);
                     //Log.d(LOG_TAG, "+7 change: " + login);
@@ -627,6 +713,114 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 }
             }
         }
+
+
+        class Tele2SendCode extends AsyncTask<String, Void, String> {
+            String content = "";
+            @Override
+            public String doInBackground(String... path) {
+                try {
+                    getContent(getActivity());
+                } catch (IOException ex) {
+                    Log.e(LOG_TAG, ex.getLocalizedMessage());
+                }
+                return null;
+            }
+            @Override
+            protected void onPostExecute(String result) {
+                try {
+                    final Preference tele2Reg = findPreference(getString(R.string.tele2_reg));
+                    tele2Reg.setEnabled(true);
+                } catch (Exception e) {
+                    Log.e(LOG_TAG, "Preference wasn't found");
+                }
+                try {
+                    // parse answer
+                    JSONObject jsonObject = new JSONObject(content);
+                    String pin = jsonObject.getString("pin");
+                    SharedPreferences shrpr = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                    shrpr.edit()
+                            .putBoolean(QuickstartPreferences.tele2AuthDisabled, false)
+                            .putString(QuickstartPreferences.pin_code, pin)
+                            .commit();
+                    try {
+                        final Preference tele2Reg = findPreference(getString(R.string.tele2_reg));
+                        sBindPreferenceSummaryToValueListener.onPreferenceChange(tele2Reg, getActivity().getString(R.string.registered));
+                    } catch (Exception e) {
+                        Log.e(LOG_TAG, "Preference was not found");
+                    }
+                    Toast.makeText(c.getApplicationContext(), getContext().getString(R.string.tele2_success_reg), Toast.LENGTH_SHORT).show();
+                } catch (JSONException e) {
+                    Log.e(LOG_TAG, "JSONException: " + e.getLocalizedMessage());
+                    try {
+                        final Preference tele2Reg = findPreference(getString(R.string.tele2_reg));
+                        sBindPreferenceSummaryToValueListener.onPreferenceChange(tele2Reg, getActivity().getString(R.string.tele2_reg_desc));
+                    } catch (Exception er) {
+                        Log.e(LOG_TAG, "Preference was not found");
+                    }
+                    Toast.makeText(c.getApplicationContext(), content, Toast.LENGTH_LONG).show();
+                }
+            }
+
+
+
+            private String getContent(Context ctx) throws IOException {
+                BufferedReader reader;
+                SharedPreferences shrpr = PreferenceManager.getDefaultSharedPreferences(ctx);
+                String version;
+                String login = shrpr.getString(QuickstartPreferences.login, "");
+                String op = shrpr.getString(QuickstartPreferences.op_list, "");
+                String android_id;
+                android_id = shrpr.getString(QuickstartPreferences.androidId, Settings.Secure.getString(ctx.getContentResolver(), Settings.Secure.ANDROID_ID));
+                Locale currentLocale = Locale.getDefault();
+                String loc = currentLocale.toString();
+                if (login.startsWith("+7")) {
+                    login = login.substring(2);
+                    //Log.d(LOG_TAG, "+7 change: " + login);
+                } else if (login.startsWith("7") || login.startsWith("8")){
+                    login = login.substring(1);
+                    //Log.d(LOG_TAG, "7/8 change: " + login);
+                }
+                if (op.equals("tele2")) {
+                    login = "7" + login;
+                }
+
+                int versionCode = BuildConfig.VERSION_CODE;
+                version = Integer.toString(versionCode);
+                try {
+                    URL url = new URL("https://srvr.su/traf.php?tele2_register" +
+                            "&sms_code=" + URLEncoder.encode(code, "UTF-8") +
+                            "&login=" + URLEncoder.encode(login, "UTF-8") +
+                            "&devid=" + URLEncoder.encode(android_id, "UTF-8") +
+                            "&loc=" + URLEncoder.encode(loc, "UTF-8") +
+                            "&version=" + URLEncoder.encode(version, "UTF-8")
+                            //+ "&test"
+                    );
+                    Log.d(LOG_TAG, "URL: " + url);
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    StringBuilder buf = new StringBuilder();
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        buf.append(line + " ");
+                    }
+                    String buffer = buf.toString();
+                    content = buffer;
+                    return (buffer);
+
+                } catch (IOException e) {
+                    if (e.getMessage().equals("No route to host")) {
+                        content = ctx.getString(R.string.server_down);
+                        return ctx.getString(R.string.server_down);
+                    } else {
+                        content = e.getMessage();
+                        return e.getMessage();
+                    }
+                }
+            }
+        }
+
+
     }
 
 }

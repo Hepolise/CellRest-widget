@@ -8,9 +8,16 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
+import android.text.InputFilter;
+import android.text.InputType;
 import android.util.Log;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.EditText;
+import android.widget.FrameLayout;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -214,5 +221,7 @@ public class Utils {
         SharedPreferences sharedPreferences = context.getSharedPreferences("MainPrefs", MODE_PRIVATE);
         return (sharedPreferences.getBoolean(QuickstartPreferences.intro_done, false));
     }
+
+
 
 }

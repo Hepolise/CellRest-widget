@@ -196,5 +196,8 @@
     <string name="calc_desc_2">Return data from provider \"As Is\"</string>
     <string name="show_login_title">Show phone number</string>
     <string name="show_login_desc">Show last 4 symbols of phone number in widget</string>
+    <string name="send">Send</string>
+    <string name="enter_code_d_title">SMS code</string>
+    <string name="enter_code_d_msg">Please enter the code from SMS message</string>
 
 </resources>

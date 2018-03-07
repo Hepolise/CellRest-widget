@@ -153,6 +153,9 @@
     <string name="calc_desc_2">Возвращать данные оператора \"Как есть\"</string>
     <string name="show_login_desc">Показывать последние 4 символа номера телефона в виджете</string>
     <string name="show_login_title">Показывать номер телефона</string>
+    <string name="send">Отправить</string>
+    <string name="enter_code_d_title">СМС код</string>
+    <string name="enter_code_d_msg">Пожалуйста, введите код из СМС-сообщения</string>
 
     <!--<string name="pattern_desc">Изменить весь текст в виджете. \n
         %dtr% - days to reestablish; \n
