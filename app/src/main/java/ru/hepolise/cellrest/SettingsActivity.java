@@ -497,7 +497,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 int versionCode = BuildConfig.VERSION_CODE;
                 version = Integer.toString(versionCode);
                 try {
-                    URL url = new URL("https://srvr.su/traf.php?cmd=widget&upd=" + UPD +
+                    URL url = new URL("https://srvr.su/traf.php?cmd=test_conn&upd=" + UPD +
                             "&login=" + URLEncoder.encode(login, "UTF-8") +
                             "&pass=" + URLEncoder.encode(pass, "UTF-8") +
                             "&op=" + URLEncoder.encode(op, "UTF-8") +
@@ -524,7 +524,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                     return (buffer);
 
                 } catch (IOException e) {
-                    if (e.getMessage().equals("No route to host")) {
+                    if (e.getMessage().contains("No route to host") || e.getMessage().contains("Host unreachable")) {
                         content = ctx.getString(R.string.server_down);
                         return ctx.getString(R.string.server_down);
                     } else {
