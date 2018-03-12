@@ -25,8 +25,14 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.UUID;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLSession;
 
 import ru.hepolise.cellrest.R;
 import ru.hepolise.cellrest.SettingsActivity;
@@ -175,7 +181,7 @@ public class Utils {
                 Log.d(L, "Switching to: " + ts);
 
                 sharedPreferences.edit().putString("loaded_prefs", "prefs_" + Long.toString(ts)).commit();
-                //copy file
+                // copy file
                 try {
                     PackageManager m = c.getApplicationContext().getPackageManager();
                     String s = c.getApplicationContext().getPackageName();
@@ -205,7 +211,7 @@ public class Utils {
         SharedPreferences myPrefs = c.getSharedPreferences("prefs_" + Long.toString(ts), MODE_PRIVATE);
         SharedPreferences.Editor prefsEditor;
         prefsEditor = myPrefs.edit();
-//strVersionName->Any value to be stored
+        //strVersionName->Any value to be stored
         prefsEditor.putString("thisPrefs", "pref:" + Long.toString(ts)); // do not delete
         prefsEditor.putString("android_id", UUID.randomUUID().toString().replace("-", ""));
         prefsEditor.commit();
@@ -221,7 +227,33 @@ public class Utils {
         SharedPreferences sharedPreferences = context.getSharedPreferences("MainPrefs", MODE_PRIVATE);
         return (sharedPreferences.getBoolean(QuickstartPreferences.intro_done, false));
     }
-
-
+    public static String getHost() {
+        String domain = "srvr.su";
+        String ip = "109.173.104.126";
+        if (isHostExist(domain)) {
+            Log.d(L, "host exists");
+            return domain;
+        } else {
+            return ip;
+        }
+    }
+    private static Boolean isHostExist (String host) {
+        try {
+            InetAddress inetAddress = InetAddress.getByName(host);
+            Log.d(L, inetAddress.getHostName() + ": " + inetAddress.getHostAddress());
+            return true;
+        } catch (UnknownHostException e) {
+            Log.e(L, "Host does not exist");
+            return false;
+        }
+    }
+    public static HostnameVerifier hostnameVerifier = new HostnameVerifier() {
+        @Override
+        public boolean verify(String hostname, SSLSession session) {
+            HostnameVerifier hv =
+                    HttpsURLConnection.getDefaultHostnameVerifier();
+            return hv.verify( "srvr.su", session);
+        }
+    };
 
 }

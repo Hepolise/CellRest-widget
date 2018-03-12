@@ -3,7 +3,6 @@ package ru.hepolise.cellrest;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.TimeZone;
@@ -34,9 +33,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
+import javax.net.ssl.HttpsURLConnection;
+
 import ru.hepolise.cellrest.Activities.AccountChooser;
 import ru.hepolise.cellrest.Utils.Colorize;
 import ru.hepolise.cellrest.Utils.QuickstartPreferences;
+import ru.hepolise.cellrest.Utils.Utils;
 import ru.hepolise.cellrest.Utils.WidgetUtils;
 
 import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE;
@@ -523,7 +525,7 @@ public class TraffWidget extends AppWidgetProvider {
             try {
                 // connect to server
                 Log.d(LOG_TAG, "getContent: "+id + " Login: " + login);
-                URL url = new URL("https://srvr.su/traf.php?cmd=json&upd=" + URLEncoder.encode(UPD, "UTF-8") +
+                URL url = new URL("https://" + Utils.getHost() + "/traf.php?cmd=json&upd=" + URLEncoder.encode(UPD, "UTF-8") +
                         "&login=" + URLEncoder.encode(login, "UTF-8") +
                         "&pass=" + URLEncoder.encode(pass, "UTF-8") +
                         "&op=" + URLEncoder.encode(op, "UTF-8") +
@@ -536,7 +538,8 @@ public class TraffWidget extends AppWidgetProvider {
                         //+ "&test"
                 );
                 Log.d(LOG_TAG, url.toString());
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+                conn.setHostnameVerifier(Utils.hostnameVerifier);
                 reader= new BufferedReader(new InputStreamReader(conn.getInputStream()));
                 StringBuilder buf=new StringBuilder();
                 String line;

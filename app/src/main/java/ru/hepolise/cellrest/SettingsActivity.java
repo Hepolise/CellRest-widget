@@ -42,12 +42,15 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLSession;
 
 import ru.hepolise.cellrest.Activities.AboutActivity;
 import ru.hepolise.cellrest.Activities.AccountManager;
@@ -496,8 +499,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
                 int versionCode = BuildConfig.VERSION_CODE;
                 version = Integer.toString(versionCode);
+
                 try {
-                    URL url = new URL("https://srvr.su/traf.php?cmd=test_conn&upd=" + UPD +
+                    URL url = new URL("https://" + Utils.getHost() + "/traf.php?cmd=test_conn&upd=" + UPD +
                             "&login=" + URLEncoder.encode(login, "UTF-8") +
                             "&pass=" + URLEncoder.encode(pass, "UTF-8") +
                             "&op=" + URLEncoder.encode(op, "UTF-8") +
@@ -511,7 +515,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                             //+ "&test"
                     );
                     Log.d(LOG_TAG, "URL: " + url);
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+                    conn.setHostnameVerifier(Utils.hostnameVerifier);
                     reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                     StringBuilder buf = new StringBuilder();
                     String line;
@@ -684,7 +689,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 int versionCode = BuildConfig.VERSION_CODE;
                 version = Integer.toString(versionCode);
                 try {
-                    URL url = new URL("https://srvr.su/traf.php?tele2_register" +
+                    URL url = new URL("https://" + Utils.getHost() + "/traf.php?tele2_register" +
                             "&login=" + URLEncoder.encode(login, "UTF-8") +
                             "&devid=" + URLEncoder.encode(android_id, "UTF-8") +
                             "&loc=" + URLEncoder.encode(loc, "UTF-8") +
@@ -692,7 +697,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                             //+ "&test"
                     );
                     Log.d(LOG_TAG, "URL: " + url);
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+                    conn.setHostnameVerifier(Utils.hostnameVerifier);
                     reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                     StringBuilder buf = new StringBuilder();
                     String line;
@@ -789,8 +795,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
                 int versionCode = BuildConfig.VERSION_CODE;
                 version = Integer.toString(versionCode);
+
                 try {
-                    URL url = new URL("https://srvr.su/traf.php?tele2_register" +
+                    URL url = new URL("https://" + Utils.getHost() + "/traf.php?tele2_register" +
                             "&sms_code=" + URLEncoder.encode(code, "UTF-8") +
                             "&login=" + URLEncoder.encode(login, "UTF-8") +
                             "&devid=" + URLEncoder.encode(android_id, "UTF-8") +
@@ -799,7 +806,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                             //+ "&test"
                     );
                     Log.d(LOG_TAG, "URL: " + url);
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+                    conn.setHostnameVerifier(Utils.hostnameVerifier);
                     reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                     StringBuilder buf = new StringBuilder();
                     String line;
