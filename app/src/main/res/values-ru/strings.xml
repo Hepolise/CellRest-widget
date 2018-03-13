@@ -94,7 +94,7 @@
     <string name="about_description">CellRest представляет собой приложение для контроля расходов трафика, созданное, чтобы
         обеспечить удобство при работе с данными операторов сотовой связи</string>
     <string name="about_contact">Открытый исходный код приложения:
-        <![CDATA[<a href="%1$s">Github</a>]]>.</string>
+        <![CDATA[<a href="%1$s">GitHub</a>]]>.</string>
     <string name="about_title">О приложении</string>
     <string name="about_write"><![CDATA[<a href="%1$s">Связаться с автором приложения</a>]]></string>
     <string name="widget_name">CellRest виджет</string>

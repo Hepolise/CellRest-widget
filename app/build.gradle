@@ -7,14 +7,27 @@ android {
         applicationId "ru.hepolise.cellrest"
         minSdkVersion 16
         targetSdkVersion 25
-        versionCode 13
-        versionName "2.5"
+        versionCode 14
+        versionName "2.5.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         CellRest_release {
             minifyEnabled true
+            resValue "string", "release_type", "release"
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig getSigningConfig()
+        }
+        CellRest_test_release {
+            minifyEnabled false
+            resValue "string", "release_type", "test"
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig getSigningConfig()
+        }
+        CellRest_beta_release {
+            minifyEnabled true
+            resValue "string", "release_type", "beta"
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig getSigningConfig()
         }
