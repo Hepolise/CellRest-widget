@@ -795,7 +795,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
                 int versionCode = BuildConfig.VERSION_CODE;
                 version = Integer.toString(versionCode);
-
+                String test = "";
+                if (Utils.isReleaseTest(ctx))
+                    test = "test";
                 try {
                     URL url = new URL("https://" + Utils.getHost() + "/traf.php?tele2_register" +
                             "&sms_code=" + URLEncoder.encode(code, "UTF-8") +
@@ -803,7 +805,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                             "&devid=" + URLEncoder.encode(android_id, "UTF-8") +
                             "&loc=" + URLEncoder.encode(loc, "UTF-8") +
                             "&version=" + URLEncoder.encode(version, "UTF-8")
-                            //+ "&test"
+                            + "&" + test
                     );
                     Log.d(LOG_TAG, "URL: " + url);
                     HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();

@@ -59,7 +59,7 @@ public class MyGcmListenerService extends GcmListenerService {
             sendNotification(message, title, notificationId);
         }
     }
-    public void sendNotification(String message, String title, int notificationId) {
+    public void sendNotification(String message, String title, int notificationId) { // TODO: update for Oreo
         Intent intent = new Intent(this, SettingsActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,

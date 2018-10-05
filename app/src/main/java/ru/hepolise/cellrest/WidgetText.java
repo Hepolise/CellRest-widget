@@ -346,6 +346,9 @@ public class WidgetText extends AppWidgetProvider {
         }
         private void getContent(Integer id) throws IOException {
             BufferedReader reader;
+            String test = "";
+            if (Utils.isReleaseTest(contextglobal))
+                test = "test";
             try {
                 URL url = new URL("https://" + Utils.getHost() + "/traf.php?cmd=widget&upd=" + URLEncoder.encode(UPD, "UTF-8") +
                         "&login=" + URLEncoder.encode(login, "UTF-8") +
@@ -359,7 +362,7 @@ public class WidgetText extends AppWidgetProvider {
                         "&return=" + URLEncoder.encode(return_, "UTF-8") +
                         "&tz=" + URLEncoder.encode(tz, "UTF-8")
                         // some server tests
-                        //+ "&test"
+                        + "&" + test
                 );
                 //Log.d(LOG_TAG, "URL: " + url);
                 HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();

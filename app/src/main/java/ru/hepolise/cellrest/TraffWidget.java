@@ -522,6 +522,9 @@ public class TraffWidget extends AppWidgetProvider {
 
         private void getContent(Integer id) throws IOException {
             BufferedReader reader;
+            String test = "";
+            if (Utils.isReleaseTest(contextglobal))
+                test = "test";
             try {
                 // connect to server
                 Log.d(LOG_TAG, "getContent: "+id + " Login: " + login);
@@ -535,7 +538,7 @@ public class TraffWidget extends AppWidgetProvider {
                         "&token=" + URLEncoder.encode(token, "UTF-8") +
                         "&tz=" + URLEncoder.encode(tz, "UTF-8")
                         // if some server tests
-                        //+ "&test"
+                        + "&" + test
                 );
                 Log.d(LOG_TAG, url.toString());
                 HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();

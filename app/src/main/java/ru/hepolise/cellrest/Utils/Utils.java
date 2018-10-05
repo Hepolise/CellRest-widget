@@ -45,7 +45,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class Utils {
     static String L = "cellLogs";
-    public static void copyFile(String inputPath, String inputFile, String outputFile) {
+    private static void copyFile(String inputPath, String inputFile, String outputFile) {
 
         InputStream in;
         OutputStream out;
@@ -229,7 +229,7 @@ public class Utils {
     }
     public static String getHost() {
         String domain = "srvr.su";
-        String ip = "109.173.104.126";
+        String ip = "188.255.79.110";
         if (isHostExist(domain)) {
             Log.d(L, "host exists");
             return domain;
@@ -255,5 +255,14 @@ public class Utils {
             return hv.verify( "srvr.su", session);
         }
     };
+    private static String getReleaseType(Context context) {
+        return context.getResources().getString(R.string.release_type);
+    }
+    public static Boolean isReleaseTest(Context context) {
+        String rel = getReleaseType(context);
+        Boolean a = ("normal".equals(rel));
+        Log.d(L, "isReleaseTest: " + a);
+        return a;
+    }
 
 }
