@@ -260,7 +260,7 @@ public class Utils {
     }
     public static Boolean isReleaseTest(Context context) {
         String rel = getReleaseType(context);
-        Boolean a = ("normal".equals(rel));
+        Boolean a = !("normal".equals(rel));
         Log.d(L, "isReleaseTest: " + a);
         return a;
     }

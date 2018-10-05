@@ -499,7 +499,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
                 int versionCode = BuildConfig.VERSION_CODE;
                 version = Integer.toString(versionCode);
-
+                String test = "";
+                if (Utils.isReleaseTest(ctx))
+                    test = "test";
                 try {
                     URL url = new URL("https://" + Utils.getHost() + "/traf.php?cmd=test_conn&upd=" + UPD +
                             "&login=" + URLEncoder.encode(login, "UTF-8") +
@@ -512,7 +514,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                             "&token=" + URLEncoder.encode(token, "UTF-8") +
                             "&return=" + URLEncoder.encode(return_, "UTF-8") +
                             "&tz=" + URLEncoder.encode(tz, "UTF-8")
-                            //+ "&test"
+                            + "&" + test
                     );
                     Log.d(LOG_TAG, "URL: " + url);
                     HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
@@ -688,13 +690,16 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
                 int versionCode = BuildConfig.VERSION_CODE;
                 version = Integer.toString(versionCode);
+                String test = "";
+                if (Utils.isReleaseTest(ctx))
+                    test = "test";
                 try {
                     URL url = new URL("https://" + Utils.getHost() + "/traf.php?tele2_register" +
                             "&login=" + URLEncoder.encode(login, "UTF-8") +
                             "&devid=" + URLEncoder.encode(android_id, "UTF-8") +
                             "&loc=" + URLEncoder.encode(loc, "UTF-8") +
                             "&version=" + URLEncoder.encode(version, "UTF-8")
-                            //+ "&test"
+                            + "&" + test
                     );
                     Log.d(LOG_TAG, "URL: " + url);
                     HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
