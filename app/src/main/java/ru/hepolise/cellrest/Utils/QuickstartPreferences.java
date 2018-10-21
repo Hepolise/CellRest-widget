@@ -29,7 +29,7 @@ public class QuickstartPreferences {
     public static final String color = "color";
     public static final String font = "font";
     //public static final String default_color = "default_color";
-    public static final String pin_code = "pin";
+    public static final String tele2_token = "tele2_token";
     public static final String loc = "loc";
     public static final String SENT_TOKEN_TO_SERVER = "sentTokenToServer";
     public static final String REGISTRATION_COMPLETE = "registrationComplete";
@@ -62,6 +62,7 @@ public class QuickstartPreferences {
     public static final String version = "version";
     public static final String show_login = "show_login";
     public static final String length = "length";
+    public static final String mPass = "mPass";
 //    public static final String check_days = "check_days";
 //    public static final String check_inet = "check_inet";
 //    public static final String check_mins = "check_mins";

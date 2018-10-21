@@ -2,13 +2,13 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion '28.0.2'
+    buildToolsVersion '28.0.3'
     defaultConfig {
         applicationId "ru.hepolise.cellrest"
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 14
-        versionName "2.5.1"
+        versionCode 15
+        versionName "2.5.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         resValue "string", "release_type", "dev"

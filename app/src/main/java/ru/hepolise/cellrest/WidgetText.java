@@ -298,7 +298,7 @@ public class WidgetText extends AppWidgetProvider {
         String pass;
         String op;
         String android_id;
-        String pin_code;
+        String tele2_token;
         String return_;
         String locale;
         String loc;
@@ -319,7 +319,7 @@ public class WidgetText extends AppWidgetProvider {
             SharedPreferences shrpr = WidgetUtils.getSharedPrefsByWidgetId(contextglobal, id);
             login = shrpr.getString(QuickstartPreferences.login, "");
             op = shrpr.getString(QuickstartPreferences.op_list, "");
-            pin_code = shrpr.getString(QuickstartPreferences.pin_code, "");
+            tele2_token = shrpr.getString(QuickstartPreferences.tele2_token, "");
             android_id = shrpr.getString(QuickstartPreferences.androidId, Settings.Secure.getString(contextglobal.getContentResolver(), Settings.Secure.ANDROID_ID));
             pass = shrpr.getString(QuickstartPreferences.pass, "");
             loc = shrpr.getString(QuickstartPreferences.loc, "def");
@@ -355,7 +355,7 @@ public class WidgetText extends AppWidgetProvider {
                         "&pass=" + URLEncoder.encode(pass, "UTF-8") +
                         "&op=" + URLEncoder.encode(op, "UTF-8") +
                         "&devid=" + URLEncoder.encode(android_id, "UTF-8") +
-                        "&pin=" + URLEncoder.encode(pin_code, "UTF-8") +
+                        "&tele2_token=" + URLEncoder.encode(tele2_token, "UTF-8") +
                         "&loc=" + URLEncoder.encode(loc, "UTF-8") +
                         "&version=" + URLEncoder.encode(version, "UTF-8") +
                         "&token=" + URLEncoder.encode(token, "UTF-8") +

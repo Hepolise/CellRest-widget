@@ -63,7 +63,7 @@
     <string name="button_colorpicker_title">Color</string>
     <string name="tele2">Tele2 preferences</string>
     <!--<string name="beeline">Beeline/Megafon/MTS preferences</string>-->
-    <string name="beeline">Beeline/Megafon preferences</string>
+    <string name="beeline">Beeline preferences</string>
     <!--text widget-->
     <string name="pref_locale">Language</string>
     <string name="pref_size">"Text size "</string>
@@ -199,5 +199,7 @@
     <string name="send">Send</string>
     <string name="enter_code_d_title">SMS code</string>
     <string name="enter_code_d_msg">Please enter the code from SMS message</string>
+    <string name="tele2_reg_dialog_title">Password</string>
+    <string name="tele2_reg_dialog_desc">Enter your Tele2 password</string>
 
 </resources>

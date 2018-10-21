@@ -84,7 +84,7 @@
     <string name="button_colorpicker_title">Цвет</string>
     <string name="pin_code_desc">ПИН-код приложения \"Мой Теле2\" (вход в приложение должен быть выполнен с данного девайса)</string>
     <!--<string name="beeline">Настройки Билайна/Мегафона/МТС</string>-->
-    <string name="beeline">Настройки Билайна/Мегафона</string>
+    <string name="beeline">Настройки Билайна</string>
     <string name="pin_code_title">PIN-код</string>
     <string name="tele2">Настройки Теле2</string>
     <string name="help_title">Справка</string>
@@ -156,6 +156,8 @@
     <string name="send">Отправить</string>
     <string name="enter_code_d_title">СМС код</string>
     <string name="enter_code_d_msg">Пожалуйста, введите код из СМС-сообщения</string>
+    <string name="tele2_reg_dialog_title">Пароль</string>
+    <string name="tele2_reg_dialog_desc">Введите пароль от \"Мой Теле2\"</string>
 
     <!--<string name="pattern_desc">Изменить весь текст в виджете. \n
         %dtr% - days to reestablish; \n
