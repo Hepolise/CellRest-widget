@@ -63,7 +63,7 @@
     <string name="button_colorpicker_title">Color</string>
     <string name="tele2">Tele2 preferences</string>
     <!--<string name="beeline">Beeline/Megafon/MTS preferences</string>-->
-    <string name="beeline">Beeline preferences</string>
+    <string name="beeline">Beeline and Tele2 preferences</string>
     <!--text widget-->
     <string name="pref_locale">Language</string>
     <string name="pref_size">"Text size "</string>
@@ -71,7 +71,7 @@
     <string name="widget_text">CellRest: Text widget</string>
 
     <string name="other_settings">Other</string>
-    <string name="request_sent">Please wait&#8230;</string>
+    <string name="request_sent">Request sent&#8230;</string>
     <string name="help_title">Help</string>
     <string name="about_title">About</string>
     <string name="about_write"><![CDATA[<a href="%1$s">Contact the author of the application</a>]]></string>
@@ -182,12 +182,11 @@
     <string name="cancel">Cancel</string>
     <string name="intro">Intro</string>
     <string name="tele2_reg" translatable="false">tele2_reg</string>
-    <string name="tele2_reg_title">Tele2 registration</string>
-    <string name="tele2_reg_desc">Complete registration for Tele2</string>
+    <string name="tele2_reg_title">Tele2 request password</string>
+    <string name="tele2_reg_desc">Request Tele2 password from \"My Tele2\" app</string>
     <string name="wait_30_sec">May be up to 30 seconds</string>
     <string name="tele2_success_reg">Registration is completed successfully</string>
     <string name="requesting">Requesting&#8230;</string>
-    <string name="registered">Registered</string>
     <string name="dialog_reg_tele2_title">Registration</string>
     <string name="dialog_reg_tele2_desc">Request registration?</string>
     <string name="calc_title">Calculations</string>
@@ -199,7 +198,6 @@
     <string name="send">Send</string>
     <string name="enter_code_d_title">SMS code</string>
     <string name="enter_code_d_msg">Please enter the code from SMS message</string>
-    <string name="tele2_reg_dialog_title">Password</string>
-    <string name="tele2_reg_dialog_desc">Enter your Tele2 password</string>
+
 
 </resources>

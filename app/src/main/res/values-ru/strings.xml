@@ -3,7 +3,7 @@
     <string name="pref_account_login">Логин</string>
     <string name="pref_account_pass">Пароль</string>
     <string name="pref_color">Настройки виджета</string>
-    <string name="pref_description_pass">Пароль от Вашего аккаунта (не заполнять в случае с Теле2)</string>
+    <string name="pref_description_pass">Пароль от Вашего аккаунта</string>
     <string name="pref_description_update">Обновлять информацию с сервера при клике на виджет</string>
     <string name="pref_header_general">Общие настройки</string>
     <string name="pref_title_op">Оператор</string>
@@ -84,11 +84,11 @@
     <string name="button_colorpicker_title">Цвет</string>
     <string name="pin_code_desc">ПИН-код приложения \"Мой Теле2\" (вход в приложение должен быть выполнен с данного девайса)</string>
     <!--<string name="beeline">Настройки Билайна/Мегафона/МТС</string>-->
-    <string name="beeline">Настройки Билайна</string>
+    <string name="beeline">Настройки Билайна и Теле2</string>
     <string name="pin_code_title">PIN-код</string>
     <string name="tele2">Настройки Теле2</string>
     <string name="help_title">Справка</string>
-    <string name="request_sent">Пожалуйста, подождите&#8230;</string>
+    <string name="request_sent">Запрос отправлен&#8230;</string>
     <string name="updating">Обновление&#8230;</string>
     <string name="widget_other_pref">Другие настройки виджета</string>
     <string name="about_description">CellRest представляет собой приложение для контроля расходов трафика, созданное, чтобы
@@ -139,12 +139,11 @@
     <string name="slide4text">Если виджет не обновляется или показывает сообщение об ошибке, следует из общих настроек выполнить пробное подключение и выяснить, что пошло не так</string>
     <string name="cancel">Отмена</string>
     <string name="intro">Интро</string>
-    <string name="tele2_reg_title">Регистрация Теле2</string>
-    <string name="tele2_reg_desc">Выполнить регистрацию Теле2</string>
+    <string name="tele2_reg_title">Запросить пароль Теле2</string>
+    <string name="tele2_reg_desc">Запросить пароль от ЛК \"Мой Теле2\"</string>
     <string name="wait_30_sec">Может длиться до 30 секунд</string>
     <string name="tele2_success_reg">Регистрация выполнена успешно</string>
     <string name="requesting">Выполняется&#8230;</string>
-    <string name="registered">Регистрация выполнена</string>
     <string name="dialog_reg_tele2_title">Регистрация</string>
     <string name="dialog_reg_tele2_desc">Выполнить регистрацию ещё раз?</string>
     <string name="fill_obligatory_desc">Оператор и логин являются обязательными полями. Для Теле2 необходимо зарегистрироваться, для Билайна/Мегафона ввести пароль от Личного Кабинета. Настройка \"Расчёт\" позволяет выбрать, какие данные Вы хотите видеть в виджете.</string>
@@ -156,8 +155,7 @@
     <string name="send">Отправить</string>
     <string name="enter_code_d_title">СМС код</string>
     <string name="enter_code_d_msg">Пожалуйста, введите код из СМС-сообщения</string>
-    <string name="tele2_reg_dialog_title">Пароль</string>
-    <string name="tele2_reg_dialog_desc">Введите пароль от \"Мой Теле2\"</string>
+
 
     <!--<string name="pattern_desc">Изменить весь текст в виджете. \n
         %dtr% - days to reestablish; \n

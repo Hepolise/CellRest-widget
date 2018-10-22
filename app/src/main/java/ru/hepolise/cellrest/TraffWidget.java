@@ -482,7 +482,6 @@ public class TraffWidget extends AppWidgetProvider {
         String pass;
         String op;
         String android_id;
-        String tele2_token;
         // load new data from server
         @Override
         public String doInBackground(Integer... id) {
@@ -506,7 +505,6 @@ public class TraffWidget extends AppWidgetProvider {
             SharedPreferences shrpr = getSharedPrefsByWidgetId(contextglobal, id);
             login = shrpr.getString(QuickstartPreferences.login, "");
             op = shrpr.getString(QuickstartPreferences.op_list, "");
-            tele2_token = shrpr.getString(QuickstartPreferences.tele2_token, "");
             android_id = shrpr.getString(QuickstartPreferences.androidId, Settings.Secure.getString(contextglobal.getContentResolver(), Settings.Secure.ANDROID_ID));
             pass = shrpr.getString(QuickstartPreferences.pass, "");
             // Reformat login
@@ -533,7 +531,6 @@ public class TraffWidget extends AppWidgetProvider {
                         "&pass=" + URLEncoder.encode(pass, "UTF-8") +
                         "&op=" + URLEncoder.encode(op, "UTF-8") +
                         "&devid=" + URLEncoder.encode(android_id, "UTF-8") +
-                        "&tele2_token=" + URLEncoder.encode(tele2_token, "UTF-8") +
                         "&version=" + URLEncoder.encode(version, "UTF-8") +
                         "&token=" + URLEncoder.encode(token, "UTF-8") +
                         "&tz=" + URLEncoder.encode(tz, "UTF-8")
@@ -589,11 +586,6 @@ public class TraffWidget extends AppWidgetProvider {
                     try {
                         jsonObject = new JSONObject(buffer);
                         String err = jsonObject.getString("error");
-                        if (err.contains("Auth needed") || err.contains("Необходимо пройти регистрацию")) {
-                            SharedPreferences shrpr = getSharedPrefsByWidgetId(contextglobal, id);
-                            //shrpr.edit().remove(QuickstartPreferences.pin_code).commit();
-                            shrpr.edit().putBoolean(QuickstartPreferences.tele2AuthDisabled, true).commit();
-                        }
                     } catch (JSONException ej) {
                         Log.e(LOG_TAG, "Catch JSONException while catching JSONException" + ej.getLocalizedMessage());
                     }
