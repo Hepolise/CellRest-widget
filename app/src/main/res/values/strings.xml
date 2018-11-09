@@ -198,6 +198,8 @@
     <string name="send">Send</string>
     <string name="enter_code_d_title">SMS code</string>
     <string name="enter_code_d_msg">Please enter the code from SMS message</string>
+    <string name="pref_use_only_rollover_data_title">Consider only rollovered data</string>
+    <string name="pref_use_only_rollover_data_desc">Do not use leftover of current month</string>
 
 
 </resources>

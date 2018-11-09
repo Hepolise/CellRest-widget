@@ -301,6 +301,7 @@ public class WidgetText extends AppWidgetProvider {
         String return_;
         String locale;
         String loc;
+        Boolean allTrafficTele2;
         @Override
         public String doInBackground(Integer... id) {
 
@@ -341,6 +342,7 @@ public class WidgetText extends AppWidgetProvider {
             if (op.equals("tele2")) {
                 login = "7" + login;
             }
+            allTrafficTele2 = !shrpr.getBoolean(QuickstartPreferences.rollover_traffic_tele2, false);
         }
         private void getContent(Integer id) throws IOException {
             BufferedReader reader;
@@ -357,7 +359,8 @@ public class WidgetText extends AppWidgetProvider {
                         "&version=" + URLEncoder.encode(version, "UTF-8") +
                         "&token=" + URLEncoder.encode(token, "UTF-8") +
                         "&return=" + URLEncoder.encode(return_, "UTF-8") +
-                        "&tz=" + URLEncoder.encode(tz, "UTF-8")
+                        "&tz=" + URLEncoder.encode(tz, "UTF-8") +
+                        "&allTrafficTele=" + URLEncoder.encode(allTrafficTele2.toString(), "UTF-8")
                         // some server tests
                         + "&" + test
                 );

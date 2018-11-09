@@ -482,6 +482,7 @@ public class TraffWidget extends AppWidgetProvider {
         String pass;
         String op;
         String android_id;
+        Boolean allTrafficTele2;
         // load new data from server
         @Override
         public String doInBackground(Integer... id) {
@@ -516,6 +517,7 @@ public class TraffWidget extends AppWidgetProvider {
             if (op.equals("tele2")) {
                 login = "7" + login;
             }
+            allTrafficTele2 = !shrpr.getBoolean(QuickstartPreferences.rollover_traffic_tele2, false);
         }
 
         private void getContent(Integer id) throws IOException {
@@ -533,7 +535,8 @@ public class TraffWidget extends AppWidgetProvider {
                         "&devid=" + URLEncoder.encode(android_id, "UTF-8") +
                         "&version=" + URLEncoder.encode(version, "UTF-8") +
                         "&token=" + URLEncoder.encode(token, "UTF-8") +
-                        "&tz=" + URLEncoder.encode(tz, "UTF-8")
+                        "&tz=" + URLEncoder.encode(tz, "UTF-8") +
+                        "&allTrafficTele=" + URLEncoder.encode(allTrafficTele2.toString(), "UTF-8")
                         // if some server tests
                         + "&" + test
                 );

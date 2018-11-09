@@ -423,6 +423,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 String op = shrpr.getString(QuickstartPreferences.op_list, "");
                 Boolean calc = shrpr.getBoolean(QuickstartPreferences.calc, true);
                 pass = shrpr.getString(QuickstartPreferences.pass, "");
+                Boolean allTrafficTele2 = !shrpr.getBoolean(QuickstartPreferences.rollover_traffic_tele2, false);
                 String return_;
                 if (calc) {
                     return_ = "calc";
@@ -443,9 +444,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
                 if (op.equals("tele2")) {
                     login = "7" + login;
-                    android_id = shrpr.getString(QuickstartPreferences.androidId, Settings.Secure.getString(ctx.getContentResolver(), Settings.Secure.ANDROID_ID));
                     //Log.d(LOG_TAG, "android_id " + android_id);
                 }
+                android_id = shrpr.getString(QuickstartPreferences.androidId, Settings.Secure.getString(ctx.getContentResolver(), Settings.Secure.ANDROID_ID));
                 if (login.equals("") || pass.equals("")) {
                     UPD = "0";
                 } else {
@@ -467,7 +468,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                             "&version=" + URLEncoder.encode(version, "UTF-8") +
                             "&token=" + URLEncoder.encode(token, "UTF-8") +
                             "&return=" + URLEncoder.encode(return_, "UTF-8") +
-                            "&tz=" + URLEncoder.encode(tz, "UTF-8")
+                            "&tz=" + URLEncoder.encode(tz, "UTF-8") +
+                            "&allTrafficTele=" + URLEncoder.encode(allTrafficTele2.toString(), "UTF-8")
                             + "&" + test
                     );
                     Log.d(LOG_TAG, "URL: " + url);
