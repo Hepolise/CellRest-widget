@@ -339,7 +339,7 @@ public class WidgetText extends AppWidgetProvider {
             } else if (login.startsWith("7") || login.startsWith("8")){
                 login = login.substring(1);
             }
-            if (op.equals("tele2")) {
+            if (op.equals("tele2") || op.equals(QuickstartPreferences.rostelekom)) {
                 login = "7" + login;
             }
             allTrafficTele2 = !shrpr.getBoolean(QuickstartPreferences.rollover_traffic_tele2, false);

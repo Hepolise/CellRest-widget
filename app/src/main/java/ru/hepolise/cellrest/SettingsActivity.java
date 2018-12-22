@@ -442,7 +442,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                     //Log.d(LOG_TAG, "7/8 change: " + login);
                 }
 
-                if (op.equals("tele2")) {
+                if (op.equals("tele2") || op.equals(QuickstartPreferences.rostelekom)) {
                     login = "7" + login;
                     //Log.d(LOG_TAG, "android_id " + android_id);
                 }

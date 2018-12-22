@@ -86,7 +86,8 @@
     <string-array name="pref_op_list_titles">
         <item>Beeline</item>
         <item>Tele2</item>
-        <item>Megafon (beta)</item>
+        <!--<item>Megafon (beta)</item>-->
+        <item>Rostelekom</item>
         <!--<item>MTS</item>-->
     </string-array>
     <string-array name="pattern_values" translatable="false">
@@ -122,7 +123,8 @@
     <string-array name="pref_op_list_values">
         <item>bee</item>
         <item>tele2</item>
-        <item>megafon</item>
+        <!--<item>megafon</item>-->
+        <item>rostelekom</item>
         <!--<item>mts</item>-->
     </string-array>
 

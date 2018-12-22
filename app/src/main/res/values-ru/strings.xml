@@ -12,13 +12,15 @@
     <string-array name="pref_op_list_titles">
         <item>Beeline</item>
         <item>Tele2</item>
-        <item>Megafon (Beta)</item>
+        <item>Ростелеком</item>
+        <!--<item>Megafon (Beta)</item>-->
         <!--<item>MTS</item>-->
     </string-array>
     <string-array name="pref_op_list_values">
         <item>bee</item>
         <item>tele2</item>
-        <item>megafon</item>
+        <item>rostelekom</item>
+        <!--<item>megafon</item>-->
         <!--<item>mts</item>-->
     </string-array>
 
